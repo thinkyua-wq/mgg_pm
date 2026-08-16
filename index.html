@@ -25,6 +25,7 @@
         urls: ['https://cdnjs.cloudflare.com/ajax/libs/Recharts/2.12.7/Recharts.js','https://cdn.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.js','https://unpkg.com/recharts@2.12.7/umd/Recharts.js','https://fastly.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.js'] }
     ];
     var loadingStatus = document.createElement('div');
+    loadingStatus.id = 'loading-status';
     loadingStatus.style.cssText = 'margin-top:12px;color:#64748b;font-size:11px;font-family:system-ui;';
     function setStatus(msg) { try { loadingStatus.textContent = msg; } catch (e) {} }
     function loadLib(i) {
@@ -325,13 +326,23 @@
      주소는 앱의 ⋯ → 「클라우드 주소 설정」에서 저장합니다.
      실패하거나 주소가 없으면 파일에 내장된 데이터로 그대로 엽니다. */
   window.__ARI_CLOUD = null;
+  /* 기본 연동 주소 (Apps Script 웹앱). ⋯ → 「클라우드 주소 설정」으로 바꿀 수 있습니다. */
+  window.ARI_CLOUD_DEFAULT = '';   /* 공개 배포본 : 주소 미포함 · ⋯ → 「클라우드 주소 설정」에서 입력 */
   function __cloudURL() {
-    try { return localStorage.getItem('ARI_CLOUD_URL') || ''; } catch (e) { return ''; }
+    try {
+      var v = localStorage.getItem('ARI_CLOUD_URL');
+      if (v === '') return '';                 // 사용자가 명시적으로 비운 경우 = 연동 해제
+      return v || window.ARI_CLOUD_DEFAULT;
+    } catch (e) { return window.ARI_CLOUD_DEFAULT; }
+  }
+  function __say(m) {
+    try { var el = document.getElementById('loading-status'); if (el) el.textContent = m; } catch (e) {}
   }
   function __prefetchCloud(done) {
-    var u = __cloudURL();
+    var u;
+    try { u = __cloudURL(); } catch (e) { u = ''; }
     if (!u) { done(); return; }
-    setStatus('클라우드 데이터 확인 중...');
+    __say('클라우드 데이터 확인 중...');
     var cb = '__ariCloudCB' + Date.now(), fin = false, tag = document.createElement('script');
     function end() {
       if (fin) return; fin = true;
@@ -344,13 +355,14 @@
       end();
     };
     tag.onerror = end;
-    setTimeout(end, 12000);
+    setTimeout(end, 7000);
     tag.src = u + (u.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + cb + '&t=' + Date.now();
     document.head.appendChild(tag);
   }
 
   window.__startApp = function() {
-    __prefetchCloud(window.__startAppNow);
+    try { __prefetchCloud(window.__startAppNow); }
+    catch (e) { window.__startAppNow(); }
   };
   window.__startAppNow = function() {
     var loading = document.getElementById('loading');
@@ -12112,7 +12124,8 @@ ARI.pages = ARI.pages || {};
     function dataURL(force) {
       let u = "";
       try {
-        u = localStorage.getItem("ARI_CLOUD_URL") || "";
+        const v = localStorage.getItem("ARI_CLOUD_URL");
+        u = v === null ? window.ARI_CLOUD_DEFAULT || "" : v;
       } catch (e) {
         u = "";
       }
