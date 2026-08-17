@@ -327,7 +327,7 @@
      실패하거나 주소가 없으면 파일에 내장된 데이터로 그대로 엽니다. */
   window.__ARI_CLOUD = null;
   /* 기본 연동 주소 (Apps Script 웹앱). ⋯ → 「클라우드 주소 설정」으로 바꿀 수 있습니다. */
-  window.ARI_CLOUD_DEFAULT = '';   /* 공개 배포본 : 주소 미포함 · ⋯ → 「클라우드 주소 설정」에서 입력 */
+  window.ARI_CLOUD_DEFAULT = 'https://script.google.com/macros/s/AKfycbykcFeA1Li6PzoxkTYMXoeDOc1huZyvls1JMvmJlWpBCHrCD8xolGGWQUlywyJDnOIIOg/exec';
   function __cloudURL() {
     try {
       var v = localStorage.getItem('ARI_CLOUD_URL');
@@ -4254,7 +4254,7 @@ ARI.pages = ARI.pages || {};
     ].filter(Boolean);
     const conclusion = db.productLabel + "\uC758 \uD604\uC7AC \uBB38\uC81C\uB294 \uD0C0\uAE43 \uACE0\uAC1D \uBD80\uC871\uC774 \uC544\uB2C8\uB77C, \uD655\uBCF4\uB41C \uD0C0\uAE43\uC744 \uC784\uC0C1\uC0AC\uC6A9\uACFC \uCD5C\uCD08\uAD6C\uB9E4\uB85C \uC804\uD658\uD558\uACE0 \uC774\uD6C4 \uC7AC\uAD6C\uB9E4\uB85C \uC815\uCC29\uC2DC\uD0A4\uB294 \uC2E4\uD589\uB825 \uBD80\uC871\uC785\uB2C8\uB2E4. \uD5A5\uD6C4 30\uC77C\uC740 " + (worstEnt ? worstEnt.name + "\uBCF8\uBD80 \uD68C\uBCF5, " : "") + U.fmt(base.cust.length) + "\uAC1C \uD0C0\uAE43\uC758 \uB2E8\uACC4\uBCC4 \uC804\uD658, \uBBF8\uC7AC\uAD6C\uB9E4 " + U.fmt(Math.max(0, entered - repCust)) + "\uAC1C\uC18C \uD6C4\uC18D\uAD00\uB9AC, \uC7AC\uACE0\xB7\uCD9C\uD558 \uD1B5\uC81C\uC5D0 \uC9D1\uC911\uD574\uC57C \uD569\uB2C8\uB2E4.";
     const LNK = useMemo(function() {
-      const E = ARI.real && ARI.real.edu || { rows: [] };
+      const E = (ARI.eduAt ? ARI.eduAt(ctx.week) : ARI.real && ARI.real.edu) || { rows: [] };
       const P = function(a, b) {
         return b ? Math.round(a / b * 1e3) / 10 : 0;
       };
@@ -4410,7 +4410,7 @@ ARI.pages = ARI.pages || {};
         ].filter(Boolean)
       };
       return { funnel, eduCnt, con, v, rows };
-    }, [gTab, areas, entered, repCust, newCust, month, qtyProg, entProg, notEntered, db.productLabel]);
+    }, [gTab, areas, entered, repCust, newCust, month, qtyProg, entProg, notEntered, db.productLabel, ctx.week]);
     const GV = useMemo(function() {
       const P = function(a, b) {
         return b ? Math.round(a / b * 1e3) / 10 : 0;
@@ -6982,7 +6982,7 @@ ARI.pages = ARI.pages || {};
       return r.v;
     })) : 0;
     const EDU = useMemo(function() {
-      const E = ARI.real && ARI.real.edu || { rows: [] };
+      const E = (ARI.eduAt ? ARI.eduAt(ctx.week) : ARI.real && ARI.real.edu) || { rows: [] };
       const ev = (E.rows || []).filter(function(r) {
         return r.ari && !r.pend && U.n(r.att) > 0;
       });
@@ -7005,7 +7005,7 @@ ARI.pages = ARI.pages || {};
         return U.n(r.sales);
       }) * 10) / 10;
       return { cnt: ev.length, att, clinic, nonuser, newdev, cost, sales };
-    }, []);
+    }, [ctx.week]);
     const HQ_SEQ2 = ["\u6D59\u6C5F\u672C\u90E8", "\u534E\u4E1C\u672C\u90E8", "\u534E\u4E2D\u672C\u90E8", "\u534E\u897F\u672C\u90E8", "\u534E\u5357\u672C\u90E8", "\u534E\u5317\u672C\u90E8"];
     const mAll = Object.keys((real.area && real.area[0] ? real.area[0].m : {}) || {}).map(Number).sort(function(a, b) {
       return a - b;
@@ -9475,8 +9475,19 @@ ARI.pages = ARI.pages || {};
   function isBrand(c) {
     return U.n(c.brand) > 0 || c.status === "\u54C1\u724C\u5E97";
   }
-  function eduEvents(year) {
-    const E = ARI.real && ARI.real.edu || null;
+  function eduAt(week) {
+    const R2 = ARI.real || {};
+    const S = R2.eduSnaps;
+    if (!S || !S.length) return R2.edu || null;
+    let pick = null;
+    for (let i = 0; i < S.length; i++) {
+      if (!week || S[i].week <= week) pick = S[i];
+    }
+    return pick || S[0];
+  }
+  ARI.eduAt = eduAt;
+  function eduEvents(year, week) {
+    const E = eduAt(week);
     if (!E) return [];
     return E.rows.map(function(r, i) {
       const num = String(r.area || "").replace("\u5927\u533A", "");
@@ -9542,11 +9553,11 @@ ARI.pages = ARI.pages || {};
     const [sortTouched, setSortTouched] = useState(false);
     const [catOpen, setCatOpen] = useState({});
     const [actOpen, setActOpen] = useState(false);
-    const E = ARI.real && ARI.real.edu || { rows: [], kol: [], buy: [], week: "", asOf: "" };
+    const E = eduAt(ctx.week) || { rows: [], kol: [], buy: [], week: "", asOf: "" };
     const month = Number(ctx.wk.start.slice(5, 7));
     const evAll = useMemo(function() {
-      return eduEvents(db.year);
-    }, [db.year]);
+      return eduEvents(db.year, ctx.week);
+    }, [db.year, ctx.week]);
     const evScope = scope === "ari" ? evAll.filter(function(e) {
       return e.ari;
     }) : evAll;
