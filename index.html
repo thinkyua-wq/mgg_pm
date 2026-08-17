@@ -12159,15 +12159,12 @@ ARI.pages = ARI.pages || {};
       }
       return u;
     }
-    function fetchCloudData(refresh2) {
-      const u = dataURL();
-      if (!u) return;
-      say(refresh2 ? "\uC6D0\uBCF8\uC5D0\uC11C \uB2E4\uC2DC \uB9CC\uB4DC\uB294 \uC911... (1~3\uBD84 \uAC78\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4)" : "\uD074\uB77C\uC6B0\uB4DC \uB370\uC774\uD130 \uBD88\uB7EC\uC624\uB294 \uC911...");
-      const cb = "__ariCB" + Date.now();
+    function jsonp(url, onOk, onErr, ms) {
+      const cb = "__ariCB" + Date.now() + Math.floor(Math.random() * 1e3);
       let done = false;
       const tag = document.createElement("script");
       const fin = function() {
-        if (done) return;
+        if (done) return true;
         done = true;
         try {
           delete window[cb];
@@ -12175,9 +12172,28 @@ ARI.pages = ARI.pages || {};
           window[cb] = void 0;
         }
         if (tag.parentNode) tag.parentNode.removeChild(tag);
+        return false;
       };
       window[cb] = function(payload) {
-        fin();
+        if (!fin()) onOk(payload);
+      };
+      tag.onerror = function() {
+        if (!fin()) onErr("\uB124\uD2B8\uC6CC\uD06C");
+      };
+      setTimeout(function() {
+        if (!done) {
+          fin();
+          onErr("\uC751\uB2F5 \uC5C6\uC74C");
+        }
+      }, ms || 2e4);
+      tag.src = url + (url.indexOf("?") >= 0 ? "&" : "?") + "callback=" + cb + "&t=" + Date.now();
+      document.head.appendChild(tag);
+    }
+    function fetchCloudData(refresh2) {
+      const u = dataURL();
+      if (!u) return;
+      say(refresh2 ? "\uC6D0\uBCF8\uC5D0\uC11C \uB2E4\uC2DC \uB9CC\uB4DC\uB294 \uC911... (3~5\uBD84 \uAC78\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4)" : "\uD074\uB77C\uC6B0\uB4DC \uB370\uC774\uD130 \uBD88\uB7EC\uC624\uB294 \uC911...");
+      jsonp(u + (refresh2 ? "?refresh=1" : ""), function(payload) {
         if (payload && payload.error) {
           say("\uC5F0\uB3D9 \uC624\uB958 : " + payload.error);
           return;
@@ -12187,58 +12203,57 @@ ARI.pages = ARI.pages || {};
           return;
         }
         window.__ARI_CLOUD = payload;
-        say("\uAE30\uC900 " + (payload.asOf || "") + " (" + (payload.week || "") + ") \uB370\uC774\uD130\uB97C \uBC1B\uC558\uC2B5\uB2C8\uB2E4. \uC0C8\uB85C\uACE0\uCE68\uD569\uB2C8\uB2E4.");
+        say("\uAE30\uC900 " + (payload.asOf || "") + " (" + (payload.week || "") + ") \xB7 \uD310\uB9E4 " + (payload.weeksARi || []).length + "\uC8FC\uCC28 \xB7 \uAD50\uC721 " + (payload.weeksEdu || []).length + "\uC8FC\uCC28 \uC218\uC2E0. \uC0C8\uB85C\uACE0\uCE68\uD569\uB2C8\uB2E4.");
         setTimeout(function() {
           location.reload();
-        }, 900);
-      };
-      tag.onerror = function() {
-        fin();
-        say("\uC5F0\uB3D9 \uC2E4\uD328 \u2014 \uC8FC\uC18C\xB7\uBC30\uD3EC \uAD8C\uD55C(\uB9C1\uD06C\uAC00 \uC788\uB294 \uBAA8\uB4E0 \uC0AC\uC6A9\uC790)\uC744 \uD655\uC778\uD558\uC138\uC694.");
-      };
-      setTimeout(function() {
-        if (!done) {
-          fin();
-          say("\uC751\uB2F5\uC774 \uC5C6\uC2B5\uB2C8\uB2E4 \u2014 \uC8FC\uC18C\xB7\uBC30\uD3EC \uAD8C\uD55C\uC744 \uD655\uC778\uD558\uC138\uC694.");
-        }
-      }, refresh2 ? 24e4 : 2e4);
-      tag.src = u + (u.indexOf("?") >= 0 ? "&" : "?") + "callback=" + cb + (refresh2 ? "&refresh=1" : "") + "&t=" + Date.now();
-      document.head.appendChild(tag);
-    }
-    function cloudURL(force) {
-      let u = S.getUI("cloudURL", "");
-      if (!u || force) {
-        u = prompt("Google Apps Script \uC6F9\uC571 URL\uC744 \uC785\uB825\uD558\uC138\uC694.\n(\uAE30\uC874 \uB300\uC2DC\uBCF4\uB4DC\uC5D0\uC11C \uC4F0\uB358 \uC8FC\uC18C\uB97C \uADF8\uB300\uB85C \uB123\uC73C\uBA74 \uB429\uB2C8\uB2E4)", u || "https://script.google.com/macros/s/.../exec");
-        if (!u) return null;
-        S.setUI("cloudURL", u);
-      }
-      return u;
+        }, 1100);
+      }, function(why) {
+        say("\uC5F0\uB3D9 \uC2E4\uD328(" + why + ") \u2014 \uC8FC\uC18C\xB7\uBC30\uD3EC \uAD8C\uD55C(\uB9C1\uD06C\uAC00 \uC788\uB294 \uBAA8\uB4E0 \uC0AC\uC6A9\uC790)\uC744 \uD655\uC778\uD558\uC138\uC694.");
+      }, refresh2 ? 3e5 : 25e3);
     }
     function doCloudSave() {
-      const u = cloudURL();
+      const u = dataURL();
       if (!u) return;
+      const body2 = S.exportJSON();
+      const mine = S.stats().edits;
       say("\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5 \uC911...");
-      fetch(u, { method: "POST", body: JSON.stringify({ action: "save", key: "ari_pm", data: JSON.parse(S.exportJSON()) }) }).then(function() {
-        say("\uD074\uB77C\uC6B0\uB4DC\uC5D0 \uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4.");
+      fetch(u, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "save", key: "ari_pm", data: JSON.parse(body2) })
+      }).then(function() {
+        setTimeout(function() {
+          jsonp(u + "?action=loadpatch&key=ari_pm", function(saved) {
+            const n = saved && saved.__count;
+            if (typeof n === "number") {
+              say(n === mine ? "\uD074\uB77C\uC6B0\uB4DC\uC5D0 \uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4 (\uC218\uC815 " + U.fmt(n) + "\uAC74 \uD655\uC778)." : "\uC800\uC7A5\uD588\uC9C0\uB9CC \uAC74\uC218\uAC00 \uB2E4\uB985\uB2C8\uB2E4 (\uBCF4\uB0B8 " + U.fmt(mine) + " / \uC800\uC7A5 " + U.fmt(n) + "\uAC74).");
+            } else say("\uC800\uC7A5 \uC694\uCCAD\uC744 \uBCF4\uB0C8\uC2B5\uB2C8\uB2E4. (\uD655\uC778 \uC751\uB2F5 \uC5C6\uC74C)");
+          }, function() {
+            say("\uC800\uC7A5\uC740 \uBCF4\uB0C8\uC9C0\uB9CC \uD655\uC778\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \u300C\uD3B8\uC9D1\uB0B4\uC5ED \uBD88\uB7EC\uC624\uAE30\u300D\uB85C \uD655\uC778\uD574 \uBCF4\uC138\uC694.");
+          }, 15e3);
+        }, 800);
       }).catch(function() {
-        say("\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5 \uC2E4\uD328 \u2014 URL\xB7\uAD8C\uD55C\uC744 \uD655\uC778\uD558\uC138\uC694.");
+        say("\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5 \uC2E4\uD328 \u2014 \uC778\uD130\uB137 \uC5F0\uACB0\uC744 \uD655\uC778\uD558\uC138\uC694.");
       });
     }
     function doCloudLoad() {
-      const u = cloudURL();
+      const u = dataURL();
       if (!u) return;
-      say("\uD074\uB77C\uC6B0\uB4DC \uBD88\uB7EC\uC624\uB294 \uC911...");
-      fetch(u + "?action=load&key=ari_pm").then(function(r) {
-        return r.json();
-      }).then(function(j) {
+      say("\uD3B8\uC9D1\uB0B4\uC5ED \uBD88\uB7EC\uC624\uB294 \uC911...");
+      jsonp(u + "?action=loadpatch&key=ari_pm", function(j) {
         const payload = j && (j.data || j);
-        if (payload && S.importJSON(JSON.stringify(payload))) {
+        if (!payload || payload.__count === 0 && !payload.patches) {
+          say("\uD074\uB77C\uC6B0\uB4DC\uC5D0 \uC800\uC7A5\uB41C \uD3B8\uC9D1\uB0B4\uC5ED\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.");
+          return;
+        }
+        if (S.importJSON(JSON.stringify(payload))) {
           refresh();
-          say("\uD074\uB77C\uC6B0\uB4DC\uC5D0\uC11C \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4.");
-        } else say("\uBD88\uB7EC\uC62C \uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.");
-      }).catch(function() {
-        say("\uD074\uB77C\uC6B0\uB4DC \uBD88\uB7EC\uC624\uAE30 \uC2E4\uD328 \u2014 URL\xB7\uAD8C\uD55C\uC744 \uD655\uC778\uD558\uC138\uC694.");
-      });
+          say("\uD074\uB77C\uC6B0\uB4DC\uC5D0\uC11C \uD3B8\uC9D1\uB0B4\uC5ED\uC744 \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4.");
+        } else say("\uD3B8\uC9D1\uB0B4\uC5ED \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+      }, function(why) {
+        say("\uBD88\uB7EC\uC624\uAE30 \uC2E4\uD328(" + why + ") \u2014 \uC8FC\uC18C\xB7\uBC30\uD3EC \uAD8C\uD55C\uC744 \uD655\uC778\uD558\uC138\uC694.");
+      }, 15e3);
     }
     const sidebarEl = /* @__PURE__ */ React.createElement(React.Fragment, null, sidebar ? /* @__PURE__ */ React.createElement("div", { className: "md:hidden fixed inset-0 bg-black/50 z-30", onClick: () => setSidebar(false) }) : null, /* @__PURE__ */ React.createElement("aside", { className: U.cls(
       "side-navy flex flex-col flex-shrink-0 overflow-y-auto transition-all duration-300 no-print",
