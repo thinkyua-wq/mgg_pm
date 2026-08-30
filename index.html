@@ -167,6 +167,9 @@
   .tbl-rpt tbody td, .ui-tbl tbody td { border:1px solid #e6e9ef; padding:6px 8px; background:#fff; white-space:nowrap;
                       font-weight:400; color:#111827; font-variant-numeric:tabular-nums; }
   .tbl-rpt tbody tr:hover td, .ui-tbl tbody tr:hover td { background:#f8fafc; }
+  /* 본부별 표 — 행 높이를 약 10% 줄인다 (패딩만 조정, 글자 크기는 유지) */
+  .tbl-rpt.tbl-tight thead th { padding:5px 8px; }
+  .tbl-rpt.tbl-tight tbody td, .tbl-rpt.tbl-tight tfoot td { padding:4px 8px; }
   /* 과제 현황 — 가로 스크롤 없이 전 열을 보여주기 위해 긴 글자는 줄바꿈 */
   .ui-tbl.tbl-task tbody td { white-space:normal; word-break:break-word; line-height:1.45; vertical-align:middle; }
   .ui-tbl.tbl-task tbody td.whitespace-nowrap { white-space:nowrap; }
@@ -2320,6 +2323,469 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "\u5BA2\u6237\u9500\u552E\u91CF",
+    "\uB370\uC774\uD130 \uC5F0\uB3D9 \uC900\uBE44\uC911": "\u6570\u636E\u8FDE\u63A5\u51C6\u5907\u4E2D",
+    "\uC8FC\uB825 \uC81C\uD488 \xB7 2026\uB144 2\uB144\uCC28": "\u4E3B\u529B\u4EA7\u54C1 \xB7 2026\u5E74\u7B2C2\u5E74",
+    "\uC900\uBE44\uC911": "\u51C6\u5907\u4E2D",
+    "\uB2EC\uB825\uC5D0\uC11C \uB0A0\uC9DC \uB610\uB294 \uC77C\uC815\uC744 \uD074\uB9AD\uD558\uBA74": "\u70B9\u51FB\u65E5\u5386\u4E2D\u7684\u65E5\u671F\u6216\u65E5\u7A0B",
+    "\uD574\uB2F9 \uD56D\uBAA9\uC758 \uC0C1\uC138\uAC00 \uC774\uACF3\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.": "\u8BE5\u9879\u76EE\u7684\u8BE6\u60C5\u5C06\u663E\u793A\u5728\u6B64\u5904\u3002",
+    "\uC6D4\uBCC4 \uAC1C\uCD5C \uC77C\uC815\uACFC \uC2E4\uC801 \uBCF4\uACE0 \uC5EC\uBD80\uB97C \uB2EC\uB825\uC73C\uB85C \uD655\uC778": "\u4EE5\u65E5\u5386\u786E\u8BA4\u5404\u6708\u4E3E\u529E\u65E5\u7A0B\u4E0E\u4E1A\u7EE9\u62A5\u544A\u60C5\u51B5",
+    "\uC9D1\uC911 \uC8FC\uCC28\uB294 \uB0A8\uC0C9 \xB7 \uC811\uC810\uC774 \uC5C6\uB294 \uACF5\uBC31 \uC8FC\uCC28\uB294 \uC8FC\uD669 \uBC30\uACBD\uC785\uB2C8\uB2E4. \uB2EC\uB825\uC758 \uC6D4 \uC774\uB3D9\uC744 \uB530\uB77C \uD568\uAED8 \uBC14\uB01D\uB2C8\uB2E4.": "\u96C6\u4E2D\u5468\u4E3A\u6DF1\u84DD\u8272\uFF0C\u65E0\u63A5\u89E6\u70B9\u7684\u7A7A\u767D\u5468\u4E3A\u6A59\u8272\u80CC\u666F\u3002\u968F\u65E5\u5386\u7684\u6708\u4EFD\u5207\u6362\u4E00\u540C\u53D8\u5316\u3002",
+    "\uC138\uBBF8\uB098 \uCC38\uC11D\uC790 \uBA85\uB2E8 \uAE30\uC900 \xB7 \uCC38\uC11D \u2192 \uBC29\uBB38 \u2192 \uC9C4\uB3C4 \u2192 \uC2E4\uC81C \uD310\uB9E4 \uC804\uD658 \uCD94\uC801": "\u4EE5\u7814\u8BA8\u4F1A\u53C2\u4F1A\u540D\u5355\u4E3A\u51C6 \xB7 \u8FFD\u8E2A \u53C2\u4F1A \u2192 \u62DC\u8BBF \u2192 \u8FDB\u5EA6 \u2192 \u5B9E\u9645\u9500\u552E \u7684\u8F6C\u5316",
+    "\uC6D4\uC5D0 \uB4F1\uB85D\uB41C \uC138\uBBF8\uB098\uAC00 \uC5C6\uC5B4 \uC804\uCCB4 \uB204\uC801\uC73C\uB85C \uBCF4\uC5EC\uB4DC\uB9BD\uB2C8\uB2E4. \uD574\uB2F9 \uC6D4 \uBA85\uB2E8\uC744 \uC62C\uB9AC\uBA74 \uC790\uB3D9\uC73C\uB85C \uC6D4 \uB204\uC801\uC73C\uB85C \uBC14\uB01D\uB2C8\uB2E4.": "\u8BE5\u6708\u672A\u767B\u8BB0\u7814\u8BA8\u4F1A\uFF0C\u56E0\u6B64\u663E\u793A\u5168\u90E8\u7D2F\u8BA1\u3002\u4E0A\u4F20\u5F53\u6708\u540D\u5355\u540E\u5C06\u81EA\u52A8\u5207\u6362\u4E3A\u5F53\u6708\u7D2F\u8BA1\u3002",
+    "\u300CARI\u5BA2\u6237\u300D\xB7\u300CARI\u660E\u7EC6\u300D \uC8FC\uAC04\uBCF4\uACE0\uC758 \uBAA9\uD45C \u2192 \uC9C4\uC785 \u2192 \uD310\uB9E4 \u2192 \uC7AC\uAD6C\uB9E4 \uC2E4\uC801": "\u5468\u62A5\u300CARI\u5BA2\u6237\u300D\xB7\u300CARI\u660E\u7EC6\u300D\u7684 \u76EE\u6807 \u2192 \u8FDB\u5165 \u2192 \u9500\u552E \u2192 \u590D\u8D2D \u4E1A\u7EE9",
+    "\uC911\uAD6D \uC784\uD50C\uB780\uD2B8 \uC2DC\uC7A5 \xB7 \uACBD\uC7C1 M/S \xB7 \uAC00\uACA9 \uD3EC\uC9C0\uC154\uB2DD \xB7 \uC9C0\uC5ED\uBCC4 \uBAA9\uD45C (\uCD9C\uCC98: BD \uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0\uC11C 250115 v2.0)": "\u4E2D\u56FD\u79CD\u690D\u4F53\u5E02\u573A \xB7 \u7ADE\u4E89 M/S \xB7 \u4EF7\u683C\u5B9A\u4F4D \xB7 \u5404\u5730\u533A\u76EE\u6807\uFF08\u51FA\u5904\uFF1ABD \u4E0A\u5E02\u6218\u7565\u62A5\u544A\u4E66 250115 v2.0\uFF09",
+    "USP \uB3C4\uCD9C\xB7\uAC80\uC99D\uBD80\uD130 \uAC00\uACA9\xB7\uC720\uD1B5\xB7\uD504\uB85C\uBAA8\uC158 \uC2E4\uD589\uAE4C\uC9C0 \u2014 Product / Price / Place / Promotion": "\u4ECE USP \u5BFC\u51FA\xB7\u9A8C\u8BC1\u5230 \u4EF7\u683C\xB7\u6D41\u901A\xB7\u4FC3\u9500 \u6267\u884C \u2014 Product / Price / Place / Promotion",
+    "\uC784\uC0C1 \uC870\uAC74\xB7\uC778\uD5C8\uAC00 \uAC80\uD1A0 \uD544\uC694 \uD45C\uD604 \u2014 \uC790\uB3D9 \uD655\uC815 \uAE08\uC9C0": "\u9700\u4E34\u5E8A\u6761\u4EF6\xB7\u6CE8\u518C\u5BA1\u67E5\u7684\u8868\u8FF0 \u2014 \u7981\u6B62\u81EA\u52A8\u786E\u5B9A",
+    "\uC704\uCD95\uB41C \uC804\uCE58\uBD80 \uC587\uC740 Ridge\uC5D0\uC11C \uAE30\uC800\uACE8 \uACE0\uC815\uB825 \uD65C\uC6A9": "\u5728\u840E\u7F29\u524D\u7259\u533A\u7684\u8584\u7259\u69FD\u5D74\u4E0A\u8FD0\u7528\u57FA\u9AA8\u56FA\u5B9A\u529B",
+    "\uC704\uCD95\uB41C \uC804\uCE58\uBD80\uC640 \uC587\uC740 Ridge\uC5D0\uC11C \uAE30\uC800\uACE8 \uACE0\uC815\uB825\uC744 \uD65C\uC6A9\uD558\uC5EC \uCD94\uAC00\uC801\uC778 GBR \uBD80\uB2F4\uC744 \uC904\uC774\uACE0 \uC548\uC815\uC801\uC778 \uC2DD\uB9BD\uC744 \uC9C0\uC6D0\uD558\uB294 \uC804\uCE58\uBD80 \uD2B9\uD654 \uC784\uD50C\uB780\uD2B8": "\u5728\u840E\u7F29\u524D\u7259\u533A\u4E0E\u8584\u7259\u69FD\u5D74\u4E0A\u8FD0\u7528\u57FA\u9AA8\u56FA\u5B9A\u529B\uFF0C\u51CF\u8F7B\u989D\u5916 GBR \u8D1F\u62C5\u5E76\u652F\u6301\u7A33\u5B9A\u79CD\u690D\u7684\u524D\u7259\u533A\u7279\u5316\u79CD\u690D\u4F53\u3002",
+    "\uBC30\uACBD \uAC15\uC870\uB41C \uD589\uC740 \u2018GBR \uC5C6\uC774\u2019, \u2018\uC989\uC2DC\uD558\uC911 \uAC00\uB2A5\u2019, \u2018\uD569\uBCD1\uC99D \uAC10\uC18C\u2019 \uD45C\uD604\uC744 \uD3EC\uD568\uD569\uB2C8\uB2E4 \u2014 \uC784\uC0C1 \uC870\uAC74\xB7\uC778\uD5C8\uAC00 \uAC80\uD1A0 \uC5C6\uC774 \uC790\uB3D9\uC73C\uB85C \uD655\uC815 \uBB38\uAD6C\uB85C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.": "\u80CC\u666F\u9AD8\u4EAE\u884C\u5305\u542B\u300C\u65E0\u9700 GBR\u300D\u300C\u53EF\u5373\u523B\u8D1F\u91CD\u300D\u300C\u5E76\u53D1\u75C7\u51CF\u5C11\u300D\u7B49\u8868\u8FF0 \u2014 \u672A\u7ECF\u4E34\u5E8A\u6761\u4EF6\xB7\u6CE8\u518C\u5BA1\u67E5\u4E0D\u5F97\u81EA\u52A8\u4F5C\u4E3A\u786E\u5B9A\u6587\u6848\u4F7F\u7528\u3002",
+    "2\uCC28 \uAE30\uB2A5: \uCE74\uD0C8\uB85C\uADF8 \uD30C\uC2F1\uC740 \uD5A5\uD6C4 \uC5F0\uB3D9 \uC608\uC815\uC785\uB2C8\uB2E4. \uD604\uC7AC\uB294 \uD30C\uC77C \uC120\uD0DD\uB9CC \uAC00\uB2A5\uD558\uBA70 \uB0B4\uC6A9\uC744 \uC77D\uAC70\uB098 \uBD84\uC11D\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.": "\u4E8C\u671F\u529F\u80FD\uFF1A\u4EA7\u54C1\u76EE\u5F55\u89E3\u6790\u5C06\u4E8E\u65E5\u540E\u8FDE\u63A5\u3002\u76EE\u524D\u4EC5\u53EF\u9009\u62E9\u6587\u4EF6\uFF0C\u4E0D\u8BFB\u53D6\u6216\u5206\u6790\u5185\u5BB9\u3002",
+    "X-PEED Surface\uB85C \uC870\uAE30 \uACE8\uC720\uCC29 \uCD09\uC9C4": "\u4EE5 X-PEED Surface \u4FC3\u8FDB\u65E9\u671F\u9AA8\u7ED3\u5408",
+    "Cell-like Groove\uAC00 \uC138\uD3EC \uBD80\uCC29 \uC720\uB3C4": "Cell-like Groove \u8BF1\u5BFC\u7EC6\u80DE\u9644\u7740",
+    "Connection \uD558\uB2E8 Groove\uB85C \uC751\uB825 \uBD84\uC0B0": "\u4EE5 Connection \u4E0B\u90E8 Groove \u5206\u6563\u5E94\u529B",
+    "0.2\u03BCm Machined Surface\uB85C \uC5F0\uC870\uC9C1 \uC548\uC815": "\u4EE5 0.2\u03BCm Machined Surface \u7A33\u5B9A\u8F6F\u7EC4\u7EC7",
+    "\uC804\xB7\uAD6C\uCE58\uBD80 \uC989\uC2DC\uC2DD\uB9BD": "\u524D\xB7\u540E\u7259\u533A\u5373\u523B\u79CD\u690D",
+    "\uBA38\uB9AC\uD589 \uD074\uB9AD \uC2DC \uC815\uB82C": "\u70B9\u51FB\u8868\u5934\u6392\u5E8F",
+    "\uC870\uAC74\uBD80 \uC99D\uB840\uB9CC": "\u4EC5\u6709\u6761\u4EF6\u75C5\u4F8B",
+    "In-vitro \uC790\uB8CC\uB9CC": "\u4EC5 In-vitro \u8D44\u6599",
+    "'\uB2E8\uCD95' \uD45C\uD604\uC740 \uC870\uAC74\uBD80": "\u300C\u7F29\u77ED\u300D\u8868\u8FF0\u4E3A\u6709\u6761\u4EF6",
+    "\uADFC\uAC70 \uBD80\uC871\uC73C\uB85C \uC0AC\uC6A9 \uBCF4\uB958": "\u56E0\u4F9D\u636E\u4E0D\u8DB3\u6682\u7F13\u4F7F\u7528",
+    "\uD569\uBCD1\uC99D \uC704\uD5D8\uC744 \uACE0\uB824\uD55C \uC548\uC815\uC131": "\u8003\u8651\u5E76\u53D1\u75C7\u98CE\u9669\u7684\u7A33\u5B9A\u6027",
+    "\uC804 \uB2E8\uACC4 \uB300\uBE44": "\u5BF9\u6BD4\u4E0A\u4E00\u9636\u6BB5",
+    "\uC804 \uBCF4\uACE0": "\u4E0A\u6B21\u62A5\u544A",
+    "\uB97C \uC810\uC720": "\u5360\u6BD4",
+    "\uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0\uC758": "\u5360\u5168\u90E8\u53C2\u4F1A\u4EBA\u6570\u7684",
+    "\uC0C1\uC704 3\uAC1C \uC720\uD615\uC774 \uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0": "\u524D 3 \u4E2A\u7C7B\u578B\u5360\u5168\u90E8\u53C2\u4F1A\u4EBA\u6570",
+    "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uC6D4\uBCC4 \uC720\uD615\uBCC4 \uAC1C\uCD5C \uAC74\uC218(\uD68C) \xB7 \uB9C9\uB300 \uC704 \uC22B\uC790 = \uC6D4 \uD569\uACC4": "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D\u5404\u6708\u5404\u7C7B\u578B\u4E3E\u529E\u6B21\u6570\uFF08\u6B21\uFF09\xB7 \u67F1\u4E0A\u6570\u5B57 = \u5F53\u6708\u5408\u8BA1",
+    "\uB85C\uADF8\uC778": "\u767B\u5F55",
+    "\uCDE8\uC18C": "\u53D6\u6D88",
+    "\uBE44\uBC00\uBC88\uD638": "\u5BC6\u7801",
+    "\uC544\uC774\uB514": "\u8D26\u53F7",
+    "\uAC1C\uBC1C": "\u5F00\u53D1",
+    "\uD310\uB9E4": "\u9500\u552E",
+    "\uC911": "\u4E2D",
+    "\uB9E4\uCD9C\uD6A8\uC728": "\u9500\u552E\u6548\u7387",
+    "\uCD5C\uC885": "\u6700\u7EC8",
+    "\uC2B9\uC778": "\u6279\u51C6",
+    "\uB2E8\uACC4": "\u9636\u6BB5",
+    "\uC5F0\uAC04": "\u5E74\u5EA6",
+    "\uAE30\uBC18": "\u57FA\u4E8E",
+    "\uC5C6\uC774": "\u65E0\u9700",
+    "\uBC0F": "\u53CA",
+    "\uD655\uC815": "\u786E\u5B9A",
+    "\uC774\uBC88": "\u672C",
+    "\uC0AC\uB0B4": "\u516C\u53F8\u5185",
+    "\uC99D\uB840": "\u75C5\u4F8B",
+    "\uC8FC": "\u5468",
+    "\uBAA9\uD45C\uB300\uBE44": "\u5BF9\u6BD4\u76EE\u6807",
+    "\uAC1C\uCC99\uCC98": "\u5F00\u62D3\u5BA2\u6237",
+    "\uBBF8\uB3C4\uC785": "\u672A\u5BFC\u5165",
+    "\uC0C1\uD0DC": "\u72B6\u6001",
+    "\uD568\uAED8": "\u4E00\u540C",
+    "\uC4F0\uB294": "\u4F7F\u7528\u7684",
+    "\uC4F0\uC9C0": "\u4E0D\u4F7F\u7528",
+    "\uC54A\uB294": "\u4E0D",
+    "\uACF3\uC740": "\u7684\u662F",
+    "\uC774\uACE0": "\uFF0C",
+    /* v2 추가 어휘 — 낱말 단위 치환의 재료가 된다 */
+    "\uBCF8\uBD80\uBCC4": "\u5404\u672C\u90E8",
+    "\uAD8C\uC5ED\uBCC4": "\u5404\u5927\u533A",
+    "\uC9C0\uC5ED\uBCC4": "\u5404\u5730\u533A",
+    "\uC720\uD615\uBCC4": "\u5404\u7C7B\u578B",
+    "\uC808\uAC15": "\u6D59\u6C5F",
+    "\uD654\uB3D9": "\u534E\u4E1C",
+    "\uD654\uC911": "\u534E\u4E2D",
+    "\uD654\uC11C": "\u534E\u897F",
+    "\uD654\uB0A8": "\u534E\u5357",
+    "\uD654\uBD81": "\u534E\u5317",
+    "\uC804\uAD6D": "\u5168\u56FD",
+    "\uC808\uAC15\uBCF8\uBD80": "\u6D59\u6C5F\u672C\u90E8",
+    "\uD654\uB3D9\uBCF8\uBD80": "\u534E\u4E1C\u672C\u90E8",
+    "\uD654\uC911\uBCF8\uBD80": "\u534E\u4E2D\u672C\u90E8",
+    "\uD654\uC11C\uBCF8\uBD80": "\u534E\u897F\u672C\u90E8",
+    "\uD654\uB0A8\uBCF8\uBD80": "\u534E\u5357\u672C\u90E8",
+    "\uD654\uBD81\uBCF8\uBD80": "\u534E\u5317\u672C\u90E8",
+    "\uBD81\uACBD": "\u5317\u4EAC",
+    "\uB2DD\uBCF4": "\u5B81\u6CE2",
+    "\uC911\uAD6D": "\u4E2D\u56FD",
+    "\uC911\uAD6D\uC0AC\uC5C5": "\u4E2D\u56FD\u4E1A\u52A1",
+    "\uC601\uC5C5\uBCF8\uBD80": "\u8425\u4E1A\u672C\u90E8",
+    "\uC784\uC0C1\uD300": "\u4E34\u5E8A\u56E2\u961F",
+    "\uAE30\uC220\uD300": "\u6280\u672F\u56E2\u961F",
+    "\uC778\uD5C8\uAC00\uD300": "\u6CE8\u518C\u56E2\u961F",
+    "\uAD50\uC721\uD300": "\u57F9\u8BAD\u56E2\u961F",
+    "\uC784\uC0C1": "\u4E34\u5E8A",
+    "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0": "\u4E3B\u8981\u73B0\u51B5\u62A5\u544A",
+    "\uC138\uBBF8\uB098\uAD50\uC721\uC77C\uC815": "\u7814\u8BA8\u4F1A\u57F9\u8BAD\u65E5\u7A0B",
+    "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74": "\u7814\u8BA8\u4F1A\u5BA2\u6237\u5F00\u53D1",
+    "\uD310\uB9E4\uD604\uD669": "\u9500\u552E\u73B0\u51B5",
+    "\uC131\uACFC\uAD00\uB9AC": "\u6210\u679C\u7BA1\u7406",
+    "\uD504\uB85C\uC138\uC2A4": "\u6D41\u7A0B",
+    "\uC2DC\uC2A4\uD15C": "\u7CFB\u7EDF",
+    "\uC2DC\uC2A4\uD15C\uBCC4": "\u6309\u7CFB\u7EDF",
+    "\uB370\uC774\uD130": "\u6570\u636E",
+    "\uB85C\uADF8\uC544\uC6C3": "\u767B\u51FA",
+    "\uD074\uB77C\uC6B0\uB4DC": "\u4E91\u7AEF",
+    "\uC5F0\uB3D9": "\u8FDE\u63A5",
+    "\uC8FC\uC694\uB0B4\uC6A9": "\u4E3B\u8981\u5185\u5BB9",
+    "\uAC70\uB798\uCC98": "\u4EA4\u6613\u5BA2\u6237",
+    "\uD310\uB9E4\uC218\uB7C9": "\u9500\u552E\u91CF",
+    "\uD310\uB9E4\uAE08\uC561": "\u9500\u552E\u91D1\u989D",
+    "\uD310\uB9E4\uC2E4\uC801": "\u9500\u552E\u4E1A\u7EE9",
+    "\uD310\uB9E4\uC810\uC218": "\u9500\u552E\u70B9\u6570",
+    "\uD310\uB9E4\uBAA9\uD45C": "\u9500\u552E\u76EE\u6807",
+    "\uD310\uB9E4\uBE44\uC911": "\u9500\u552E\u5360\u6BD4",
+    "\uB300\uB9AC\uC0C1\uBC1C\uC8FC": "\u7ECF\u9500\u5546\u8BA2\u8D27",
+    "\uC18C\uC9C4\uC728": "\u6D88\u5316\u7387",
+    "\uBE44\uC911": "\u5360\u6BD4",
+    "\uC810\uC720\uC728": "\u5360\u6709\u7387",
+    "\uC810\uC720": "\u5360\u6709",
+    "\uCC28\uC9C0": "\u5360",
+    "\uBAA9\uD45C": "\u76EE\u6807",
+    "\uC5F0\uAC04\uBAA9\uD45C": "\u5E74\u5EA6\u76EE\u6807",
+    "\uB9E4\uCD9C\uBAA9\uD45C": "\u9500\u552E\u989D\u76EE\u6807",
+    "\uC2E4\uC801": "\u4E1A\u7EE9",
+    "\uB2EC\uC131\uB960": "\u8FBE\u6210\u7387",
+    "\uB300\uBE44": "\u5BF9\u6BD4",
+    "\uB204\uACC4": "\u7D2F\u8BA1",
+    "\uACBD\uACFC": "\u8FDB\u5EA6",
+    "\uACA9\uCC28": "\u5DEE\u8DDD",
+    "\uBBF8\uB2EC": "\u672A\u8FBE",
+    "\uC794\uC5EC": "\u5269\u4F59",
+    "\uC2E0\uADDC": "\u65B0\u589E",
+    "\uAE30\uC874": "\u73B0\u6709",
+    "\uAE30\uC874 \uC8FC\uB825": "\u73B0\u6709\u4E3B\u529B",
+    "\uC2E0\uADDC\uACE0\uAC1D": "\u65B0\u5BA2\u6237",
+    "\uC2E0\uADDC\uAC1C\uBC1C": "\u65B0\u5F00\u53D1",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D": "\u65B0\u5F00\u53D1\u5BA2\u6237",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uC728": "\u65B0\u5F00\u53D1\u7387",
+    "\uC7AC\uAD6C\uB9E4": "\u590D\u8D2D",
+    "\uC7AC\uAD6C\uB9E4\uC728": "\u590D\u8D2D\u7387",
+    "\uAD6C\uB9E4\uACE0\uAC1D": "\u8D2D\u4E70\u5BA2\u6237",
+    "\uAD6C\uB9E4\uB7C9": "\u8D2D\u4E70\u91CF",
+    "\uAD6C\uB9E4": "\u8D2D\u4E70",
+    "\uBBF8\uC18C\uC9C4": "\u672A\u6D88\u5316",
+    "\uC7AC\uACE0": "\u5E93\u5B58",
+    "\uBC1C\uC8FC": "\u8BA2\u8D27",
+    "\uACF5\uAE09": "\u4F9B\u8D27",
+    "\uD558\uBD80\uACE0\uAC1D": "\u4E0B\u6E38\u5BA2\u6237",
+    "\uBA54\uAC00\uC820": "\u7F8E\u683C\u771F",
+    "\uBA54\uAC00\uC820\uD310\uB9E4": "\u7F8E\u683C\u771F\u9500\u552E",
+    "\uB300\uB9AC\uC0C1": "\u7ECF\u9500\u5546",
+    "\uBBF8\uBC30\uC815": "\u672A\u5206\u914D",
+    "\uC9C1\uC601": "\u76F4\u8425",
+    "\uAC70\uB798\uD615\uD0DC": "\u4EA4\u6613\u5F62\u5F0F",
+    "\uAC70\uB798": "\u4EA4\u6613",
+    "\uD604\uD669": "\u73B0\u51B5",
+    "\uD604\uD669\uACFC": "\u73B0\u51B5\u4E0E",
+    "\uACB0\uACFC\uD604\uD669": "\u7ED3\u679C\u73B0\u51B5",
+    "\uC138\uBBF8\uB098": "\u7814\u8BA8\u4F1A",
+    "\uAD50\uC721": "\u57F9\u8BAD",
+    "\uAD50\uC721\uC758": "\u57F9\u8BAD\u7684",
+    "\uAD50\uC721\uC138\uBBF8\uB098": "\u57F9\u8BAD\u7814\u8BA8\u4F1A",
+    "\uAC15\uC0AC": "\u8BB2\u5E08",
+    "\uAC15\uC758": "\u8BB2\u8BFE",
+    "\uC0B4\uB871": "\u6C99\u9F99",
+    "\uC0AC\uB871": "\u6C99\u9F99",
+    "\uC0AC\uB871\uAD50\uC721": "\u6C99\u9F99\u57F9\u8BAD",
+    "\uC218\uC220\uC0B4\uB871": "\u624B\u672F\u6C99\u9F99",
+    "\uD559\uC220\uB300\uD68C": "\u5B66\u672F\u5927\u4F1A",
+    "\uD6C4\uC6D0": "\u8D5E\u52A9",
+    "\uCD08\uAE09\uBC18": "\u521D\u7EA7\u73ED",
+    "\uC911\uAE09\uBC18": "\u4E2D\u7EA7\u73ED",
+    "\uACE0\uAE09\uBC18": "\u9AD8\u7EA7\u73ED",
+    "\uAE30\uCD08\uBC18": "\u57FA\u7840\u73ED",
+    "\uAD6D\uC81C": "\u56FD\u9645",
+    "\uC628\uB77C\uC778": "\u7EBF\u4E0A",
+    "\uAD11\uACE0": "\u5E7F\u544A",
+    "\uAD11\uACE0\uBB38\uAD6C": "\u5E7F\u544A\u6587\u6848",
+    "\uCE74\uD0C8\uB85C\uADF8": "\u4EA7\u54C1\u76EE\u5F55",
+    "\uCC38\uC11D": "\u53C2\u4F1A",
+    "\uCC38\uC11D\uC790": "\u53C2\u4F1A\u8005",
+    "\uCC38\uC11D\uCE58\uACFC": "\u53C2\u4F1A\u7259\u79D1",
+    "\uCC38\uC11D\uC778\uC6D0": "\u53C2\u4F1A\u4EBA\u6570",
+    "\uCC38\uC5EC": "\u53C2\u4E0E",
+    "\uCC38\uC5EC\uCE58\uACFC": "\u53C2\u4E0E\u7259\u79D1",
+    "\uCC38\uAC00": "\u53C2\u52A0",
+    "\uBBF8\uCC38\uAC00": "\u672A\u53C2\u52A0",
+    "\uCD1D\uC778\uC6D0\uC218": "\u603B\u4EBA\u6570",
+    "\uAC1C\uCD5C": "\u4E3E\u529E",
+    "\uD69F\uC218": "\u6B21\u6570",
+    "\uCD5C\uB2E4": "\u6700\u591A",
+    "\uC8FC\uCC28\uBCC4": "\u6309\u5468",
+    "\uC6B4\uC601\uAD00\uB9AC\uBC18": "\u8FD0\u8425\u7BA1\u7406\u73ED",
+    "\uBB34\uCE58\uC545\uBC18": "\u65E0\u7259\u988C\u73ED",
+    "\uD2B8\uB808\uC774\uB2DD": "\u57F9\u8BAD",
+    "\uCEA0\uD504": "\u8BAD\u7EC3\u8425",
+    "\uC81C\uD488\uAD50\uC721": "\u4EA7\u54C1\u57F9\u8BAD",
+    "\uC601\uC5C5\uAD50\uC721": "\u8425\u4E1A\u57F9\u8BAD",
+    "\uC601\uC5C5\uAD50\uC721\uB9CC": "\u4EC5\u8425\u4E1A\u57F9\u8BAD",
+    "\uB0B4\uBD80": "\u5185\u90E8",
+    "\uBC29\uBB38\uC728": "\u62DC\u8BBF\u7387",
+    "\uBC29\uBB38\uC644\uB8CC": "\u5DF2\u62DC\u8BBF",
+    "\uBC29\uBB38\uC608\uC815": "\u8BA1\u5212\u62DC\u8BBF",
+    "\uBC29\uBB38\uC77C\uC790": "\u62DC\u8BBF\u65E5\u671F",
+    "\uC804\uD658\uC728": "\u8F6C\u5316\u7387",
+    "\uC804\uD658": "\u8F6C\u5316",
+    "\uC5F0\uACB0\uB960": "\u8FDE\u63A5\u7387",
+    "\uC5F0\uACB0": "\u8FDE\u63A5",
+    "\uC2E4\uC81C\uC9C4\uC785": "\u5B9E\u9645\u8FDB\u5165",
+    "\uC2E4\uC81C\uD310\uB9E4": "\u5B9E\u9645\u9500\u552E",
+    "\uC2E4\uD310\uB9E4": "\u5B9E\u9500",
+    "\uC9C4\uC785": "\u8FDB\u5165",
+    "\uC9C4\uC785\uC810": "\u8FDB\u5165\u70B9",
+    "\uC9C4\uB3C4": "\u8FDB\u5EA6",
+    "\uACE0\uAC1D\uC9C4\uB3C4\uC728": "\u5BA2\u6237\u8FDB\u5EA6\u7387",
+    "\uACE0\uAC1D\uBA85": "\u5BA2\u6237\u540D",
+    "\uBA85\uB2E8": "\u540D\u5355",
+    "\uBA85\uB2E8\uACFC": "\u540D\u5355\u4E0E",
+    "\uBA85\uB2E8\uC5D0": "\u540D\u5355\u4E2D",
+    "\uBCD1\uBAA9": "\u74F6\u9888",
+    "\uD37C\uB110": "\u6F0F\u6597",
+    "\uD1B5\uD569": "\u6574\u5408",
+    "\uBBF8\uBCF4\uACE0": "\u672A\u62A5\u544A",
+    "\uC2E4\uC801\uBCF4\uACE0": "\u4E1A\u7EE9\u62A5\u544A",
+    "\uBBF8\uC81C\uCD9C": "\u672A\u63D0\u4EA4",
+    "\uBBF8\uBD84\uB958": "\u672A\u5206\u7C7B",
+    "\uBBF8\uC120\uD0DD": "\u672A\u9009\u62E9",
+    "\uC5C6\uC74C": "\u65E0",
+    "\uB7F0\uCE6D": "\u4E0A\u5E02",
+    "\uACFC\uC81C": "\u8BFE\u9898",
+    "\uC900\uBE44\uACFC\uC81C": "\u51C6\u5907\u8BFE\u9898",
+    "\uB9C8\uAC10": "\u622A\u6B62",
+    "\uC2DC\uC7A5\uBD84\uC11D": "\u5E02\u573A\u5206\u6790",
+    "\uC804\uB7B5\uD655\uC815": "\u6218\u7565\u786E\u5B9A",
+    "\uCD08\uB3C4\uBB3C\uB7C9": "\u9996\u6279\u6570\u91CF",
+    "\uCD5C\uC885\uC810\uAC80": "\u6700\u7EC8\u68C0\u67E5",
+    "\uD589\uC0AC": "\u6D3B\u52A8",
+    "\uCD08\uCCAD": "\u9080\u8BF7",
+    "\uC785\uACE0": "\u5165\u5E93",
+    "\uD655\uC778\uC11C": "\u786E\u8BA4\u4E66",
+    "\uC2B9\uC778\uBB38\uC11C": "\u6279\u51C6\u6587\u4EF6",
+    "\uC2B9\uC778\uBB38\uAD6C": "\u6279\u51C6\u6587\u6848",
+    "\uC218\uB839": "\u6536\u53D6",
+    "\uD68C\uC758\uB85D": "\u4F1A\u8BAE\u8BB0\u5F55",
+    "\uB4F1\uB85D": "\u767B\u8BB0",
+    "\uC644\uB8CC": "\u5B8C\u6210",
+    "\uC815\uB82C": "\u6392\u5E8F",
+    "\uBA38\uB9AC\uD589": "\u8868\u5934",
+    "\uBCF4\uACE0\uCCB4\uACC4": "\u62A5\u544A\u4F53\u7CFB",
+    "\uD15C\uD50C\uB9BF": "\u6A21\u677F",
+    "\uC815\uC758": "\u5B9A\u4E49",
+    "\uC778\uD5C8\uAC00": "\u6CE8\u518C\u8BB8\u53EF",
+    "\uD488\uC9C8": "\u8D28\u91CF",
+    "\uAC80\uD1A0": "\u5BA1\u67E5",
+    "\uAC80\uD1A0\uC911": "\u5BA1\u67E5\u4E2D",
+    "\uC2EC\uC758": "\u5BA1\u8BAE",
+    "\uD1B5\uACFC": "\u901A\u8FC7",
+    "\uBD88\uAC00": "\u4E0D\u53EF",
+    "\uBCF4\uC644": "\u8865\u5145",
+    "\uADFC\uAC70": "\u4F9D\u636E",
+    "\uADFC\uAC70\uBB38\uD5CC": "\u4F9D\u636E\u6587\u732E",
+    "\uBB38\uD5CC": "\u6587\u732E",
+    "\uC99D\uB840": "\u75C5\u4F8B",
+    "\uBD80\uC871": "\u4E0D\u8DB3",
+    "\uC0AC\uC6A9": "\u4F7F\u7528",
+    "\uBCF4\uB958": "\u4FDD\u7559",
+    "\uC870\uAC74\uBD80": "\u6709\u6761\u4EF6",
+    "\uC790\uB8CC": "\u8D44\u6599",
+    "\uB3D9\uBB3C\uC2DC\uD5D8": "\u52A8\u7269\u8BD5\u9A8C",
+    "\uAE30\uACC4\uC2DC\uD5D8": "\u673A\u68B0\u8BD5\u9A8C",
+    "\uCE21\uC815": "\u6D4B\u91CF",
+    "\uC870\uC0AC\uAC12": "\u8C03\u67E5\u503C",
+    "\uC2E4\uC81C": "\u5B9E\u9645",
+    "\uC81C\uD488": "\u4EA7\u54C1",
+    "\uC81C\uD488\uBA85": "\u4EA7\u54C1\u540D",
+    "\uC81C\uD488\uC815\uBCF4": "\u4EA7\u54C1\u4FE1\u606F",
+    "\uCD94\uCD9C": "\u63D0\u53D6",
+    "\uC5C5\uB85C\uB4DC": "\u4E0A\u4F20",
+    "\uC791\uB3D9\uC6D0\uB9AC": "\u4F5C\u7528\u539F\u7406",
+    "\uC784\uC0C1\uAC00\uCE58": "\u4E34\u5E8A\u4EF7\u503C",
+    "\uC784\uD50C\uB780\uD2B8": "\u79CD\u690D\u4F53",
+    "\uC784\uD50C\uB780\uD2B8\uC758": "\u79CD\u690D\u4F53\u7684",
+    "\uD45C\uBA74": "\u8868\u9762",
+    "\uD45C\uBA74\uCC98\uB9AC": "\u8868\u9762\u5904\u7406",
+    "\uC0DD\uBB3C\uD559\uC801": "\u751F\u7269\u5B66",
+    "\uBC18\uC751": "\u53CD\u5E94",
+    "\uACE8\uC720\uCC29": "\u9AA8\u7ED3\u5408",
+    "\uACE8\uC811\uCD09\uB960": "\u9AA8\u63A5\u89E6\u7387",
+    "\uAE30\uC800\uACE8": "\u57FA\u9AA8",
+    "\uACE0\uC815": "\u56FA\u5B9A",
+    "\uACE0\uC815\uB825": "\u56FA\u5B9A\u529B",
+    "\uCD08\uAE30\uACE0\uC815\uB825": "\u521D\u671F\u56FA\u5B9A\u529B",
+    "\uCD08\uAE30": "\u521D\u671F",
+    "\uC548\uC815\uC131": "\u7A33\u5B9A\u6027",
+    "\uC548\uC815": "\u7A33\u5B9A",
+    "\uC989\uC2DC\uC2DD\uB9BD": "\u5373\u523B\u79CD\u690D",
+    "\uC989\uC2DC\uD558\uC911": "\u5373\u523B\u8D1F\u91CD",
+    "\uC2DD\uB9BD": "\u79CD\u690D",
+    "\uC804\uCE58\uBD80": "\u524D\u7259\u533A",
+    "\uAD6C\uCE58\uBD80": "\u540E\u7259\u533A",
+    "\uCE58\uC870\uC81C": "\u7259\u69FD\u5D74",
+    "\uC704\uCD95": "\u840E\u7F29",
+    "\uBB34\uCE58\uC545": "\u65E0\u7259\u988C",
+    "\uD611\uCE21\uACE8": "\u988A\u4FA7\u9AA8",
+    "\uBCF4\uC874": "\u4FDD\u5B58",
+    "\uC587\uC740": "\u8584",
+    "\uB0AE\uC740": "\u4F4E",
+    "\uACE8\uC9C8\uC5D0\uC11C": "\u9AA8\u8D28\u4E0B",
+    "\uACE8\uC704\uCD95": "\u9AA8\u840E\u7F29",
+    "\uACE8\uC99D\uB300": "\u9AA8\u589E\u91CF",
+    "\uC0C1\uC545\uB3D9": "\u4E0A\u988C\u7AA6",
+    "\uBD80\uB2F4": "\u8D1F\u62C5",
+    "\uACBD\uAC10": "\u51CF\u8F7B",
+    "\uAC10\uC18C": "\u51CF\u5C11",
+    "\uD5A5\uC0C1": "\u63D0\u5347",
+    "\uCD09\uC9C4": "\u4FC3\u8FDB",
+    "\uD655\uBCF4": "\u786E\u4FDD",
+    "\uC9C0\uC6D0": "\u652F\u6301",
+    "\uC801\uC6A9": "\u5E94\u7528",
+    "\uD65C\uC6A9": "\u8FD0\u7528",
+    "\uD569\uBCD1\uC99D": "\u5E76\u53D1\u75C7",
+    "\uC704\uD5D8": "\u98CE\u9669",
+    "\uAD00\uB9AC": "\u7BA1\u7406",
+    "\uC2EC\uBBF8": "\u7F8E\u5B66",
+    "\uC608\uCE21\uC131": "\u53EF\u9884\u6D4B\u6027",
+    "\uACB0\uACFC": "\u7ED3\u679C",
+    "\uCE58\uB8CC\uAE30\uAC04": "\u6CBB\u7597\u5468\u671F",
+    "\uB2E8\uCD95": "\u7F29\u77ED",
+    "\uAE30\uB300": "\u9884\u671F",
+    "\uC808\uAC10": "\u8282\u7EA6",
+    "\uC218\uC220": "\u624B\u672F",
+    "\uC2DC\uAC04": "\u65F6\u95F4",
+    "\uBE44\uC6A9": "\u8D39\u7528",
+    "\uC9D1\uD589\uBE44\uC6A9": "\u6267\u884C\u8D39\u7528",
+    "\uD65C\uB3D9\uBE44": "\u6D3B\u52A8\u8D39",
+    "\uAC1C\uBC1C\uB2F9": "\u6BCF\u5F00\u53D1",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9": "\u6BCF\u65B0\u5F00\u53D1",
+    "\uC7A5\uAE30": "\u957F\u671F",
+    "\uC720\uC9C0": "\u7EF4\u6301",
+    "\uC6A9\uC774": "\u5BB9\u6613",
+    "\uC2E4\uD328": "\u5931\u8D25",
+    "\uD601\uC2E0": "\u521B\u65B0",
+    "\uC138\uD3EC": "\u7EC6\u80DE",
+    "\uC5F0\uC870\uC9C1": "\u8F6F\u7EC4\u7EC7",
+    "\uBD80\uCC29": "\u9644\u7740",
+    "\uC751\uB825": "\u5E94\u529B",
+    "\uBD84\uC0B0": "\u5206\u6563",
+    "\uC720\uB3C4": "\u8BF1\u5BFC",
+    "\uC870\uAE30": "\u65E9\u671F",
+    "\uC601\uC5ED": "\u533A\u57DF",
+    "\uC911\uC99D": "\u91CD\u5EA6",
+    "\uC644\uC804": "\u5B8C\u5168",
+    "\uAE38\uC774": "\u957F\u5EA6",
+    "\uC9C1\uACBD": "\u76F4\u5F84",
+    "\uCC28\uBCC4\uD654": "\u5DEE\u5F02\u5316",
+    "\uACBD\uC7C1": "\u7ADE\u4E89",
+    "\uACBD\uC7C1\uC81C\uD488": "\u7ADE\u54C1",
+    "\uBE44\uAD50": "\u6BD4\u8F83",
+    "\uAC80\uC99D": "\u9A8C\u8BC1",
+    "\uC7AC\uAC80\uC99D": "\u518D\u9A8C\u8BC1",
+    "\uB3C4\uCD9C": "\u5BFC\u51FA",
+    "\uD30C\uC774\uD504\uB77C\uC778": "\u6D41\u7A0B",
+    "\uD6C4\uBCF4": "\u5019\u9009",
+    "\uB4F1\uAE09": "\u7B49\u7EA7",
+    "\uD559\uC220": "\u5B66\u672F",
+    "\uAD50\uC721\uC790\uB8CC": "\u57F9\u8BAD\u8D44\u6599",
+    "\uD574\uC11D": "\u89E3\u6790",
+    "\uB9E4\uD551": "\u5BF9\u5E94",
+    "\uC218\uC785\uC790": "\u8FDB\u53E3\u5546",
+    "\uC2DC\uC7A5": "\u5E02\u573A",
+    "\uC804\uCCB4\uC2DC\uC7A5": "\u6574\u4F53\u5E02\u573A",
+    "\uBAA9\uD45C\uC2DC\uC7A5": "\u76EE\u6807\u5E02\u573A",
+    "\uC2DC\uC7A5\uB9E4\uB825\uB3C4": "\u5E02\u573A\u5438\u5F15\u529B",
+    "\uC811\uADFC\uC131": "\u53EF\u63A5\u8FD1\u6027",
+    "\uC2A4\uCF54\uC5B4\uB9C1": "\u8BC4\u5206",
+    "\uC138\uADF8\uBA3C\uD2B8": "\u7EC6\u5206\u5E02\u573A",
+    "\uD504\uB9AC\uBBF8\uC5C4": "\u9AD8\u7AEF",
+    "\uC2DC\uC7A5\uADDC\uBAA8": "\u5E02\u573A\u89C4\u6A21",
+    "\uCD94\uC774": "\u8D8B\u52BF",
+    "\uB9E4\uCD9C": "\u9500\u552E\u989D",
+    "\uC2E0\uC7A5": "\u589E\u957F",
+    "\uC804\uB7B5": "\u6218\u7565",
+    "\uC911\uC7A5\uAE30": "\u4E2D\u957F\u671F",
+    "\uAC00\uACA9": "\u4EF7\u683C",
+    "\uAC00\uACA9\uB300": "\u4EF7\u683C\u5E26",
+    "\uAD6C\uC870": "\u7ED3\u6784",
+    "\uBD84\uC11D": "\u5206\u6790",
+    "\uC608\uC0C1": "\u9884\u8BA1",
+    "\uD604\uC7AC": "\u5F53\u524D",
+    "\uD398\uC774\uC2A4": "\u901F\u5EA6",
+    "\uC6D4\uD3C9\uADE0": "\u6708\u5747",
+    "\uB0A8\uC740": "\u5269\u4F59",
+    "\uB2EC": "\u4E2A\u6708",
+    "\uCD1D": "\u603B",
+    "\uCD1D\uACC4": "\u603B\u8BA1",
+    "\uC9D1\uACC4": "\u6C47\u603B",
+    "\uD569\uACC4": "\u5408\u8BA1",
+    "\uC6D0\uBCF8": "\u539F\u59CB",
+    "\uC2DC\uD2B8": "\u8868",
+    "\uC5D1\uC140": "\u8868\u683C",
+    "\uAE30\uC900": "\u57FA\u51C6",
+    "\uAE30\uC900\uC6D4": "\u57FA\u51C6\u6708",
+    "\uD574\uB2F9\uC6D4": "\u5F53\u6708",
+    "\uC9C1\uC804": "\u4E0A\u671F",
+    "\uC8FC\uAC04\uBCF4\uACE0": "\u5468\u62A5",
+    "\uBCF4\uACE0": "\u62A5\u544A",
+    "\uC694\uC57D": "\u6458\u8981",
+    "\uC0C1\uC138": "\u8BE6\u60C5",
+    "\uC120\uD0DD": "\u9009\u62E9",
+    "\uB0A0\uC9DC": "\u65E5\u671F",
+    "\uC77C\uC790": "\u65E5\u671F",
+    "\uC77C\uC815": "\u65E5\u7A0B",
+    "\uB2EC\uB825": "\u65E5\u5386",
+    "\uC8FC\uC81C": "\u4E3B\u9898",
+    "\uB3C4\uC2DC": "\u57CE\u5E02",
+    "\uC774\uB984": "\u59D3\u540D",
+    "\uD56D\uBAA9": "\u9879\u76EE",
+    "\uC9C0\uD45C": "\u6307\u6807",
+    "\uC720\uD615": "\u7C7B\u578B",
+    "\uC815\uBCF4": "\u4FE1\u606F",
+    "\uACE0\uAC1D": "\u5BA2\u6237",
+    "\uCE58\uACFC": "\u7259\u79D1",
+    "\uCE58\uACFC\uC218": "\u7259\u79D1\u6570",
+    "\uC21C\uC704": "\u6392\u540D",
+    "\uC0C1\uC704": "\u524D",
+    "\uD558\uB2E8": "\u4E0B\u65B9",
+    "\uBAA8\uB450": "\u5168\u90E8",
+    "\uD3BC\uCE58\uAE30": "\u5C55\u5F00",
+    "\uD074\uB9AD": "\u70B9\u51FB",
+    "\uBCF4\uAE30": "\u67E5\u770B",
+    "\uACC4\uC18D": "\u7EE7\u7EED",
+    "\uD544\uC694": "\u9700\u8981",
+    "\uAC00\uB2A5": "\u53EF\u80FD",
+    "\uC5EC\uBD80": "\u4E0E\u5426",
+    "\uC870\uAC74": "\u6761\u4EF6",
+    "\uAE30\uC7AC": "\u586B\u5199",
+    "\uAE08\uC9C0": "\u7981\u6B62",
+    "\uB300\uAE30": "\u5F85\u5904\u7406",
+    "\uB3C4\uB2EC": "\u5230\u8FBE",
+    "\uC810\uAC80": "\u68C0\u67E5",
+    "\uAC1C\uC120": "\u6539\u5584",
+    "\uCD94\uC801": "\u8DDF\u8E2A",
+    "\uD655\uC778": "\u786E\u8BA4",
+    "\uC0C1\uB2F4": "\u54A8\u8BE2",
+    "\uC6B4\uC601": "\u8FD0\u8425",
+    "\uC131": "\u6210",
+    "\uC131\uACFC": "\u6210\u679C",
+    "\uD2B9\uD654": "\u7279\u5316",
+    "\uB2E8\uB3C5": "\u5355\u72EC",
+    "\uACF5\uB3D9": "\u5171\u540C",
+    "\uC8FC\uB825": "\u4E3B\u529B",
+    "\uC194\uB8E8\uC158\uACFC": "\u89E3\u51B3\u65B9\u6848\u4E0E",
+    "\uD3B8": "\u7BC7",
+    "\uC0AC": "\u5BB6",
+    "\uC6D0": "\u5143",
+    "\uC5B5": "\u4EBF",
+    "\uC5B5\uC6D0": "\u4EBF\u97E9\u5143",
+    "\uCC9C": "\u5343",
+    "\uCC9C\uAC1C": "\u5343\u4E2A",
+    "\uD654": "\u5468\u4E8C",
+    "\uC218": "\u5468\u4E09",
+    "\uBAA9": "\u5468\u56DB",
+    "\uAE08": "\u5468\u4E94",
+    "\uD1A0": "\u5468\u516D",
     /* 셸 · 메뉴 */
     "MGG PM": "MGG PM",
     "\uD1B5\uD569 \uB300\uC2DC\uBCF4\uB4DC": "\u7EFC\u5408\u4EEA\u8868\u677F",
@@ -2793,6 +3259,469 @@ ARI.pages = ARI.pages || {};
     "\uB204\uC801 \uC9C4\uC785": "\u7D2F\u8BA1\u8FDB\u5165"
   };
   const EN = {
+    "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "Client sales",
+    "\uB370\uC774\uD130 \uC5F0\uB3D9 \uC900\uBE44\uC911": "Data sync pending",
+    "\uC8FC\uB825 \uC81C\uD488 \xB7 2026\uB144 2\uB144\uCC28": "Core product \xB7 2026 yr 2",
+    "\uC900\uBE44\uC911": "coming soon",
+    "\uB2EC\uB825\uC5D0\uC11C \uB0A0\uC9DC \uB610\uB294 \uC77C\uC815\uC744 \uD074\uB9AD\uD558\uBA74": "Click a date or event in the calendar",
+    "\uD574\uB2F9 \uD56D\uBAA9\uC758 \uC0C1\uC138\uAC00 \uC774\uACF3\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.": "and its details appear here.",
+    "\uC6D4\uBCC4 \uAC1C\uCD5C \uC77C\uC815\uACFC \uC2E4\uC801 \uBCF4\uACE0 \uC5EC\uBD80\uB97C \uB2EC\uB825\uC73C\uB85C \uD655\uC778": "Monthly schedule and reporting status on a calendar",
+    "\uC9D1\uC911 \uC8FC\uCC28\uB294 \uB0A8\uC0C9 \xB7 \uC811\uC810\uC774 \uC5C6\uB294 \uACF5\uBC31 \uC8FC\uCC28\uB294 \uC8FC\uD669 \uBC30\uACBD\uC785\uB2C8\uB2E4. \uB2EC\uB825\uC758 \uC6D4 \uC774\uB3D9\uC744 \uB530\uB77C \uD568\uAED8 \uBC14\uB01D\uB2C8\uB2E4.": "Dense weeks are navy; blank weeks with no touchpoints are orange. Follows the calendar month.",
+    "\uC138\uBBF8\uB098 \uCC38\uC11D\uC790 \uBA85\uB2E8 \uAE30\uC900 \xB7 \uCC38\uC11D \u2192 \uBC29\uBB38 \u2192 \uC9C4\uB3C4 \u2192 \uC2E4\uC81C \uD310\uB9E4 \uC804\uD658 \uCD94\uC801": "By attendee list \u2014 tracking attend \u2192 visit \u2192 progress \u2192 actual sales",
+    "\uC6D4\uC5D0 \uB4F1\uB85D\uB41C \uC138\uBBF8\uB098\uAC00 \uC5C6\uC5B4 \uC804\uCCB4 \uB204\uC801\uC73C\uB85C \uBCF4\uC5EC\uB4DC\uB9BD\uB2C8\uB2E4. \uD574\uB2F9 \uC6D4 \uBA85\uB2E8\uC744 \uC62C\uB9AC\uBA74 \uC790\uB3D9\uC73C\uB85C \uC6D4 \uB204\uC801\uC73C\uB85C \uBC14\uB01D\uB2C8\uB2E4.": "No seminars registered this month, so the full cumulative view is shown. Upload the month's list and it switches automatically.",
+    "\u300CARI\u5BA2\u6237\u300D\xB7\u300CARI\u660E\u7EC6\u300D \uC8FC\uAC04\uBCF4\uACE0\uC758 \uBAA9\uD45C \u2192 \uC9C4\uC785 \u2192 \uD310\uB9E4 \u2192 \uC7AC\uAD6C\uB9E4 \uC2E4\uC801": "Target \u2192 entry \u2192 sales \u2192 repurchase from the weekly report",
+    "\uC911\uAD6D \uC784\uD50C\uB780\uD2B8 \uC2DC\uC7A5 \xB7 \uACBD\uC7C1 M/S \xB7 \uAC00\uACA9 \uD3EC\uC9C0\uC154\uB2DD \xB7 \uC9C0\uC5ED\uBCC4 \uBAA9\uD45C (\uCD9C\uCC98: BD \uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0\uC11C 250115 v2.0)": "China implant market \xB7 competitor M/S \xB7 price positioning \xB7 regional targets (source: BD launch strategy report 250115 v2.0)",
+    "USP \uB3C4\uCD9C\xB7\uAC80\uC99D\uBD80\uD130 \uAC00\uACA9\xB7\uC720\uD1B5\xB7\uD504\uB85C\uBAA8\uC158 \uC2E4\uD589\uAE4C\uC9C0 \u2014 Product / Price / Place / Promotion": "From USP derivation and validation to price, place and promotion \u2014 Product / Price / Place / Promotion",
+    "\uC784\uC0C1 \uC870\uAC74\xB7\uC778\uD5C8\uAC00 \uAC80\uD1A0 \uD544\uC694 \uD45C\uD604 \u2014 \uC790\uB3D9 \uD655\uC815 \uAE08\uC9C0": "Wording needing clinical/RA review \u2014 no auto-approval",
+    "\uC704\uCD95\uB41C \uC804\uCE58\uBD80 \uC587\uC740 Ridge\uC5D0\uC11C \uAE30\uC800\uACE8 \uACE0\uC815\uB825 \uD65C\uC6A9": "Uses basal-bone stability on thin anterior ridges",
+    "\uC704\uCD95\uB41C \uC804\uCE58\uBD80\uC640 \uC587\uC740 Ridge\uC5D0\uC11C \uAE30\uC800\uACE8 \uACE0\uC815\uB825\uC744 \uD65C\uC6A9\uD558\uC5EC \uCD94\uAC00\uC801\uC778 GBR \uBD80\uB2F4\uC744 \uC904\uC774\uACE0 \uC548\uC815\uC801\uC778 \uC2DD\uB9BD\uC744 \uC9C0\uC6D0\uD558\uB294 \uC804\uCE58\uBD80 \uD2B9\uD654 \uC784\uD50C\uB780\uD2B8": "An anterior-specific implant that uses basal-bone stability on atrophic anterior ridges, reducing GBR burden and supporting stable placement.",
+    "\uBC30\uACBD \uAC15\uC870\uB41C \uD589\uC740 \u2018GBR \uC5C6\uC774\u2019, \u2018\uC989\uC2DC\uD558\uC911 \uAC00\uB2A5\u2019, \u2018\uD569\uBCD1\uC99D \uAC10\uC18C\u2019 \uD45C\uD604\uC744 \uD3EC\uD568\uD569\uB2C8\uB2E4 \u2014 \uC784\uC0C1 \uC870\uAC74\xB7\uC778\uD5C8\uAC00 \uAC80\uD1A0 \uC5C6\uC774 \uC790\uB3D9\uC73C\uB85C \uD655\uC815 \uBB38\uAD6C\uB85C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.": "Highlighted rows contain claims like 'without GBR', 'immediate loading', 'fewer complications' \u2014 they cannot be used as approved copy without clinical and RA review.",
+    "2\uCC28 \uAE30\uB2A5: \uCE74\uD0C8\uB85C\uADF8 \uD30C\uC2F1\uC740 \uD5A5\uD6C4 \uC5F0\uB3D9 \uC608\uC815\uC785\uB2C8\uB2E4. \uD604\uC7AC\uB294 \uD30C\uC77C \uC120\uD0DD\uB9CC \uAC00\uB2A5\uD558\uBA70 \uB0B4\uC6A9\uC744 \uC77D\uAC70\uB098 \uBD84\uC11D\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.": "Phase 2: catalog parsing will be connected later. For now you can only pick a file; nothing is read or analyzed.",
+    "X-PEED Surface\uB85C \uC870\uAE30 \uACE8\uC720\uCC29 \uCD09\uC9C4": "X-PEED Surface promotes early osseointegration",
+    "Cell-like Groove\uAC00 \uC138\uD3EC \uBD80\uCC29 \uC720\uB3C4": "Cell-like Groove induces cell attachment",
+    "Connection \uD558\uB2E8 Groove\uB85C \uC751\uB825 \uBD84\uC0B0": "Groove below the connection distributes stress",
+    "0.2\u03BCm Machined Surface\uB85C \uC5F0\uC870\uC9C1 \uC548\uC815": "0.2\u03BCm machined surface stabilizes soft tissue",
+    "\uC804\xB7\uAD6C\uCE58\uBD80 \uC989\uC2DC\uC2DD\uB9BD": "Anterior & posterior immediate placement",
+    "\uBA38\uB9AC\uD589 \uD074\uB9AD \uC2DC \uC815\uB82C": "Click header to sort",
+    "\uC870\uAC74\uBD80 \uC99D\uB840\uB9CC": "Conditional cases only",
+    "In-vitro \uC790\uB8CC\uB9CC": "In-vitro data only",
+    "'\uB2E8\uCD95' \uD45C\uD604\uC740 \uC870\uAC74\uBD80": "'Shorten' claim is conditional",
+    "\uADFC\uAC70 \uBD80\uC871\uC73C\uB85C \uC0AC\uC6A9 \uBCF4\uB958": "On hold \u2014 insufficient evidence",
+    "\uD569\uBCD1\uC99D \uC704\uD5D8\uC744 \uACE0\uB824\uD55C \uC548\uC815\uC131": "Stability accounting for complication risk",
+    "\uC804 \uB2E8\uACC4 \uB300\uBE44": "vs previous stage",
+    "\uC804 \uBCF4\uACE0": "Prev. report",
+    "\uB97C \uC810\uC720": "share",
+    "\uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0\uC758": "of total attendance",
+    "\uC0C1\uC704 3\uAC1C \uC720\uD615\uC774 \uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0": "Top 3 types of total attendance",
+    "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uC6D4\uBCC4 \uC720\uD615\uBCC4 \uAC1C\uCD5C \uAC74\uC218(\uD68C) \xB7 \uB9C9\uB300 \uC704 \uC22B\uC790 = \uC6D4 \uD569\uACC4": "Sessions by month and type \xB7 number above bar = monthly total",
+    "\uB85C\uADF8\uC778": "Log in",
+    "\uCDE8\uC18C": "Cancel",
+    "\uBE44\uBC00\uBC88\uD638": "Password",
+    "\uC544\uC774\uB514": "ID",
+    "\uAC1C\uBC1C": "Dev",
+    "\uD310\uB9E4": "Sales",
+    "\uC911": "of",
+    "\uB9E4\uCD9C\uD6A8\uC728": "Rev. efficiency",
+    "\uCD5C\uC885": "Final",
+    "\uC2B9\uC778": "Approval",
+    "\uB2E8\uACC4": "Stage",
+    "\uC5F0\uAC04": "Annual",
+    "\uAE30\uBC18": "based on",
+    "\uC5C6\uC774": "without",
+    "\uBC0F": "and",
+    "\uD655\uC815": "Confirmed",
+    "\uC774\uBC88": "This",
+    "\uC0AC\uB0B4": "In-house",
+    "\uC99D\uB840": "Cases",
+    "\uC8FC": "W",
+    "\uBAA9\uD45C\uB300\uBE44": "vs target",
+    "\uAC1C\uCC99\uCC98": "New accounts",
+    "\uBBF8\uB3C4\uC785": "Not adopted",
+    "\uC0C1\uD0DC": "Status",
+    "\uD568\uAED8": "together",
+    "\uC4F0\uB294": "using",
+    "\uC4F0\uC9C0": "not using",
+    "\uC54A\uB294": "not",
+    "\uACF3\uC740": "are",
+    "\uC774\uACE0": "and",
+    /* v2 추가 어휘 */
+    "\uBCF8\uBD80\uBCC4": "by HQ",
+    "\uAD8C\uC5ED\uBCC4": "by area",
+    "\uC9C0\uC5ED\uBCC4": "by region",
+    "\uC720\uD615\uBCC4": "by type",
+    "\uC808\uAC15": "Zhejiang",
+    "\uD654\uB3D9": "East",
+    "\uD654\uC911": "Central",
+    "\uD654\uC11C": "West",
+    "\uD654\uB0A8": "South",
+    "\uD654\uBD81": "North",
+    "\uC804\uAD6D": "Nationwide",
+    "\uC808\uAC15\uBCF8\uBD80": "Zhejiang HQ",
+    "\uD654\uB3D9\uBCF8\uBD80": "East HQ",
+    "\uD654\uC911\uBCF8\uBD80": "Central HQ",
+    "\uD654\uC11C\uBCF8\uBD80": "West HQ",
+    "\uD654\uB0A8\uBCF8\uBD80": "South HQ",
+    "\uD654\uBD81\uBCF8\uBD80": "North HQ",
+    "\uBD81\uACBD": "Beijing",
+    "\uB2DD\uBCF4": "Ningbo",
+    "\uC911\uAD6D": "China",
+    "\uC911\uAD6D\uC0AC\uC5C5": "China biz",
+    "\uC601\uC5C5\uBCF8\uBD80": "Sales HQ",
+    "\uC784\uC0C1\uD300": "Clinical",
+    "\uAE30\uC220\uD300": "Tech",
+    "\uC778\uD5C8\uAC00\uD300": "RA",
+    "\uAD50\uC721\uD300": "Training",
+    "\uC784\uC0C1": "Clinical",
+    "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0": "Status Report",
+    "\uC138\uBBF8\uB098\uAD50\uC721\uC77C\uC815": "Seminar Calendar",
+    "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74": "Seminar Leads",
+    "\uD310\uB9E4\uD604\uD669": "Sales",
+    "\uC131\uACFC\uAD00\uB9AC": "Performance",
+    "\uD504\uB85C\uC138\uC2A4": "Process",
+    "\uC2DC\uC2A4\uD15C": "System",
+    "\uC2DC\uC2A4\uD15C\uBCC4": "by system",
+    "\uB370\uC774\uD130": "Data",
+    "\uB85C\uADF8\uC544\uC6C3": "Log out",
+    "\uD074\uB77C\uC6B0\uB4DC": "Cloud",
+    "\uC5F0\uB3D9": "Sync",
+    "\uC8FC\uC694\uB0B4\uC6A9": "Summary",
+    "\uAC70\uB798\uCC98": "Accounts",
+    "\uD310\uB9E4\uC218\uB7C9": "Volume",
+    "\uD310\uB9E4\uAE08\uC561": "Revenue",
+    "\uD310\uB9E4\uC2E4\uC801": "Sales",
+    "\uD310\uB9E4\uC810\uC218": "Points",
+    "\uD310\uB9E4\uBAA9\uD45C": "Sales target",
+    "\uD310\uB9E4\uBE44\uC911": "Share",
+    "\uB300\uB9AC\uC0C1\uBC1C\uC8FC": "Dealer orders",
+    "\uC18C\uC9C4\uC728": "Burn rate",
+    "\uBE44\uC911": "Share",
+    "\uC810\uC720\uC728": "Share",
+    "\uC810\uC720": "share",
+    "\uCC28\uC9C0": "of",
+    "\uBAA9\uD45C": "Target",
+    "\uC5F0\uAC04\uBAA9\uD45C": "Annual target",
+    "\uB9E4\uCD9C\uBAA9\uD45C": "Revenue target",
+    "\uC2E4\uC801": "Actual",
+    "\uB2EC\uC131\uB960": "Attainment",
+    "\uB300\uBE44": "vs",
+    "\uB204\uACC4": "Cumulative",
+    "\uACBD\uACFC": "Progress",
+    "\uACA9\uCC28": "Gap",
+    "\uBBF8\uB2EC": "Below",
+    "\uC794\uC5EC": "Remaining",
+    "\uC2E0\uADDC": "New",
+    "\uAE30\uC874": "Existing",
+    "\uAE30\uC874 \uC8FC\uB825": "Core product",
+    "\uC2E0\uADDC\uACE0\uAC1D": "New clients",
+    "\uC2E0\uADDC\uAC1C\uBC1C": "New dev",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D": "New dev clients",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uC728": "New dev rate",
+    "\uC7AC\uAD6C\uB9E4": "Repurchase",
+    "\uC7AC\uAD6C\uB9E4\uC728": "Repurchase rate",
+    "\uAD6C\uB9E4\uACE0\uAC1D": "Buyers",
+    "\uAD6C\uB9E4\uB7C9": "Qty",
+    "\uAD6C\uB9E4": "Purchase",
+    "\uBBF8\uC18C\uC9C4": "Unsold",
+    "\uC7AC\uACE0": "Stock",
+    "\uBC1C\uC8FC": "Order",
+    "\uACF5\uAE09": "Supply",
+    "\uD558\uBD80\uACE0\uAC1D": "Sub-clients",
+    "\uBA54\uAC00\uC820": "MegaGen",
+    "\uBA54\uAC00\uC820\uD310\uB9E4": "MegaGen sales",
+    "\uB300\uB9AC\uC0C1": "Dealer",
+    "\uBBF8\uBC30\uC815": "Unassigned",
+    "\uC9C1\uC601": "Direct",
+    "\uAC70\uB798\uD615\uD0DC": "Deal type",
+    "\uAC70\uB798": "Deal",
+    "\uD604\uD669": "Status",
+    "\uD604\uD669\uACFC": "status and",
+    "\uACB0\uACFC\uD604\uD669": "Results",
+    "\uC138\uBBF8\uB098": "Seminar",
+    "\uAD50\uC721": "Training",
+    "\uAD50\uC721\uC758": "training",
+    "\uAD50\uC721\uC138\uBBF8\uB098": "Training",
+    "\uAC15\uC0AC": "Lecturer",
+    "\uAC15\uC758": "Lecture",
+    "\uC0B4\uB871": "Salon",
+    "\uC0AC\uB871": "Salon",
+    "\uC0AC\uB871\uAD50\uC721": "Salon",
+    "\uC218\uC220\uC0B4\uB871": "Surgery salon",
+    "\uD559\uC220\uB300\uD68C": "Congress",
+    "\uD6C4\uC6D0": "Sponsor",
+    "\uCD08\uAE09\uBC18": "Basic",
+    "\uC911\uAE09\uBC18": "Intermediate",
+    "\uACE0\uAE09\uBC18": "Advanced",
+    "\uAE30\uCD08\uBC18": "Intro",
+    "\uAD6D\uC81C": "Intl",
+    "\uC628\uB77C\uC778": "Online",
+    "\uAD11\uACE0": "Ad",
+    "\uAD11\uACE0\uBB38\uAD6C": "Ad copy",
+    "\uCE74\uD0C8\uB85C\uADF8": "Catalog",
+    "\uCC38\uC11D": "Attend",
+    "\uCC38\uC11D\uC790": "Attendees",
+    "\uCC38\uC11D\uCE58\uACFC": "Attending clinics",
+    "\uCC38\uC11D\uC778\uC6D0": "Attendance",
+    "\uCC38\uC5EC": "Participation",
+    "\uCC38\uC5EC\uCE58\uACFC": "Clinics",
+    "\uCC38\uAC00": "Join",
+    "\uBBF8\uCC38\uAC00": "No-show",
+    "\uCD1D\uC778\uC6D0\uC218": "Total",
+    "\uAC1C\uCD5C": "Held",
+    "\uD69F\uC218": "Count",
+    "\uCD5C\uB2E4": "Peak",
+    "\uC8FC\uCC28\uBCC4": "Weekly",
+    "\uC6B4\uC601\uAD00\uB9AC\uBC18": "Ops class",
+    "\uBB34\uCE58\uC545\uBC18": "Edentulous",
+    "\uD2B8\uB808\uC774\uB2DD": "Training",
+    "\uCEA0\uD504": "Camp",
+    "\uC81C\uD488\uAD50\uC721": "Product training",
+    "\uC601\uC5C5\uAD50\uC721": "Sales training",
+    "\uC601\uC5C5\uAD50\uC721\uB9CC": "Sales-only",
+    "\uB0B4\uBD80": "Internal",
+    "\uBC29\uBB38\uC728": "Visit rate",
+    "\uBC29\uBB38\uC644\uB8CC": "Visited",
+    "\uBC29\uBB38\uC608\uC815": "Planned",
+    "\uBC29\uBB38\uC77C\uC790": "Visit date",
+    "\uC804\uD658\uC728": "Conversion",
+    "\uC804\uD658": "Conversion",
+    "\uC5F0\uACB0\uB960": "Link rate",
+    "\uC5F0\uACB0": "Link",
+    "\uC2E4\uC81C\uC9C4\uC785": "Actual entry",
+    "\uC2E4\uC81C\uD310\uB9E4": "Actual sales",
+    "\uC2E4\uD310\uB9E4": "Actual",
+    "\uC9C4\uC785": "Entry",
+    "\uC9C4\uC785\uC810": "Entry pts",
+    "\uC9C4\uB3C4": "Progress",
+    "\uACE0\uAC1D\uC9C4\uB3C4\uC728": "Progress",
+    "\uACE0\uAC1D\uBA85": "Client",
+    "\uBA85\uB2E8": "List",
+    "\uBA85\uB2E8\uACFC": "list and",
+    "\uBA85\uB2E8\uC5D0": "in list",
+    "\uBCD1\uBAA9": "Bottleneck",
+    "\uD37C\uB110": "Funnel",
+    "\uD1B5\uD569": "Unified",
+    "\uBBF8\uBCF4\uACE0": "Unreported",
+    "\uC2E4\uC801\uBCF4\uACE0": "Report",
+    "\uBBF8\uC81C\uCD9C": "Not submitted",
+    "\uBBF8\uBD84\uB958": "Uncategorized",
+    "\uBBF8\uC120\uD0DD": "None selected",
+    "\uC5C6\uC74C": "None",
+    "\uB7F0\uCE6D": "Launch",
+    "\uACFC\uC81C": "Task",
+    "\uC900\uBE44\uACFC\uC81C": "Prep task",
+    "\uB9C8\uAC10": "Due",
+    "\uC2DC\uC7A5\uBD84\uC11D": "Market",
+    "\uC804\uB7B5\uD655\uC815": "Strategy",
+    "\uCD08\uB3C4\uBB3C\uB7C9": "Initial qty",
+    "\uCD5C\uC885\uC810\uAC80": "Final check",
+    "\uD589\uC0AC": "Event",
+    "\uCD08\uCCAD": "Invite",
+    "\uC785\uACE0": "Receipt",
+    "\uD655\uC778\uC11C": "Confirmation",
+    "\uC2B9\uC778\uBB38\uC11C": "Approval doc",
+    "\uC2B9\uC778\uBB38\uAD6C": "Approved copy",
+    "\uC218\uB839": "Received",
+    "\uD68C\uC758\uB85D": "Minutes",
+    "\uB4F1\uB85D": "Registered",
+    "\uC644\uB8CC": "Done",
+    "\uC815\uB82C": "Sort",
+    "\uBA38\uB9AC\uD589": "Header",
+    "\uBCF4\uACE0\uCCB4\uACC4": "Reporting",
+    "\uD15C\uD50C\uB9BF": "Template",
+    "\uC815\uC758": "Definition",
+    "\uC778\uD5C8\uAC00": "RA",
+    "\uD488\uC9C8": "Quality",
+    "\uAC80\uD1A0": "Review",
+    "\uAC80\uD1A0\uC911": "In review",
+    "\uC2EC\uC758": "Review",
+    "\uD1B5\uACFC": "Passed",
+    "\uBD88\uAC00": "Rejected",
+    "\uBCF4\uC644": "Supplement",
+    "\uADFC\uAC70": "Evidence",
+    "\uADFC\uAC70\uBB38\uD5CC": "Literature",
+    "\uBB38\uD5CC": "Papers",
+    "\uC99D\uB840": "Cases",
+    "\uBD80\uC871": "Insufficient",
+    "\uC0AC\uC6A9": "Use",
+    "\uBCF4\uB958": "On hold",
+    "\uC870\uAC74\uBD80": "Conditional",
+    "\uC790\uB8CC": "Data",
+    "\uB3D9\uBB3C\uC2DC\uD5D8": "Animal study",
+    "\uAE30\uACC4\uC2DC\uD5D8": "Bench test",
+    "\uCE21\uC815": "Measure",
+    "\uC870\uC0AC\uAC12": "Survey value",
+    "\uC2E4\uC81C": "Actual",
+    "\uC81C\uD488": "Product",
+    "\uC81C\uD488\uBA85": "Product",
+    "\uC81C\uD488\uC815\uBCF4": "Product info",
+    "\uCD94\uCD9C": "Extract",
+    "\uC5C5\uB85C\uB4DC": "Upload",
+    "\uC791\uB3D9\uC6D0\uB9AC": "Mechanism",
+    "\uC784\uC0C1\uAC00\uCE58": "Clinical value",
+    "\uC784\uD50C\uB780\uD2B8": "Implant",
+    "\uC784\uD50C\uB780\uD2B8\uC758": "implant",
+    "\uD45C\uBA74": "Surface",
+    "\uD45C\uBA74\uCC98\uB9AC": "Surface",
+    "\uC0DD\uBB3C\uD559\uC801": "Biological",
+    "\uBC18\uC751": "Response",
+    "\uACE8\uC720\uCC29": "Osseointegration",
+    "\uACE8\uC811\uCD09\uB960": "BIC",
+    "\uAE30\uC800\uACE8": "Basal bone",
+    "\uACE0\uC815": "Fixation",
+    "\uACE0\uC815\uB825": "Stability",
+    "\uCD08\uAE30\uACE0\uC815\uB825": "Primary stability",
+    "\uCD08\uAE30": "Initial",
+    "\uC548\uC815\uC131": "Stability",
+    "\uC548\uC815": "Stable",
+    "\uC989\uC2DC\uC2DD\uB9BD": "Immediate placement",
+    "\uC989\uC2DC\uD558\uC911": "Immediate loading",
+    "\uC2DD\uB9BD": "Placement",
+    "\uC804\uCE58\uBD80": "Anterior",
+    "\uAD6C\uCE58\uBD80": "Posterior",
+    "\uCE58\uC870\uC81C": "Ridge",
+    "\uC704\uCD95": "Atrophic",
+    "\uBB34\uCE58\uC545": "Edentulous",
+    "\uD611\uCE21\uACE8": "Buccal bone",
+    "\uBCF4\uC874": "Preservation",
+    "\uC587\uC740": "Thin",
+    "\uB0AE\uC740": "Low",
+    "\uACE8\uC9C8\uC5D0\uC11C": "in low bone",
+    "\uACE8\uC704\uCD95": "Bone atrophy",
+    "\uACE8\uC99D\uB300": "Bone augmentation",
+    "\uC0C1\uC545\uB3D9": "Sinus",
+    "\uBD80\uB2F4": "Burden",
+    "\uACBD\uAC10": "Reduce",
+    "\uAC10\uC18C": "Reduce",
+    "\uD5A5\uC0C1": "Improve",
+    "\uCD09\uC9C4": "Promote",
+    "\uD655\uBCF4": "Secure",
+    "\uC9C0\uC6D0": "Support",
+    "\uC801\uC6A9": "Application",
+    "\uD65C\uC6A9": "Use",
+    "\uD569\uBCD1\uC99D": "Complication",
+    "\uC704\uD5D8": "Risk",
+    "\uAD00\uB9AC": "Management",
+    "\uC2EC\uBBF8": "Esthetic",
+    "\uC608\uCE21\uC131": "Predictability",
+    "\uACB0\uACFC": "Outcome",
+    "\uCE58\uB8CC\uAE30\uAC04": "Treatment time",
+    "\uB2E8\uCD95": "Shorten",
+    "\uAE30\uB300": "Expected",
+    "\uC808\uAC10": "Save",
+    "\uC218\uC220": "Surgery",
+    "\uC2DC\uAC04": "Time",
+    "\uBE44\uC6A9": "Cost",
+    "\uC9D1\uD589\uBE44\uC6A9": "Spend",
+    "\uD65C\uB3D9\uBE44": "Activity cost",
+    "\uAC1C\uBC1C\uB2F9": "per dev",
+    "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9": "per new dev",
+    "\uC7A5\uAE30": "Long-term",
+    "\uC720\uC9C0": "Maintenance",
+    "\uC6A9\uC774": "Easy",
+    "\uC2E4\uD328": "Failure",
+    "\uD601\uC2E0": "Innovation",
+    "\uC138\uD3EC": "Cell",
+    "\uC5F0\uC870\uC9C1": "Soft tissue",
+    "\uBD80\uCC29": "Attachment",
+    "\uC751\uB825": "Stress",
+    "\uBD84\uC0B0": "Distribution",
+    "\uC720\uB3C4": "Induce",
+    "\uC870\uAE30": "Early",
+    "\uC601\uC5ED": "Zone",
+    "\uC911\uC99D": "Severe",
+    "\uC644\uC804": "Full",
+    "\uAE38\uC774": "Length",
+    "\uC9C1\uACBD": "Diameter",
+    "\uCC28\uBCC4\uD654": "Differentiation",
+    "\uACBD\uC7C1": "Competition",
+    "\uACBD\uC7C1\uC81C\uD488": "Competitor",
+    "\uBE44\uAD50": "Comparison",
+    "\uAC80\uC99D": "Validation",
+    "\uC7AC\uAC80\uC99D": "Re-validate",
+    "\uB3C4\uCD9C": "Derivation",
+    "\uD30C\uC774\uD504\uB77C\uC778": "Pipeline",
+    "\uD6C4\uBCF4": "Candidate",
+    "\uB4F1\uAE09": "Grade",
+    "\uD559\uC220": "Academic",
+    "\uAD50\uC721\uC790\uB8CC": "Training material",
+    "\uD574\uC11D": "Analysis",
+    "\uB9E4\uD551": "Mapping",
+    "\uC218\uC785\uC790": "Importer",
+    "\uC2DC\uC7A5": "Market",
+    "\uC804\uCCB4\uC2DC\uC7A5": "Total market",
+    "\uBAA9\uD45C\uC2DC\uC7A5": "Target market",
+    "\uC2DC\uC7A5\uB9E4\uB825\uB3C4": "Attractiveness",
+    "\uC811\uADFC\uC131": "Accessibility",
+    "\uC2A4\uCF54\uC5B4\uB9C1": "Scoring",
+    "\uC138\uADF8\uBA3C\uD2B8": "Segment",
+    "\uD504\uB9AC\uBBF8\uC5C4": "Premium",
+    "\uC2DC\uC7A5\uADDC\uBAA8": "Market size",
+    "\uCD94\uC774": "Trend",
+    "\uB9E4\uCD9C": "Revenue",
+    "\uC2E0\uC7A5": "Growth",
+    "\uC804\uB7B5": "Strategy",
+    "\uC911\uC7A5\uAE30": "Mid-term",
+    "\uAC00\uACA9": "Price",
+    "\uAC00\uACA9\uB300": "Price band",
+    "\uAD6C\uC870": "Structure",
+    "\uBD84\uC11D": "Analysis",
+    "\uC608\uC0C1": "Forecast",
+    "\uD604\uC7AC": "Current",
+    "\uD398\uC774\uC2A4": "Pace",
+    "\uC6D4\uD3C9\uADE0": "Monthly avg",
+    "\uB0A8\uC740": "Remaining",
+    "\uB2EC": "months",
+    "\uCD1D": "Total",
+    "\uCD1D\uACC4": "Total",
+    "\uC9D1\uACC4": "Aggregate",
+    "\uD569\uACC4": "Total",
+    "\uC6D0\uBCF8": "Source",
+    "\uC2DC\uD2B8": "Sheet",
+    "\uC5D1\uC140": "Excel",
+    "\uAE30\uC900": "Basis",
+    "\uAE30\uC900\uC6D4": "Base month",
+    "\uD574\uB2F9\uC6D4": "This month",
+    "\uC9C1\uC804": "Previous",
+    "\uC8FC\uAC04\uBCF4\uACE0": "Weekly report",
+    "\uBCF4\uACE0": "Report",
+    "\uC694\uC57D": "Summary",
+    "\uC0C1\uC138": "Detail",
+    "\uC120\uD0DD": "Select",
+    "\uB0A0\uC9DC": "Date",
+    "\uC77C\uC790": "Date",
+    "\uC77C\uC815": "Schedule",
+    "\uB2EC\uB825": "Calendar",
+    "\uC8FC\uC81C": "Topic",
+    "\uB3C4\uC2DC": "City",
+    "\uC774\uB984": "Name",
+    "\uD56D\uBAA9": "Item",
+    "\uC9C0\uD45C": "Metric",
+    "\uC720\uD615": "Type",
+    "\uC815\uBCF4": "Info",
+    "\uACE0\uAC1D": "Client",
+    "\uCE58\uACFC": "Clinic",
+    "\uCE58\uACFC\uC218": "Clinics",
+    "\uC21C\uC704": "Rank",
+    "\uC0C1\uC704": "Top",
+    "\uD558\uB2E8": "Below",
+    "\uBAA8\uB450": "All",
+    "\uD3BC\uCE58\uAE30": "Expand",
+    "\uD074\uB9AD": "Click",
+    "\uBCF4\uAE30": "View",
+    "\uACC4\uC18D": "Continue",
+    "\uD544\uC694": "Needed",
+    "\uAC00\uB2A5": "Possible",
+    "\uC5EC\uBD80": "Y/N",
+    "\uC870\uAC74": "Condition",
+    "\uAE30\uC7AC": "Entry",
+    "\uAE08\uC9C0": "No",
+    "\uB300\uAE30": "Pending",
+    "\uB3C4\uB2EC": "Reached",
+    "\uC810\uAC80": "Check",
+    "\uAC1C\uC120": "Improve",
+    "\uCD94\uC801": "Track",
+    "\uD655\uC778": "Confirm",
+    "\uC0C1\uB2F4": "Consult",
+    "\uC6B4\uC601": "Ops",
+    "\uC131": "done",
+    "\uC131\uACFC": "Result",
+    "\uD2B9\uD654": "Specialized",
+    "\uB2E8\uB3C5": "Only",
+    "\uACF5\uB3D9": "Joint",
+    "\uC8FC\uB825": "Core",
+    "\uC194\uB8E8\uC158\uACFC": "solution and",
+    "\uD3B8": "papers",
+    "\uC0AC": "cos.",
+    "\uC6D0": "KRW",
+    "\uC5B5": "00M",
+    "\uC5B5\uC6D0": "00M KRW",
+    "\uCC9C": "k",
+    "\uCC9C\uAC1C": "k ea",
+    "\uD654": "Tue",
+    "\uC218": "Wed",
+    "\uBAA9": "Thu",
+    "\uAE08": "Fri",
+    "\uD1A0": "Sat",
     "MGG PM": "MGG PM",
     "\uD1B5\uD569 \uB300\uC2DC\uBCF4\uB4DC": "Overview",
     "\uD604\uD669\uBD84\uC11D": "Status Analysis",
@@ -3280,10 +4209,86 @@ ARI.pages = ARI.pages || {};
     while (n = w.nextNode()) list.push(n);
     list.forEach(fn);
   }
+  const UNIT = {
+    zh: {
+      "\uAC1C\uC18C": "\u4E2A\u70B9",
+      "\uAC1C\uC0AC": "\u5BB6",
+      "\uAC1C\uC6D4": "\u4E2A\u6708",
+      "\uC9C0\uC5ED": "\u4E2A\u533A\u57DF",
+      "\uCE58\uACFC": "\u5BB6\u7259\u79D1",
+      "\uBA85": "\u540D",
+      "\uAC74": "\u4EF6",
+      "\uD68C": "\u6B21",
+      "\uAC1C": "\u4E2A",
+      "\uC810": "\u70B9",
+      "\uB9CC": "\u4E07",
+      "\uCC9C": "\u5343",
+      "\uC5B5": "\u4EBF",
+      "\uB144": "\u5E74",
+      "\uC6D4": "\u6708",
+      "\uC77C": "\u65E5",
+      "\uC8FC": "\u5468",
+      "\uC8FC\uCC28": "\u5468\u6B21",
+      "\uBC30": "\u500D",
+      "\uC885": "\u79CD",
+      "\uC704": "\u4F4D",
+      "\uB2E8\uACC4": "\u9636\u6BB5",
+      "\uC2DC\uAC04": "\u5C0F\u65F6",
+      "\uBD84": "\u5206",
+      "\uCD08": "\u79D2",
+      "%p": "%p"
+    },
+    en: {
+      "\uAC1C\uC18C": " sites",
+      "\uAC1C\uC0AC": " cos.",
+      "\uAC1C\uC6D4": " mo.",
+      "\uC9C0\uC5ED": " areas",
+      "\uCE58\uACFC": " clinics",
+      "\uBA85": " ppl",
+      "\uAC74": " cases",
+      "\uD68C": " times",
+      "\uAC1C": " ea",
+      "\uC810": " pts",
+      "\uB9CC": "0k",
+      "\uCC9C": "k",
+      "\uC5B5": "00M",
+      "\uB144": "",
+      "\uC6D4": "/",
+      "\uC77C": "",
+      "\uC8FC": "W",
+      "\uC8FC\uCC28": "W",
+      "\uBC30": "x",
+      "\uC885": " types",
+      "\uC704": "th",
+      "\uB2E8\uACC4": " steps",
+      "\uC2DC\uAC04": "h",
+      "\uBD84": "m",
+      "\uCD08": "s",
+      "%p": "%p"
+    }
+  };
+  function tokenSwap(key, d) {
+    const U = UNIT[cur];
+    if (!U) return void 0;
+    if (key.length > 160) return void 0;
+    if (!/[가-힣]/.test(key)) return void 0;
+    let ok = true;
+    const out = key.replace(/[가-힣]+/g, function(w) {
+      if (d[w] !== void 0) return d[w];
+      if (U[w] !== void 0) return U[w];
+      ok = false;
+      return w;
+    });
+    return ok ? out : void 0;
+  }
+  function lookup(key, d) {
+    if (d[key] !== void 0) return d[key];
+    return tokenSwap(key, d);
+  }
   function translateNode(n, d) {
     const ko = n.__ko !== void 0 ? n.__ko : n.nodeValue;
     const key = String(ko).trim();
-    const hit = d[key];
+    const hit = lookup(key, d);
     if (hit === void 0) {
       if (n.__ko !== void 0 && n.nodeValue !== n.__ko) n.nodeValue = n.__ko;
       return;
@@ -3311,8 +4316,8 @@ ARI.pages = ARI.pages || {};
     });
     root.querySelectorAll("option").forEach(function(o) {
       const ko = o.__ko !== void 0 ? o.__ko : o.textContent;
-      const hit = d[String(ko).trim()];
-      if (hit) {
+      const hit = lookup(String(ko).trim(), d);
+      if (hit !== void 0) {
         if (o.__ko === void 0) o.__ko = o.textContent;
         o.textContent = hit;
       }
@@ -3366,7 +4371,7 @@ ARI.pages = ARI.pages || {};
     let hit = 0, miss = 0;
     walk(root, function(n) {
       const ko = n.__ko !== void 0 ? n.__ko : n.nodeValue;
-      if (d[String(ko).trim()] !== void 0) hit++;
+      if (lookup(String(ko).trim(), d) !== void 0) hit++;
       else miss++;
     });
     return { hit, miss, rate: hit / Math.max(1, hit + miss) * 100 };
@@ -4196,7 +5201,14 @@ ARI.pages = ARI.pages || {};
         commit(v);
       }, 700);
     }
-    return /* @__PURE__ */ React.createElement("div", { style: { background: "#fdecec", border: "1px solid #f3d2d2" } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-1.5" }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold", style: { color: "#8a2b22", opacity: 0.8 } }, "\uD074\uB9AD\uD574\uC11C \uC218\uC815 \xB7 \uC790\uB3D9 \uC800\uC7A5"), /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ React.createElement("div", { style: {
+      background: "#f5f6f8",
+      border: "1px solid #d9dde5",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-1.5", style: { minHeight: 14 } }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: function() {
@@ -4209,7 +5221,7 @@ ARI.pages = ARI.pages || {};
           }, 1200);
         },
         className: "text-[9.5px] font-extrabold underline",
-        style: { color: "#8a2b22" }
+        style: { color: "#141826" }
       },
       "\uC790\uB3D9\uBB38\uAD6C\uB85C"
     ) : null), /* @__PURE__ */ React.createElement(
@@ -4224,8 +5236,8 @@ ARI.pages = ARI.pages || {};
           if (timer.current) clearTimeout(timer.current);
           commit(e.currentTarget.innerText);
         },
-        className: "text-[11.5px] leading-[1.7] px-2.5 py-2 outline-none",
-        style: { color: "#8a2b22", minHeight: 60, whiteSpace: "pre-wrap" }
+        className: "leading-[1.7] px-2.5 pb-2 outline-none",
+        style: { color: "#141826", fontSize: 12.7, whiteSpace: "pre-wrap", flex: 1, minHeight: 0, overflowY: "auto" }
       },
       text
     ));
@@ -4248,7 +5260,7 @@ ARI.pages = ARI.pages || {};
         }
       },
       {
-        k: "\uD310\uB9E4\uC218\uB7C9",
+        k: "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9",
         get: function(x) {
           return U.fmt(x.sA) + "\uAC1C";
         },
@@ -4287,9 +5299,16 @@ ARI.pages = ARI.pages || {};
     let read = "";
     if (A && B) {
       const penet = B.cA ? Math.round(nCross / B.cA * 1e3) / 10 : 0;
-      read = "BD \uC804\uAD6D " + U.fmt(B.cA) + "\uAC1C\uC18C \uB3C4\uC785, \uBAA9\uD45C " + U.fmt(B.cT) + "\uAC1C\uC18C \uB300\uBE44 " + B.cPct + "% \uB2EC\uC131 \uBC0F \uBC1C\uC8FC \uBB3C\uB7C9 " + B.burn + "% \uC18C\uC9C4. \uBC18\uBA74, BD \uC0AC\uC6A9\uCC98 \uC911 ARi \uBCD1\uD589 \uC0AC\uC6A9\uCC98\uB294 " + U.fmt(nCross) + "\uAC1C\uC18C(" + penet + "%)\uC5D0 \uBD88\uACFC\uD558\uBA70, ARi \uC18C\uC9C4\uC728\uB3C4 " + A.burn + "%\uC5D0 \uADF8\uCE68. \uB300\uB9AC\uC0C1 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC801\uCCB4\uB85C \uCD94\uAC00 \uBC1C\uC8FC\uAC00 \uC5B4\uB824\uC6B4 \uC0C1\uD669\uC774\uBA70, ARi \uBAA9\uD45C \uB2EC\uC131\uB960 " + A.cPct + "%\uC758 \uC8FC\uC694 \uC6D0\uC778\uC740 \uAE30\uC874 \uACF5\uAE09 \uBB3C\uB7C9\uC758 \uC0AC\uC6A9\uCC98 \uC804\uD658 \uBC0F \uC18C\uC9C4 \uBD80\uC9C4\uC73C\uB85C \uD310\uB2E8.";
+      const L = ARI.i18n && ARI.i18n.get ? ARI.i18n.get() : "ko";
+      if (L === "zh") {
+        read = "BD \u5168\u56FD\u5BFC\u5165 " + U.fmt(B.cA) + " \u4E2A\u70B9\uFF0C\u5BF9\u6BD4\u76EE\u6807 " + U.fmt(B.cT) + " \u4E2A\u70B9\u8FBE\u6210 " + B.cPct + "%\uFF0C\u8BA2\u8D27\u91CF\u6D88\u5316 " + B.burn + "%\u3002\u76F8\u6BD4\u4E4B\u4E0B\uFF0CBD \u4F7F\u7528\u5BA2\u6237\u4E2D\u540C\u65F6\u4F7F\u7528 ARi \u7684\u4EC5 " + U.fmt(nCross) + " \u4E2A\u70B9\uFF08" + penet + "%\uFF09\uFF0CARi \u6D88\u5316\u7387\u4E5F\u4EC5\u4E3A " + A.burn + "%\u3002\u7ECF\u9500\u5546\u5E93\u5B58\u79EF\u538B " + U.fmt(A.stock) + " \u4E2A\u5BFC\u81F4\u96BE\u4EE5\u8FFD\u52A0\u8BA2\u8D27\uFF0CARi \u76EE\u6807\u8FBE\u6210\u7387 " + A.cPct + "% \u7684\u4E3B\u8981\u539F\u56E0\u5224\u65AD\u4E3A\u65E2\u6709\u4F9B\u8D27\u91CF\u7684\u4F7F\u7528\u5BA2\u6237\u8F6C\u5316\u53CA\u6D88\u5316\u4E0D\u8DB3\u3002";
+      } else if (L === "en") {
+        read = "BD reached " + U.fmt(B.cA) + " accounts nationwide \u2014 " + B.cPct + "% of the " + U.fmt(B.cT) + " target, with " + B.burn + "% of dealer orders sold through. By contrast, only " + U.fmt(nCross) + " BD accounts (" + penet + "%) also use ARi, and ARi's sell-through is just " + A.burn + "%. With " + U.fmt(A.stock) + " units stuck in dealer inventory, further orders are unlikely; ARi's " + A.cPct + "% attainment is driven by weak conversion and sell-through of existing supply, not by newness.";
+      } else {
+        read = "BD \uC804\uAD6D " + U.fmt(B.cA) + "\uAC1C\uC18C \uB3C4\uC785, \uBAA9\uD45C " + U.fmt(B.cT) + "\uAC1C\uC18C \uB300\uBE44 " + B.cPct + "% \uB2EC\uC131 \uBC0F \uBC1C\uC8FC \uBB3C\uB7C9 " + B.burn + "% \uC18C\uC9C4. \uBC18\uBA74, BD \uC0AC\uC6A9\uCC98 \uC911 ARi \uBCD1\uD589 \uC0AC\uC6A9\uCC98\uB294 " + U.fmt(nCross) + "\uAC1C\uC18C(" + penet + "%)\uC5D0 \uBD88\uACFC\uD558\uBA70, ARi \uC18C\uC9C4\uC728\uB3C4 " + A.burn + "%\uC5D0 \uADF8\uCE68. \uB300\uB9AC\uC0C1 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC801\uCCB4\uB85C \uCD94\uAC00 \uBC1C\uC8FC\uAC00 \uC5B4\uB824\uC6B4 \uC0C1\uD669\uC774\uBA70, ARi \uBAA9\uD45C \uB2EC\uC131\uB960 " + A.cPct + "%\uC758 \uC8FC\uC694 \uC6D0\uC778\uC740 \uAE30\uC874 \uACF5\uAE09 \uBB3C\uB7C9\uC758 \uC0AC\uC6A9\uCC98 \uC804\uD658 \uBC0F \uC18C\uC9C4 \uBD80\uC9C4\uC73C\uB85C \uD310\uB2E8.";
+      }
     }
-    return /* @__PURE__ */ React.createElement(Card, { title: "ARi \xB7 BD \uC8FC\uC694\uB0B4\uC6A9", desc: "\u300CARI\u5BA2\u6237\u300D\xB7\u300CBD\u5BA2\u6237\u300D \uC804\uAD6D \uD569\uACC4 \xB7 \uAC70\uB798\uCC98 \xB7 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uBC1C\uC8FC \uC18C\uC9C4\uC728 3\uAC1C \uC9C0\uD45C" }, /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#141826", margin: "2px 0 12px" } }), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_260px] gap-3 items-start" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 118 } }, "\uC9C0\uD45C"), COLS.map(function(c) {
+    return /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_480px] gap-3 items-stretch" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 118 } }, "\uC9C0\uD45C"), COLS.map(function(c) {
       return /* @__PURE__ */ React.createElement("th", { key: c.id, className: "num" }, /* @__PURE__ */ React.createElement("span", { style: { color: c.c } }, c.lab), /* @__PURE__ */ React.createElement("span", { className: "text-[10px] font-semibold ml-1", style: { color: "#141826" } }, c.note));
     }))), /* @__PURE__ */ React.createElement("tbody", null, ROWS.map(function(r) {
       return /* @__PURE__ */ React.createElement("tr", { key: r.k }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.k)), COLS.map(function(c) {
@@ -4382,14 +5401,17 @@ ARI.pages = ARI.pages || {};
           color: "#141826",
           lineHeight: 1.2
         } }, (best ? "\u2605" : "") + r.rate + "%")) : /* @__PURE__ */ React.createElement("div", { style: { height: LEAD + 26, flexShrink: 0 } }),
-        /* @__PURE__ */ React.createElement(
-          "div",
-          {
-            className: "text-[10.5px] font-extrabold leading-none mb-[3px] whitespace-nowrap",
-            style: { color: "#141826", flexShrink: 0 }
-          },
-          r.has ? U.fmt(r.b) + " / " + U.fmt(r.a) : ""
-        ),
+        (function() {
+          const lab = r.has ? U.fmt(r.b) + " / " + U.fmt(r.a) : "";
+          return /* @__PURE__ */ React.createElement(
+            "div",
+            {
+              className: "font-extrabold leading-none mb-[3px] whitespace-nowrap",
+              style: { color: "#141826", flexShrink: 0, fontSize: lab.length > 12 ? 9 : lab.length > 9 ? 9.8 : 10.5 }
+            },
+            lab
+          );
+        })(),
         /* @__PURE__ */ React.createElement("div", { style: { width: "52%", height: bh, background: r.has ? col : "#eef1f6", flexShrink: 0 } }),
         /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-[5px] whitespace-nowrap", style: { color: "#141826", flexShrink: 0 } }, r.hq)
       );
@@ -4408,15 +5430,18 @@ ARI.pages = ARI.pages || {};
       });
     };
     const rows = HQ_SEQ6.map(function(hq) {
-      const cT = sumBy(hq, "cT"), cA = sumBy(hq, "cA");
+      const sT = sumBy(hq, "sT"), sA = sumBy(hq, "sA");
       return {
         hq: HQ_KO6[hq] || hq,
-        a: cT,
-        b: cA,
-        has: cT > 0,
-        sA: sumBy(hq, "sA"),
+        a: sT,
+        b: sA,
+        has: sT > 0,
+        // 막대 기준 = 판매수량
+        cA: sumBy(hq, "cA"),
+        cT: sumBy(hq, "cT"),
+        sA,
         dB: sumBy(hq, "dB"),
-        rate: cT ? Math.round(cA / cT * 1e3) / 10 : 0
+        rate: sT ? Math.round(sA / sT * 1e3) / 10 : 0
       };
     });
     if (!rows.some(function(r) {
@@ -4428,6 +5453,9 @@ ARI.pages = ARI.pages || {};
       }),
       b: C.sum(rows, function(r) {
         return r.b;
+      }),
+      cA: C.sum(rows, function(r) {
+        return r.cA;
       }),
       sA: C.sum(rows, function(r) {
         return r.sA;
@@ -4447,46 +5475,93 @@ ARI.pages = ARI.pages || {};
     }).length;
     const nFresh = ariIn.length - nCross;
     const bdA = R2.BD && R2.BD.tot ? U.n(R2.BD.tot.cA) : 0;
-    const note = isAri ? "\uC804\uAD6D " + U.fmt(T.b) + "\uAC1C\uC18C \xB7 \uC5F0\uAC04\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uC774 \uC911 " + U.fmt(nCross) + "\uAC1C\uC18C\uB294 BD \uAC70\uB798\uCC98\uC774\uACE0 " + U.fmt(nFresh) + "\uAC1C\uC18C\uB294 BD \uB97C \uC4F0\uC9C0 \uC54A\uB294 \uC2E0\uADDC \uAC1C\uCC99\uCC98\uC785\uB2C8\uB2E4." : "\uC804\uAD6D " + U.fmt(T.b) + "\uAC1C\uC18C \xB7 \uC5F0\uAC04\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uC774 \uC911 ARi \uB97C \uD568\uAED8 \uC4F0\uB294 \uACF3\uC740 " + U.fmt(nCross) + "\uAC1C\uC18C(" + pct(nCross, bdA) + "%)\uBFD0\uC774\uACE0, " + U.fmt(Math.max(0, bdA - nCross)) + "\uAC1C\uC18C\uAC00 ARi \uBBF8\uB3C4\uC785 \uC0C1\uD0DC\uC785\uB2C8\uB2E4.";
+    const L = ARI.i18n && ARI.i18n.get ? ARI.i18n.get() : "ko";
+    const nOpen = Math.max(0, bdA - nCross);
+    const note = L === "zh" ? isAri ? "\u5168\u56FD\u9500\u552E " + U.fmt(T.b) + " \u4E2A \xB7 \u5BF9\u6BD4\u5E74\u5EA6\u9500\u552E\u76EE\u6807 " + U.fmt(T.a) + " \u8FBE\u6210 " + pct(T.b, T.a) + "%\u3002\u4EA4\u6613\u5BA2\u6237 " + U.fmt(T.cA) + " \u4E2A\u70B9\u4E2D\uFF0C" + U.fmt(nCross) + " \u4E2A\u70B9\u4E3A BD \u4EA4\u6613\u5BA2\u6237\uFF0C" + U.fmt(nFresh) + " \u4E2A\u70B9\u4E3A\u672A\u4F7F\u7528 BD \u7684\u65B0\u5F00\u62D3\u5BA2\u6237\u3002" : "\u5168\u56FD\u9500\u552E " + U.fmt(T.b) + " \u4E2A \xB7 \u5BF9\u6BD4\u5E74\u5EA6\u9500\u552E\u76EE\u6807 " + U.fmt(T.a) + " \u8FBE\u6210 " + pct(T.b, T.a) + "%\u3002\u4EA4\u6613\u5BA2\u6237 " + U.fmt(T.cA) + " \u4E2A\u70B9\u4E2D\uFF0C\u540C\u65F6\u4F7F\u7528 ARi \u7684\u4EC5 " + U.fmt(nCross) + " \u4E2A\u70B9\uFF08" + pct(nCross, bdA) + "%\uFF09\uFF0C" + U.fmt(nOpen) + " \u4E2A\u70B9\u5C1A\u672A\u5BFC\u5165 ARi\u3002" : L === "en" ? isAri ? U.fmt(T.b) + " units sold nationwide \u2014 " + pct(T.b, T.a) + "% of the " + U.fmt(T.a) + " annual target. Of " + U.fmt(T.cA) + " accounts, " + U.fmt(nCross) + " are BD accounts and " + U.fmt(nFresh) + " are net-new accounts that do not use BD." : U.fmt(T.b) + " units sold nationwide \u2014 " + pct(T.b, T.a) + "% of the " + U.fmt(T.a) + " annual target. Of " + U.fmt(T.cA) + " accounts, only " + U.fmt(nCross) + " (" + pct(nCross, bdA) + "%) also use ARi; " + U.fmt(nOpen) + " have not adopted it." : isAri ? "\uC804\uAD6D \uD310\uB9E4 " + U.fmt(T.b) + "\uAC1C \xB7 \uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uAC70\uB798\uCC98 " + U.fmt(T.cA) + "\uAC1C\uC18C \uC911 " + U.fmt(nCross) + "\uAC1C\uC18C\uB294 BD \uAC70\uB798\uCC98\uC774\uACE0, " + U.fmt(nFresh) + "\uAC1C\uC18C\uB294 BD \uB97C \uC4F0\uC9C0 \uC54A\uB294 \uC2E0\uADDC \uAC1C\uCC99\uCC98\uC785\uB2C8\uB2E4." : "\uC804\uAD6D \uD310\uB9E4 " + U.fmt(T.b) + "\uAC1C \xB7 \uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uAC70\uB798\uCC98 " + U.fmt(T.cA) + "\uAC1C\uC18C \uC911 ARi \uB97C \uD568\uAED8 \uC4F0\uB294 \uACF3\uC740 " + U.fmt(nCross) + "\uAC1C\uC18C(" + pct(nCross, bdA) + "%)\uBFD0\uC774\uACE0, " + U.fmt(nOpen) + "\uAC1C\uC18C\uAC00 ARi \uBBF8\uB3C4\uC785 \uC0C1\uD0DC\uC785\uB2C8\uB2E4.";
     const COLS = [
-      { k: "\uAC70\uB798\uCC98", v: function(r) {
-        return U.fmt(r.b);
+      { k: "\uAC70\uB798\uCC98", get: function(r) {
+        return r.cA;
+      }, fmt: function(r) {
+        return U.fmt(r.cA);
       } },
-      { k: "\uD310\uB9E4\uC218\uB7C9", v: function(r) {
+      { k: "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9", get: function(r) {
+        return r.sA;
+      }, fmt: function(r) {
         return U.fmt(r.sA);
       } },
-      { k: "\uB300\uB9AC\uC0C1\uBC1C\uC8FC", v: function(r) {
+      {
+        k: "\uBE44\uC911",
+        get: function(r) {
+          return T.sA ? r.sA / T.sA : 0;
+        },
+        fmt: function(r) {
+          return pct(r.sA, T.sA) + "%";
+        },
+        blue: true
+      },
+      { k: "\uB300\uB9AC\uC0C1\uBC1C\uC8FC", get: function(r) {
+        return r.dB;
+      }, fmt: function(r) {
         return U.fmt(r.dB);
       } },
-      { k: "\uC18C\uC9C4\uC728", v: function(r) {
-        return pct(r.sA, r.dB) + "%";
-      }, warn: function(r) {
-        return pct(r.sA, r.dB) < 60;
-      } }
+      {
+        k: "\uC18C\uC9C4\uC728",
+        get: function(r) {
+          return r.dB ? r.sA / r.dB : 0;
+        },
+        fmt: function(r) {
+          return pct(r.sA, r.dB) + "%";
+        },
+        warn: function(r) {
+          return pct(r.sA, r.dB) < 60;
+        }
+      }
     ];
+    const [sortK, setSortK] = useState("\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9");
+    const [sortA, setSortA] = useState(false);
+    function head(k) {
+      if (sortK === k) setSortA(!sortA);
+      else {
+        setSortK(k);
+        setSortA(false);
+      }
+    }
+    const col = COLS.filter(function(c) {
+      return c.k === sortK;
+    })[0] || COLS[1];
+    const tRows = rows.slice().sort(function(x, y) {
+      const d = col.get(x) - col.get(y);
+      return sortA ? d : -d;
+    });
     return /* @__PURE__ */ React.createElement(
       Card,
       {
-        title: "\uBCF8\uBD80\uBCC4 \uBAA9\uD45C \uB2EC\uC131\uB960 \u2014 " + sys,
-        desc: "\uAC70\uB798\uCC98 \xF7 \uC5F0\uAC04\uBAA9\uD45C \uAC1C\uC18C \xB7 \uC544\uB798 \uD45C\uB294 \uC774 \uC2DC\uC2A4\uD15C\uC758 \uBCF8\uBD80\uBCC4 \uAC70\uB798\uCC98 \xB7 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uBC1C\uC8FC \xB7 \uC18C\uC9C4\uC728"
+        title: "\uBCF8\uBD80\uBCC4 \uD310\uB9E4\uC218\uB7C9 \uBAA9\uD45C \uB2EC\uC131\uB960 \u2014 " + sys,
+        desc: "\uD310\uB9E4\uC218\uB7C9 \xF7 \uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C \xB7 \uC544\uB798 \uD45C\uB294 \uC774 \uC2DC\uC2A4\uD15C\uC758 \uBCF8\uBD80\uBCC4 \uAC70\uB798\uCC98 \xB7 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uBC1C\uC8FC \xB7 \uC18C\uC9C4\uC728"
       },
-      /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#141826", margin: "2px 0 14px" } }),
       /* @__PURE__ */ React.createElement(HqBars, { rows, tgt: 100, h: 141, frac: true }),
-      /* @__PURE__ */ React.createElement("div", { style: { marginTop: 12 } }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 58 } }, "\uBCF8\uBD80"), COLS.map(function(c) {
-        return /* @__PURE__ */ React.createElement("th", { key: c.k, className: "num" }, c.k);
-      }))), /* @__PURE__ */ React.createElement("tbody", null, rows.map(function(r) {
-        return /* @__PURE__ */ React.createElement("tr", { key: r.hq }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.hq)), COLS.map(function(c) {
-          return /* @__PURE__ */ React.createElement(
-            "td",
-            {
-              key: c.k,
-              className: "num",
-              style: { color: c.warn && c.warn(r) ? "#c0392f" : "#141826", fontWeight: 700 }
+      /* @__PURE__ */ React.createElement("div", { style: { marginTop: 12 } }, /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-bold", style: { color: "#141826", opacity: 0.75, marginBottom: 3 } }, "% = \uBAA9\uD45C \uB300\uBE44 \uD310\uB9E4\uBE44\uC911"), /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt tbl-tight", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 58 } }, "\uBCF8\uBD80"), COLS.map(function(c) {
+        const on = sortK === c.k;
+        return /* @__PURE__ */ React.createElement(
+          "th",
+          {
+            key: c.k,
+            className: "num",
+            onClick: function() {
+              head(c.k);
             },
-            c.v(r)
-          );
+            style: { cursor: "pointer", userSelect: "none", background: on ? "#e9edf6" : void 0 },
+            title: "\uD074\uB9AD\uD558\uBA74 \uC774 \uC5F4\uB85C \uC815\uB82C\uD569\uB2C8\uB2E4"
+          },
+          c.k,
+          /* @__PURE__ */ React.createElement("span", { style: { marginLeft: 3, fontSize: 9, color: on ? "#1e2f5e" : "#c3cbd2" } }, on ? sortA ? "\u25B2" : "\u25BC" : "\u25BD")
+        );
+      }))), /* @__PURE__ */ React.createElement("tbody", null, tRows.map(function(r) {
+        return /* @__PURE__ */ React.createElement("tr", { key: r.hq }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.hq)), COLS.map(function(c) {
+          const color = c.blue ? "#1d3a86" : c.warn && c.warn(r) ? "#c0392f" : "#141826";
+          return /* @__PURE__ */ React.createElement("td", { key: c.k, className: "num", style: { color, fontWeight: 700 } }, c.fmt(r));
         }));
-      })), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.b))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.sA))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.dB))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: pct(T.sA, T.dB) < 60 ? "#c0392f" : "#141826" } }, /* @__PURE__ */ React.createElement("b", null, pct(T.sA, T.dB), "%")))))),
+      })), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.cA))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.sA))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: "#1d3a86" } }, /* @__PURE__ */ React.createElement("b", null, "100%")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.dB))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: pct(T.sA, T.dB) < 60 ? "#c0392f" : "#141826" } }, /* @__PURE__ */ React.createElement("b", null, pct(T.sA, T.dB), "%")))))),
       /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px]", style: { lineHeight: 1.65, marginTop: 8, color: "#141826" } }, note)
     );
   }
@@ -5292,7 +6367,7 @@ ARI.pages = ARI.pages || {};
         desc: "\uC8FC\uAC04\uBCF4\uACE0 " + ctx.week.slice(5) + " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C " + (base.asOf || ARI.real.asOf) + (prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "")
       },
       /* @__PURE__ */ React.createElement(ProdCompare, { db }),
-      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3 items-start" }, /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "ARi" }), /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "BD" })),
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3 items-start" }, /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "BD" }), /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "ARi" })),
       false ? /* @__PURE__ */ React.createElement(EntryPath, { db }) : null
     );
   };
@@ -13823,6 +14898,44 @@ ARI.pages = ARI.pages || {};
     admin: "\uD655\uC815 \uACC4\uD68D\uAC12 \xB7 \uAD8C\uD55C \xB7 \uB370\uC774\uD130 \uC815\uD569\uC131 \uAD00\uB9AC"
   };
   const AUTH_KEY = "ARI_AUTH_V1";
+  function authRead() {
+    let v = "";
+    try {
+      v = localStorage.getItem(AUTH_KEY) || "";
+    } catch (e) {
+    }
+    if (!v) {
+      try {
+        v = sessionStorage.getItem(AUTH_KEY) || "";
+      } catch (e) {
+      }
+    }
+    if (!v) {
+      try {
+        const m = document.cookie.match(new RegExp("(?:^|; )" + AUTH_KEY + "=([^;]*)"));
+        if (m) v = decodeURIComponent(m[1]);
+      } catch (e) {
+      }
+    }
+    return v;
+  }
+  function authWrite(v) {
+    try {
+      if (v) localStorage.setItem(AUTH_KEY, v);
+      else localStorage.removeItem(AUTH_KEY);
+    } catch (e) {
+    }
+    try {
+      if (v) sessionStorage.setItem(AUTH_KEY, v);
+      else sessionStorage.removeItem(AUTH_KEY);
+    } catch (e) {
+    }
+    try {
+      document.cookie = AUTH_KEY + "=" + (v ? encodeURIComponent(v) : "") + "; path=/; max-age=" + (v ? 31536e3 : 0) + "; SameSite=Lax";
+    } catch (e) {
+    }
+  }
+  const AUTH_ID_KEY = "ARI_AUTH_ID";
   function fp_(s) {
     let h = 5381;
     for (let i = 0; i < s.length; i++) h = (h * 33 ^ s.charCodeAt(i)) >>> 0;
@@ -13862,14 +14975,16 @@ ARI.pages = ARI.pages || {};
     const [langRev, setLangRev] = useState(0);
     const [help, setHelp] = useState(false);
     const [authed, setAuthed] = useState(function() {
-      try {
-        return localStorage.getItem(AUTH_KEY) === AUTH_FP;
-      } catch (e) {
-        return false;
-      }
+      return authRead() === AUTH_FP;
     });
     const [loginOpen, setLoginOpen] = useState(false);
-    const [lgId, setLgId] = useState("");
+    const [lgId, setLgId] = useState(function() {
+      try {
+        return localStorage.getItem(AUTH_ID_KEY) || "";
+      } catch (e) {
+        return "";
+      }
+    });
     const [lgPw, setLgPw] = useState("");
     const [lgErr, setLgErr] = useState("");
     const [toast, setToast] = useState(null);
@@ -13956,9 +15071,15 @@ ARI.pages = ARI.pages || {};
     function setLangAll(l) {
       setLang(l);
       ARI.i18n.set(l);
-      if (l === "ko") setLangRev(function(n) {
+      setLangRev(function(n) {
         return n + 1;
       });
+      setTimeout(function() {
+        try {
+          ARI.i18n.apply();
+        } catch (e) {
+        }
+      }, 60);
     }
     const VIS_GROUPS = GROUPS.filter(function(g) {
       return authed || !g.locked;
@@ -13974,14 +15095,14 @@ ARI.pages = ARI.pages || {};
     }, [authed, page]);
     function doLogin() {
       if (checkLogin(lgId, lgPw)) {
+        authWrite(AUTH_FP);
         try {
-          localStorage.setItem(AUTH_KEY, AUTH_FP);
+          localStorage.setItem(AUTH_ID_KEY, String(lgId).trim());
         } catch (e) {
         }
         setAuthed(true);
         setLoginOpen(false);
         setLgErr("");
-        setLgId("");
         setLgPw("");
         setOpen(function(o) {
           const n = Object.assign({}, o);
@@ -13994,10 +15115,7 @@ ARI.pages = ARI.pages || {};
       }
     }
     function doLogout() {
-      try {
-        localStorage.removeItem(AUTH_KEY);
-      } catch (e) {
-      }
+      authWrite("");
       setAuthed(false);
       say("\uB85C\uADF8\uC544\uC6C3\uD588\uC2B5\uB2C8\uB2E4.");
     }
@@ -14260,7 +15378,8 @@ ARI.pages = ARI.pages || {};
           className: "side-sel w-full appearance-none rounded-lg pl-3 pr-8 py-[7px] text-[13px] font-bold outline-none cursor-pointer"
         },
         PRODUCTS.map(function(p) {
-          return /* @__PURE__ */ React.createElement("option", { key: p.key, value: p.key }, p.label, p.ready ? "" : " (\uC900\uBE44\uC911)");
+          const soon = lang === "zh" ? " (\u51C6\u5907\u4E2D)" : lang === "en" ? " (coming soon)" : " (\uC900\uBE44\uC911)";
+          return /* @__PURE__ */ React.createElement("option", { key: p.key, value: p.key }, p.label, p.ready ? "" : soon);
         })
       ), /* @__PURE__ */ React.createElement(Icon, { name: "chevronDown", className: "w-4 h-4 side-t3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" })), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] side-t3 mt-1.5 leading-snug" }, (PRODUCTS.filter(function(p) {
         return p.key === product;
