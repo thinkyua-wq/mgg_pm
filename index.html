@@ -5181,11 +5181,11 @@ ARI.pages = ARI.pages || {};
     const text = saved === null || saved === void 0 ? auto : saved;
     useEffect(function() {
       const el = ref.current;
-      if (el && document.activeElement !== el && el.innerText !== text) el.innerText = text;
+      if (el && document.activeElement !== el && el.innerHTML !== text) el.innerHTML = text;
     }, [text]);
     function commit(v) {
       const t = String(v).replace(/\u00a0/g, " ").trim();
-      if (t === auto.trim() || t === "") {
+      if (t === auto.trim() || t === "" || t === "<br>") {
         S2.setUI(NOTE_KEY, null);
         setSaved(null);
       } else {
@@ -5198,7 +5198,7 @@ ARI.pages = ARI.pages || {};
       }, 1200);
     }
     function onInput(e) {
-      const v = e.currentTarget.innerText;
+      const v = e.currentTarget.innerHTML;
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(function() {
         commit(v);
@@ -5211,13 +5211,13 @@ ARI.pages = ARI.pages || {};
       display: "flex",
       flexDirection: "column",
       overflow: "hidden"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-2", style: { minHeight: 14 } }, /* @__PURE__ */ React.createElement("span", { className: "font-extrabold", style: { color: "#141826", fontSize: 12.7 } }, "\uD604\uD669\uBD84\uC11D \uBC0F \uBB38\uC81C/\uAC1C\uC120\uC810"), /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
+    } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-2", style: { minHeight: 14 } }, /* @__PURE__ */ React.createElement("span", { className: "font-extrabold", style: { color: "#141826", fontSize: 12.7 } }, "\u25A0 \uD604\uD669\uBD84\uC11D \uBC0F \uBB38\uC81C/\uAC1C\uC120\uC810"), /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: function() {
           S2.setUI(NOTE_KEY, null);
           setSaved(null);
-          if (ref.current) ref.current.innerText = auto;
+          if (ref.current) ref.current.innerHTML = auto;
           setFlash("\uC790\uB3D9\uBB38\uAD6C");
           setTimeout(function() {
             setFlash("");
@@ -5237,12 +5237,12 @@ ARI.pages = ARI.pages || {};
         onInput,
         onBlur: function(e) {
           if (timer.current) clearTimeout(timer.current);
-          commit(e.currentTarget.innerText);
+          commit(e.currentTarget.innerHTML);
         },
-        className: "leading-[1.7] px-2.5 pt-1 pb-2 outline-none",
-        style: { color: "#141826", fontSize: 12.7, whiteSpace: "pre-wrap", flex: 1, minHeight: 0, overflowY: "auto" }
-      },
-      text
+        className: "leading-[1.7] px-2.5 pt-2 pb-2 outline-none",
+        style: { color: "#141826", fontSize: 10.8, flex: 1, minHeight: 0, overflowY: "auto" },
+        dangerouslySetInnerHTML: { __html: text }
+      }
     ));
   }
   function ProdCompare({ db }) {
@@ -5302,13 +5302,58 @@ ARI.pages = ARI.pages || {};
     let read = "";
     if (A && B) {
       const penet = B.cA ? Math.round(nCross / B.cA * 1e3) / 10 : 0;
+      const nOpenBD = Math.max(0, B.cA - nCross);
       const L = ARI.i18n && ARI.i18n.get ? ARI.i18n.get() : "ko";
+      const sec = function(list) {
+        return list.map(function(x) {
+          return "<b>" + x[0] + "</b><br>" + x[1];
+        }).join("<br><br>");
+      };
       if (L === "zh") {
-        read = "BD \u5168\u56FD\u5BFC\u5165 " + U.fmt(B.cA) + " \u4E2A\u70B9\uFF0C\u5BF9\u6BD4\u76EE\u6807 " + U.fmt(B.cT) + " \u4E2A\u70B9\u8FBE\u6210 " + B.cPct + "%\uFF0C\u8BA2\u8D27\u91CF\u6D88\u5316 " + B.burn + "%\u3002\u76F8\u6BD4\u4E4B\u4E0B\uFF0CBD \u4F7F\u7528\u5BA2\u6237\u4E2D\u540C\u65F6\u4F7F\u7528 ARi \u7684\u4EC5 " + U.fmt(nCross) + " \u4E2A\u70B9\uFF08" + penet + "%\uFF09\uFF0CARi \u6D88\u5316\u7387\u4E5F\u4EC5\u4E3A " + A.burn + "%\u3002\u7ECF\u9500\u5546\u5E93\u5B58\u79EF\u538B " + U.fmt(A.stock) + " \u4E2A\u5BFC\u81F4\u96BE\u4EE5\u8FFD\u52A0\u8BA2\u8D27\uFF0CARi \u76EE\u6807\u8FBE\u6210\u7387 " + A.cPct + "% \u7684\u4E3B\u8981\u539F\u56E0\u5224\u65AD\u4E3A\u65E2\u6709\u4F9B\u8D27\u91CF\u7684\u4F7F\u7528\u5BA2\u6237\u8F6C\u5316\u53CA\u6D88\u5316\u4E0D\u8DB3\u3002";
+        read = sec([
+          [
+            "1. \u73B0\u51B5\u5206\u6790",
+            "BD \u5168\u56FD\u5BFC\u5165 " + U.fmt(B.cA) + " \u4E2A\u70B9\uFF0C\u5BF9\u6BD4\u76EE\u6807 " + U.fmt(B.cT) + " \u4E2A\u70B9\u8FBE\u6210 " + B.cPct + "%\uFF0C\u8BA2\u8D27\u91CF\u6D88\u5316 " + B.burn + "%\u3002ARi \u4E3A " + U.fmt(A.cA) + " \u4E2A\u70B9 \xB7 " + U.fmt(A.sA) + " \u4E2A\uFF0C\u6D88\u5316\u7387 " + A.burn + "%\u3002"
+          ],
+          [
+            "2. \u95EE\u9898\u70B9",
+            "BD \u4F7F\u7528\u5BA2\u6237\u4E2D\u540C\u65F6\u4F7F\u7528 ARi \u7684\u4EC5 " + U.fmt(nCross) + " \u4E2A\u70B9\uFF08" + penet + "%\uFF09\uFF0C" + U.fmt(nOpenBD) + " \u4E2A\u70B9\u5C1A\u672A\u5BFC\u5165\u3002\u7ECF\u9500\u5546\u5E93\u5B58\u79EF\u538B " + U.fmt(A.stock) + " \u4E2A\uFF0C\u96BE\u4EE5\u8FFD\u52A0\u8BA2\u8D27\uFF0CARi \u76EE\u6807\u8FBE\u6210\u7387\u505C\u7559\u5728 " + A.cPct + "%\u3002"
+          ],
+          [
+            "3. \u89E3\u51B3\u65B9\u6848",
+            "\u4F18\u5148\u6309 BD \u8BA2\u8D27\u91CF\u6392\u5E8F\u8F6C\u5316\u672A\u5BFC\u5165\u7684 " + U.fmt(nOpenBD) + " \u4E2A\u70B9\uFF1B\u540C\u65F6\u4EE5\u6D88\u5316\u73B0\u6709 " + U.fmt(A.stock) + " \u4E2A\u5E93\u5B58\u4E3A\u524D\u63D0\u518D\u8C08\u8FFD\u52A0\u8BA2\u8D27\u3002"
+          ]
+        ]);
       } else if (L === "en") {
-        read = "BD reached " + U.fmt(B.cA) + " accounts nationwide \u2014 " + B.cPct + "% of the " + U.fmt(B.cT) + " target, with " + B.burn + "% of dealer orders sold through. By contrast, only " + U.fmt(nCross) + " BD accounts (" + penet + "%) also use ARi, and ARi's sell-through is just " + A.burn + "%. With " + U.fmt(A.stock) + " units stuck in dealer inventory, further orders are unlikely; ARi's " + A.cPct + "% attainment is driven by weak conversion and sell-through of existing supply, not by newness.";
+        read = sec([
+          [
+            "1. Status",
+            "BD reached " + U.fmt(B.cA) + " accounts \u2014 " + B.cPct + "% of the " + U.fmt(B.cT) + " target, with " + B.burn + "% of dealer orders sold through. ARi is at " + U.fmt(A.cA) + " accounts / " + U.fmt(A.sA) + " units, " + A.burn + "% sell-through."
+          ],
+          [
+            "2. Issues",
+            "Only " + U.fmt(nCross) + " BD accounts (" + penet + "%) also use ARi; " + U.fmt(nOpenBD) + " have not adopted it. With " + U.fmt(A.stock) + " units stuck in dealer inventory, further orders are unlikely and ARi attainment stays at " + A.cPct + "%."
+          ],
+          [
+            "3. Actions",
+            "Convert the " + U.fmt(nOpenBD) + " untouched BD accounts in order of order volume, and make clearing the " + U.fmt(A.stock) + " units in stock a precondition for any new order."
+          ]
+        ]);
       } else {
-        read = "BD \uC804\uAD6D " + U.fmt(B.cA) + "\uAC1C\uC18C \uB3C4\uC785, \uBAA9\uD45C " + U.fmt(B.cT) + "\uAC1C\uC18C \uB300\uBE44 " + B.cPct + "% \uB2EC\uC131 \uBC0F \uBC1C\uC8FC \uBB3C\uB7C9 " + B.burn + "% \uC18C\uC9C4. \uBC18\uBA74, BD \uC0AC\uC6A9\uCC98 \uC911 ARi \uBCD1\uD589 \uC0AC\uC6A9\uCC98\uB294 " + U.fmt(nCross) + "\uAC1C\uC18C(" + penet + "%)\uC5D0 \uBD88\uACFC\uD558\uBA70, ARi \uC18C\uC9C4\uC728\uB3C4 " + A.burn + "%\uC5D0 \uADF8\uCE68. \uB300\uB9AC\uC0C1 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC801\uCCB4\uB85C \uCD94\uAC00 \uBC1C\uC8FC\uAC00 \uC5B4\uB824\uC6B4 \uC0C1\uD669\uC774\uBA70, ARi \uBAA9\uD45C \uB2EC\uC131\uB960 " + A.cPct + "%\uC758 \uC8FC\uC694 \uC6D0\uC778\uC740 \uAE30\uC874 \uACF5\uAE09 \uBB3C\uB7C9\uC758 \uC0AC\uC6A9\uCC98 \uC804\uD658 \uBC0F \uC18C\uC9C4 \uBD80\uC9C4\uC73C\uB85C \uD310\uB2E8.";
+        read = sec([
+          [
+            "1. \uD604\uD669\uBD84\uC11D",
+            "BD \uC804\uAD6D " + U.fmt(B.cA) + "\uAC1C\uC18C \uB3C4\uC785, \uBAA9\uD45C " + U.fmt(B.cT) + "\uAC1C\uC18C \uB300\uBE44 " + B.cPct + "% \uB2EC\uC131 \uBC0F \uBC1C\uC8FC \uBB3C\uB7C9 " + B.burn + "% \uC18C\uC9C4. ARi \uB294 " + U.fmt(A.cA) + "\uAC1C\uC18C \xB7 " + U.fmt(A.sA) + "\uAC1C, \uC18C\uC9C4\uC728 " + A.burn + "%."
+          ],
+          [
+            "2. \uC774\uC288\uC0AC\uD56D",
+            "BD \uC0AC\uC6A9\uCC98 \uC911 ARi \uBCD1\uD589 \uC0AC\uC6A9\uCC98\uB294 " + U.fmt(nCross) + "\uAC1C\uC18C(" + penet + "%)\uC5D0 \uBD88\uACFC\uD558\uBA70 " + U.fmt(nOpenBD) + "\uAC1C\uC18C\uAC00 \uBBF8\uB3C4\uC785. \uB300\uB9AC\uC0C1 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC801\uCCB4\uB85C \uCD94\uAC00 \uBC1C\uC8FC\uAC00 \uC5B4\uB824\uC6CC ARi \uBAA9\uD45C \uB2EC\uC131\uB960\uC774 " + A.cPct + "%\uC5D0 \uBA38\uBB34\uB984."
+          ],
+          [
+            "3. \uD574\uACB0\uBC29\uC548",
+            "\uBBF8\uB3C4\uC785 " + U.fmt(nOpenBD) + "\uAC1C\uC18C\uB97C BD \uBC1C\uC8FC\uB7C9 \uC21C\uC73C\uB85C \uC804\uD658 \uC6B0\uC120\uC21C\uC704\uB97C \uC7A1\uACE0, \uAE30\uC874 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC18C\uC9C4\uC744 \uCD94\uAC00 \uBC1C\uC8FC\uC758 \uC120\uD589 \uC870\uAC74\uC73C\uB85C \uAD00\uB9AC."
+          ]
+        ]);
       }
     }
     return /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_480px] gap-3 items-stretch" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 118 } }, "\uC9C0\uD45C"), COLS.map(function(c) {
@@ -14958,9 +15003,7 @@ ARI.pages = ARI.pages || {};
     const [db, setDb] = useState(function() {
       return S.build(S.getUI("product", "ARi"));
     });
-    const [page, setPage] = useState(function() {
-      return S.getUI("page", "dashboard");
-    });
+    const [page, setPage] = useState("report");
     const [params, setParams] = useState({});
     const [sidebar, setSidebar] = useState(true);
     const [open, setOpen] = useState(function() {
