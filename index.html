@@ -491,6 +491,7 @@ ARI.pages = ARI.pages || {};
       clock: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ React.createElement("polyline", { points: "12 6 12 12 16 14" })),
       edit: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("path", { d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" }), /* @__PURE__ */ React.createElement("path", { d: "M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z" })),
       shield: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" })),
+      lock: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2" }), /* @__PURE__ */ React.createElement("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })),
       pie: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("path", { d: "M21.21 15.89A10 10 0 1 1 8 2.83" }), /* @__PURE__ */ React.createElement("path", { d: "M22 12A10 10 0 0 0 12 2v10z" })),
       arrowUp: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("line", { x1: "12", y1: "19", x2: "12", y2: "5" }), /* @__PURE__ */ React.createElement("polyline", { points: "5 12 12 5 19 12" })),
       arrowDown: /* @__PURE__ */ React.createElement("svg", { ...P }, /* @__PURE__ */ React.createElement("line", { x1: "12", y1: "5", x2: "12", y2: "19" }), /* @__PURE__ */ React.createElement("polyline", { points: "19 12 12 19 5 12" }))
@@ -4160,13 +4161,82 @@ ARI.pages = ARI.pages || {};
       custN: (p.cust || []).length
     };
   }
+  const NOTE_KEY = "reportNote";
+  function NotePanel({ auto }) {
+    const S2 = ARI.store;
+    const ref = React.useRef(null);
+    const timer = React.useRef(null);
+    const [saved, setSaved] = useState(function() {
+      return S2.getUI(NOTE_KEY, null);
+    });
+    const [flash, setFlash] = useState("");
+    const text = saved === null || saved === void 0 ? auto : saved;
+    useEffect(function() {
+      const el = ref.current;
+      if (el && document.activeElement !== el && el.innerText !== text) el.innerText = text;
+    }, [text]);
+    function commit(v) {
+      const t = String(v).replace(/\u00a0/g, " ").trim();
+      if (t === auto.trim() || t === "") {
+        S2.setUI(NOTE_KEY, null);
+        setSaved(null);
+      } else {
+        S2.setUI(NOTE_KEY, t);
+        setSaved(t);
+      }
+      setFlash("\uC800\uC7A5\uB428");
+      setTimeout(function() {
+        setFlash("");
+      }, 1200);
+    }
+    function onInput(e) {
+      const v = e.currentTarget.innerText;
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(function() {
+        commit(v);
+      }, 700);
+    }
+    return /* @__PURE__ */ React.createElement("div", { style: { background: "#fdecec", border: "1px solid #f3d2d2" } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-1.5" }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold", style: { color: "#8a2b22", opacity: 0.8 } }, "\uD074\uB9AD\uD574\uC11C \uC218\uC815 \xB7 \uC790\uB3D9 \uC800\uC7A5"), /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        onClick: function() {
+          S2.setUI(NOTE_KEY, null);
+          setSaved(null);
+          if (ref.current) ref.current.innerText = auto;
+          setFlash("\uC790\uB3D9\uBB38\uAD6C");
+          setTimeout(function() {
+            setFlash("");
+          }, 1200);
+        },
+        className: "text-[9.5px] font-extrabold underline",
+        style: { color: "#8a2b22" }
+      },
+      "\uC790\uB3D9\uBB38\uAD6C\uB85C"
+    ) : null), /* @__PURE__ */ React.createElement(
+      "div",
+      {
+        ref,
+        contentEditable: true,
+        suppressContentEditableWarning: true,
+        "data-notr": "1",
+        onInput,
+        onBlur: function(e) {
+          if (timer.current) clearTimeout(timer.current);
+          commit(e.currentTarget.innerText);
+        },
+        className: "text-[11.5px] leading-[1.7] px-2.5 py-2 outline-none",
+        style: { color: "#8a2b22", minHeight: 60, whiteSpace: "pre-wrap" }
+      },
+      text
+    ));
+  }
   function ProdCompare({ db }) {
     const R2 = ARI.real || {};
     const A = prodStat(R2.ARi), B = prodStat(R2.BD);
     if (!A && !B) return null;
     const ROWS = [
       {
-        k: "\uAC70\uB798 \uAC1C\uC18C",
+        k: "\uAC70\uB798\uCC98",
         get: function(x) {
           return U.fmt(x.cA) + "\uAC1C\uC18C";
         },
@@ -4190,27 +4260,16 @@ ARI.pages = ARI.pages || {};
         }
       },
       {
-        k: "\uB300\uB9AC\uC0C1 \uBC1C\uC8FC",
+        k: "\uB300\uB9AC\uC0C1\uBC1C\uC8FC \uC18C\uC9C4\uC728",
         get: function(x) {
-          return U.fmt(x.dB) + "\uAC1C";
-        },
-        sub: function() {
-          return "\uBA54\uAC00\uC820 \u2192 \uB300\uB9AC\uC0C1";
-        },
-        pct: null
-      },
-      {
-        k: "\uBBF8\uC18C\uC9C4 \uC7AC\uACE0",
-        get: function(x) {
-          return U.fmt(x.stock) + "\uAC1C";
+          return x.burn + "%";
         },
         sub: function(x) {
-          return "\uC18C\uC9C4\uC728 " + x.burn + "%";
+          return "\uBC1C\uC8FC " + U.fmt(x.dB) + " \xB7 \uBBF8\uC18C\uC9C4 " + U.fmt(x.stock);
         },
         pct: function(x) {
           return x.burn;
-        },
-        inv: true
+        }
       }
     ];
     const COLS = [
@@ -4219,28 +4278,26 @@ ARI.pages = ARI.pages || {};
     ].filter(function(c) {
       return c.s;
     });
+    const ariIn = (R2.ARi && R2.ARi.cust || []).filter(function(c) {
+      return c.status === "\u5DF2\u8FDB\u5165";
+    });
+    const nCross = ariIn.filter(function(c) {
+      return c.useBD === "\u221A";
+    }).length;
     let read = "";
     if (A && B) {
-      read = "\uAC19\uC740 \uC601\uC5C5\uC870\uC9C1\xB7\uAC19\uC740 \uCE58\uACFC\uB97C \uC0C1\uB300\uB85C BD \uB294 \uBC1C\uC8FC\uBD84\uC758 " + B.burn + "%\uB97C \uC18C\uC9C4\uD558\uB294\uB370 ARi \uB294 " + A.burn + "%\uC785\uB2C8\uB2E4. ARi \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C\uAC00 \uB300\uB9AC\uC0C1 \uCC3D\uACE0\uC5D0 \uC7A0\uACA8 \uC788\uC73C\uBA70, \uC774 \uC0C1\uD0DC\uC5D0\uC11C\uB294 \uB300\uB9AC\uC0C1\uC774 \uCD94\uAC00 \uBC1C\uC8FC\uB97C \uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. ARi \uC758 \uB0AE\uC740 \uBAA9\uD45C \uB2EC\uC131\uB960(" + A.cPct + "%)\uC740 \uC2E0\uC81C\uD488\uC774\uB77C\uC11C\uAC00 \uC544\uB2C8\uB77C \uB123\uC5B4\uB454 \uBB3C\uB7C9\uC774 \uC548 \uBE60\uC9C0\uACE0 \uC788\uAE30 \uB54C\uBB38\uC785\uB2C8\uB2E4.";
+      const penet = B.cA ? Math.round(nCross / B.cA * 1e3) / 10 : 0;
+      read = "BD \uC804\uAD6D " + U.fmt(B.cA) + "\uAC1C\uC18C \uB3C4\uC785, \uBAA9\uD45C " + U.fmt(B.cT) + "\uAC1C\uC18C \uB300\uBE44 " + B.cPct + "% \uB2EC\uC131 \uBC0F \uBC1C\uC8FC \uBB3C\uB7C9 " + B.burn + "% \uC18C\uC9C4. \uBC18\uBA74, BD \uC0AC\uC6A9\uCC98 \uC911 ARi \uBCD1\uD589 \uC0AC\uC6A9\uCC98\uB294 " + U.fmt(nCross) + "\uAC1C\uC18C(" + penet + "%)\uC5D0 \uBD88\uACFC\uD558\uBA70, ARi \uC18C\uC9C4\uC728\uB3C4 " + A.burn + "%\uC5D0 \uADF8\uCE68. \uB300\uB9AC\uC0C1 \uC7AC\uACE0 " + U.fmt(A.stock) + "\uAC1C \uC801\uCCB4\uB85C \uCD94\uAC00 \uBC1C\uC8FC\uAC00 \uC5B4\uB824\uC6B4 \uC0C1\uD669\uC774\uBA70, ARi \uBAA9\uD45C \uB2EC\uC131\uB960 " + A.cPct + "%\uC758 \uC8FC\uC694 \uC6D0\uC778\uC740 \uAE30\uC874 \uACF5\uAE09 \uBB3C\uB7C9\uC758 \uC0AC\uC6A9\uCC98 \uC804\uD658 \uBC0F \uC18C\uC9C4 \uBD80\uC9C4\uC73C\uB85C \uD310\uB2E8.";
     }
-    return /* @__PURE__ */ React.createElement(Card, { title: "ARi \xB7 BD \uC8FC\uC694\uB0B4\uC6A9", desc: "\u300CARI\u5BA2\u6237\u300D\xB7\u300CBD\u5BA2\u6237\u300D \uC804\uAD6D \uD569\uACC4 \xB7 \uB450 \uC81C\uD488\uC744 \uAC19\uC740 \uC9C0\uD45C \uC815\uC758\uB85C \uB098\uB780\uD788 \uBE44\uAD50" }, /* @__PURE__ */ React.createElement("div", { className: "overflow-x-auto" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 96 } }, "\uC9C0\uD45C"), COLS.map(function(c) {
+    return /* @__PURE__ */ React.createElement(Card, { title: "ARi \xB7 BD \uC8FC\uC694\uB0B4\uC6A9", desc: "\u300CARI\u5BA2\u6237\u300D\xB7\u300CBD\u5BA2\u6237\u300D \uC804\uAD6D \uD569\uACC4 \xB7 \uAC70\uB798\uCC98 \xB7 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uBC1C\uC8FC \uC18C\uC9C4\uC728 3\uAC1C \uC9C0\uD45C" }, /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#141826", margin: "2px 0 12px" } }), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_260px] gap-3 items-start" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 118 } }, "\uC9C0\uD45C"), COLS.map(function(c) {
       return /* @__PURE__ */ React.createElement("th", { key: c.id, className: "num" }, /* @__PURE__ */ React.createElement("span", { style: { color: c.c } }, c.lab), /* @__PURE__ */ React.createElement("span", { className: "text-[10px] font-semibold ml-1", style: { color: "#141826" } }, c.note));
     }))), /* @__PURE__ */ React.createElement("tbody", null, ROWS.map(function(r) {
       return /* @__PURE__ */ React.createElement("tr", { key: r.k }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.k)), COLS.map(function(c) {
         const p = r.pct ? r.pct(c.s) : null;
-        const bad = p !== null && (r.inv ? p < 60 : p < 60);
+        const bad = p !== null && p < 60;
         return /* @__PURE__ */ React.createElement("td", { key: c.id, className: "num" }, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold", style: Object.assign({ color: "#16234a" }, U.NUM) }, r.get(c.s)), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-bold", style: { color: bad ? "#c0392f" : "#141826" } }, r.sub(c.s)));
       }));
-    })))), read ? /* @__PURE__ */ React.createElement(
-      "div",
-      {
-        className: "text-[11.5px] leading-[1.65] mt-2.5 px-2.5 py-2",
-        style: { background: "#fdecec", border: "1px solid #f3d2d2", color: "#8a2b22" }
-      },
-      /* @__PURE__ */ React.createElement("b", null, "\uD310\uB2E8"),
-      " \xB7 ",
-      read
-    ) : null);
+    }))), read ? /* @__PURE__ */ React.createElement(NotePanel, { auto: read }) : null));
   }
   const HQ_SEQ6 = ["\u6D59\u6C5F\u672C\u90E8", "\u534E\u4E1C\u672C\u90E8", "\u534E\u4E2D\u672C\u90E8", "\u534E\u897F\u672C\u90E8", "\u534E\u5357\u672C\u90E8", "\u534E\u5317\u672C\u90E8"];
   const HQ_KO6 = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
@@ -4338,80 +4395,99 @@ ARI.pages = ARI.pages || {};
       );
     }));
   }
-  function Penetration({ db }) {
+  function HqGoal({ db, sys }) {
     const R2 = ARI.real || {};
-    const [prod, setProd] = useState(db.product === "BD" ? "BD" : "ARi");
-    useEffect(function() {
-      setProd(db.product === "BD" ? "BD" : "ARi");
-    }, [db.product]);
-    const isAri = prod === "ARi";
-    const sumBy = function(arr, hq, k) {
-      return C.sum((arr || []).filter(function(a) {
+    const P = R2[sys];
+    if (!P || !P.area || !P.area.length) return null;
+    const isAri = sys === "ARi";
+    const sumBy = function(hq, k) {
+      return C.sum((P.area || []).filter(function(a) {
         return a.hq === hq;
       }), function(a) {
         return U.n(a[k]);
       });
     };
-    const provHq = (function() {
-      const m = {};
-      [].concat(R2.ARi && R2.ARi.org || [], R2.BD && R2.BD.org || []).forEach(function(o) {
-        if (o.prov && !m[o.prov]) m[o.prov] = o.hq;
-      });
-      return m;
-    })();
-    const ariIn = (R2.ARi && R2.ARi.cust || []).filter(function(c) {
-      return c.status === "\u5DF2\u8FDB\u5165";
-    });
-    const withBD = {}, noBD = {};
-    ariIn.forEach(function(c) {
-      const hq = provHq[c.prov];
-      if (!hq) return;
-      const t = c.useBD === "\u221A" ? withBD : noBD;
-      t[hq] = (t[hq] || 0) + 1;
-    });
-    const nNew = C.sum(HQ_SEQ6, function(hq) {
-      return noBD[hq] || 0;
-    });
     const rows = HQ_SEQ6.map(function(hq) {
-      const a = isAri ? sumBy(R2.BD && R2.BD.area, hq, "cA") : sumBy(R2.BD && R2.BD.area, hq, "cT");
-      const b = isAri ? withBD[hq] || 0 : sumBy(R2.BD && R2.BD.area, hq, "cA");
+      const cT = sumBy(hq, "cT"), cA = sumBy(hq, "cA");
       return {
         hq: HQ_KO6[hq] || hq,
-        a,
-        b,
-        has: a > 0,
-        rate: a ? Math.round(b / a * 1e3) / 10 : 0
+        a: cT,
+        b: cA,
+        has: cT > 0,
+        sA: sumBy(hq, "sA"),
+        dB: sumBy(hq, "dB"),
+        rate: cT ? Math.round(cA / cT * 1e3) / 10 : 0
       };
     });
     if (!rows.some(function(r) {
       return r.has;
     })) return null;
-    const ta = C.sum(rows, function(r) {
-      return r.a;
+    const T = {
+      a: C.sum(rows, function(r) {
+        return r.a;
+      }),
+      b: C.sum(rows, function(r) {
+        return r.b;
+      }),
+      sA: C.sum(rows, function(r) {
+        return r.sA;
+      }),
+      dB: C.sum(rows, function(r) {
+        return r.dB;
+      })
+    };
+    const pct = function(x, y) {
+      return y ? Math.round(x / y * 1e3) / 10 : 0;
+    };
+    const ariIn = (R2.ARi && R2.ARi.cust || []).filter(function(c) {
+      return c.status === "\u5DF2\u8FDB\u5165";
     });
-    const tb = C.sum(rows, function(r) {
-      return r.b;
-    });
-    const tRate = ta ? Math.round(tb / ta * 1e3) / 10 : 0;
-    const tgt = isAri ? 20 : 100;
+    const nCross = ariIn.filter(function(c) {
+      return c.useBD === "\u221A";
+    }).length;
+    const nFresh = ariIn.length - nCross;
+    const bdA = R2.BD && R2.BD.tot ? U.n(R2.BD.tot.cA) : 0;
+    const note = isAri ? "\uC804\uAD6D " + U.fmt(T.b) + "\uAC1C\uC18C \xB7 \uC5F0\uAC04\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uC774 \uC911 " + U.fmt(nCross) + "\uAC1C\uC18C\uB294 BD \uAC70\uB798\uCC98\uC774\uACE0 " + U.fmt(nFresh) + "\uAC1C\uC18C\uB294 BD \uB97C \uC4F0\uC9C0 \uC54A\uB294 \uC2E0\uADDC \uAC1C\uCC99\uCC98\uC785\uB2C8\uB2E4." : "\uC804\uAD6D " + U.fmt(T.b) + "\uAC1C\uC18C \xB7 \uC5F0\uAC04\uBAA9\uD45C " + U.fmt(T.a) + " \uB300\uBE44 " + pct(T.b, T.a) + "%. \uC774 \uC911 ARi \uB97C \uD568\uAED8 \uC4F0\uB294 \uACF3\uC740 " + U.fmt(nCross) + "\uAC1C\uC18C(" + pct(nCross, bdA) + "%)\uBFD0\uC774\uACE0, " + U.fmt(Math.max(0, bdA - nCross)) + "\uAC1C\uC18C\uAC00 ARi \uBBF8\uB3C4\uC785 \uC0C1\uD0DC\uC785\uB2C8\uB2E4.";
+    const COLS = [
+      { k: "\uAC70\uB798\uCC98", v: function(r) {
+        return U.fmt(r.b);
+      } },
+      { k: "\uD310\uB9E4\uC218\uB7C9", v: function(r) {
+        return U.fmt(r.sA);
+      } },
+      { k: "\uB300\uB9AC\uC0C1\uBC1C\uC8FC", v: function(r) {
+        return U.fmt(r.dB);
+      } },
+      { k: "\uC18C\uC9C4\uC728", v: function(r) {
+        return pct(r.sA, r.dB) + "%";
+      }, warn: function(r) {
+        return pct(r.sA, r.dB) < 60;
+      } }
+    ];
     return /* @__PURE__ */ React.createElement(
       Card,
       {
-        rightPos: "left",
-        right: /* @__PURE__ */ React.createElement(
-          Seg,
-          {
-            value: prod,
-            onChange: setProd,
-            options: [{ value: "ARi", label: "ARi" }, { value: "BD", label: "BD" }]
-          }
-        ),
-        title: isAri ? "\uBCF8\uBD80\uBCC4 ARi \uCE68\uD22C\uC728" : "\uBCF8\uBD80\uBCC4 BD \uBAA9\uD45C \uB2EC\uC131\uB960",
-        desc: isAri ? "BD \uAC70\uB798\uCC98 \uC911 ARi \uB3C4 \uB3C4\uC785\uD55C \uAC1C\uC18C \xF7 BD \uAC70\uB798 \uAC1C\uC18C \xB7 BD \uAC00 \uC774\uBBF8 \uBB38\uC744 \uC5F4\uC5B4 \uB454 \uACC4\uC815\uC5D0 ARi \uAC00 \uC5BC\uB9C8\uB098 \uB530\uB77C \uB4E4\uC5B4\uAC14\uB294\uAC00" : "BD \uAC70\uB798 \uAC1C\uC18C \xF7 BD \uC5F0\uAC04 \uBAA9\uD45C \uAC1C\uC18C"
+        title: "\uBCF8\uBD80\uBCC4 \uBAA9\uD45C \uB2EC\uC131\uB960 \u2014 " + sys,
+        desc: "\uAC70\uB798\uCC98 \xF7 \uC5F0\uAC04\uBAA9\uD45C \uAC1C\uC18C \xB7 \uC544\uB798 \uD45C\uB294 \uC774 \uC2DC\uC2A4\uD15C\uC758 \uBCF8\uBD80\uBCC4 \uAC70\uB798\uCC98 \xB7 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uBC1C\uC8FC \xB7 \uC18C\uC9C4\uC728"
       },
       /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#141826", margin: "2px 0 14px" } }),
-      /* @__PURE__ */ React.createElement(HqBars, { rows, tgt, h: 141, frac: true }),
-      /* @__PURE__ */ React.createElement("div", { style: { marginTop: 12 } }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 70 } }, "\uAD6C\uBD84"), /* @__PURE__ */ React.createElement("th", { className: "num" }, isAri ? "BD \uAC70\uB798\uCC98" : "BD \uAC70\uB798"), /* @__PURE__ */ React.createElement("th", { className: "num" }, isAri ? "ARi \uB3C4\uC785" : "BD \uC5F0\uAC04 \uBAA9\uD45C"), /* @__PURE__ */ React.createElement("th", { className: "num" }, isAri ? "ARi \uBBF8\uB3C4\uC785" : "\uC794\uC5EC"), /* @__PURE__ */ React.createElement("th", { className: "num", style: { width: 90 } }, isAri ? "\uCE68\uD22C\uC728" : "\uB2EC\uC131\uB960"))), /* @__PURE__ */ React.createElement("tbody", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800, color: "#141826" } }, U.fmt(isAri ? ta : tb), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800, color: "#141826" } }, U.fmt(isAri ? tb : ta), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800, color: "#141826" } }, U.fmt(Math.max(0, ta - tb)), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num", style: Object.assign({ fontWeight: 800, color: tRate >= tgt ? "#16794a" : "#c0392f" }, U.NUM) }, tRate, "%")))), isAri ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11.5, lineHeight: 1.6, marginTop: 7, color: "#141826" } }, "ARi \uC9C4\uC785 ", /* @__PURE__ */ React.createElement("b", null, U.fmt(tb + nNew), "\uAC1C\uC18C"), " \uC911 ", /* @__PURE__ */ React.createElement("b", null, U.fmt(tb), "\uAC1C\uC18C"), "\uAC00 BD \uAC70\uB798\uCC98\uC774\uACE0, \uB098\uBA38\uC9C0 ", /* @__PURE__ */ React.createElement("b", null, U.fmt(nNew), "\uAC1C\uC18C"), "\uB294 BD \uB97C \uC4F0\uC9C0 \uC54A\uB294 ", /* @__PURE__ */ React.createElement("b", null, "\uC2E0\uADDC \uAC1C\uCC99\uCC98"), "\uC785\uB2C8\uB2E4. \uCE68\uD22C\uC728\uC740 \uC55E\uC758 ", U.fmt(tb), "\uAC1C\uC18C\uB9CC \uBD84\uC790\uB85C \uC501\uB2C8\uB2E4. (\uC6D0\uBCF8 \u300C\u662F\u5426\u4F7F\u7528BD\u300D \uAE30\uC900)") : null)
+      /* @__PURE__ */ React.createElement(HqBars, { rows, tgt: 100, h: 141, frac: true }),
+      /* @__PURE__ */ React.createElement("div", { style: { marginTop: 12 } }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { width: "100%" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { style: { width: 58 } }, "\uBCF8\uBD80"), COLS.map(function(c) {
+        return /* @__PURE__ */ React.createElement("th", { key: c.k, className: "num" }, c.k);
+      }))), /* @__PURE__ */ React.createElement("tbody", null, rows.map(function(r) {
+        return /* @__PURE__ */ React.createElement("tr", { key: r.hq }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.hq)), COLS.map(function(c) {
+          return /* @__PURE__ */ React.createElement(
+            "td",
+            {
+              key: c.k,
+              className: "num",
+              style: { color: c.warn && c.warn(r) ? "#c0392f" : "#141826", fontWeight: 700 }
+            },
+            c.v(r)
+          );
+        }));
+      })), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.b))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.sA))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.dB))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: pct(T.sA, T.dB) < 60 ? "#c0392f" : "#141826" } }, /* @__PURE__ */ React.createElement("b", null, pct(T.sA, T.dB), "%")))))),
+      /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px]", style: { lineHeight: 1.65, marginTop: 8, color: "#141826" } }, note)
     );
   }
   function EntryPath({ db }) {
@@ -5215,35 +5291,9 @@ ARI.pages = ARI.pages || {};
         title: db.productLabel + " \uB7F0\uCE6D \uC131\uACFC \uB300\uC2DC\uBCF4\uB4DC",
         desc: "\uC8FC\uAC04\uBCF4\uACE0 " + ctx.week.slice(5) + " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C " + (base.asOf || ARI.real.asOf) + (prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "")
       },
-      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3 items-start" }, /* @__PURE__ */ React.createElement(ProdCompare, { db }), /* @__PURE__ */ React.createElement(Penetration, { db })),
-      /* @__PURE__ */ React.createElement("div", { className: "ui-sec mt-1" }, /* @__PURE__ */ React.createElement("span", { className: "ui-sec-t" }, "\uAD00\uB9AC\uD3EC\uC778\uD2B8"), /* @__PURE__ */ React.createElement("span", { className: "ui-sec-l" })),
-      /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 xl:grid-cols-4 gap-2 items-stretch" }, MP.map(function(m, i) {
-        const w = Math.max(2, Math.min(100, m.cur / m.tgt * 100));
-        return (
-          /* 4장의 높이·막대 위치를 맞추기 위해 세로 flex 로 짜고,
-             제목 영역은 고정 높이를 줘서 두 줄 제목이 있어도 아래가 밀리지 않게 한다. */
-          /* @__PURE__ */ React.createElement("div", { key: i, className: "flex flex-col", style: { padding: "10px 12px" } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start gap-2", style: { minHeight: 40 } }, /* @__PURE__ */ React.createElement(
-            "span",
-            {
-              className: "shrink-0 w-[19px] h-[19px] rounded-full text-[10.5px] font-extrabold flex items-center justify-center",
-              style: { background: "#141826", color: "#fff" }
-            },
-            i + 1
-          ), /* @__PURE__ */ React.createElement("span", { className: "text-[12.5px] font-extrabold flex-1 leading-[1.35]", style: { color: "#141826" } }, m.t), /* @__PURE__ */ React.createElement(
-            "span",
-            {
-              className: "text-[10px] font-extrabold rounded-[2px] px-1.5 py-[1px] shrink-0",
-              style: {
-                background: m.na ? "#f2f4f6" : "#fdecec",
-                color: m.na ? "#667085" : "#c0392f",
-                border: "1px solid " + (m.na ? "#e6e9ef" : "#c0392f55")
-              }
-            },
-            m.na ? "\uCE21\uC815 \uC900\uBE44" : "\uBBF8\uB2EC"
-          )), /* @__PURE__ */ React.createElement("div", { className: "flex items-end gap-5", style: { margin: "2px 0 8px" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold", style: { color: "#141826" } }, "\uC2E4\uC801"), /* @__PURE__ */ React.createElement("div", { className: "text-[19px] font-extrabold leading-none", style: Object.assign({ color: m.na ? "#c3cbd2" : "#c0392f" }, U.NUM) }, m.na ? "\u2013" : m.cur + "%")), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold", style: { color: "#141826" } }, "\uBAA9\uD45C"), /* @__PURE__ */ React.createElement("div", { className: "text-[19px] font-extrabold leading-none", style: Object.assign({ color: "#141826" }, U.NUM) }, m.tgt, "%"))), /* @__PURE__ */ React.createElement("div", { className: "mt-auto" }, m.hq && m.hq.rows.length ? /* @__PURE__ */ React.createElement(HqBars, { rows: m.hq.rows, tgt: m.tgt, h: 52 }) : /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-bold flex items-center justify-center", style: { height: 82, color: "#c3cbd2" } }, "\uBCF8\uBD80\uBCC4 \uB370\uC774\uD130 \uC5C6\uC74C")))
-        );
-      }))),
-      db.product === "BD" ? null : /* @__PURE__ */ React.createElement(EntryPath, { db })
+      /* @__PURE__ */ React.createElement(ProdCompare, { db }),
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3 items-start" }, /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "ARi" }), /* @__PURE__ */ React.createElement(HqGoal, { db, sys: "BD" })),
+      false ? /* @__PURE__ */ React.createElement(EntryPath, { db }) : null
     );
   };
 })();
@@ -9681,7 +9731,7 @@ ARI.pages = ARI.pages || {};
       return v.key === view;
     })[0] || VIEWS[0];
     const Inner = cur.pg ? ARI.pages[cur.pg] : null;
-    return /* @__PURE__ */ React.createElement(Page, { title: "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0", desc: "ARi \xB7 BD \uB300\uBE44 \uD604\uD669\uACFC \uC774\uBC88 \uBD84\uAE30 \uAD00\uB9AC\uD3EC\uC778\uD2B8" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-3 min-w-0" }, Inner ? /* @__PURE__ */ React.createElement(Inner, { ctx, db, embed: true }) : /* @__PURE__ */ React.createElement(ReportView, { data, week, hq })));
+    return /* @__PURE__ */ React.createElement(Page, { title: "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0", desc: "ARi \xB7 BD \uB300\uBE44 \uD604\uD669\uACFC \uC2DC\uC2A4\uD15C\uBCC4 \uBCF8\uBD80 \uBAA9\uD45C \uB2EC\uC131\uB960" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-3 min-w-0" }, Inner ? /* @__PURE__ */ React.createElement(Inner, { ctx, db, embed: true }) : /* @__PURE__ */ React.createElement(ReportView, { data, week, hq })));
   };
 })();
 
@@ -11506,7 +11556,19 @@ ARI.pages = ARI.pages || {};
         justifyContent: "flex-end",
         paddingRight: 10
       } }, w > 16 ? /* @__PURE__ */ React.createElement("span", { className: "text-white font-extrabold text-[14px]", style: U.NUM }, U.fmt(f.v), /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] font-bold opacity-80 ml-0.5" }, f.u)) : null), w <= 16 ? /* @__PURE__ */ React.createElement("span", { className: "absolute font-extrabold text-[14px]", style: Object.assign({ left: "calc(" + w + "% + 8px)", top: 5, color: "#1e2f5e" }, U.NUM) }, U.fmt(f.v), /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] font-bold text-slate-400 ml-0.5" }, f.u)) : null), /* @__PURE__ */ React.createElement("div", { className: "text-right shrink-0", style: { width: 92 } }, /* @__PURE__ */ React.createElement("div", { className: "text-[13px] font-extrabold", style: Object.assign({ color: "#1e2f5e" }, U.NUM) }, Math.round(w * 10) / 10, "%"), /* @__PURE__ */ React.createElement("div", { className: "text-[10px] text-slate-400 -mt-0.5" }, i ? "\uCC38\uC11D \uB300\uBE44" : "\uD65C\uB3D9 " + U.fmt(done.length) + "\uD68C"))));
-    }))) : null, /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "text-[13.5px] font-extrabold leading-[1.5] mb-0.5", style: { color: "#16234a" } }, "\uC0C1\uC704 3\uAC1C \uC720\uD615\uC774 \uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0 ", U.fmt(attended), "\uBA85 \uC911 ", U.pctStr(C.conv(C.sum(catRank.slice(0, 3), function(r) {
+    }))) : null, /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "text-[13.5px] font-extrabold leading-[1.5] mb-0.5", style: { color: "#16234a" } }, monCat.hiName, " \uAD50\uC721 ", U.fmt(monCat.best), "\uD68C\uB85C \uCD5C\uB2E4 \u2014 \uB204\uC801 ", U.fmt(catEvN), "\uD68C \uAC1C\uCD5C"), /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] text-slate-500 mb-1" }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uC6D4\uBCC4 \uC720\uD615\uBCC4 \uAC1C\uCD5C \uAC74\uC218(\uD68C) \xB7 \uB9C9\uB300 \uC704 \uC22B\uC790 = \uC6D4 \uD569\uACC4"), /* @__PURE__ */ React.createElement("div", { style: { height: 18 } }), /* @__PURE__ */ React.createElement(
+      V.StackBar,
+      {
+        data: monCat.rows,
+        keys: monCat.keys,
+        w: 620,
+        height: 330,
+        hi: monCat.hi,
+        legendLeft: true,
+        legendW: 96,
+        hiText: monCat.hiName + " \uCD5C\uB2E4 " + U.fmt(monCat.best) + "\uD68C"
+      }
+    )), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "text-[13.5px] font-extrabold leading-[1.5] mb-0.5", style: { color: "#16234a" } }, "\uC0C1\uC704 3\uAC1C \uC720\uD615\uC774 \uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0 ", U.fmt(attended), "\uBA85 \uC911 ", U.pctStr(C.conv(C.sum(catRank.slice(0, 3), function(r) {
       return U.n(r.v);
     }), attended)), "\uB97C \uC810\uC720"), /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] text-slate-500 mb-1" }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uC720\uD615\uBCC4 \uCD1D \uCC38\uC11D\uC778\uC6D0(\uBA85) \uC21C\uC704"), /* @__PURE__ */ React.createElement("div", { style: { height: 18 } }), /* @__PURE__ */ React.createElement(
       V.RankBar,
@@ -11518,18 +11580,6 @@ ARI.pages = ARI.pages || {};
         maxLabel: 7,
         callout: ["1\uC704 '" + (catRank[0] ? catRank[0].name : "-") + "'\uC774", "\uC804\uCCB4 \uCC38\uC11D\uC778\uC6D0\uC758", (attended && catRank[0] ? Math.round(U.n(catRank[0].v) / attended * 100) : 0) + "%\uB97C \uCC28\uC9C0"],
         calloutFoot: "\uCC38\uC11D\uC778\uC6D0 " + U.fmt(attended) + "\uBA85"
-      }
-    )), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { className: "text-[13.5px] font-extrabold leading-[1.5] mb-0.5", style: { color: "#16234a" } }, monCat.hiName, " \uAD50\uC721 ", U.fmt(monCat.best), "\uD68C\uB85C \uCD5C\uB2E4 \u2014 \uB204\uC801 ", U.fmt(catEvN), "\uD68C \uAC1C\uCD5C"), /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] text-slate-500 mb-1" }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uC6D4\uBCC4 \uC720\uD615\uBCC4 \uAC1C\uCD5C \uAC74\uC218(\uD68C) \xB7 \uB9C9\uB300 \uC704 \uC22B\uC790 = \uC6D4 \uD569\uACC4"), /* @__PURE__ */ React.createElement("div", { style: { height: 18 } }), /* @__PURE__ */ React.createElement(
-      V.StackBar,
-      {
-        data: monCat.rows,
-        keys: monCat.keys,
-        w: 620,
-        height: 330,
-        hi: monCat.hi,
-        legendLeft: true,
-        legendW: 96,
-        hiText: monCat.hiName + " \uCD5C\uB2E4 " + U.fmt(monCat.best) + "\uD68C"
       }
     ))) : null, SH.extras ? /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-3 gap-3" }, /* @__PURE__ */ React.createElement(Card, { title: "\uC720\uD615\uBCC4 \uC2E0\uADDC\uAC1C\uBC1C \uC131\uACFC", desc: "\uB9C9\uB300=\uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D(\uAC1C) \xB7 \uC6B0\uCE21=\uC2E0\uADDC\uAC1C\uBC1C\uB960(\uC2E0\uADDC\uAC1C\uBC1C\xF7\uC2E0\uADDC\uACE0\uAC1D)" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-1.5" }, devRank.map(function(r) {
       return /* @__PURE__ */ React.createElement("div", { key: r.name, className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] text-slate-700 shrink-0", style: { width: 76 } }, r.name), /* @__PURE__ */ React.createElement("div", { className: "flex-1 rounded", style: { background: "#e8ecf3", height: 16, position: "relative" } }, /* @__PURE__ */ React.createElement("div", { style: { width: (devMax ? Math.max(3, r.newdev / devMax * 100) : 3) + "%", height: "100%", background: "#3d6cca", borderRadius: 4 } })), /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold text-slate-800 text-right shrink-0", style: Object.assign({ width: 30 }, U.NUM) }, U.fmt(r.newdev)), /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] text-slate-500 text-right shrink-0", style: Object.assign({ width: 42 }, U.NUM) }, r.devRate, "%"));
@@ -13745,7 +13795,7 @@ ARI.pages = ARI.pages || {};
       { key: "conv", label: "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74" },
       { key: "weekly", label: "\uD310\uB9E4\uD604\uD669" }
     ] },
-    { id: "g_st", label: "\uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0", icon: "layers", items: [
+    { id: "g_st", label: "\uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0", icon: "layers", locked: true, items: [
       { key: "market", label: "\uC2DC\uC7A5\xB7\uC804\uB7B5 \uBD84\uC11D" },
       { key: "fourp", label: "\uC81C\uD488\xB74P \uC804\uB7B5" },
       { key: "launch", label: "\uB7F0\uCE6D\uC2E4\uD589\uD504\uB85C\uC138\uC2A4" }
@@ -13769,9 +13819,19 @@ ARI.pages = ARI.pages || {};
     fourp: "Product \xB7 Price \xB7 Place \xB7 Promotion \uC804\uB7B5 \uAD00\uB9AC",
     launch: "D-180~D+90 \uC900\uBE44\uC77C\uC815\uACFC \uC778\uD5C8\uAC00 Gate \uD310\uC815",
     issues: "\uAC1C\uC120\uACFC\uC81C\xB7\uC784\uC0C1\uD53C\uB4DC\uBC31\uC744 \uC774\uC288\uB85C \uD1B5\uD569 \uAD00\uB9AC\uD558\uACE0 \uD6A8\uACFC\uB97C \uAC80\uC99D",
-    report: "\uAD50\uC721 \u2192 \uD310\uB9E4 \uC804\uD658 \uD37C\uB110\uACFC \uC774\uBC88 \uBD84\uAE30 \uAD00\uB9AC\uD3EC\uC778\uD2B8",
+    report: "ARi \xB7 BD \uB300\uBE44 \uD604\uD669\uACFC \uC2DC\uC2A4\uD15C\uBCC4 \uBCF8\uBD80 \uBAA9\uD45C \uB2EC\uC131\uB960",
     admin: "\uD655\uC815 \uACC4\uD68D\uAC12 \xB7 \uAD8C\uD55C \xB7 \uB370\uC774\uD130 \uC815\uD569\uC131 \uAD00\uB9AC"
   };
+  const AUTH_KEY = "ARI_AUTH_V1";
+  function fp_(s) {
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = (h * 33 ^ s.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  }
+  const AUTH_FP = "1lppj4r|mq894k";
+  function checkLogin(id, pw) {
+    return AUTH_FP === fp_(String(id).trim().toLowerCase()) + "|" + fp_(String(pw));
+  }
   const PRODUCTS = [
     { key: "ARi", label: "ARi", ready: true, desc: "\uC804\uCE58\uBD80 \uD2B9\uD654 \xB7 2026.6 \uB7F0\uCE6D" },
     { key: "BD", label: "BD", ready: true, desc: "\uC8FC\uB825 \uC81C\uD488 \xB7 2026\uB144 2\uB144\uCC28" },
@@ -13801,6 +13861,17 @@ ARI.pages = ARI.pages || {};
     });
     const [langRev, setLangRev] = useState(0);
     const [help, setHelp] = useState(false);
+    const [authed, setAuthed] = useState(function() {
+      try {
+        return localStorage.getItem(AUTH_KEY) === AUTH_FP;
+      } catch (e) {
+        return false;
+      }
+    });
+    const [loginOpen, setLoginOpen] = useState(false);
+    const [lgId, setLgId] = useState("");
+    const [lgPw, setLgPw] = useState("");
+    const [lgErr, setLgErr] = useState("");
     const [toast, setToast] = useState(null);
     const [tick, setTick] = useState(0);
     const fileRef = useRef(null);
@@ -13888,6 +13959,47 @@ ARI.pages = ARI.pages || {};
       if (l === "ko") setLangRev(function(n) {
         return n + 1;
       });
+    }
+    const VIS_GROUPS = GROUPS.filter(function(g) {
+      return authed || !g.locked;
+    });
+    const lockedKeys = {};
+    GROUPS.forEach(function(g) {
+      if (g.locked) g.items.forEach(function(i) {
+        lockedKeys[i.key] = 1;
+      });
+    });
+    useEffect(function() {
+      if (!authed && lockedKeys[page]) go("report");
+    }, [authed, page]);
+    function doLogin() {
+      if (checkLogin(lgId, lgPw)) {
+        try {
+          localStorage.setItem(AUTH_KEY, AUTH_FP);
+        } catch (e) {
+        }
+        setAuthed(true);
+        setLoginOpen(false);
+        setLgErr("");
+        setLgId("");
+        setLgPw("");
+        setOpen(function(o) {
+          const n = Object.assign({}, o);
+          n.g_st = true;
+          return n;
+        });
+        say("\uB85C\uADF8\uC778\uD588\uC2B5\uB2C8\uB2E4. \uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0\uAC00 \uC5F4\uB838\uC2B5\uB2C8\uB2E4.");
+      } else {
+        setLgErr("\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uB9DE\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+      }
+    }
+    function doLogout() {
+      try {
+        localStorage.removeItem(AUTH_KEY);
+      } catch (e) {
+      }
+      setAuthed(false);
+      say("\uB85C\uADF8\uC544\uC6C3\uD588\uC2B5\uB2C8\uB2E4.");
     }
     const weekIdx = Math.max(0, db.weeks.findIndex(function(w) {
       return w.key === week;
@@ -14131,20 +14243,7 @@ ARI.pages = ARI.pages || {};
         style: { background: "linear-gradient(135deg,#3d6cca,#5b8ce0)" }
       },
       /* @__PURE__ */ React.createElement(Icon, { name: "box", className: "w-[17px] h-[17px] text-white" })
-    ), /* @__PURE__ */ React.createElement("div", { className: "flex-1 leading-tight min-w-0", "data-notr": "1" }, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold tracking-[-.3px] side-t1" }, "MGG PM"), /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold tracking-[1px] side-t3" }, "MEGAGEN CHINA")), /* @__PURE__ */ React.createElement("button", { onClick: () => setSidebar(false), className: "side-t3 hover:opacity-100 p-0.5" }, /* @__PURE__ */ React.createElement(Icon, { name: "chevronLeft", className: "w-4 h-4" }))), /* @__PURE__ */ React.createElement("div", { className: "px-3 pt-3 pb-2.5 side-div" }, /* @__PURE__ */ React.createElement("div", { className: "ui-eyebrow side-t3 mb-1.5", style: { fontSize: "9.45px" } }, "\uC81C\uD488"), /* @__PURE__ */ React.createElement("div", { className: "relative" }, /* @__PURE__ */ React.createElement(
-      "select",
-      {
-        value: product,
-        onChange: (e) => pickProduct(e.target.value),
-        "data-notr": "1",
-        className: "side-sel w-full appearance-none rounded-lg pl-3 pr-8 py-[7px] text-[13px] font-bold outline-none cursor-pointer"
-      },
-      PRODUCTS.map(function(p) {
-        return /* @__PURE__ */ React.createElement("option", { key: p.key, value: p.key }, p.label, p.ready ? "" : " (\uC900\uBE44\uC911)");
-      })
-    ), /* @__PURE__ */ React.createElement(Icon, { name: "chevronDown", className: "w-4 h-4 side-t3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" })), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] side-t3 mt-1.5 leading-snug" }, (PRODUCTS.filter(function(p) {
-      return p.key === product;
-    })[0] || {}).desc)), /* @__PURE__ */ React.createElement("div", { className: "flex-1 py-2 px-2" }, GROUPS.map(function(g) {
+    ), /* @__PURE__ */ React.createElement("div", { className: "flex-1 leading-tight min-w-0", "data-notr": "1" }, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold tracking-[-.3px] side-t1" }, "MGG PM"), /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold tracking-[1px] side-t3" }, "MEGAGEN CHINA")), /* @__PURE__ */ React.createElement("button", { onClick: () => setSidebar(false), className: "side-t3 hover:opacity-100 p-0.5" }, /* @__PURE__ */ React.createElement(Icon, { name: "chevronLeft", className: "w-4 h-4" }))), /* @__PURE__ */ React.createElement("div", { className: "flex-1 py-2 px-2" }, VIS_GROUPS.map(function(g, gi) {
       const isOpen = !!open[g.id];
       const hasActive = g.items.some(function(i) {
         return i.key === page;
@@ -14152,7 +14251,20 @@ ARI.pages = ARI.pages || {};
       const gBadge = g.items.reduce(function(a, i) {
         return a + (BADGES[i.key] || 0);
       }, 0);
-      return /* @__PURE__ */ React.createElement("div", { key: g.id, className: "mb-0.5" }, /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ React.createElement("div", { key: g.id, className: "mb-0.5" }, g.id === "g_op" ? /* @__PURE__ */ React.createElement("div", { className: "px-1 pt-1 pb-3" }, /* @__PURE__ */ React.createElement("div", { className: "ui-eyebrow side-t3 mb-1.5", style: { fontSize: "9.45px" } }, "\uC2DC\uC2A4\uD15C"), /* @__PURE__ */ React.createElement("div", { className: "relative" }, /* @__PURE__ */ React.createElement(
+        "select",
+        {
+          value: product,
+          onChange: (e) => pickProduct(e.target.value),
+          "data-notr": "1",
+          className: "side-sel w-full appearance-none rounded-lg pl-3 pr-8 py-[7px] text-[13px] font-bold outline-none cursor-pointer"
+        },
+        PRODUCTS.map(function(p) {
+          return /* @__PURE__ */ React.createElement("option", { key: p.key, value: p.key }, p.label, p.ready ? "" : " (\uC900\uBE44\uC911)");
+        })
+      ), /* @__PURE__ */ React.createElement(Icon, { name: "chevronDown", className: "w-4 h-4 side-t3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" })), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] side-t3 mt-1.5 leading-snug" }, (PRODUCTS.filter(function(p) {
+        return p.key === product;
+      })[0] || {}).desc)) : null, /* @__PURE__ */ React.createElement(
         "button",
         {
           onClick: () => toggleGroup(g.id),
@@ -14351,7 +14463,20 @@ ARI.pages = ARI.pages || {};
         /* @__PURE__ */ React.createElement(Icon, { name: t.icon, className: "shrink-0", style: { width: "11.2px", height: "11.2px" } }),
         t.l
       );
-    }), /* @__PURE__ */ React.createElement("div", { className: "relative", ref: moreRef }, /* @__PURE__ */ React.createElement(
+    }), /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        onClick: () => authed ? doLogout() : (setLgErr(""), setLoginOpen(true)),
+        title: authed ? "\uB85C\uADF8\uC544\uC6C3" : "\uB85C\uADF8\uC778\uD558\uBA74 \uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0\uAC00 \uC5F4\uB9BD\uB2C8\uB2E4",
+        style: { gap: "3.2px", padding: "4px 6.4px", fontSize: "9.2px", borderRadius: "5px" },
+        className: U.cls(
+          "inline-flex items-center border font-bold transition-all whitespace-nowrap shrink-0",
+          authed ? "border-emerald-600 bg-emerald-50 text-emerald-700" : "border-slate-300 bg-white text-slate-600 hover:bg-slate-50"
+        )
+      },
+      /* @__PURE__ */ React.createElement(Icon, { name: authed ? "check" : "lock", className: "shrink-0", style: { width: "11.2px", height: "11.2px" } }),
+      authed ? "\uB85C\uADF8\uC544\uC6C3" : "\uB85C\uADF8\uC778"
+    ), /* @__PURE__ */ React.createElement("div", { className: "relative", ref: moreRef }, /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: () => setMoreOpen(!moreOpen),
@@ -14416,7 +14541,32 @@ ARI.pages = ARI.pages || {};
       return p.key === product;
     })[0].ready;
     const body = notReady ? /* @__PURE__ */ React.createElement("div", { className: "p-5" }, /* @__PURE__ */ React.createElement("div", { className: "ui-card p-8 text-center" }, /* @__PURE__ */ React.createElement("div", { className: "w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mx-auto mb-3" }, /* @__PURE__ */ React.createElement(Icon, { name: "box", className: "w-6 h-6 text-slate-400" })), /* @__PURE__ */ React.createElement("div", { className: "text-[16px] font-extrabold text-slate-800", "data-notr": "1" }, product, " \uB370\uC774\uD130\uB294 \uC544\uC9C1 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4"), /* @__PURE__ */ React.createElement("div", { className: "text-[12.5px] text-slate-500 mt-1.5 leading-relaxed" }, "\uD604\uC7AC \uAD6C\uCD95\uB41C \uB370\uC774\uD130\uB294 ", /* @__PURE__ */ React.createElement("b", null, "ARi"), " \uAE30\uC900\uC785\uB2C8\uB2E4. \uB2E4\uB978 \uC81C\uD488\uC758 \uC22B\uC790\uB97C ARi \uB370\uC774\uD130\uB85C \uB300\uC2E0 \uBCF4\uC5EC\uC8FC\uBA74", /* @__PURE__ */ React.createElement("br", null), "\uC624\uB3C5 \uC704\uD5D8\uC774 \uC788\uC5B4 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC81C\uD488\uBCC4 \uC2E4\uC801\uC744 \uC8FC\uC2DC\uBA74 \uB3D9\uC77C \uAD6C\uC870\uB85C \uBC14\uB85C \uC5F0\uACB0\uB429\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement("div", { className: "mt-4" }, /* @__PURE__ */ React.createElement(Btn, { tone: "primary", onClick: () => pickProduct("ARi") }, "ARi \uB370\uC774\uD130 \uBCF4\uAE30")))) : /* @__PURE__ */ React.createElement(Cur, { key: "pg-" + page + "-" + langRev, ctx, db });
-    return /* @__PURE__ */ React.createElement("div", { className: "flex h-screen overflow-hidden" }, sidebarEl, /* @__PURE__ */ React.createElement("main", { className: "flex-1 overflow-y-auto" }, topEl, /* @__PURE__ */ React.createElement("div", { className: "print-area" }, body), /* @__PURE__ */ React.createElement("div", { className: "px-5 py-3.5 text-[11px] text-slate-400 border-t border-slate-200 bg-white no-print" }, "MGG PM \xB7 \uC8FC\uAC04\uBCF4\uACE0 \uC5D1\uC140(ARI\u5BA2\u6237 \xB7 ARI\u660E\u7EC6) \uAE30\uC900")), toast ? /* @__PURE__ */ React.createElement("div", { className: "fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 rounded-lg bg-slate-900 text-white text-[12.5px] font-semibold shadow-xl" }, toast) : null, /* @__PURE__ */ React.createElement(Modal, { open: help, onClose: () => setHelp(false), title: "\uC0AC\uC6A9 \uC548\uB0B4", width: "max-w-2xl" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-2.5 text-[12.5px] text-slate-700" }, /* @__PURE__ */ React.createElement(Field, { label: "\uC81C\uD488 \uC120\uD0DD" }, "\uC0AC\uC774\uB4DC\uBC14 \uC0C1\uB2E8\uC5D0\uC11C BD / ARi / BDC / Evidence \uC804\uD658. \uD604\uC7AC \uB370\uC774\uD130\uB294 ARi\uB9CC \uAD6C\uCD95\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uC8FC\uCC28 \uC774\uB3D9" }, "\uC0C1\uB2E8 \uC5F0\uB3C4\xB7\uC6D4\xB7\uC8FC\uCC28 \uC120\uD0DD \uB610\uB294 \u2039 \u203A \uBC84\uD2BC. \uC8FC\uCC28\uB97C \uBC14\uAFB8\uBA74 \uBAA8\uB4E0 \uD654\uBA74\uC758 \uC9C0\uD45C\uAC00 \uADF8 \uC2DC\uC810 \uB204\uC801\uC73C\uB85C \uB2E4\uC2DC \uACC4\uC0B0\uB429\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uAE30\uAC04" }, "\uB204\uC801(\uC5F0\uCD08~\uC120\uD0DD \uC8FC\uCC28) / \uC6D4(\uC120\uD0DD \uC8FC\uCC28\uAC00 \uC18D\uD55C \uB2EC) / \uC8FC(\uC120\uD0DD \uC8FC\uCC28\uB9CC)."), /* @__PURE__ */ React.createElement(Field, { label: "\uD3B8\uC9D1" }, "\uBAA8\uB4E0 \uD45C\uC758 \uC140\uC744 ", /* @__PURE__ */ React.createElement("b", null, "\uB354\uBE14\uD074\uB9AD"), "\uD558\uBA74 \uC989\uC2DC \uC218\uC815\uB418\uACE0 \uC790\uB3D9 \uC800\uC7A5\uB429\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uC800\uC7A5" }, "\uC800\uC7A5=\uBE0C\uB77C\uC6B0\uC800 \uB85C\uCEEC, \uBC31\uC5C5=JSON \uD30C\uC77C \uB0B4\uB824\uBC1B\uAE30, \uBCF5\uC6D0=JSON \uD30C\uC77C \uC62C\uB9AC\uAE30, \uD074\uB77C\uC6B0\uB4DC=Apps Script \uC8FC\uC18C \uC5F0\uB3D9."), /* @__PURE__ */ React.createElement(Field, { label: "\uC5B8\uC5B4" }, "\uD55C/\u4E2D \xB7 \uD55C/EN \uBC84\uD2BC\uC73C\uB85C \uC804\uD658. \uC0AC\uC804\uC5D0 \uB4F1\uB85D\uB41C \uC6A9\uC5B4\uB9CC \uBC88\uC5ED\uB418\uBA70, \uBBF8\uB4F1\uB85D \uBB38\uAD6C\uB294 \uD55C\uAD6D\uC5B4\uB85C \uB0A8\uC2B5\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uACC4\uD68D vs \uC2E4\uC801" }, "\uD68C\uC0C9=\uBAA9\uD45C(\uACC4\uD68D\uAC12), \uC9C4\uD55C \uC0C9=\uC2E4\uC801\uAC12\uC73C\uB85C \uAD6C\uBD84\uD569\uB2C8\uB2E4.")), /* @__PURE__ */ React.createElement(Note, null, "\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5\xB7\uBD88\uB7EC\uC624\uAE30\uB294 Google Apps Script \uC6F9\uC571 URL\uC774 \uD544\uC694\uD569\uB2C8\uB2E4. \uCC98\uC74C \uB204\uB974\uBA74 \uC8FC\uC18C \uC785\uB825\uCC3D\uC774 \uB728\uACE0, \uC774\uD6C4\uC5D0\uB294 \uC800\uC7A5\uB41C \uC8FC\uC18C\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.")));
+    return /* @__PURE__ */ React.createElement("div", { className: "flex h-screen overflow-hidden" }, sidebarEl, /* @__PURE__ */ React.createElement("main", { className: "flex-1 overflow-y-auto" }, topEl, /* @__PURE__ */ React.createElement("div", { className: "print-area" }, body), /* @__PURE__ */ React.createElement("div", { className: "px-5 py-3.5 text-[11px] text-slate-400 border-t border-slate-200 bg-white no-print" }, "MGG PM \xB7 \uC8FC\uAC04\uBCF4\uACE0 \uC5D1\uC140(ARI\u5BA2\u6237 \xB7 ARI\u660E\u7EC6) \uAE30\uC900")), toast ? /* @__PURE__ */ React.createElement("div", { className: "fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 rounded-lg bg-slate-900 text-white text-[12.5px] font-semibold shadow-xl" }, toast) : null, /* @__PURE__ */ React.createElement(Modal, { open: loginOpen, onClose: () => setLoginOpen(false), title: "\uB85C\uADF8\uC778", width: "max-w-sm" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-2.5" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] text-slate-600 leading-relaxed" }, "\uB85C\uADF8\uC778\uD558\uBA74 ", /* @__PURE__ */ React.createElement("b", null, "\uB7F0\uCE6D\uC804\uB7B5\uBCF4\uACE0"), "(\uC2DC\uC7A5\xB7\uC804\uB7B5 \uBD84\uC11D \xB7 \uC81C\uD488\xB74P \uC804\uB7B5 \xB7 \uB7F0\uCE6D\uC2E4\uD589\uD504\uB85C\uC138\uC2A4)\uAC00 \uC5F4\uB9BD\uB2C8\uB2E4. \uB85C\uADF8\uC778 \uC5C6\uC774\uB3C4 \uC8FC\uC694\uD604\uD669\uBCF4\uACE0\uC640 \uC2E4\uD589\uAD00\uB9AC\uB294 \uADF8\uB300\uB85C \uBCF4\uC2E4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "text-[11px] font-bold text-slate-600 mb-1" }, "\uC544\uC774\uB514"), /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        value: lgId,
+        onChange: (e) => setLgId(e.target.value),
+        autoComplete: "username",
+        "data-notr": "1",
+        onKeyDown: (e) => {
+          if (e.key === "Enter") doLogin();
+        },
+        className: "w-full border border-slate-300 rounded-lg px-3 py-[7px] text-[13px] outline-none focus:border-sky-600"
+      }
+    )), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "text-[11px] font-bold text-slate-600 mb-1" }, "\uBE44\uBC00\uBC88\uD638"), /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        value: lgPw,
+        onChange: (e) => setLgPw(e.target.value),
+        type: "password",
+        autoComplete: "current-password",
+        "data-notr": "1",
+        onKeyDown: (e) => {
+          if (e.key === "Enter") doLogin();
+        },
+        className: "w-full border border-slate-300 rounded-lg px-3 py-[7px] text-[13px] outline-none focus:border-sky-600"
+      }
+    )), lgErr ? /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold", style: { color: "#c0392f" } }, lgErr) : null, /* @__PURE__ */ React.createElement("div", { className: "flex gap-2 pt-1" }, /* @__PURE__ */ React.createElement(Btn, { tone: "primary", onClick: doLogin }, "\uB85C\uADF8\uC778"), /* @__PURE__ */ React.createElement(Btn, { onClick: () => setLoginOpen(false) }, "\uCDE8\uC18C")))), /* @__PURE__ */ React.createElement(Modal, { open: help, onClose: () => setHelp(false), title: "\uC0AC\uC6A9 \uC548\uB0B4", width: "max-w-2xl" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-2.5 text-[12.5px] text-slate-700" }, /* @__PURE__ */ React.createElement(Field, { label: "\uC81C\uD488 \uC120\uD0DD" }, "\uC0AC\uC774\uB4DC\uBC14 \uC0C1\uB2E8\uC5D0\uC11C BD / ARi / BDC / Evidence \uC804\uD658. \uD604\uC7AC \uB370\uC774\uD130\uB294 ARi\uB9CC \uAD6C\uCD95\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uC8FC\uCC28 \uC774\uB3D9" }, "\uC0C1\uB2E8 \uC5F0\uB3C4\xB7\uC6D4\xB7\uC8FC\uCC28 \uC120\uD0DD \uB610\uB294 \u2039 \u203A \uBC84\uD2BC. \uC8FC\uCC28\uB97C \uBC14\uAFB8\uBA74 \uBAA8\uB4E0 \uD654\uBA74\uC758 \uC9C0\uD45C\uAC00 \uADF8 \uC2DC\uC810 \uB204\uC801\uC73C\uB85C \uB2E4\uC2DC \uACC4\uC0B0\uB429\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uAE30\uAC04" }, "\uB204\uC801(\uC5F0\uCD08~\uC120\uD0DD \uC8FC\uCC28) / \uC6D4(\uC120\uD0DD \uC8FC\uCC28\uAC00 \uC18D\uD55C \uB2EC) / \uC8FC(\uC120\uD0DD \uC8FC\uCC28\uB9CC)."), /* @__PURE__ */ React.createElement(Field, { label: "\uD3B8\uC9D1" }, "\uBAA8\uB4E0 \uD45C\uC758 \uC140\uC744 ", /* @__PURE__ */ React.createElement("b", null, "\uB354\uBE14\uD074\uB9AD"), "\uD558\uBA74 \uC989\uC2DC \uC218\uC815\uB418\uACE0 \uC790\uB3D9 \uC800\uC7A5\uB429\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uC800\uC7A5" }, "\uC800\uC7A5=\uBE0C\uB77C\uC6B0\uC800 \uB85C\uCEEC, \uBC31\uC5C5=JSON \uD30C\uC77C \uB0B4\uB824\uBC1B\uAE30, \uBCF5\uC6D0=JSON \uD30C\uC77C \uC62C\uB9AC\uAE30, \uD074\uB77C\uC6B0\uB4DC=Apps Script \uC8FC\uC18C \uC5F0\uB3D9."), /* @__PURE__ */ React.createElement(Field, { label: "\uC5B8\uC5B4" }, "\uD55C/\u4E2D \xB7 \uD55C/EN \uBC84\uD2BC\uC73C\uB85C \uC804\uD658. \uC0AC\uC804\uC5D0 \uB4F1\uB85D\uB41C \uC6A9\uC5B4\uB9CC \uBC88\uC5ED\uB418\uBA70, \uBBF8\uB4F1\uB85D \uBB38\uAD6C\uB294 \uD55C\uAD6D\uC5B4\uB85C \uB0A8\uC2B5\uB2C8\uB2E4."), /* @__PURE__ */ React.createElement(Field, { label: "\uACC4\uD68D vs \uC2E4\uC801" }, "\uD68C\uC0C9=\uBAA9\uD45C(\uACC4\uD68D\uAC12), \uC9C4\uD55C \uC0C9=\uC2E4\uC801\uAC12\uC73C\uB85C \uAD6C\uBD84\uD569\uB2C8\uB2E4.")), /* @__PURE__ */ React.createElement(Note, null, "\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5\xB7\uBD88\uB7EC\uC624\uAE30\uB294 Google Apps Script \uC6F9\uC571 URL\uC774 \uD544\uC694\uD569\uB2C8\uB2E4. \uCC98\uC74C \uB204\uB974\uBA74 \uC8FC\uC18C \uC785\uB825\uCC3D\uC774 \uB728\uACE0, \uC774\uD6C4\uC5D0\uB294 \uC800\uC7A5\uB41C \uC8FC\uC18C\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.")));
   }
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(/* @__PURE__ */ React.createElement(App, null));
