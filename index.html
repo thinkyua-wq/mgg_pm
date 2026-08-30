@@ -2323,6 +2323,7 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "\uD604\uD669\uBD84\uC11D \uBC0F \uBB38\uC81C/\uAC1C\uC120\uC810": "\u73B0\u51B5\u5206\u6790\u53CA\u95EE\u9898/\u6539\u5584\u70B9",
     "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "\u5BA2\u6237\u9500\u552E\u91CF",
     "\uB370\uC774\uD130 \uC5F0\uB3D9 \uC900\uBE44\uC911": "\u6570\u636E\u8FDE\u63A5\u51C6\u5907\u4E2D",
     "\uC8FC\uB825 \uC81C\uD488 \xB7 2026\uB144 2\uB144\uCC28": "\u4E3B\u529B\u4EA7\u54C1 \xB7 2026\u5E74\u7B2C2\u5E74",
@@ -3259,6 +3260,7 @@ ARI.pages = ARI.pages || {};
     "\uB204\uC801 \uC9C4\uC785": "\u7D2F\u8BA1\u8FDB\u5165"
   };
   const EN = {
+    "\uD604\uD669\uBD84\uC11D \uBC0F \uBB38\uC81C/\uAC1C\uC120\uC810": "Analysis & issues/actions",
     "\uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "Client sales",
     "\uB370\uC774\uD130 \uC5F0\uB3D9 \uC900\uBE44\uC911": "Data sync pending",
     "\uC8FC\uB825 \uC81C\uD488 \xB7 2026\uB144 2\uB144\uCC28": "Core product \xB7 2026 yr 2",
@@ -5146,6 +5148,7 @@ ARI.pages = ARI.pages || {};
     "9": "\u534E\u897F\u672C\u90E8",
     "10": "\u534E\u5357\u672C\u90E8"
   };
+  const WARN = "#8a1f1a";
   function prodStat(p) {
     if (!p || !p.tot) return null;
     const t = p.tot;
@@ -5208,7 +5211,7 @@ ARI.pages = ARI.pages || {};
       display: "flex",
       flexDirection: "column",
       overflow: "hidden"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-1.5", style: { minHeight: 14 } }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
+    } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-2.5 pt-2", style: { minHeight: 14 } }, /* @__PURE__ */ React.createElement("span", { className: "font-extrabold", style: { color: "#141826", fontSize: 12.7 } }, "\uD604\uD669\uBD84\uC11D \uBC0F \uBB38\uC81C/\uAC1C\uC120\uC810"), /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-extrabold ml-auto", style: { color: "#16794a" }, "data-notr": "1" }, flash), saved ? /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: function() {
@@ -5224,7 +5227,7 @@ ARI.pages = ARI.pages || {};
         style: { color: "#141826" }
       },
       "\uC790\uB3D9\uBB38\uAD6C\uB85C"
-    ) : null), /* @__PURE__ */ React.createElement(
+    ) : null), /* @__PURE__ */ React.createElement("div", { style: { height: 1, background: "#141826", margin: "6px 10px 0" } }), /* @__PURE__ */ React.createElement(
       "div",
       {
         ref,
@@ -5236,7 +5239,7 @@ ARI.pages = ARI.pages || {};
           if (timer.current) clearTimeout(timer.current);
           commit(e.currentTarget.innerText);
         },
-        className: "leading-[1.7] px-2.5 pb-2 outline-none",
+        className: "leading-[1.7] px-2.5 pt-1 pb-2 outline-none",
         style: { color: "#141826", fontSize: 12.7, whiteSpace: "pre-wrap", flex: 1, minHeight: 0, overflowY: "auto" }
       },
       text
@@ -5286,7 +5289,7 @@ ARI.pages = ARI.pages || {};
     ];
     const COLS = [
       { id: "ARi", s: A, lab: "ARi", note: "26.6 \uB7F0\uCE6D", c: "#141826" },
-      { id: "BD", s: B, lab: "BD", note: "\uAE30\uC874 \uC8FC\uB825", c: "#7B93CC" }
+      { id: "BD", s: B, lab: "BD", note: "25.3 \uB7F0\uCE6D", c: "#141826" }
     ].filter(function(c) {
       return c.s;
     });
@@ -5314,7 +5317,7 @@ ARI.pages = ARI.pages || {};
       return /* @__PURE__ */ React.createElement("tr", { key: r.k }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.k)), COLS.map(function(c) {
         const p = r.pct ? r.pct(c.s) : null;
         const bad = p !== null && p < 60;
-        return /* @__PURE__ */ React.createElement("td", { key: c.id, className: "num" }, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold", style: Object.assign({ color: "#16234a" }, U.NUM) }, r.get(c.s)), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-bold", style: { color: bad ? "#c0392f" : "#141826" } }, r.sub(c.s)));
+        return /* @__PURE__ */ React.createElement("td", { key: c.id, className: "num" }, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold", style: Object.assign({ color: "#16234a" }, U.NUM) }, r.get(c.s)), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-bold", style: { color: bad ? WARN : "#141826" } }, r.sub(c.s)));
       }));
     }))), read ? /* @__PURE__ */ React.createElement(NotePanel, { auto: read }) : null));
   }
@@ -5558,10 +5561,10 @@ ARI.pages = ARI.pages || {};
         );
       }))), /* @__PURE__ */ React.createElement("tbody", null, tRows.map(function(r) {
         return /* @__PURE__ */ React.createElement("tr", { key: r.hq }, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, r.hq)), COLS.map(function(c) {
-          const color = c.blue ? "#1d3a86" : c.warn && c.warn(r) ? "#c0392f" : "#141826";
+          const color = c.blue ? "#1d3a86" : c.warn && c.warn(r) ? WARN : "#141826";
           return /* @__PURE__ */ React.createElement("td", { key: c.k, className: "num", style: { color, fontWeight: 700 } }, c.fmt(r));
         }));
-      })), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.cA))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.sA))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: "#1d3a86" } }, /* @__PURE__ */ React.createElement("b", null, "100%")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.dB))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: pct(T.sA, T.dB) < 60 ? "#c0392f" : "#141826" } }, /* @__PURE__ */ React.createElement("b", null, pct(T.sA, T.dB), "%")))))),
+      })), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement("b", null, "\uC804\uAD6D")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.cA))), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.sA))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: "#1d3a86" } }, /* @__PURE__ */ React.createElement("b", null, "100%")), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement("b", null, U.fmt(T.dB))), /* @__PURE__ */ React.createElement("td", { className: "num", style: { color: pct(T.sA, T.dB) < 60 ? WARN : "#141826" } }, /* @__PURE__ */ React.createElement("b", null, pct(T.sA, T.dB), "%")))))),
       /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px]", style: { lineHeight: 1.65, marginTop: 8, color: "#141826" } }, note)
     );
   }
