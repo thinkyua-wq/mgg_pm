@@ -21715,7 +21715,7 @@ ARI.pages = ARI.pages || {};
     }))), CALX.noDay.length ? /* @__PURE__ */ React.createElement("div", { className: "mt-2 flex items-start gap-2 px-2.5 py-2", style: { background: "#fdf7ec", border: "1px solid #f0dcb8" } }, /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] font-extrabold shrink-0", style: { color: "#8a5a00" } }, "\uC6D4\uC911\xB7\uC77C\uC790 \uBBF8\uC815 ", U.fmt(CALX.noDay.length), "\uAC74"), /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] text-slate-500 leading-[1.5]" }, CALX.noDay.slice(0, 6).map(function(e) {
       return (topicKo(e.name) || e.name) + "(" + e.city + ")";
     }).join(" \xB7 "), CALX.noDay.length > 6 ? " \uC678 " + (CALX.noDay.length - 6) + "\uAC74" : "")) : null)), CALX.sel ? /* @__PURE__ */ React.createElement("div", {
-      onClick: function() { setSel(""); },
+      onClick: function() { setCalSel(""); },
       style: { position: "fixed", inset: 0, background: "rgba(15,23,42,.45)", zIndex: 80, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }
     }, /* @__PURE__ */ React.createElement("div", {
       onClick: function(e) { e.stopPropagation(); },
@@ -21725,7 +21725,7 @@ ARI.pages = ARI.pages || {};
       /* @__PURE__ */ React.createElement("span", { className: "text-[12px] font-bold text-slate-400" }, DOW[(new Date(CALX.sel + "T00:00:00")).getDay()] + "\uC694\uC77C"),
       /* @__PURE__ */ React.createElement("span", { className: "text-[12px] font-bold", style: { color: "#16234a" } }, U.fmt(CALX.selEv.length) + "\uAC74"),
       /* @__PURE__ */ React.createElement("button", {
-        type: "button", onClick: function() { setSel(""); },
+        type: "button", onClick: function() { setCalSel(""); },
         className: "ml-auto text-[12px] font-bold px-3 py-[4px]",
         style: { border: "1px solid #c9cfd9", background: "#fff", color: "#16234a", cursor: "pointer" }
       }, "\uB2EB\uAE30")
