@@ -3479,7 +3479,32 @@ eXBlOidNR0dfUkVBRFknfSwgJyonKTsgfWNhdGNoKGUpe30KfSkoKTsKPC9zY3JpcHQ+CgoKPC9ib2R5
     try { __prefetchCloud(window.__startAppNow); }
     catch (e) { window.__startAppNow(); }
   };
-  window.__startAppNow = function() {
+  /* 클라우드 자료가 화면을 망가뜨리면, 그 자료를 버리고 내장 자료로 한 번 더 띄운다.
+     그래야 「아무것도 안 보이는 화면」 대신 최소한 예전 주차라도 볼 수 있다. */
+  window.__ARI_RETRIED = false;
+  window.__ariRetryWithEmbedded = function (msg) {
+    if (window.__ARI_RETRIED) return false;
+    if (!window.__ARI_CLOUD) return false;
+    window.__ARI_RETRIED = true;
+    window.__ARI_CLOUD = null;
+    window.__ARI_CLOUD_STATE = { ok: false, why: '클라우드 자료에 문제가 있어 내장 자료로 열었습니다 — ' + (msg || '') };
+    try { sessionStorage.removeItem('ARI_CLOUD_LATE'); } catch (e) {}
+    try { sessionStorage.removeItem('ARI_CLOUD_RELOADED'); } catch (e) {}
+    try {
+      var root = document.getElementById('root');
+      if (root) root.innerHTML = '';
+      var box0 = document.getElementById('error-box');
+      if (box0) { box0.style.display = 'none'; box0.innerHTML = ''; }
+    } catch (e) {}
+    window.__startAppNow(true);
+    return true;
+  };
+  window.addEventListener('error', function (ev) {
+    if (window.__ARI_BOOTED) return;
+    window.__ariRetryWithEmbedded(ev && ev.message ? ev.message : '');
+  });
+
+  window.__startAppNow = function(isRetry) {
     var loading = document.getElementById('loading');
     var src = document.getElementById('app-script');
     if (!src) { if (loading) loading.classList.add('hide'); return; }
@@ -3487,8 +3512,10 @@ eXBlOidNR0dfUkVBRFknfSwgJyonKTsgfWNhdGNoKGUpe30KfSkoKTsKPC9zY3JpcHQ+CgoKPC9ib2R5
       var runner = document.createElement('script');
       runner.textContent = src.textContent;
       document.body.appendChild(runner);
+      window.__ARI_BOOTED = true;
       setTimeout(function() { if (loading) loading.classList.add('hide'); }, 100);
     } catch (e) {
+      if (!isRetry && window.__ariRetryWithEmbedded(e.message)) return;
       var box = document.getElementById('error-box');
       if (box) { box.style.display = 'block'; box.innerHTML = '<strong>⚠️ 앱 시작 실패</strong><br>' + e.message; }
       if (loading) loading.classList.add('hide');
@@ -3503,6 +3530,7 @@ eXBlOidNR0dfUkVBRFknfSwgJyonKTsgfWNhdGNoKGUpe30KfSkoKTsKPC9zY3JpcHQ+CgoKPC9ib2R5
    그래서 통째로 갈아끼우지 않고, 내장 데이터 위에 있는 것만 덮어쓴다.
    이렇게 하면 클라우드에 빠진 항목이 있어도 앱이 멈추지 않는다. */
 ARI.real=(function(){
+ try{
   var c=window.__ARI_CLOUD, e=ARI.embedded;
   function wk(d){
     if(!d) return '';
@@ -3536,6 +3564,7 @@ ARI.real=(function(){
     }
   });
   return out;
+ }catch(err){ return ARI.embedded; }
 })();
 ARI.src=(ARI.real===ARI.embedded)?'내장':'클라우드';
 
