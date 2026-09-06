@@ -8770,7 +8770,7 @@ LmFkZFRleHQudGV4dCxpLmFkZFRleHQub3B0aW9uc3x8e30pfSl9LG59KCk7Ci8vIyBzb3VyY2VNYXBw
     var u;
     try { u = __cloudURL(); } catch (e) { u = ''; }
     if (!u) { done(); return; }
-    __say('클라우드 데이터 확인 중... (첫 접속은 최대 30초)');
+    __say('클라우드 데이터 확인 중...');
     var cb = '__ariCloudCB' + Date.now(), fin = false, tag = document.createElement('script');
     /* 연동 실패를 조용히 넘기면 「내장 데이터(옛 주차)」로 열리면서도 사용자는 모릅니다.
        왜 실패했는지를 남겨 두고, 화면 왼쪽 아래 「데이터」 줄에 빨갛게 표시합니다. */
@@ -8794,7 +8794,7 @@ LmFkZFRleHQudGV4dCxpLmFkZFRleHQub3B0aW9uc3x8e30pfSl9LG59KCk7Ci8vIyBzb3VyY2VNYXBw
       end();
     };
     tag.onerror = function () { end('주소에 연결 실패 (404·권한·네트워크)'); };
-    setTimeout(function () { end('30초 안에 응답 없음 — Apps Script 예열(SETUP_trigger)을 걸면 빨라집니다'); }, 30000);
+    setTimeout(function () { end('아직 받는 중 — 도착하면 화면 아래에 알려 드립니다'); }, 1500);
     tag.src = u + (u.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + cb + '&t=' + Date.now();
     document.head.appendChild(tag);
   }
@@ -17576,8 +17576,9 @@ ARI.pages = ARI.pages || {};
     }, {});
     const PINK = "#fdf2f6";
     const SEPL = "1px solid #b8c2d4";
-    const TDS = { color: "#111827", padding: "2px 1px", fontSize: 13.3, lineHeight: 1.2, whiteSpace: "nowrap" };
-    const THS = { textAlign: "center", whiteSpace: "nowrap", color: "#111827", fontSize: 12, fontWeight: 400, padding: "2px 1px", lineHeight: 1.15, letterSpacing: "-.4px" };
+    const PINK2 = "#f1f3f7";  /* 26년 누계 판매량 — 옅은 회색 */
+    const TDS = { color: "#111827", padding: "4px 2px", whiteSpace: "nowrap" };
+    const THS = { textAlign: "center", whiteSpace: "nowrap", color: "#111827", fontWeight: 800, padding: "8px 2px", lineHeight: 1.2, letterSpacing: "-.3px" };
     const TH = function(t, o) {
       o = o || {};
       return /* @__PURE__ */ React.createElement("th", Object.assign({}, o, { style: Object.assign({}, THS, o.style || {}) }), t);
@@ -17585,7 +17586,7 @@ ARI.pages = ARI.pages || {};
     const td = function(v, key, st) {
       return /* @__PURE__ */ React.createElement("td", { key, className: "num", style: Object.assign({}, TDS, st || {}) }, v);
     };
-    const pct = function(v) { return { color: v >= 100 ? "#2a51ab" : v >= 40 ? "#111827" : "#c0392f", fontWeight: 700 }; };
+    const pct = function() { return { color: "#111827", fontWeight: 400 }; };
     const line = function(r, i, st) {
       const rate = P2(r.mS, r.mST), yrate = P2(r.sA, r.sT), crate = P2(r.mC, r.mT);
       if (both) return /* @__PURE__ */ React.createElement("tr", { key: i },
@@ -17593,13 +17594,13 @@ ARI.pages = ARI.pages || {};
         td(r.hq, "b", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(r.area, "c", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(U.fmt(r.dl), "d", st),
-        td(U.fmt(r.cl), "e", Object.assign({ fontWeight: 800 }, st)),
+        td(U.fmt(r.cl), "e", st),
         td(U.fmt(r.cA), "f", Object.assign({ borderLeft: SEPL }, st)),
         td(U.fmt(r.mA), "g", Object.assign({ borderLeft: SEPL }, st)),
         td(U.fmt(r.mS), "h", Object.assign({ background: PINK }, st)),
         td(U.fmt(r.aA), "i", Object.assign({ borderLeft: SEPL }, st)),
         td(U.fmt(r.bA), "j", st),
-        td(U.fmt(r.sA), "k", Object.assign({ background: PINK, fontWeight: 800 }, st)),
+        td(U.fmt(r.sA), "k", Object.assign({ background: PINK2 }, st)),
         td(P2(r.aA, r.sA) + "%", "l", Object.assign({}, st, { color: "#111827" })),
         td(U.fmt(r.rep), "m", Object.assign({ borderLeft: SEPL }, st))
       );
@@ -17611,8 +17612,9 @@ ARI.pages = ARI.pages || {};
         td(U.fmt(r.mT), "f", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.mC), "g", st), td(crate + "%", "h", Object.assign({}, st, pct(crate))),
         td(U.fmt(r.mA), "i", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.mS), "j", Object.assign({ background: PINK }, st)), td(rate + "%", "k", Object.assign({}, st, pct(rate))), td(U.fmt(r.mD), "l", st),
         td(U.fmt(r.rep), "m", Object.assign({ borderLeft: SEPL }, st)),
-        td(U.fmt(r.cA), "n", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.sA), "o", Object.assign({ background: PINK }, st)), td(yrate + "%", "p", Object.assign({}, st, pct(yrate))), td(U.fmt(r.dB), "q", st),
-        td(r.diff > 0 ? "+" + U.fmt(r.diff) : U.fmt(r.diff), "r", Object.assign({ borderLeft: SEPL, color: r.diff > 0 ? "#16794a" : "#98a2b3" }, st))
+        td(U.fmt(r.cA), "n", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.sA), "o", Object.assign({ background: PINK2 }, st)), td(yrate + "%", "p", Object.assign({}, st, pct(yrate))), td(U.fmt(r.dB), "q", st),
+        td(r.diff > 0 ? "\u25B2 " + U.fmt(r.diff) : r.diff < 0 ? "\u25BC " + U.fmt(-r.diff) : "\u2013", "r",
+           Object.assign({ borderLeft: SEPL, color: r.diff > 0 ? "#16794a" : r.diff < 0 ? "#c0392f" : "#98a2b3", fontWeight: r.diff ? 700 : 400 }, st))
       );
     };
     const foot = Object.assign({}, SUM, { corp: "", hq: "", area: "\uD569\uACC4" });
@@ -17656,11 +17658,11 @@ ARI.pages = ARI.pages || {};
               TH("ARi \uD310\uB9E4", { key: "c1", style: { borderLeft: SEPL, width: "8.25%" } }),
               TH("\uD569\uACC4", { key: "c2", style: { background: PINK, width: "8.25%" } }),
               TH("ARi", { key: "c3", style: { borderLeft: SEPL, width: "8.25%" } }), TH("BD", { key: "c4", style: { width: "8.25%" } }),
-              TH("\uD569\uACC4", { key: "c5", style: { background: PINK, width: "8.25%" } }), TH("ARi \uBE44\uC911", { key: "c6", style: { width: "8.25%" } })
+              TH("\uD569\uACC4", { key: "c5", style: { background: PINK2, width: "8.25%" } }), TH("ARi \uBE44\uC911", { key: "c6", style: { width: "8.25%" } })
             ) : /* @__PURE__ */ React.createElement("tr", null,
               TH("\uBAA9\uD45C", { key: "s1", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD655\uC815", { key: "s2", style: { width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s3", style: { width: "6.6%" } }),
               TH("\uC9C4\uC785", { key: "s4", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD310\uB9E4\uB7C9", { key: "s5", style: { background: PINK, width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s6", style: { width: "6.6%" } }), TH("\uB300\uB9AC\uC0C1", { key: "s7", style: { width: "6.6%" } }),
-              TH("\uC9C4\uC785", { key: "s8", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD310\uB9E4\uB7C9", { key: "s9", style: { background: PINK, width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s10", style: { width: "6.6%" } }), TH("\uB300\uB9AC\uC0C1", { key: "s11", style: { width: "6.6%" } })
+              TH("\uC9C4\uC785", { key: "s8", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD310\uB9E4\uB7C9", { key: "s9", style: { background: PINK2, width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s10", style: { width: "6.6%" } }), TH("\uB300\uB9AC\uC0C1", { key: "s11", style: { width: "6.6%" } })
             )
           ),
           /* @__PURE__ */ React.createElement("tbody", null, data.map(function(r, i) { return line(r, i); })),
@@ -18611,7 +18613,7 @@ ARI.pages = ARI.pages || {};
       {
         className: "pg-navy",
         title: db.productLabel + " \uD310\uB9E4 \uC2E4\uC801 \uBD84\uC11D",
-        desc: "\u300CARI\u5BA2\u6237\u300D\xB7\u300CARI\u660E\u7EC6\u300D \uC8FC\uAC04\uBCF4\uACE0\uC758 \uBAA9\uD45C \u2192 \uC9C4\uC785 \u2192 \uD310\uB9E4 \u2192 \uC7AC\uAD6C\uB9E4 \uC2E4\uC801"
+        desc: "\u300C" + db.productLabel + "\u5BA2\u6237\u300D\xB7\u300C" + db.productLabel + "\u660E\u7EC6\u300D \uC8FC\uAC04\uBCF4\uACE0\uC758 \uBAA9\uD45C \u2192 \uC9C4\uC785 \u2192 \uD310\uB9E4 \u2192 \uC7AC\uAD6C\uB9E4 \uC2E4\uC801"
       },
       /* @__PURE__ */ React.createElement(WeeklyProgress, { ctx, db })
     );
