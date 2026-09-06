@@ -8770,7 +8770,7 @@ LmFkZFRleHQudGV4dCxpLmFkZFRleHQub3B0aW9uc3x8e30pfSl9LG59KCk7Ci8vIyBzb3VyY2VNYXBw
     var u;
     try { u = __cloudURL(); } catch (e) { u = ''; }
     if (!u) { done(); return; }
-    __say('클라우드 데이터 확인 중...');
+    __say('클라우드 데이터 확인 중... (첫 접속은 최대 30초)');
     var cb = '__ariCloudCB' + Date.now(), fin = false, tag = document.createElement('script');
     /* 연동 실패를 조용히 넘기면 「내장 데이터(옛 주차)」로 열리면서도 사용자는 모릅니다.
        왜 실패했는지를 남겨 두고, 화면 왼쪽 아래 「데이터」 줄에 빨갛게 표시합니다. */
@@ -8794,7 +8794,7 @@ LmFkZFRleHQudGV4dCxpLmFkZFRleHQub3B0aW9uc3x8e30pfSl9LG59KCk7Ci8vIyBzb3VyY2VNYXBw
       end();
     };
     tag.onerror = function () { end('주소에 연결 실패 (404·권한·네트워크)'); };
-    setTimeout(function () { end('7초 안에 응답 없음'); }, 7000);
+    setTimeout(function () { end('30초 안에 응답 없음 — Apps Script 예열(SETUP_trigger)을 걸면 빨라집니다'); }, 30000);
     tag.src = u + (u.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + cb + '&t=' + Date.now();
     document.head.appendChild(tag);
   }
@@ -17499,7 +17499,7 @@ ARI.pages = ARI.pages || {};
     }
     const ci = list.indexOf(cur);
     prv = ci > 0 ? list[ci - 1] : null;
-    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15\uBCF8\uBD80", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9\uBCF8\uBD80", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911\uBCF8\uBD80", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C\uBCF8\uBD80", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8\uBCF8\uBD80", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81\uBCF8\uBD80" };
+    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
     const CORPKO = { "\u5B81\u6CE2": "\uB2DD\uBCF4", "\u5317\u4EAC": "\uBD81\uACBD" };
     const BJ = { "\u5317\u4EAC": 1, "\u5185\u8499\u53E4": 1, "\u5185\u8499": 1, "\u6CB3\u5317": 1, "\u5929\u6D25": 1, "\u8FBD\u5B81": 1, "\u5409\u6797": 1, "\u9ED1\u9F99\u6C5F": 1 };
     /* ARi·BD 를 모두 쓰는 고객 (성 + 치과명 일치) */
@@ -17551,7 +17551,7 @@ ARI.pages = ARI.pages || {};
       if (both) return {
         corp: CORPKO[r.corp] || r.corp,
         hq: HQKO[r.hq] || (r.hq || "\uAE30\uD0C0"),
-        area: areaN(r.area) === 999 ? "\uAE30\uD0C0" : r.area + "\uAD8C\uC5ED",
+        area: areaN(r.area) === 999 ? "\uAE30\uD0C0" : String(r.area),
         dl: Object.keys(c.dl).length, cl: c.cl, rep: c.rep,
         mT: 0, mC: 0, mA: n(c.aM), mS: n(c.aM) + n(c.bM), mST: 0, mD: 0,
         cA: n(c.aE), sA: n(c.aA) + n(c.bA), sT: 0, dB: 0,
@@ -17561,7 +17561,7 @@ ARI.pages = ARI.pages || {};
       return {
         corp: CORPKO[r.corp] || r.corp,
         hq: HQKO[r.hq] || (r.hq || "\uAE30\uD0C0"),
-        area: areaN(r.area) === 999 ? "\uAE30\uD0C0" : r.area + "\uAD8C\uC5ED",
+        area: areaN(r.area) === 999 ? "\uAE30\uD0C0" : String(r.area),
         dl: Object.keys(c.dl).length, cl: c.cl, rep: c.rep,
         mT: mv(r, "cT"), mC: mv(r, "cC"), mA: mv(r, "cA"), mS: mv(r, "sA"), mST: mv(r, "sT"), mD: mv(r, "dB"),
         cA: n(r.cA), sA: n(r.sA), sT: n(r.sT), dB: n(r.dB),
@@ -17575,9 +17575,9 @@ ARI.pages = ARI.pages || {};
       return a2;
     }, {});
     const PINK = "#fdf2f6";
-    const SEPL = "2px solid #b8c2d4";
-    const TDS = { color: "#111827", padding: "2px 4px", fontSize: 11, lineHeight: 1.25, whiteSpace: "nowrap" };
-    const THS = { textAlign: "center", whiteSpace: "nowrap", color: "#111827", fontSize: 9.9, fontWeight: 400, padding: "2px 3px", lineHeight: 1.2 };
+    const SEPL = "1px solid #b8c2d4";
+    const TDS = { color: "#111827", padding: "2px 1px", fontSize: 13.3, lineHeight: 1.2, whiteSpace: "nowrap" };
+    const THS = { textAlign: "center", whiteSpace: "nowrap", color: "#111827", fontSize: 12, fontWeight: 400, padding: "2px 1px", lineHeight: 1.15, letterSpacing: "-.4px" };
     const TH = function(t, o) {
       o = o || {};
       return /* @__PURE__ */ React.createElement("th", Object.assign({}, o, { style: Object.assign({}, THS, o.style || {}) }), t);
@@ -17592,9 +17592,9 @@ ARI.pages = ARI.pages || {};
         td(r.corp, "a", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(r.hq, "b", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(r.area, "c", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
-        td(U.fmt(r.dl) + "\uAC1C\uC0AC", "d", st),
-        td(U.fmt(r.cl) + "\uAC1C\uC18C", "e", Object.assign({ fontWeight: 800 }, st)),
-        td(U.fmt(r.cA) + "\uAC1C\uC18C", "f", Object.assign({ borderLeft: SEPL }, st)),
+        td(U.fmt(r.dl), "d", st),
+        td(U.fmt(r.cl), "e", Object.assign({ fontWeight: 800 }, st)),
+        td(U.fmt(r.cA), "f", Object.assign({ borderLeft: SEPL }, st)),
         td(U.fmt(r.mA), "g", Object.assign({ borderLeft: SEPL }, st)),
         td(U.fmt(r.mS), "h", Object.assign({ background: PINK }, st)),
         td(U.fmt(r.aA), "i", Object.assign({ borderLeft: SEPL }, st)),
@@ -17607,7 +17607,7 @@ ARI.pages = ARI.pages || {};
         td(r.corp, "a", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(r.hq, "b", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
         td(r.area, "c", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
-        td(U.fmt(r.dl) + "\uAC1C\uC0AC", "d", st), td(U.fmt(r.cl) + "\uAC1C\uC18C", "e", st),
+        td(U.fmt(r.dl), "d", st), td(U.fmt(r.cl), "e", st),
         td(U.fmt(r.mT), "f", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.mC), "g", st), td(crate + "%", "h", Object.assign({}, st, pct(crate))),
         td(U.fmt(r.mA), "i", Object.assign({ borderLeft: SEPL }, st)), td(U.fmt(r.mS), "j", Object.assign({ background: PINK }, st)), td(rate + "%", "k", Object.assign({}, st, pct(rate))), td(U.fmt(r.mD), "l", st),
         td(U.fmt(r.rep), "m", Object.assign({ borderLeft: SEPL }, st)),
@@ -17631,36 +17631,36 @@ ARI.pages = ARI.pages || {};
         /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_status", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed" } },
           /* @__PURE__ */ React.createElement("thead", { className: "sticky top-0 z-10" },
             both ? /* @__PURE__ */ React.createElement("tr", null,
-              TH("\uBC95\uC778", { key: "b1", rowSpan: 2, style: { width: 44, fontWeight: 800 } }),
-              TH("\uBCF8\uBD80", { key: "b2", rowSpan: 2, style: { width: 62, fontWeight: 800 } }),
-              TH("\uAD8C\uC5ED", { key: "b3", rowSpan: 2, style: { width: 58, fontWeight: 800 } }),
-              TH("\uB300\uB9AC\uC0C1", { key: "b4", rowSpan: 2, style: { width: 54 } }),
-              TH("\uC911\uBCF5 \uACE0\uAC1D", { key: "b5", rowSpan: 2, style: { width: 66 } }),
-              TH("ARi \uC9C4\uC785", { key: "b6", rowSpan: 2, style: { width: 62, borderLeft: SEPL } }),
+              TH("\uBC95\uC778", { key: "b1", rowSpan: 2, style: { width: "7%", fontWeight: 800 } }),
+              TH("\uBCF8\uBD80", { key: "b2", rowSpan: 2, style: { width: "7%", fontWeight: 800 } }),
+              TH("\uAD8C\uC5ED", { key: "b3", rowSpan: 2, style: { width: "6%", fontWeight: 800 } }),
+              TH("\uB300\uB9AC\uC0C1", { key: "b4", rowSpan: 2, style: { width: "7%" } }),
+              TH("\uC911\uBCF5 \uACE0\uAC1D", { key: "b5", rowSpan: 2, style: { width: "8%" } }),
+              TH("ARi \uC9C4\uC785", { key: "b6", rowSpan: 2, style: { width: "8%", borderLeft: SEPL } }),
               TH(M + "\uC6D4", { key: "b7", colSpan: 2, style: { borderLeft: SEPL } }),
               TH("26\uB144 \uB204\uACC4", { key: "b8", colSpan: 4, style: { borderLeft: SEPL } }),
-              TH("\uBC18\uBCF5\uAD6C\uB9E4", { key: "b9", rowSpan: 2, style: { width: 52, borderLeft: SEPL } })
+              TH("\uBC18\uBCF5\uAD6C\uB9E4", { key: "b9", rowSpan: 2, style: { width: "8.5%", borderLeft: SEPL } })
             ) : /* @__PURE__ */ React.createElement("tr", null,
-              TH("\uBC95\uC778", { key: "h1", rowSpan: 2, style: { width: 44, fontWeight: 800 } }),
-              TH("\uBCF8\uBD80", { key: "h2", rowSpan: 2, style: { width: 62, fontWeight: 800 } }),
-              TH("\uAD8C\uC5ED", { key: "h3", rowSpan: 2, style: { width: 58, fontWeight: 800 } }),
-              TH("\uB300\uB9AC\uC0C1", { key: "h4", rowSpan: 2, style: { width: 54 } }),
-              TH("\uACE0\uAC1D(\uCE58\uACFC)", { key: "h5", rowSpan: 2, style: { width: 62 } }),
+              TH("\uBC95\uC778", { key: "h1", rowSpan: 2, style: { width: "4.2%", fontWeight: 800 } }),
+              TH("\uBCF8\uBD80", { key: "h2", rowSpan: 2, style: { width: "4.2%", fontWeight: 800 } }),
+              TH("\uAD8C\uC5ED", { key: "h3", rowSpan: 2, style: { width: "3.6%", fontWeight: 800 } }),
+              TH("\uB300\uB9AC\uC0C1", { key: "h4", rowSpan: 2, style: { width: "4.4%" } }),
+              TH("\uACE0\uAC1D(\uCE58\uACFC)", { key: "h5", rowSpan: 2, style: { width: "5%" } }),
               TH(M + "\uC6D4 \uACE0\uAC1D", { key: "h6", colSpan: 3, style: { borderLeft: SEPL } }),
               TH(M + "\uC6D4 \uC2E4\uC801", { key: "h7", colSpan: 4, style: { borderLeft: SEPL } }),
-              TH("\uBC18\uBCF5\uAD6C\uB9E4", { key: "h8", rowSpan: 2, style: { width: 52, borderLeft: SEPL } }),
+              TH("\uBC18\uBCF5\uAD6C\uB9E4", { key: "h8", rowSpan: 2, style: { width: "5%", borderLeft: SEPL } }),
               TH("26\uB144 \uB204\uACC4", { key: "h9", colSpan: 4, style: { borderLeft: SEPL } }),
-              TH("\uC804 \uBCF4\uACE0 \uB300\uBE44", { key: "h10", rowSpan: 2, style: { width: 62, borderLeft: SEPL } })
+              TH([/* @__PURE__ */ React.createElement("div", { key: "l1" }, "\uC804 \uBCF4\uACE0"), /* @__PURE__ */ React.createElement("div", { key: "l2" }, "\uB300\uBE44")], { key: "h10", rowSpan: 2, style: { width: "5.4%", borderLeft: SEPL, whiteSpace: "normal", lineHeight: 1.15 } })
             ),
             both ? /* @__PURE__ */ React.createElement("tr", null,
-              TH("ARi \uD310\uB9E4", { key: "c1", style: { borderLeft: SEPL } }),
-              TH("\uD569\uACC4", { key: "c2", style: { background: PINK } }),
-              TH("ARi", { key: "c3", style: { borderLeft: SEPL } }), TH("BD", { key: "c4" }),
-              TH("\uD569\uACC4", { key: "c5", style: { background: PINK } }), TH("ARi \uBE44\uC911", { key: "c6" })
+              TH("ARi \uD310\uB9E4", { key: "c1", style: { borderLeft: SEPL, width: "8.25%" } }),
+              TH("\uD569\uACC4", { key: "c2", style: { background: PINK, width: "8.25%" } }),
+              TH("ARi", { key: "c3", style: { borderLeft: SEPL, width: "8.25%" } }), TH("BD", { key: "c4", style: { width: "8.25%" } }),
+              TH("\uD569\uACC4", { key: "c5", style: { background: PINK, width: "8.25%" } }), TH("ARi \uBE44\uC911", { key: "c6", style: { width: "8.25%" } })
             ) : /* @__PURE__ */ React.createElement("tr", null,
-              TH("\uBAA9\uD45C", { key: "s1", style: { borderLeft: SEPL } }), TH("\uD655\uC815", { key: "s2" }), TH("\uB2EC\uC131\uB960", { key: "s3" }),
-              TH("\uC9C4\uC785", { key: "s4", style: { borderLeft: SEPL } }), TH("\uD310\uB9E4\uB7C9", { key: "s5", style: { background: PINK } }), TH("\uB2EC\uC131\uB960", { key: "s6" }), TH("\uB300\uB9AC\uC0C1", { key: "s7" }),
-              TH("\uC9C4\uC785", { key: "s8", style: { borderLeft: SEPL } }), TH("\uD310\uB9E4\uB7C9", { key: "s9", style: { background: PINK } }), TH("\uB2EC\uC131\uB960", { key: "s10" }), TH("\uB300\uB9AC\uC0C1", { key: "s11" })
+              TH("\uBAA9\uD45C", { key: "s1", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD655\uC815", { key: "s2", style: { width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s3", style: { width: "6.6%" } }),
+              TH("\uC9C4\uC785", { key: "s4", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD310\uB9E4\uB7C9", { key: "s5", style: { background: PINK, width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s6", style: { width: "6.6%" } }), TH("\uB300\uB9AC\uC0C1", { key: "s7", style: { width: "6.6%" } }),
+              TH("\uC9C4\uC785", { key: "s8", style: { borderLeft: SEPL, width: "6.6%" } }), TH("\uD310\uB9E4\uB7C9", { key: "s9", style: { background: PINK, width: "6.6%" } }), TH("\uB2EC\uC131\uB960", { key: "s10", style: { width: "6.6%" } }), TH("\uB300\uB9AC\uC0C1", { key: "s11", style: { width: "6.6%" } })
             )
           ),
           /* @__PURE__ */ React.createElement("tbody", null, data.map(function(r, i) { return line(r, i); })),
@@ -17669,7 +17669,7 @@ ARI.pages = ARI.pages || {};
       )
     );
   }
-  function WeeklyProgress({ ctx, db }) {
+  function WeeklyProgress({ ctx, db, only }) {
     const D = ARI.data;
     const base = ARI.real[db.product] || ARI.real.ARi;
     const snapList = base.snaps || (base.prev ? [base.prev, Object.assign({ week: "2026-W33", asOf: base.asOf }, base)] : null);
@@ -17692,7 +17692,7 @@ ARI.pages = ARI.pages || {};
     const [open, setOpen] = useState({});
     const [wTab, setWTab] = useState("s_pt");
     const [actOpen, setActOpen] = useState(false);
-    const [btTab, setBtTab] = useState("rpt");
+    const [btTab, setBtTab] = useState(only || "rpt");
     const [hqMetric, setHqMetric] = useState("pt");
     const wk = ctx.wk;
     const month = Number(wk.start.slice(5, 7));
@@ -18463,7 +18463,7 @@ ARI.pages = ARI.pages || {};
     const nb = "num";
     const ft = "num";
     const prevLabel = prev ? "\uC804 \uBCF4\uACE0 \uB300\uBE44(" + prev.week.slice(5) + ")" : "\uC804 \uBCF4\uACE0 \uB300\uBE44";
-    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] text-slate-500" }, "\uC8FC\uAC04\uBCF4\uACE0 ", ctx.week.slice(5), " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C ", asOf, prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "", " ", /* @__PURE__ */ React.createElement(StatusBadge, { rate }))), /* @__PURE__ */ React.createElement(KPIGrid, { cols: 5, style: { gridTemplateColumns: "1.25fr 1.25fr 1.25fr .85fr .85fr" } }, /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, only ? null : /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] text-slate-500" }, "\uC8FC\uAC04\uBCF4\uACE0 ", ctx.week.slice(5), " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C ", asOf, prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "", " ", /* @__PURE__ */ React.createElement(StatusBadge, { rate }))), /* @__PURE__ */ (only ? null : React.createElement(KPIGrid, { cols: 5, style: { gridTemplateColumns: "1.25fr 1.25fr 1.25fr .85fr .85fr" } }, /* @__PURE__ */ React.createElement(
       KPI,
       {
         label: "\uC9C4\uC785\uC810",
@@ -18510,7 +18510,7 @@ ARI.pages = ARI.pages || {};
         value: U.pctStr(repRate),
         sub: "\uC7AC\uAD6C\uB9E4 " + U.fmt(T.rep) + " / \uAD6C\uB9E4 " + U.fmt(cumEnt) + "\uAC1C\uC18C"
       }
-    )), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 2 } }, /* @__PURE__ */ React.createElement(
+    ))), only ? null : /* @__PURE__ */ React.createElement("div", { style: { marginTop: 2 } }, /* @__PURE__ */ React.createElement(
       Seg,
       {
         value: btTab,
@@ -18587,6 +18587,24 @@ ARI.pages = ARI.pages || {};
       /* @__PURE__ */ React.createElement(Note, null, '\uBAA9\uD45C\xB7\uD655\uC815\xB7\uC9C4\uC785\xB7\uD310\uB9E4\uB7C9\xB7\uB300\uB9AC\uC0C1\uC740 \uC8FC\uAC04\uBCF4\uACE0 \uC5D1\uC140 \u300C\u7B80\u8981\u300D/\u300CARI\u5BA2\u6237\u300D \uC2DC\uD2B8 \uAC12 \uADF8\uB300\uB85C\uC785\uB2C8\uB2E4. \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC758 \uD310\uB9E4\uB7C9\uC740 \u300CARI\u660E\u7EC6\u300D \uAE30\uC900\uC774\uBA70, \uB300\uB9AC\uC0C1(\u91C7\u8D2D\u91CF)\uC740 \uAD8C\uC5ED \uB2E8\uC704\uB85C\uB9CC \uC9D1\uACC4\uB418\uC5B4 \uD558\uC704 \uD589\uC740 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \u300C\uAE30\uD0C0\u300D\uB294 \uAD8C\uC5ED\uC5D0 \uBC30\uC815\uB418\uC9C0 \uC54A\uC740 \uB300\uB9AC\uC0C1 \uAD6C\uB9E4\uB7C9\uC785\uB2C8\uB2E4. \uB2EC\uC131\uB960\uC740 \uD655\uC815\xF7\uBAA9\uD45C, \uD310\uB9E4\uB7C9\xF7\uD574\uB2F9 \uAE30\uAC04 \uD310\uB9E4\uBAA9\uD45C, \uB204\uACC4 \uD310\uB9E4\uB7C9\xF7\uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C\uC774\uBA70 \uBAA9\uD45C\uAC00 \uC5C6\uB294 \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC740 "-"\uC785\uB2C8\uB2E4. \uBC18\uBCF5\uAD6C\uB9E4\uB294 \u300CARI\u660E\u7EC6\u300D \u590D\u8D2D\u5BA2\u6237 \uAE30\uC900\uC785\uB2C8\uB2E4.')
     )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "cust" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(CustomerTable, { real, base, month, regions, region, hqF, db0: db.productLabel })));
   }
+  /* 주요현황보고(주간)에서 그대로 끌어다 쓸 블록들.
+     같은 컴포넌트를 재사용하므로 원래 화면과 숫자가 항상 같다. */
+  ARI.blocks = ARI.blocks || {};
+  ARI.blocks.status = StatusReport;
+  ARI.blocks.monthTrack = function ReportMonthTrack({ ctx, db }) {
+    return /* @__PURE__ */ React.createElement(WeeklyProgress, { ctx, db, only: "pt" });
+  };
+  ARI.blocks.qtyPane = function ReportQtyPane({ ctx, db }) {
+    return /* @__PURE__ */ React.createElement(
+      Card,
+      {
+        title: "\uC6D4\uBCC4 \uD310\uB9E4\uC218\uB7C9",
+        desc: "\uBAA9\uD45C \xB7 \uC6D4\uBCC4 \xB7 \uB204\uC801 \xB7 \uBCF8\uBD80\xB7\uC6D4 \uB9E4\uD2B8\uB9AD\uC2A4"
+      },
+      /* @__PURE__ */ React.createElement(ARI.ReportPane, { pane: "p3", week: ctx.week, lang: ctx.lang, prod: db.product })
+    );
+  };
+
   ARI.pages.weekly = function Weekly({ ctx, db }) {
     return /* @__PURE__ */ React.createElement(
       Page,
@@ -19609,67 +19627,20 @@ ARI.pages = ARI.pages || {};
     }))) : null);
   }
   ARI.pages.report = function ReportPage({ ctx, db }) {
-    const hostRef = React.useRef(null);
-    const frameRef = React.useRef(null);
-    const readyRef = React.useRef(false);
-    const week = ctx.week;
-    const lang = ctx.lang;
-    function send(payload) {
-      if (!readyRef.current || !frameRef.current) return;
-      try { frameRef.current.contentWindow.postMessage(payload, "*"); } catch (e) {}
-    }
-    React.useEffect(function() {
-      const box = hostRef.current;
-      if (!box) return;
-      const src = document.getElementById("mgg-report-src");
-      if (!src) return;
-      let html = "";
-      try {
-        const bin = atob(src.textContent.replace(/\s+/g, ""));
-        const bytes = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-        html = new TextDecoder("utf-8").decode(bytes);
-      } catch (e) {
-        box.textContent = "\uBCF4\uACE0\uC11C \uC6D0\uBCF8\uC744 \uC77D\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
-        return;
-      }
-      function onMsg(e) {
-        const d = e && e.data;
-        if (!d || d.type !== "MGG_READY") return;
-        if (!frameRef.current || e.source !== frameRef.current.contentWindow) return;
-        readyRef.current = true;
-        try {
-          const w = frameRef.current.contentWindow;
-          w.postMessage({ type: "MGG_WEEK", week: ctx.week }, "*");
-          w.postMessage({ type: "MGG_CMD", cmd: "setlang", lang: ctx.lang }, "*");
-          w.postMessage({ type: "MGG_PROD", prod: prod }, "*");
-        } catch (err) {}
-      }
-      window.addEventListener("message", onMsg);
-      const f = document.createElement("iframe");
-      f.id = "mgg-report-frame";
-      f.title = "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0";
-      f.style.cssText = "width:100%;height:calc(100vh - 132px);min-height:660px;border:0;background:transparent;display:block";
-      f.srcdoc = html;
-      frameRef.current = f;
-      box.appendChild(f);
-      return function() {
-        window.removeEventListener("message", onMsg);
-        readyRef.current = false;
-        frameRef.current = null;
-        try { box.removeChild(f); } catch (e) {}
-      };
-    }, []);
-    React.useEffect(function() {
-      send({ type: "MGG_WEEK", week });
-    }, [week]);
-    React.useEffect(function() {
-      send({ type: "MGG_CMD", cmd: "setlang", lang });
-    }, [lang]);
+    /* 주간 보고용 한 장 — 다른 화면의 표를 그대로 끌어다 쓴다.
+       계산을 새로 하지 않으므로 원래 화면과 숫자가 항상 같다. */
+    const W = ARI.blocks || {};
     return /* @__PURE__ */ React.createElement(
       Page,
-      { title: "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0", desc: "\uD604\uD669\uBD84\uC11D\uBCF4\uACE0 \xB7 \uC6D4\uBCC4 \uD310\uB9E4\uC218\uB7C9 \xB7 \uB300\uB9AC\uC0C1\uD310\uB9E4\uC18C\uC9C4\uC728" },
-      /* @__PURE__ */ React.createElement("div", { ref: hostRef, className: "min-w-0" })
+      {
+        className: "pg-navy",
+        title: "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0",
+        desc: "\uD604\uD669\uBD84\uC11D\uBCF4\uACE0 \xB7 \uC6D4\uBCC4 \uD310\uB9E4\uC810\uC218 \xB7 \uC6D4\uBCC4 \uD310\uB9E4\uC218\uB7C9 \xB7 \uBCF8\uBD80\uBCC4 \uC138\uBBF8\uB098 \uC2E4\uC801 \u2014 " + ctx.week + " \uAE30\uC900"
+      },
+      W.status ? /* @__PURE__ */ React.createElement(W.status, { ctx, db }) : null,
+      W.monthTrack ? /* @__PURE__ */ React.createElement(W.monthTrack, { ctx, db, metric: "pt" }) : null,
+      W.qtyPane ? /* @__PURE__ */ React.createElement(W.qtyPane, { ctx, db }) : null,
+      W.convHq ? /* @__PURE__ */ React.createElement(W.convHq, { ctx, db }) : null
     );
   };
 })();
@@ -22476,7 +22447,7 @@ ARI.pages = ARI.pages || {};
   function gradePill(g) {
     return pill(g + "%", g >= 100 ? "ok" : g >= 80 ? "navy" : g >= 40 ? "warn" : "gray");
   }
-  function ConvPage({ ctx, db }) {
+  function ConvPage({ ctx, db, only }) {
     const SEED = ARI.convSeed || { sem: [], rows: [] };
     const [tab, setTab] = useState("att");
     const [hqF, setHqF] = useState("");
@@ -22641,7 +22612,7 @@ ARI.pages = ARI.pages || {};
       setOv(n);
       ARI.store.setUI("conv_ov", n);
     }
-    const curMon = Number(ctx.wk.start.slice(5, 7));
+    const wkMon = Number(ctx.wk.start.slice(5, 7));
     const semMon = {};
     (SEED.sem || []).forEach(function(s2) {
       semMon[s2.id] = U.n(s2.mon);
@@ -22663,6 +22634,16 @@ ARI.pages = ARI.pages || {};
         return Object.assign({}, r, ov[r.id] || {});
       });
     }, [ov, added, ctx.week]);
+    /* 이번 달에 명단이 아직 없으면 「명단이 있는 가장 최근 달」을 기준으로 삼는다.
+       그러지 않으면 월 토글이 눌리지 않고 늘 전체 누적으로 잠긴다. */
+    const curMon = useMemo(function() {
+      const has = {};
+      allRows.forEach(function(r) { const m = semMon[r.sem]; if (m) has[m] = 1; });
+      if (has[wkMon]) return wkMon;
+      let best = 0;
+      Object.keys(has).forEach(function(m) { const x = +m; if (x <= wkMon && x > best) best = x; });
+      return best || wkMon;
+    }, [allRows, wkMon]);
     const monRows = useMemo(function() {
       return allRows.filter(function(r) {
         const m = semMon[r.sem];
@@ -22710,15 +22691,26 @@ ARI.pages = ARI.pages || {};
       }
     }
     const real = ARI.real[db.product] || ARI.real.ARi;
+    /* 치과명은 표기가 조금씩 달라(공백·괄호·「门诊部」「有限公司」 등) 정확일치만으로는 놓친다.
+       정확일치를 먼저 보고, 없으면 표기를 지운 이름으로 한 번 더 찾는다.
+       진입 판정에는 「已进入」과 「品牌店」을 함께 넣는다 (원본에서 品牌店도 거래 중인 곳). */
+    const clinicKey = function(v) {
+      return String(v || "").replace(/[\s()\uFF08\uFF09\xB7\-\u2014]/g, "")
+        .replace(/(\u6709\u9650\u516C\u53F8|\u95E8\u8BCA\u90E8|\u53E3\u8154\u533B\u9662|\u53E3\u8154\u8BCA\u6240|\u8FDE\u9501|\u5206\u9662|\u533B\u9662|\u8BCA\u6240)/g, "");
+    };
     const custIdx = useMemo(function() {
-      const m = {};
+      const m = { exact: {}, norm: {} };
       (real.cust || []).forEach(function(c) {
-        m[String(c.name).trim()] = { entered: c.status === "\u5DF2\u8FDB\u5165", qty: U.n(c.tot) };
+        const o = { entered: c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97", qty: U.n(c.tot) };
+        m.exact[String(c.name).trim()] = o;
+        const k = clinicKey(c.name);
+        if (k && !m.norm[k]) m.norm[k] = o;
       });
       return m;
     }, [db.product]);
     function realOf(r) {
-      return custIdx[String(r.clinic).trim()] || null;
+      const t = String(r.clinic || "").trim();
+      return custIdx.exact[t] || custIdx.norm[clinicKey(t)] || null;
     }
     function kit(rs) {
       const uq = function(a) {
@@ -22831,7 +22823,22 @@ ARI.pages = ARI.pages || {};
       const repQty = C.sum(cust, function(c) {
         return U.n(c.rep);
       });
+      /* 세미나 명단과 이어진 치과만 따로 — 전사 수치와 구분해서 보여 준다 */
+      const semCl = {};
+      rows.forEach(function(r) { if (r.clinic) semCl[String(r.clinic).trim()] = 1; });
+      const linked = cust.filter(function(c) { return !!realOf({ clinic: c.name }); });
+      const semLinked = cust.filter(function(c) {
+        var t = String(c.name || "").trim();
+        return semCl[t] || semCl[clinicKey(t)] || Object.keys(semCl).some(function(k) { return clinicKey(k) === clinicKey(t); });
+      });
+      const semEnter = semLinked.filter(function(c) { return c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97"; }).length;
+      const semRep = semLinked.filter(function(c) { return U.n(c.rep) > 0; }).length;
+      const semQty = C.sum(semLinked, function(c) { return U.n(c.tot); });
       return {
+        semN: semLinked.length,
+        semEnter: semEnter,
+        semRep: semRep,
+        semQty: semQty,
         edu: ev.length,
         att: S2("att"),
         clinic: S2("clinic"),
@@ -23199,8 +23206,8 @@ ARI.pages = ARI.pages || {};
       return b ? Math.round(a / b * 1e3) / 10 : 0;
     };
     return /* @__PURE__ */ React.createElement(
-      Page,
-      {
+      only ? "div" : Page,
+      only ? { className: "pg-conv" } : {
         className: "pg-navy pg-conv",
         title: db.productLabel + " \uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74",
         desc: "\uC138\uBBF8\uB098 \uCC38\uC11D\uC790 \uBA85\uB2E8 \uAE30\uC900 \xB7 \uCC38\uC11D \u2192 \uBC29\uBB38 \u2192 \uC9C4\uB3C4 \u2192 \uC2E4\uC81C \uD310\uB9E4 \uC804\uD658 \uCD94\uC801"
@@ -23213,19 +23220,19 @@ ARI.pages = ARI.pages || {};
         { b: "\uAD50\uC721", l: "\uC2E0\uADDC \uACE0\uAC1D", v: U.fmt(F.nonuser), u: "\uAC1C", sub: "\uCC38\uC5EC \uCE58\uACFC \uB300\uBE44 " + U.pctStr(C.conv(F.nonuser, F.clinic)), bg: "#2a51ab" },
         { b: "\uBA85\uB2E8", l: "\uBC29\uBB38\uC728", v: U.pctStr(visitRate), u: "", sub: "\uBC29\uBB38\uC644\uB8CC " + U.fmt(K.done.length) + "/" + U.fmt(K.attCl.length) + "\uAC1C \uCE58\uACFC", bg: "#3458b8" },
         { b: "\uAD50\uC721", l: "\uC2E0\uADDC \uAC1C\uBC1C", v: U.fmt(F.newdev), u: "\uAC1C", sub: "\uC2E0\uADDC \uACE0\uAC1D \uB300\uBE44 " + U.pctStr(C.conv(F.newdev, F.nonuser)), bg: "#3d6cca" },
-        { b: "\uD310\uB9E4", l: db.productLabel + " \uC9C4\uC785", v: U.fmt(F.entered), u: "\uAC1C\uC18C", v2: U.fmt(F.cumQty), u2: "\uAC1C", sub: "\uC2E0\uADDC \uAC1C\uBC1C \uB300\uBE44 " + U.pctStr(C.conv(F.entered, F.newdev)), bg: "#4f7fd6" },
-        { b: "\uD310\uB9E4", l: db.productLabel + " \uC7AC\uAD6C\uB9E4", v: U.fmt(F.repCust), u: "\uAC1C\uC18C", v2: U.fmt(F.repQty), u2: "\uAC1C", sub: db.productLabel + " \uC9C4\uC785 \uB300\uBE44 " + U.pctStr(C.conv(F.repCust, F.entered)), bg: "#7aa7ec" },
-        { b: "\uD310\uB9E4", l: "\uAD50\uC721\u2192\uC9C4\uC785 \uC5F0\uACB0\uB960", v: U.pctStr(C.conv(F.entered, F.newdev)), u: "", sub: "\uC2E0\uADDC\uAC1C\uBC1C " + U.fmt(F.newdev) + " \uC911 \uC9C4\uC785 " + U.fmt(F.entered), bg: "#b7d3f8", dark: 1 }
+        { b: "\uD310\uB9E4", l: db.productLabel + " \uC9C4\uC785", v: U.fmt(F.semEnter), u: "\uAC1C\uC18C", v2: U.fmt(F.semQty), u2: "\uAC1C", sub: "\uC138\uBBF8\uB098 \uC5F0\uACB0 \uAE30\uC900 \xB7 \uC804\uC0AC " + U.fmt(F.entered) + "\uAC1C\uC18C", bg: "#4f7fd6" },
+        { b: "\uD310\uB9E4", l: db.productLabel + " \uC7AC\uAD6C\uB9E4", v: U.fmt(F.semRep), u: "\uAC1C\uC18C", v2: "", u2: "", sub: "\uC138\uBBF8\uB098 \uC5F0\uACB0 " + U.fmt(F.semN) + "\uAC1C\uC18C \uC911 \xB7 \uC804\uC0AC " + U.fmt(F.repCust) + "\uAC1C\uC18C", bg: "#7aa7ec" },
+        { b: "\uD310\uB9E4", l: "\uAD50\uC721\u2192\uC9C4\uC785", v: U.pctStr(C.conv(F.entered, F.newdev)), u: "", sub: "\uC2E0\uADDC\uAC1C\uBC1C " + U.fmt(F.newdev) + " \uC911 \uC9C4\uC785 " + U.fmt(F.entered), bg: "#b7d3f8", dark: 1 }
       ].map(function(t, i) {
         const fg = t.dark ? "#16234a" : "#fff";
-        return /* @__PURE__ */ React.createElement("div", { key: i, className: "px-3 py-2.5", style: { background: t.bg, color: fg, borderRadius: 0 } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-1.5 mb-1.5" }, /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ React.createElement("div", { key: i, className: "px-2 py-2", style: { background: t.bg, color: fg, borderRadius: 0, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-1 mb-1", style: { minWidth: 0 } }, /* @__PURE__ */ React.createElement(
           "span",
           {
-            className: "text-[10px] font-extrabold rounded-[2px] px-1.5 py-[1px]",
-            style: { background: t.dark ? "#16234a" : "#fff", color: t.dark ? "#fff" : "#16234a" }
+            className: "text-[9px] font-extrabold rounded-[2px] px-1 py-[1px]",
+            style: { background: t.dark ? "#16234a" : "#fff", color: t.dark ? "#fff" : "#16234a", flexShrink: 0, whiteSpace: "nowrap" }
           },
           t.b
-        ), /* @__PURE__ */ React.createElement("span", { className: "text-[12px] font-bold", style: { opacity: 0.95, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, t.l)), /* @__PURE__ */ React.createElement("div", { style: U.NUM }, /* @__PURE__ */ React.createElement("span", { className: "text-[24px] font-extrabold leading-none" }, t.v), t.u ? /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold ml-[2px]", style: { opacity: 0.85 } }, t.u) : null, t.v2 ? /* @__PURE__ */ React.createElement("span", { className: "text-[17px] font-extrabold ml-2" }, t.v2) : null, t.u2 ? /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold ml-[2px]", style: { opacity: 0.85 } }, t.u2) : null), /* @__PURE__ */ React.createElement("div", { className: "font-semibold mt-1.5", style: { opacity: 0.88, fontSize: 6 } }, t.sub));
+        ), /* @__PURE__ */ React.createElement("span", { className: "font-bold", title: t.l, style: { fontSize: 10.5, letterSpacing: "-.3px", opacity: 0.95, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 } }, t.l)), /* @__PURE__ */ React.createElement("div", { style: Object.assign({ whiteSpace: "nowrap" }, U.NUM) }, /* @__PURE__ */ React.createElement("span", { className: "text-[21px] font-extrabold leading-none" }, t.v), t.u ? /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold ml-[2px]", style: { opacity: 0.85 } }, t.u) : null, t.v2 ? /* @__PURE__ */ React.createElement("span", { className: "text-[17px] font-extrabold ml-2" }, t.v2) : null, t.u2 ? /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold ml-[2px]", style: { opacity: 0.85 } }, t.u2) : null), /* @__PURE__ */ React.createElement("div", { className: "font-semibold mt-1", style: { opacity: 0.88, fontSize: 8.5, lineHeight: 1.25 } }, t.sub));
       })),
       /* @__PURE__ */ React.createElement("div", { style: { marginTop: 2 } }, /* @__PURE__ */ React.createElement(
         Seg,
@@ -23243,7 +23250,15 @@ ARI.pages = ARI.pages || {};
         },
         curMon,
         "\uC6D4\uC5D0 \uB4F1\uB85D\uB41C \uC138\uBBF8\uB098\uAC00 \uC5C6\uC5B4 \uC804\uCCB4 \uB204\uC801\uC73C\uB85C \uBCF4\uC5EC\uB4DC\uB9BD\uB2C8\uB2E4. \uD574\uB2F9 \uC6D4 \uBA85\uB2E8\uC744 \uC62C\uB9AC\uBA74 \uC790\uB3D9\uC73C\uB85C \uC6D4 \uB204\uC801\uC73C\uB85C \uBC14\uB01D\uB2C8\uB2E4."
-      ) : null, /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold leading-[1.5]", style: { color: "#16234a" } }, "\uBCF8\uBD80\uBCC4 \uC138\uBBF8\uB098 \uC2E4\uC801 \xB7 ", effSpan === "mon" ? curMon + "\uC6D4 \uB204\uC801" : "\uC804\uCCB4 \uB204\uC801", " (", ctx.week.slice(5), " \uAE30\uC900)"), /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#16234a", margin: "9px 0 12px" } }), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-3" }, TREE.map(function(m) {
+      ) : null, /* @__PURE__ */ React.createElement("div", { className: "flex items-baseline gap-3 flex-wrap" },
+        /* @__PURE__ */ React.createElement("span", { className: "text-[15px] font-extrabold leading-[1.5]", style: { color: "#16234a" } }, "\uBCF8\uBD80\uBCC4 \uC138\uBBF8\uB098 \uC2E4\uC801 \xB7 ", effSpan === "mon" ? curMon + "\uC6D4 \uB204\uC801" : "\uC804\uCCB4 \uB204\uC801", " (", ctx.week.slice(5), " \uAE30\uC900)"),
+        /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-semibold leading-[1.5]", style: { color: "#2a51ab" } },
+          "\u203B \uC9C4\uC785\uCE58\uACFC\xB7\uC804\uD658\uC728\xB7\uC2E4\uC81C\uD310\uB9E4\uB294 \uC138\uBBF8\uB098 \uBA85\uB2E8\uC758 \uCE58\uACFC\uBA85\uACFC \uACE0\uAC1D\uBA85\uC138\uC758 \uCE58\uACFC\uBA85\uC744 \uB300\uC870\uD574 \uCC44\uC6C1\uB2C8\uB2E4. " +
+          "\uB450 \uC790\uB8CC\uC5D0 \uACF5\uD1B5 \uACE0\uAC1D\uCF54\uB4DC\uAC00 \uC5C6\uC5B4 \uC774\uB984 \uD45C\uAE30\uAC00 \uB2E4\uB974\uBA74 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC73C\uBA70, " +
+          "\uD604\uC7AC \uC138\uBBF8\uB098 \uCC38\uC11D \uCE58\uACFC 2,646\uAC1C\uC18C \uC911 \uBA85\uC138\uC5D0 \uC788\uB294 \uACF3\uC740 225\uAC1C\uC18C(8.5%)\uC785\uB2C8\uB2E4. " +
+          "\uB530\uB77C\uC11C \uC774 \uC138 \uAC12\uC740 \uC2E4\uC81C\uBCF4\uB2E4 \uC791\uAC8C \uC7A1\uD790 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uCE58\uACFC\uCF54\uB4DC\uAC00 \uBD80\uC5EC\uB418\uBA74 \uC815\uD655\uD574\uC9d1\uB2C8\uB2E4."
+        )
+      ), /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#16234a", margin: "9px 0 12px" } }), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-3" }, TREE.map(function(m) {
         const base = m.k ? m.k.totCl.length : 0;
         const st = [
           { l: "\uCC38\uC11D\uCE58\uACFC", v: base, c: "#141826" },
@@ -23652,6 +23667,10 @@ ARI.pages = ARI.pages || {};
   function Zh({ children }) {
     return /* @__PURE__ */ React.createElement("span", { "data-notr": "1" }, children);
   }
+  ARI.blocks = ARI.blocks || {};
+  ARI.blocks.convHq = function ReportConvHq({ ctx, db }) {
+    return /* @__PURE__ */ React.createElement(ConvPage, { ctx, db, only: "hq" });
+  };
   ARI.pages.conv = ConvPage;
 })();
 
@@ -24015,7 +24034,6 @@ ARI.pages = ARI.pages || {};
   const { Sel, Btn, Badge, Modal, Note, Field } = ARI.ui;
   const GROUPS = [
     { id: "g_ov", label: "\uD1B5\uD569 \uB300\uC2DC\uBCF4\uB4DC", icon: "dashboard", items: [
-      { key: "report", label: "\uC8FC\uC694\uD604\uD669\uBCF4\uACE0" },
       { key: "weekly", label: "\uC81C\uD488\uD310\uB9E4\uD604\uD669" },
       { key: "conv", label: "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74" }
     ] },
@@ -24101,7 +24119,7 @@ ARI.pages = ARI.pages || {};
     const [db, setDb] = useState(function() {
       return S.build(S.getUI("product", "ARi"));
     });
-    const [page, setPage] = useState("report");
+    const [page, setPage] = useState("weekly");
     const [params, setParams] = useState({});
     const [sidebar, setSidebar] = useState(true);
     const [open, setOpen] = useState(function() {
@@ -24235,7 +24253,7 @@ ARI.pages = ARI.pages || {};
       });
     });
     useEffect(function() {
-      if (!authed && lockedKeys[page]) go("report");
+      if (!authed && lockedKeys[page]) go("weekly");
     }, [authed, page]);
     function doLogin() {
       if (checkLogin(lgId, lgPw)) {
@@ -24637,7 +24655,7 @@ ARI.pages = ARI.pages || {};
     const TOOL = [
       { l: "\uC800\uC7A5", icon: "check", cls: "bg-sky-800 border-sky-800 text-white", fn: doSave },
       { l: "\uD074\uB77C\uC6B0\uB4DC \uC800\uC7A5", icon: "cloud", cls: "bg-sky-700 border-sky-700 text-white", fn: doCloudSave }
-    ].concat(page === "report" ? [
+    ].concat(page === "weekly" ? [
       { l: "PPT \uB2E4\uC6B4\uB85C\uB4DC", icon: "download", cls: "bg-sky-800 border-sky-800 text-white", fn: () => reportCmd({ type: "MGG_CMD", cmd: "ppt" }) }
     ] : []);
     const MORE = [
