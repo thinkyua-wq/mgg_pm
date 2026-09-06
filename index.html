@@ -22622,9 +22622,14 @@ ARI.pages = ARI.pages || {};
     const semOfId = {};
     /* 제품이 BD · ARi · ARi、BD 인 세미나만 다룬다 (其他·AO·미기재 제외) */
     const PROD_OK = { "BD": 1, "ARi": 1, "ARi\u3001BD": 1, "ARi,BD": 1, "BD\u3001ARi": 1, "BD,ARi": 1 };
+    /* 좌측에서 고른 제품의 세미나만 본다.
+       ARi 를 고르면 ARi 단독 + ARi·BD 동시운영, BD 를 고르면 BD 단독 + 동시운영. */
+    const CURP = db.product === "BD" ? "BD" : "ARi";
     function prodOK(x) {
       if (!x) return false;
-      return !!PROD_OK[String(x.prod || "").replace(/\s+/g, "")];
+      const p = String(x.prod || "").replace(/\s+/g, "");
+      if (!PROD_OK[p]) return false;
+      return p.indexOf(CURP) >= 0;
     }
     (SEED.sem || []).forEach(function(x) {
       semOfId[x.id] = x;
@@ -22635,7 +22640,7 @@ ARI.pages = ARI.pages || {};
       }).map(function(r) {
         return Object.assign({}, r, ov[r.id] || {});
       });
-    }, [ov, added, ctx.week]);
+    }, [ov, added, ctx.week, db.product]);
     /* 이번 달에 명단이 아직 없으면 「명단이 있는 가장 최근 달」을 기준으로 삼는다.
        그러지 않으면 월 토글이 눌리지 않고 늘 전체 누적으로 잠긴다. */
     const curMon = useMemo(function() {
@@ -22696,6 +22701,10 @@ ARI.pages = ARI.pages || {};
     /* 치과명은 표기가 조금씩 달라(공백·괄호·「门诊部」「有限公司」 등) 정확일치만으로는 놓친다.
        정확일치를 먼저 보고, 없으면 표기를 지운 이름으로 한 번 더 찾는다.
        진입 판정에는 「已进入」과 「品牌店」을 함께 넣는다 (원본에서 品牌店도 거래 중인 곳). */
+    /* 방문일자가 한 건도 입력되지 않았으면 「0」이 아니라 「미입력」 */
+    const noVisitHq = function(m) {
+      return !((m && m.rows) || []).some(function(r) { return String(r.visit || "").trim(); });
+    };
     const clinicKey = function(v) {
       return String(v || "").replace(/[\s()\uFF08\uFF09\xB7\-\u2014]/g, "")
         .replace(/(\u6709\u9650\u516C\u53F8|\u95E8\u8BCA\u90E8|\u53E3\u8154\u533B\u9662|\u53E3\u8154\u8BCA\u6240|\u8FDE\u9501|\u5206\u9662|\u533B\u9662|\u8BCA\u6240)/g, "");
@@ -22910,6 +22919,7 @@ ARI.pages = ARI.pages || {};
         return {
           hq,
           k,
+          rows: rs,
           sems,
           semN: sems.length,
           empty: !sems.length,
@@ -22919,7 +22929,7 @@ ARI.pages = ARI.pages || {};
           cr: P(k.realIn.length, k.totCl.length + sems.reduce(function(a, x) { return a + (x.k.totCl.length ? 0 : U.n(x.eCl)); }, 0))
         };
       });
-    }, [rows]);
+    }, [rows, db.product]);
     const TOT = useMemo(function() {
       return kit(rows);
     }, [rows]);
@@ -23267,19 +23277,22 @@ ARI.pages = ARI.pages || {};
           { l: "\uBC29\uBB38\uC644\uB8CC", v: m.k ? m.k.done.length : 0, c: "#3d4d84" },
           { l: "\uC9C4\uC785\uCE58\uACFC", v: m.k ? m.k.realIn.length : 0, c: "#16794a" }
         ];
+        /* 방문일자가 하나도 입력되지 않은 본부는 「0」이 아니라 「미입력」이다.
+           이때 낙폭(병목)을 표시하면 실적이 나쁜 것처럼 읽히므로 표시하지 않는다. */
+        const noVisit = !(m.rows || []).some(function(r) { return String(r.visit || "").trim(); });
         let bn = -1, bv = -1;
-        for (let i = 1; i < st.length; i++) {
-          const d = st[i - 1].v - st[i].v;
-          if (d > bv) {
-            bv = d;
-            bn = i;
+        if (!noVisit) {
+          for (let i = 1; i < st.length; i++) {
+            const d = st[i - 1].v - st[i].v;
+            if (d > bv) { bv = d; bn = i; }
           }
         }
         return /* @__PURE__ */ React.createElement("div", { key: m.hq, style: { border: "1px solid #e3e8f0", padding: "7px 8px 8px" } }, /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] font-extrabold", style: { color: "#16234a" } }, m.hq), /* @__PURE__ */ React.createElement("div", { style: { height: 1, background: "#141826", margin: "5px 0 6px" } }), st.map(function(s, i) {
           const w = base ? Math.max(2, s.v / base * 100) : 2;
           const bad = bn === i && bv > 0;
-          return /* @__PURE__ */ React.createElement("div", { key: s.l, className: "flex items-center gap-1.5", style: { marginBottom: 3 } }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-bold", style: { width: 46, color: bad ? "#c0392f" : "#68748B", flexShrink: 0 } }, s.l), /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 9, background: "#eef1f6", position: "relative" } }, /* @__PURE__ */ React.createElement("i", { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: w + "%", background: s.c, display: "block" } })), /* @__PURE__ */ React.createElement("span", { className: "text-[10px] font-extrabold", style: { width: 22, textAlign: "right", color: "#16234a", flexShrink: 0 } }, s.v));
-        }), /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold mt-1", style: { color: bv > 0 ? "#c0392f" : "#94a3b8" } }, base ? bv > 0 ? "\uBCD1\uBAA9 " + st[bn - 1].l + "\u2192" + st[bn].l + " \u2212" + bv : "\uB099\uD3ED \uC5C6\uC74C" : "\uBA85\uB2E8 \uC5C6\uC74C"));
+          const blank = noVisit && i > 0;
+          return /* @__PURE__ */ React.createElement("div", { key: s.l, className: "flex items-center gap-1.5", style: { marginBottom: 3 } }, /* @__PURE__ */ React.createElement("span", { className: "text-[9.5px] font-bold", style: { width: 46, color: bad ? "#c0392f" : "#68748B", flexShrink: 0 } }, s.l), /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 9, background: "#eef1f6", position: "relative" } }, /* @__PURE__ */ React.createElement("i", { style: { position: "absolute", left: 0, top: 0, bottom: 0, width: w + "%", background: s.c, display: "block" } })), /* @__PURE__ */ React.createElement("span", { className: "text-[10px] font-extrabold", style: { width: 22, textAlign: "right", color: "#16234a", flexShrink: 0 } }, blank ? "\u2013" : s.v));
+        }), /* @__PURE__ */ React.createElement("div", { className: "text-[9.5px] font-bold mt-1", style: { color: bv > 0 ? "#c0392f" : "#94a3b8" } }, !base ? "\uBA85\uB2E8 \uC5C6\uC74C" : noVisit ? "\uBC29\uBB38 \uAE30\uB85D \uBBF8\uC785\uB825" : bv > 0 ? "\uBCD1\uBAA9 " + st[bn - 1].l + "\u2192" + st[bn].l + " \u2212" + bv : "\uB099\uD3ED \uC5C6\uC74C"));
       })), /* @__PURE__ */ React.createElement("div", { className: "overflow-x-auto" }, /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt cv-big" }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, [
         ["\uBCF8\uBD80", 96, 0],
         ["\uC138\uBBF8\uB098 \uD69F\uC218", 96, 1],
@@ -23315,8 +23328,8 @@ ARI.pages = ARI.pages || {};
           /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, m.semN, "\uD68C"),
           /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(m.eAtt)),
           /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(m.eCl)),
-          /* @__PURE__ */ React.createElement("td", { className: "num" }, m.k.done.length),
-          /* @__PURE__ */ React.createElement("td", { className: "num", style: rc(m.vr, 35) }, m.vr, "%"),
+          /* @__PURE__ */ React.createElement("td", { className: "num" }, noVisitHq(m) ? "\u2013" : m.k.done.length),
+          /* @__PURE__ */ React.createElement("td", { className: "num", style: noVisitHq(m) ? { color: "#94a3b8" } : rc(m.vr, 35) }, noVisitHq(m) ? "\u2013" : m.vr + "%"),
           /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, m.k.realIn.length),
           /* @__PURE__ */ React.createElement("td", { className: "num", style: rc(m.cr, 15) }, m.cr, "%"),
           /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, U.fmt(m.k.realQ)),
