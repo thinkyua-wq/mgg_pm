@@ -4241,6 +4241,7 @@ ARI.pages = ARI.pages || {};
     { stage: "\uBE0C\uB79C\uB4DC\uC639\uD638", rule: "\uBE0C\uB79C\uB4DC\uC2A4\uD1A0\uC5B4(\u54C1\u724C\u5E97) \uC9C0\uC815" }
   ];
   function buildOrg(rows) {
+    rows = rows || [];
     const provMap = {}, hqSet = [], areaSet = [];
     rows.forEach(function(r) {
       provMap[r.prov] = { corp: r.corp, hq: r.hq, prov: r.prov };
@@ -4279,7 +4280,7 @@ ARI.pages = ARI.pages || {};
   }
   function buildCustomers(prod, real, org) {
     const meta = PRODUCT_META[prod];
-    return real.cust.map(function(c, i) {
+    return (real.cust || []).map(function(c, i) {
       const info = org.provMap[c.prov] || { corp: "-", hq: "\uAE30\uD0C0" };
       const months = meta.months;
       const monthly = {};
@@ -4878,7 +4879,17 @@ ARI.pages = ARI.pages || {};
   function build(product) {
     const prod = PRODUCT_META[product] ? product : "ARi";
     if (CACHE[prod]) return CACHE[prod];
-    const real = R[prod] || { org: [], cust: [], tot: null };
+    const base = R[prod] || {};
+    /* 클라우드 응답에 일부 항목이 없을 수 있다 — 없으면 내장 자료로 메운다 */
+    const fb = (ARI.embedded && ARI.embedded[prod]) || {};
+    const real = {
+      org: base.org || fb.org || [],
+      cust: base.cust || fb.cust || [],
+      area: base.area || fb.area || [],
+      tot: base.tot || fb.tot || null,
+      snaps: base.snaps || fb.snaps || [],
+      prev: base.prev || fb.prev || null
+    };
     const meta = PRODUCT_META[prod];
     const org = buildOrg(real.org);
     const customers = buildCustomers(prod, real, org);
