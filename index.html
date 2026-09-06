@@ -3410,26 +3410,51 @@ eXBlOidNR0dfUkVBRFknfSwgJyonKTsgfWNhdGNoKGUpe30KfSkoKTsKPC9zY3JpcHQ+CgoKPC9ib2R5
     /* 연동 실패를 조용히 넘기면 「내장 데이터(옛 주차)」로 열리면서도 사용자는 모릅니다.
        왜 실패했는지를 남겨 두고, 화면 왼쪽 아래 「데이터」 줄에 빨갛게 표시합니다. */
     window.__ARI_CLOUD_STATE = { url: u, ok: false, why: '' };
+    /* 지난 접속 때 늦게 도착해 담아 둔 응답이 있으면 그것부터 쓴다 */
+    try {
+      var keep = sessionStorage.getItem('ARI_CLOUD_LATE');
+      if (keep) {
+        var kp = JSON.parse(keep);
+        if (kp && kp.ARi && kp.ARi.area) {
+          window.__ARI_CLOUD = kp;
+          window.__ARI_CLOUD_STATE.ok = true;
+          window.__ARI_CLOUD_STATE.week = kp.week || '';
+          window.__ARI_CLOUD_STATE.files = kp.files || null;
+        }
+      }
+    } catch (e) {}
+    /* 기다림이 끝나도 요청은 버리지 않는다. 늦게 와도 받아서 다음 접속에 쓴다. */
     function end(why) {
       if (fin) return; fin = true;
       if (!window.__ARI_CLOUD) window.__ARI_CLOUD_STATE.why = why || '응답 없음';
-      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
-      if (tag.parentNode) tag.parentNode.removeChild(tag);
       done();
     }
     window[cb] = function (payload) {
-      if (payload && payload.ARi && payload.ARi.area) {
+      var good = payload && payload.ARi && payload.ARi.area;
+      if (good && !fin) {
         window.__ARI_CLOUD = payload;
         window.__ARI_CLOUD_STATE.ok = true;
         window.__ARI_CLOUD_STATE.week = payload.week || '';
         window.__ARI_CLOUD_STATE.files = payload.files || null;
-      } else {
+      } else if (good) {
+        /* 이미 내장 데이터로 열린 뒤 도착 — 담아 두고 눌러서 새로고침할 수 있게 알린다 */
+        try { sessionStorage.setItem('ARI_CLOUD_LATE', JSON.stringify(payload)); } catch (e) {}
+        try {
+          var b = document.createElement('div');
+          b.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9999;' +
+            'background:#16234a;color:#fff;padding:11px 18px;font-size:13px;font-weight:700;' +
+            'box-shadow:0 8px 24px rgba(15,23,42,.32);cursor:pointer;border-radius:2px';
+          b.textContent = '클라우드 데이터(' + (payload.week || '') + ') 도착 — 눌러서 새로고침';
+          b.onclick = function () { location.reload(); };
+          document.body.appendChild(b);
+        } catch (e) {}
+      } else if (!fin) {
         window.__ARI_CLOUD_STATE.why = (payload && payload.error) ? String(payload.error) : '데이터 형식 오류';
       }
-      end();
+      if (!fin) end();
     };
     tag.onerror = function () { end('주소에 연결 실패 (404·권한·네트워크)'); };
-    setTimeout(function () { end('아직 받는 중 — 도착하면 화면 아래에 알려 드립니다'); }, 1500);
+    setTimeout(function () { end('아직 받는 중 \u2014 도착하면 화면 아래에 알려 드립니다'); }, 8000);
     tag.src = u + (u.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + cb + '&t=' + Date.now();
     document.head.appendChild(tag);
   }
@@ -17492,6 +17517,8 @@ ARI.pages = ARI.pages || {};
     }, [ctx.week, db.product]);
     const visitRate = C.conv(K.done.length, K.attCl.length) || 0;
     const schedRate = C.conv(K.sched.length, K.attCl.length) || 0;
+    /* 「n월 누적」을 고른 경우 세미나 목록도 그 달로 좁힌다 */
+    const monOnly = (span === "mon" && !autoAll) ? curMon : 0;
     const TREE = useMemo(function() {
       const P = function(a, b) {
         return b ? Math.round(a / b * 1e3) / 10 : 0;
@@ -17501,9 +17528,14 @@ ARI.pages = ARI.pages || {};
           return r.hq === hq;
         });
         const k = kit(rs);
+        /* 진입치과·실제판매는 「그 달에 진입」이 아니라 「지금까지 진입」이다.
+           그래서 이 세 값만 월 필터를 걸지 않고 전체 기간으로 계산한다. */
+        const kAll = monOnly ? kit(allRows.filter(function(r) { return r.hq === hq; })) : k;
         const ids = [];
         (SEED.sem || []).forEach(function(x) {
-          if (x.hq === hq && x.week && x.week <= ctx.week && prodOK(x) && ids.indexOf(x.id) < 0) ids.push(x.id);
+          if (x.hq !== hq || !x.week || x.week > ctx.week || !prodOK(x)) return;
+          if (monOnly && U.n(x.mon) !== monOnly) return;
+          if (ids.indexOf(x.id) < 0) ids.push(x.id);
         });
         rs.forEach(function(r) {
           if (ids.indexOf(r.sem) < 0 && prodOK(semOfId[r.sem])) ids.push(r.sem);
@@ -17552,13 +17584,14 @@ ARI.pages = ARI.pages || {};
           sems,
           semN: sems.length,
           empty: !sems.length,
+          kAll: kAll,
           eAtt: sems.reduce(function(a, x) { return a + U.n(x.eAtt); }, 0),
           eCl: k.totCl.length + sems.reduce(function(a, x) { return a + (x.k.totCl.length ? 0 : U.n(x.eCl)); }, 0),
           vr: P(k.done.length, k.totCl.length + sems.reduce(function(a, x) { return a + (x.k.totCl.length ? 0 : U.n(x.eCl)); }, 0)),
-          cr: P(k.realIn.length, k.totCl.length + sems.reduce(function(a, x) { return a + (x.k.totCl.length ? 0 : U.n(x.eCl)); }, 0))
+          cr: P(kAll.realIn.length, kAll.totCl.length)
         };
       });
-    }, [rows, db.product]);
+    }, [rows, db.product, monOnly]);
     const TOT = useMemo(function() {
       return kit(rows);
     }, [rows]);
@@ -17929,9 +17962,9 @@ ARI.pages = ARI.pages || {};
         ["\uCC38\uC11D \uCE58\uACFC", 96, 1],
         ["\uBC29\uBB38\uC644\uB8CC", 92, 1],
         ["\uBC29\uBB38\uC728", 80, 1],
-        ["\uC9C4\uC785\uCE58\uACFC", 88, 1],
-        ["\uC804\uD658\uC728", 80, 1],
-        ["\uC2E4\uC81C\uD310\uB9E4(\uAC1C)", 108, 1]
+        ["\uC9C4\uC785\uCE58\uACFC \uB204\uC801", 96, 1],
+        ["\uC804\uD658\uC728 \uB204\uC801", 88, 1],
+        ["\uC2E4\uC81C\uD310\uB9E4 \uB204\uC801(\uAC1C)", 116, 1]
       ].map(function(h) {
         return /* @__PURE__ */ React.createElement("th", { key: h[0], className: h[2] ? "num" : "", style: { minWidth: h[1], whiteSpace: "nowrap" } }, h[0]);
       }), /* @__PURE__ */ React.createElement("th", { style: { width: 90, minWidth: 90, maxWidth: 90, whiteSpace: "nowrap" } }, "\uAE30\uD0C0"))), /* @__PURE__ */ React.createElement("tbody", null, TREE.map(function(m) {
@@ -17959,9 +17992,9 @@ ARI.pages = ARI.pages || {};
           /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(m.eCl)),
           /* @__PURE__ */ React.createElement("td", { className: "num" }, noVisitHq(m) ? "\u2013" : m.k.done.length),
           /* @__PURE__ */ React.createElement("td", { className: "num", style: noVisitHq(m) ? { color: "#94a3b8" } : rc(m.vr, 35) }, noVisitHq(m) ? "\u2013" : m.vr + "%"),
-          /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, m.k.realIn.length),
+          /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, m.kAll.realIn.length),
           /* @__PURE__ */ React.createElement("td", { className: "num", style: rc(m.cr, 15) }, m.cr, "%"),
-          /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, U.fmt(m.k.realQ)),
+          /* @__PURE__ */ React.createElement("td", { className: "num", style: { fontWeight: 800 } }, U.fmt(m.kAll.realQ)),
           /* @__PURE__ */ React.createElement("td", { onClick: function(e) {
             e.stopPropagation();
           } }, etcCell(m.hq))
@@ -17973,7 +18006,15 @@ ARI.pages = ARI.pages || {};
         return U.n(m.eAtt);
       }))), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(C.sum(TREE, function(m) {
         return U.n(m.eCl);
-      }))), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.done.length), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.totCl.length ? Math.round(TOT.done.length / TOT.totCl.length * 1e3) / 10 : 0, "%"), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.realIn.length), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.totCl.length ? Math.round(TOT.realIn.length / TOT.totCl.length * 1e3) / 10 : 0, "%"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(TOT.realQ)), /* @__PURE__ */ React.createElement("td", null))))), TREE.filter(function(m) {
+      }))), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.done.length), /* @__PURE__ */ React.createElement("td", { className: "num" }, TOT.totCl.length ? Math.round(TOT.done.length / TOT.totCl.length * 1e3) / 10 : 0, "%"), /* @__PURE__ */ React.createElement("td", { className: "num" }, C.sum(TREE, function(m) {
+        return m.kAll.realIn.length;
+      })), /* @__PURE__ */ React.createElement("td", { className: "num" }, (function() {
+        const a = C.sum(TREE, function(m) { return m.kAll.realIn.length; });
+        const b = C.sum(TREE, function(m) { return m.kAll.totCl.length; });
+        return b ? Math.round(a / b * 1e3) / 10 : 0;
+      })(), "%"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(C.sum(TREE, function(m) {
+        return m.kAll.realQ;
+      }))), /* @__PURE__ */ React.createElement("td", null))))), TREE.filter(function(m) {
         return !m.empty && m.sems && m.sems.length && m.hq === selHq;
       }).map(function(m) {
         const rc2 = function(v, t) {
