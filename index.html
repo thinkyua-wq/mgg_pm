@@ -1043,7 +1043,7 @@ ARI.pages = ARI.pages || {};
   };
   const GRADES = ["Seed KOL", "\uBE0C\uB79C\uB4DC\uC2A4\uD1A0\uC5B4", "DSO", "\uBBFC\uC601", "\uAE30\uD0C0"];
   const STATUS_STAGE = { "\u8DDF\u8FDB\u4E2D": "\uC778\uC9C0", "\u6709\u610F\u5411": "\uAD50\uC721", "\u5DF2\u786E\u8BA4": "\uC784\uC0C1\uC0AC\uC6A9", "\u5DF2\u8FDB\u5165": "\uCD5C\uCD08\uAD6C\uB9E4", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC639\uD638" };
-  const STATUS_KO = { "\u8DDF\u8FDB\u4E2D": "\uD314\uB85C\uC5C5", "\u6709\u610F\u5411": "\uAD00\uC2EC", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC2A4\uD1A0\uC5B4" };
+  const STATUS_KO = { "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911", "\u6709\u610F\u5411": "\uAD00\uC2EC", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC2A4\uD1A0\uC5B4" };
   const MARKET = {
     TAM: 13e6,
     SAM: 26e5,
@@ -8829,7 +8829,7 @@ ARI.pages = ARI.pages || {};
       data.length ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3 mt-3 pt-2.5", style: { borderTop: "1px solid #e6e9ef" } }, /* @__PURE__ */ React.createElement("div", { className: "text-[13px] font-extrabold", style: { color: "#16234a", flexShrink: 0 } }, "\uD569\uACC4"), /* @__PURE__ */ React.createElement("div", { className: "flex-1 text-[14px] font-extrabold", style: Object.assign({ color: "#16234a" }, U.NUM) }, U.fmt(totA), un, /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-semibold text-slate-500 ml-2" }, "\uBAA9\uD45C ", U.fmt(totT), un, " \xB7 \uACA9\uCC28 ", totT > totA ? "\u2212" + U.fmt(totT - totA) : "+" + U.fmt(totA - totT), un)), /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold", style: Object.assign({ color: pcColor(totRate), flexShrink: 0 }, U.NUM) }, totRate, "%")) : /* @__PURE__ */ React.createElement("div", { className: "text-center text-[13px] py-5", style: { color: "#94a3b8" } }, "\uD45C\uC2DC\uD560 \uBCF8\uBD80 \uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.")
     );
   }
-  const RM = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uD314\uB85C\uC5C5" };
+  const RM = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911" };
   const RT = { "\u5DF2\u8FDB\u5165": "ok", "\u54C1\u724C\u5E97": "navy", "\u5DF2\u786E\u8BA4": "info", "\u6709\u610F\u5411": "warn", "\u8DDF\u8FDB\u4E2D": "gray" };
   const ST_BG = { "\u5DF2\u8FDB\u5165": "#16794a", "\u54C1\u724C\u5E97": "#1d2347", "\u5DF2\u786E\u8BA4": "#2a51ab", "\u6709\u610F\u5411": "#8a5a00", "\u8DDF\u8FDB\u4E2D": "#667085" };
   function StBadge({ s }) {
@@ -8879,7 +8879,11 @@ ARI.pages = ARI.pages || {};
   }
   const DEAL_KO = { "\u4EE3\u7406\u5546": "\uB300\uB9AC\uC0C1", "\u4EE3\u7406\u5546\u4F9B\u8D27": "\uB300\uB9AC\uC0C1 \uACF5\uAE09", "\u76F4\u9500": "\uC9C1\uAC70\uB798", "\u76F4\u8425": "\uC9C1\uC601" };
   function typeKo(t) {
-    return (t || "").indexOf("DSO") >= 0 && (t || "").indexOf("\u975EDSO") < 0 ? "DSO" : "\uCE58\uACFC";
+    const v = String(t || "").replace(/[\r\n]|_x000D_/g, "").trim();
+    if (v.indexOf("\u516C\u7ACB") >= 0) return "\uACF5\uB9BD";
+    if (v.indexOf("DSO") >= 0 && v.indexOf("\u975EDSO") < 0) return "DSO";
+    if (v.indexOf("kol") >= 0 || v.indexOf("KOL") >= 0) return "KOL";
+    return "\uBBFC\uC601";
   }
   function buildRegions(real, month, mode, tgtSrc) {
     const D = ARI.data;
@@ -9034,6 +9038,20 @@ ARI.pages = ARI.pages || {};
     });
   }
   const UPD_TONE = { "\uC2E0\uADDC": "ok", "\uD310\uB9E4": "info", "\uC0C1\uD0DC": "warn", "\uBCF5\uD569": "urgent" };
+  const CN_KO = {
+    "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815",
+    "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911",
+    "\u4EE3\u7406\u5546": "\uB300\uB9AC\uC0C1", "\u4EE3\u7406\u5546\u4F9B\u8D27": "\uB300\uB9AC\uC0C1 \uACF5\uAE09",
+    "\u76F4\u8425": "\uC9C1\uC601", "\u76F4\u9500": "\uC9C1\uD310",
+    "DSO": "DSO", "\u975EDSO\u6C11\u8425": "\uBBFC\uC601", "\u975EDSO\u6C11\u8425\u673A\u6784": "\uBBFC\uC601",
+    "DSO\u6C11\u8425\u673A\u6784": "DSO \uBBFC\uC601", "DSO\u6C11\u8425": "DSO \uBBFC\uC601",
+    "\u6C11\u8425": "\uBBFC\uC601", "\u6C11\u8425kol": "\uBBFC\uC601 KOL",
+    "\u516C\u7ACB": "\uACF5\uB9BD", "\u516C\u7ACB\u533B\u9662": "\uACF5\uB9BD\uBCD1\uC6D0", "\u975EDSO\u516C\u7ACB\u673A\u6784": "\uACF5\uB9BD"
+  };
+  function koCN(v) {
+    const t = String(v || "").replace(/[\r\n]|_x000D_/g, "").trim();
+    return CN_KO[t] || t;
+  }
   function CustomerTable({ real, base, month, regions, region, hqF, db0 }) {
     const [mode, setMode] = useState("buy");
     const [mSel, setMSel] = useState([month]); /* 처음엔 해당 월만 · 전체 버튼으로 해제 */
@@ -9782,10 +9800,11 @@ ARI.pages = ARI.pages || {};
      치과 이름에서 도시를 찾아 그 좌표에, 못 찾으면 성 중심에 흩뿌려 찍는다.
      좌표 자료가 없으므로 위치는 어림이며, 점에 마우스를 대면 상세가 뜬다. */
   function CustomerMap({ ctx, db }) {
+    /* 치과 이름에 든 도시명으로 위치를 찾는다. 도시를 못 찾으면 지도에 찍지 않는다. */
     const G = window.__GEO;
     const n = function(v) { return +v || 0; };
     const [hov, setHov] = useState(null);
-    const [mode, setMode] = useState("qty");   /* qty=판매량 · ent=진입여부 */
+    const [mode, setMode] = useState("hq");   /* hq=본부별 · qty=판매량 · ent=진입여부 */
     if (!G) return null;
     const base = ARI.real[db.product] || {};
     const list = base.snaps || [];
@@ -9793,7 +9812,18 @@ ARI.pages = ARI.pages || {};
     for (let i = 0; i < list.length; i++) if (list[i].week <= ctx.week) cur = list[i];
     const cust = (cur && cur.cust && cur.cust.length ? cur.cust : base.cust) || [];
 
-    const M = G.map, CITY = G.city, PROV = G.prov;
+    const ST = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810",
+                 "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911" };
+    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
+    const AREA_HQ = { "1": "\uC808\uAC15", "2": "\uC808\uAC15", "3": "\uD654\uB3D9", "4": "\uD654\uB3D9", "5": "\uD654\uB3D9",
+                      "6": "\uD654\uC911", "7": "\uD654\uC911", "11": "\uD654\uC911",
+                      "8": "\uD654\uC11C", "9": "\uD654\uC11C", "10": "\uD654\uB0A8" };
+    const BJ = { "\u5317\u4EAC": 1, "\u5185\u8499\u53E4": 1, "\u5185\u8499": 1, "\u6CB3\u5317": 1, "\u5929\u6D25": 1, "\u8FBD\u5B81": 1, "\u5409\u6797": 1, "\u9ED1\u9F99\u6C5F": 1 };
+    const SEQ = ["\uC808\uAC15", "\uD654\uB3D9", "\uD654\uC911", "\uD654\uC11C", "\uD654\uB0A8", "\uD654\uBD81"];
+    const HQC = { "\uC808\uAC15": "#16234a", "\uD654\uB3D9": "#2a51ab", "\uD654\uC911": "#16794a",
+                  "\uD654\uC11C": "#c08a2f", "\uD654\uB0A8": "#c0392f", "\uD654\uBD81": "#7a4bbf", "\uAE30\uD0C0": "#98a2b3" };
+
+    const M = G.map, CITY = G.city;
     const W = M.w, H = M.h;
     const cityKeys = useMemo(function() {
       return Object.keys(CITY).sort(function(a2, b2) { return b2.length - a2.length; });
@@ -9803,7 +9833,6 @@ ARI.pages = ARI.pages || {};
       return [ (lon - M.lon0) / (M.lon1 - M.lon0) * W,
                (my(M.lat1) - my(lat)) / (my(M.lat1) - my(M.lat0)) * H ];
     };
-    /* 같은 좌표에 겹치지 않게 이름을 씨앗으로 조금씩 흩는다 */
     const jit = function(seed, r) {
       let h = 0;
       for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0x7fffffff;
@@ -9816,42 +9845,53 @@ ARI.pages = ARI.pages || {};
         const nm = String(c.name || "");
         let city = null;
         for (let i = 0; i < cityKeys.length; i++) if (nm.indexOf(cityKeys[i]) >= 0) { city = cityKeys[i]; break; }
-        const ll = city ? CITY[city] : PROV[c.prov];
-        if (!ll) return null;
-        const p = prj(ll[0], ll[1]);
-        const j = jit(nm + (c.dealer || ""), city ? 7 : 18);
+        if (!city) return null;                       /* 도시를 못 찾으면 찍지 않는다 */
+        const p = prj(CITY[city][0], CITY[city][1]);
+        const j = jit(nm + (c.dealer || ""), 8);
+        const ar = String(c.area || "").replace("\u5927\u533A", "");
+        const hq = BJ[c.prov] ? "\uD654\uBD81" : (AREA_HQ[ar] || "\uAE30\uD0C0");
         return {
           x: p[0] + j[0], y: p[1] + j[1],
-          name: nm, city: city, prov: c.prov,
+          name: nm, city: city, prov: c.prov, hq: hq,
           owner: c.owner || "", dealer: c.dealer || "",
           qty: n(c.tot) + n(c.tot25), q26: n(c.tot),
           ent: c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97",
-          status: c.status || "", exact: !!city
+          st: ST[c.status] || c.status || "-"
         };
       }).filter(Boolean).sort(function(a2, b2) { return a2.qty - b2.qty; });
     }, [cust, db.product]);
 
     const maxQ = Math.max.apply(null, pts.map(function(p) { return p.qty; }).concat([1]));
-    const rOf = function(p) { return 2.2 + Math.sqrt(p.qty / maxQ) * 9; };
+    const rOf = function(p) { return 2.4 + Math.sqrt(p.qty / maxQ) * 9; };
     const cOf = function(p) {
+      if (mode === "hq") return HQC[p.hq] || "#98a2b3";
       if (mode === "ent") return p.ent ? "#16794a" : "#c9d2e4";
       if (!p.qty) return "#c9d2e4";
       const t = p.qty / maxQ;
       return t > 0.5 ? "#16234a" : t > 0.15 ? "#2a51ab" : "#7aa7ec";
     };
     const F = function(v) { return U.fmt(Math.round(v)); };
-    const exact = pts.filter(function(p) { return p.exact; }).length;
     const withQty = pts.filter(function(p) { return p.qty > 0; }).length;
+    const byHq = SEQ.concat(["\uAE30\uD0C0"]).map(function(h) {
+      const l = pts.filter(function(p) { return p.hq === h; });
+      return { hq: h, n: l.length, q: l.reduce(function(a2, p) { return a2 + p.qty; }, 0) };
+    }).filter(function(t) { return t.n; });
+
+    const legend = mode === "hq"
+      ? byHq.map(function(t) { return { c: HQC[t.hq], l: t.hq + " " + F(t.n) }; })
+      : mode === "ent"
+        ? [{ c: "#16794a", l: "\uC9C4\uC785 \uC644\uB8CC" }, { c: "#c9d2e4", l: "\uBBF8\uC9C4\uC785" }]
+        : [{ c: "#16234a", l: "\uB9CE\uC74C" }, { c: "#2a51ab", l: "\uBCF4\uD1B5" }, { c: "#7aa7ec", l: "\uC801\uC74C" }, { c: "#c9d2e4", l: "\uAD6C\uB9E4 \uC5C6\uC74C" }];
 
     return /* @__PURE__ */ React.createElement(
       Card,
       {
-        title: db.productLabel + " \uACE0\uAC1D \uBD84\uD3EC \uC9C0\uB3C4",
-        desc: "\uCE58\uACFC " + F(pts.length) + "\uAC1C\uC18C \xB7 \uC810 \uD06C\uAE30\uB294 \uD310\uB9E4\uB7C9 \xB7 " + ctx.week + " \uAE30\uC900",
+        title: db.productLabel + " \uACE0\uAC1D \uBD84\uD3EC\uB9F5",
+        desc: "\uCE58\uACFC \uC774\uB984\uC5D0\uC11C \uB3C4\uC2DC\uB97C \uCC3E\uC544 \uCC0D\uC740 " + F(pts.length) + "\uAC1C\uC18C \xB7 \uC810 \uD06C\uAE30\uB294 \uD310\uB9E4\uB7C9 \xB7 " + ctx.week + " \uAE30\uC900",
         rightPos: "left",
         right: /* @__PURE__ */ React.createElement(Seg, {
           value: mode, onChange: setMode,
-          options: [{ value: "qty", label: "\uD310\uB9E4\uB7C9" }, { value: "ent", label: "\uC9C4\uC785 \uC5EC\uBD80" }]
+          options: [{ value: "hq", label: "\uBCF8\uBD80\uBCC4" }, { value: "qty", label: "\uD310\uB9E4\uB7C9" }, { value: "ent", label: "\uC9C4\uC785 \uC5EC\uBD80" }]
         })
       },
       /* @__PURE__ */ React.createElement("div", { style: { position: "relative", width: "100%" } },
@@ -9872,32 +9912,25 @@ ARI.pages = ARI.pages || {};
         hov ? /* @__PURE__ */ React.createElement("div", {
           style: { position: "absolute", left: (hov.x / W * 100) + "%", top: (hov.y / H * 100) + "%",
                    transform: "translate(12px, -50%)", background: "#16234a", color: "#fff",
-                   padding: "8px 11px", zIndex: 20, pointerEvents: "none", maxWidth: 260,
+                   padding: "8px 11px", zIndex: 20, pointerEvents: "none", maxWidth: 300,
                    boxShadow: "0 6px 18px rgba(15,23,42,.3)" } },
-          /* @__PURE__ */ React.createElement("div", { className: "text-[12.5px] font-extrabold" }, hov.name),
-          /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-1", style: { opacity: 0.85 } },
-            (hov.city || hov.prov) + (hov.exact ? "" : " \xB7 \uC131 \uC911\uC2EC \uC5B4\uB9BC")),
-          /* @__PURE__ */ React.createElement("div", { className: "text-[11px] mt-1.5" },
+          /* @__PURE__ */ React.createElement("div", { className: "text-[12.5px] font-extrabold" },
+            hov.name, /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] font-semibold ml-1.5", style: { opacity: 0.8 } }, hov.hq + " \xB7 " + hov.city)),
+          /* @__PURE__ */ React.createElement("div", { className: "text-[11px] mt-1" },
             "\uB2F4\uB2F9 " + (hov.owner || "-") + " \xB7 " + (hov.dealer || "-")),
           /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mt-1" },
-            "\uB204\uACC4 " + F(hov.qty) + "\uAC1C" + (hov.q26 !== hov.qty ? " \xB7 26\uB144 " + F(hov.q26) + "\uAC1C" : "") ),
-          /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-0.5", style: { opacity: 0.85 } }, hov.status || "-")
+            "\uB204\uACC4 " + F(hov.qty) + "\uAC1C",
+            /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px] font-semibold ml-1.5", style: { opacity: 0.85 } }, hov.st))
         ) : null
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-4 flex-wrap mt-2 text-[11px]", style: { color: "#68748B" } },
-        mode === "ent"
-          ? /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-1.5" },
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#16794a", display: "block" } }), "\uC9C4\uC785 \uC644\uB8CC",
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#c9d2e4", display: "block", marginLeft: 8 } }), "\uBBF8\uC9C4\uC785")
-          : /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-1.5" },
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#16234a", display: "block" } }), "\uB9CE\uC74C",
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#2a51ab", display: "block", marginLeft: 8 } }), "\uBCF4\uD1B5",
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#7aa7ec", display: "block", marginLeft: 8 } }), "\uC801\uC74C",
-              /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: "#c9d2e4", display: "block", marginLeft: 8 } }), "\uAD6C\uB9E4 \uC5C6\uC74C"),
-        /* @__PURE__ */ React.createElement("span", null, "\uAD6C\uB9E4 \uC788\uB294 \uCE58\uACFC " + F(withQty) + "\uAC1C\uC18C"),
-        /* @__PURE__ */ React.createElement("span", null, "\uB3C4\uC2DC\uAE4C\uC9C0 \uD2B9\uC815 " + F(exact) + "\uAC1C\uC18C (" + Math.round(exact / Math.max(1, pts.length) * 100) + "%)")
+      /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3 flex-wrap mt-2 text-[11px]", style: { color: "#68748B" } },
+        legend.map(function(g, i) {
+          return /* @__PURE__ */ React.createElement("span", { key: i, className: "flex items-center gap-1" },
+            /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, borderRadius: 5, background: g.c, display: "block" } }), g.l);
+        }),
+        /* @__PURE__ */ React.createElement("span", { style: { marginLeft: 6 } }, "\uAD6C\uB9E4 \uC788\uB294 \uCE58\uACFC " + F(withQty) + "\uAC1C\uC18C")
       ),
-      /* @__PURE__ */ React.createElement(Note, null, "\uCE58\uACFC \uC8FC\uC18C\uAC00 \uC6D0\uBCF8\uC5D0 \uC5C6\uC5B4, \uCE58\uACFC \uC774\uB984\uC5D0 \uB4E4\uC5B4 \uC788\uB294 \uB3C4\uC2DC\uBA85\uC73C\uB85C \uC704\uCE58\uB97C \uCC3E\uC2B5\uB2C8\uB2E4. \uC774\uB984\uC5D0 \uB3C4\uC2DC\uAC00 \uC5C6\uC73C\uBA74 \uC131 \uC911\uC2EC \uADFC\uCC98\uC5D0 \uD754\uC5B4 \uCC0D\uC2B5\uB2C8\uB2E4. \uB530\uB77C\uC11C \uC810\uC758 \uC790\uB9AC\uB294 \uC5B4\uB9BC\uC774\uACE0, \uAC19\uC740 \uB3C4\uC2DC \uC548\uC5D0\uC11C\uC758 \uC0C1\uB300 \uC704\uCE58\uB294 \uC758\uBBF8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4. \uC815\uD655\uD55C \uC9C0\uB3C4\uB97C \uB9CC\uB4E4\uB824\uBA74 \uACE0\uAC1D\uBA85\uC138\uC5D0 \uC8FC\uC18C\uB098 \uC88C\uD45C\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.")
+      /* @__PURE__ */ React.createElement(Note, null, "\uCE58\uACFC \uC8FC\uC18C\uAC00 \uC6D0\uBCF8\uC5D0 \uC5C6\uC5B4, \uCE58\uACFC \uC774\uB984\uC5D0 \uB4E4\uC5B4 \uC788\uB294 \uB3C4\uC2DC\uBA85\uC73C\uB85C\uB9CC \uC704\uCE58\uB97C \uCC3E\uC2B5\uB2C8\uB2E4. \uC774\uB984\uC5D0 \uB3C4\uC2DC\uAC00 \uC5C6\uB294 \uCE58\uACFC\uB294 \uC9C0\uB3C4\uC5D0 \uCC0D\uC9C0 \uC54A\uC544, \uC804\uCCB4 \uACE0\uAC1D \uC218\uBCF4\uB2E4 \uC801\uAC8C \uBCF4\uC785\uB2C8\uB2E4. \uAC19\uC740 \uB3C4\uC2DC \uC548\uC5D0\uC11C\uC758 \uC0C1\uB300 \uC704\uCE58\uB294 \uACB9\uCE68\uC744 \uD53C\uD558\uB824\uACE0 \uD754\uC5B4 \uB193\uC740 \uAC83\uC774\uB77C \uC758\uBBF8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4. \uC815\uD655\uD55C \uC9C0\uB3C4\uB294 \uACE0\uAC1D\uBA85\uC138\uC5D0 \uB3C4\uC2DC \uB610\uB294 \uC8FC\uC18C \uC5F4\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.")
     );
   }
 
@@ -10644,7 +10677,7 @@ ARI.pages = ARI.pages || {};
     const [open, setOpen] = useState({});
     const [wTab, setWTab] = useState("s_pt");
     const [actOpen, setActOpen] = useState(false);
-    const [btTab, setBtTab] = useState(only || "rpt");
+    const [btTab, setBtTab] = useState(only || "ms");
     const [hqMetric, setHqMetric] = useState("pt");
     const wk = ctx.wk;
     const month = Number(wk.start.slice(5, 7));
@@ -11470,6 +11503,7 @@ ARI.pages = ARI.pages || {};
         value: btTab,
         onChange: setBtTab,
         options: [
+          { value: "ms", label: "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728" },
           { value: "rpt", label: "\uD604\uD669\uBD84\uC11D\uBCF4\uACE0" },
           { value: "pt", label: "\uC6D4\uBCC4 \uD310\uB9E4\uC810\uC218" },
           { value: "qty", label: "\uC6D4\uBCC4 \uD310\uB9E4\uC218\uB7C9" },
@@ -11477,9 +11511,8 @@ ARI.pages = ARI.pages || {};
           { value: "dlr", label: "\uB300\uB9AC\uC0C1 \uD310\uB9E4\uC18C\uC9C4\uC728" },
           { value: "hq", label: "\uBCF8\uBD80\uBCC4 \uBAA9\uD45C \uB300\uBE44 \uC2E4\uC801" },
           { value: "org", label: "\uB300\uB9AC\uC0C1 \xB7 \uD558\uBD80\uACE0\uAC1D \uC2E4\uC801" },
-          { value: "cust", label: db.productLabel + " \uACE0\uAC1D \uC0C1\uC138" },
-          { value: "ms", label: "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728" },
-          { value: "map", label: "\uACE0\uAC1D \uBD84\uD3EC \uC9C0\uB3C4" }
+          { value: "map", label: "\uACE0\uAC1D \uBD84\uD3EC\uB9F5" },
+          { value: "cust", label: db.productLabel + " \uACE0\uAC1D \uC0C1\uC138" }
         ]
       }
     )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "rpt" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(StatusReport, { ctx, db })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "pt" ? "block" : "none" } },
@@ -13228,7 +13261,7 @@ ARI.pages = ARI.pages || {};
   const DC = { 1: "#2563eb", 2: "#d97706", 3: "#dc2626" };
   const DBG = { 1: "#eef4ff", 2: "#fdf5e8", 3: "#fdeeee" };
   const DT = { 1: "\uC591\uD638", 2: "\uC8FC\uC758", 3: "\uC704\uD5D8" };
-  const ST_KO = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uD314\uB85C\uC5C5" };
+  const ST_KO = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911" };
   const ST_TONE = { "\uC644\uB8CC": "ok", "\uBBF8\uBCF4\uACE0": "warn", "\uC608\uC815": "red" };
   const ROLES = [
     {
@@ -15096,7 +15129,7 @@ ARI.pages = ARI.pages || {};
   const NAVY = "#1e2f5e", TEAL = "#3d6cca", GRAY = "#cbd5e1", ORANGE = "#e5643f";
   const HQ_SEQ = ["\u6D59\u6C5F\u672C\u90E8", "\u534E\u4E1C\u672C\u90E8", "\u534E\u4E2D\u672C\u90E8", "\u534E\u897F\u672C\u90E8", "\u534E\u5357\u672C\u90E8", "\u534E\u5317\u672C\u90E8"];
   const HQ_KO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
-  const RM = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uD314\uB85C\uC5C5" };
+  const RM = { "\u5DF2\u8FDB\u5165": "\uC9C4\uC785", "\u54C1\u724C\u5E97": "\uBE0C\uB79C\uB4DC\uC810", "\u5DF2\u786E\u8BA4": "\uD655\uC815", "\u6709\u610F\u5411": "\uC758\uD5A5", "\u8DDF\u8FDB\u4E2D": "\uCD94\uC801\uC911" };
   const RT = { "\u5DF2\u8FDB\u5165": "ok", "\u54C1\u724C\u5E97": "navy", "\u5DF2\u786E\u8BA4": "info", "\u6709\u610F\u5411": "warn", "\u8DDF\u8FDB\u4E2D": "gray" };
   function Zh({ children }) {
     return /* @__PURE__ */ React.createElement("span", { className: "zh" }, children);
