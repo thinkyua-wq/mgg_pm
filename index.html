@@ -2467,6 +2467,47 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "\uB9C9\uB300\uB294 \uC99D\uAC10\uB960": "\u67F1\u5F62\u4E3A\u589E\u51CF\u7387",
+    "\uC9C4\uC785\uB960": "\u8FDB\u5165\u7387",
+    "\uACE0\uAC1D\uC758": "\u5BA2\u6237\u7684",
+    "\uACE0\uAC1D\uC758 ": "\u5BA2\u6237\u7684 ",
+    "\uC9C4\uC785 \uAC1C\uC18C\uB2F9": "\u6BCF\u8FDB\u5165\u5BA2\u6237",
+    "9\uC6D4 \uBAA9\uD45C": "9\u6708\u76EE\u6807",
+    "9\uC6D4 \uD310\uB9E4": "9\u6708\u9500\u552E",
+    "9\uC6D4 \uC9C4\uC785": "9\u6708\u8FDB\u5165",
+    "\uC9C4\uC785 \uC644\uB8CC": "\u8FDB\u5165\u5B8C\u6210",
+    "\uC9C4\uC785\uC728": "\u8FDB\u5165\u7387",
+    "\uBCF8\uBD80\uBCC4 26\uB144 \uD310\uB9E4 \u2014 \uB204\uB974\uBA74 \uAD8C\uC5ED\uBCC4 \uD3BC\uCE68": "\u5206\u672C\u90E826\u5E74\u9500\u552E \u2014 \u70B9\u51FB\u5C55\u5F00\u5206\u5927\u533A",
+    "\uC624\uB978\uCABD \uC22B\uC790 = \uB300\uB9AC\uC0C1 \uAD6C\uB9E4 \uB300\uBE44 \uC18C\uC9C4\uC728": "\u53F3\u4FA7\u6570\u5B57 = \u76F8\u5BF9\u7ECF\u9500\u5546\u91C7\u8D2D\u7684\u6D88\u5316\u7387",
+    "1. \uD604\uC7AC\uAE4C\uC9C0 \uC9C4\uC785\uD55C 239\uAC1C\uC18C DSO\uC5D0 ARi/BD \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD\n2. \uC2E0\uADDC DSO \uC9C4\uC785 \xB7 ARi/BD + ST\xB7AR\xB7AO \uC81C\uC548": "1. \u5BF9\u5DF2\u8FDB\u5165\u7684239\u5BB6DSO\u5236\u5B9AARi/BD\u8FDB\u5165\u76EE\u6807\n2. \u65B0DSO\u8FDB\u5165 \xB7 ARi/BD + ST\xB7AR\xB7AO \u63D0\u6848",
+    "\uAD00\uC2EC \uACE0\uAC1D \uBC1C\uAD74 \uBC0F \uBAA8\uAC1D\uD65C\uB3D9 \uC9C4\uD589": "\u6316\u6398\u610F\u5411\u5BA2\u6237\u53CA\u5F00\u5C55\u62DB\u52DF\u6D3B\u52A8",
+    "\uACE0\uAC1D\uC601\uC5C5 \uBC0F \uC801\uADF9\uC9C4\uC785": "\u5BA2\u6237\u8425\u4E1A\u53CA\u79EF\u6781\u8FDB\u5165",
+    "\uAD50\uC721\uCC38\uC11D \uACE0\uAC1D\uBC29\uBB38 \uBC0F \uC601\uC5C5": "\u57F9\u8BAD\u53C2\u4F1A\u5BA2\u6237\u62DC\u8BBF\u53CA\u8425\u4E1A",
+    "\uC7AC\uACE0 \uD3EC\uC778\uD2B8\uB85C BD/ARi \uAD50\uD658 \u2192 \uB300\uB9AC\uC0C1 \uC801\uADF9 \uCD94\uCC9C \uCD94\uC9C4": "\u5E93\u5B58\u79EF\u5206\u5151\u6362BD/ARi \u2192 \u63A8\u52A8\u7ECF\u9500\u5546\u79EF\u6781\u63A8\u8350",
+    "DSO \uC801\uADF9\uC9C4\uC785": "DSO \u79EF\u6781\u8FDB\u5165",
+    "\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \u2605": "\u9500\u552E\u6269\u59276\u9636\u6BB5 \u2605",
+    "\uC138\uBBF8\uB098 \uC131\uACFC\uAD00\uB9AC \u2605": "\u7814\u8BA8\u4F1A\u7EE9\u6548\u7BA1\u7406 \u2605",
+    "\uB3D9\uC77C \uACE0\uAC1D \uB300\uC0C1 ARi\u00B7BD \uAD50\uCC28\uD310\uB9E4": "\u540C\u4E00\u5BA2\u6237 ARi\u00B7BD \u4EA4\u53C9\u9500\u552E",
+    "B2C \uD50C\uB7AB\uD3FC (\uD658\uC790/\uCE58\uACFC\uC758\uC0AC\uB300\uC0C1)": "B2C \u5E73\u53F0\uFF08\u9762\u5411\u60A3\u8005/\u7259\u533B\uFF09",
+    "\uC138\uBBF8\uB098 \u00B7 \uC0AC\uB871 \u00B7 \uCEE4\uC2A4\uD68C\uC758 (\uCE58\uACFC\uC758\uC0AC\uB300\uC0C1)": "\u7814\u8BA8\u4F1A \u00B7 \u6C99\u9F99 \u00B7 \u5BA2\u6237\u4F1A\u8BAE\uFF08\u9762\u5411\u7259\u533B\uFF09",
+    "\uACE0\uAC1D\uBC29\uBB38 \uBC0F \uC601\uC5C5": "\u5BA2\u6237\u62DC\u8BBF\u53CA\u8425\u4E1A",
+    "\uC801\uD569\uCF00\uC774\uC2A4 \uD655\uC778": "\u786E\u8BA4\u9002\u7528\u75C5\u4F8B",
+    "\uC77C\uBC18\uCE58\uACFC \uC9C4\uC785": "\u666E\u901A\u7259\u79D1\u8FDB\u5165",
+    "DSO \uB3C4\uC785": "DSO \u5BFC\u5165",
+    "\uAE30\uC874\u00B7\uBAA9\uD45C \uB9AC\uC2A4\uD2B8 / \uB2E8\uACC4\uBCC4 \uC9C4\uC785 / BD\u00B7ARi\u00B7ST\u00B7AR\u00B7AO \uC81C\uC548": "\u5B58\u91CF\u00B7\u76EE\u6807\u540D\u5355 / \u5206\u9636\u6BB5\u8FDB\u5165 / BD\u00B7ARi\u00B7ST\u00B7AR\u00B7AO \u63D0\u6848",
+    "1. \uAE30\uC874 DSO 239\uAC1C\uC18C \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD\n2. \uC2E0\uADDC DSO \uC9C4\uC785": "1. \u5B58\u91CFDSO 239\u5BB6 \u5236\u5B9A\u8FDB\u5165\u76EE\u6807\n2. \u65B0DSO\u8FDB\u5165",
+    "1. \uD604\uC7AC\uAE4C\uC9C0 \uC9C4\uC785\uD55C 239\uAC1C\uC18C DSO\uC5D0 ARi/BD \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD\n2. ARi/BD + ST\u00B7AR\u00B7AO \uC81C\uC548": "1. \u5BF9\u5DF2\u8FDB\u5165\u7684239\u5BB6DSO\u5236\u5B9AARi/BD\u8FDB\u5165\u76EE\u6807\n2. ARi/BD + ST\u00B7AR\u00B7AO \u63D0\u6848",
+    "\uC81C\uD488\uAD50\uC721/\uD578\uC988\uC628 \u00B7 \uC0AC\uC6A9\uBC29\uBC95 \uC219\uC9C0 \u00B7 \uC801\uC6A9 \uCF00\uC774\uC2A4 \uB17C\uC758": "\u4EA7\u54C1\u57F9\u8BAD/\u5B9E\u64CD \u00B7 \u719F\u6089\u4F7F\u7528\u65B9\u6CD5 \u00B7 \u8BA8\u8BBA\u9002\u7528\u75C5\u4F8B",
+    "DSO \uC9D1\uC911\uACF5\uB7B5": "DSO \u96C6\u4E2D\u653B\u7565",
+    "1st \uC784\uC0C1\uC9C4\uD589": "1st \u4E34\u5E8A\u8FDB\u884C",
+    "\uB514\uC9C0\uD138 R2 \uD65C\uC6A9": "\u6570\u5B57\u5316R2\u5E94\u7528",
+    "\uC138\uBBF8\uB098 \u00B7 \uC0AC\uB871 \u00B7 \uCEE4\uC2A4\uD68C\uC758": "\u7814\u8BA8\u4F1A \u00B7 \u6C99\u9F99 \u00B7 \u5BA2\u6237\u4F1A\u8BAE",
+    "\uAE30\uC874 DSO 239\uAC1C\uC18C \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD": "\u5B58\u91CFDSO 239\u5BB6 \u5236\u5B9A\u8FDB\u5165\u76EE\u6807",
+    "\uD604\uC7AC\uAE4C\uC9C0 \uC9C4\uC785\uD55C 239\uAC1C\uC18C DSO\uC5D0 ARi/BD \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD": "\u5BF9\u5DF2\u8FDB\u5165\u7684239\u5BB6DSO\u5236\u5B9AARi/BD\u8FDB\u5165\u76EE\u6807",
+    "\uC2E0\uADDC DSO \uC9C4\uC785": "\u65B0DSO\u8FDB\u5165",
+    "ARi/BD + ST\u00B7AR\u00B7AO \uC81C\uC548": "ARi/BD + ST\u00B7AR\u00B7AO \u63D0\u6848",
+    "\uB300\uB9AC\uC0C1 \uB3C4\uC785 \uB3C5\uB824 \u00B7 9\uC6D4\uBD80\uD130 \uC2E4\uD589": "\u9F13\u52B1\u7ECF\u9500\u5546\u5BFC\u5165 \u00B7 9\u6708\u8D77\u6267\u884C",
+    "9\uC6D4\uBD80\uD130": "9\u6708\u8D77",
     "\uC81C\uD488 \uC778\uC9C0\uB3C4 \uD655\uB300": "\u63D0\u5347\u4EA7\u54C1\u8BA4\u77E5\u5EA6",
     "\uC81C\uD488 \uD310\uB9E4/\uC601\uC5C5": "\u4EA7\u54C1\u9500\u552E/\u8425\u4E1A",
     "DSO \u00B7 \uD558\uBD80\uACE0\uAC1D \uAD50\uC721": "DSO \u00B7 \u4E0B\u7EA7\u5BA2\u6237\u57F9\u8BAD",
@@ -2528,7 +2569,7 @@ ARI.pages = ARI.pages || {};
     "\uC801\uD569 \uCF00\uC774\uC2A4 \uBC0F \uD544\uC694 \uC9C0\uC6D0 \uD655\uC778": "\u786E\u8BA4\u9002\u7528\u75C5\u4F8B\u53CA\u6240\u9700\u652F\u6301",
     "DSO \uB3C4\uC785": "DSO \u5BFC\u5165",
     "\uB300\uB9AC\uC0C1 \uB3C4\uC785 \uB3C5\uB824": "\u9F13\u52B1\u7ECF\u9500\u5546\u5BFC\u5165",
-    "\uC7AC\uACE0 \uD3EC\uC778\uD2B8\uB85C BD/ARi \uAD50\uD658 \uAC00\uB2A5 \uC2DC, \uB300\uB9AC\uC0C1 \uC801\uADF9 \uCD94\uCC9C \uCD94\uC9C4": "\u53EF\u7528\u5E93\u5B58\u79EF\u5206\u5151\u6362BD/ARi\u65F6\uFF0C\u63A8\u52A8\u7ECF\u9500\u5546\u79EF\u6781\u63A8\u8350",
+    "\uC7AC\uACE0 \uD3EC\uC778\uD2B8\uB85C BD/ARi \uAD50\uD658 \u2192 \uB300\uB9AC\uC0C1 \uC801\uADF9 \uCD94\uCC9C \uCD94\uC9C4": "\u53EF\u7528\u5E93\u5B58\u79EF\u5206\u5151\u6362BD/ARi\u65F6\uFF0C\u63A8\u52A8\u7ECF\u9500\u5546\u79EF\u6781\u63A8\u8350",
     "BD/ARi \uC218\uC220 \uC0B4\uB871": "BD/ARi \u624B\u672F\u6C99\u9F99",
     "\uC81C\uD488\uAD50\uC721 \u00B7 \uC0AC\uC6A9\uBC29\uBC95 \uC219\uC9C0 \u00B7 \uC801\uC6A9 \uCF00\uC774\uC2A4 \uB17C\uC758": "\u4EA7\u54C1\u57F9\u8BAD \u00B7 \u719F\u6089\u4F7F\u7528\u65B9\u6CD5 \u00B7 \u8BA8\u8BBA\u9002\u7528\u75C5\u4F8B",
     "\uB514\uC9C0\uD138\uD300 \uD611\uC870": "\u6570\u5B57\u5316\u56E2\u961F\u534F\u4F5C",
@@ -5836,6 +5877,7 @@ ARI.pages = ARI.pages || {};
     Pie,
     Cell
   } = R;
+  ARI.RC = R;   /* 다른 스코프 컴포넌트도 차트를 쓸 수 있게 노출 */
   const COL = { plan: "#cbd5e1", act: "#1d3a86", ok: "#059669", warn: "#f59e0b", risk: "#f97316", bad: "#e11d48" };
   const PIE_COL = ["#1d3a86", "#94a3b8", "#cbd5e1"];
   function PlanCell({ label, value, unit, sub }) {
@@ -9013,6 +9055,18 @@ ARI.pages = ARI.pages || {};
 /* ==== 66_weekly.jsx ==== */
 (function() {
   const { useState, useMemo } = React;
+  function Collapsible({ label, children }) {
+    const [open, setOpen] = useState(false);
+    return /* @__PURE__ */ React.createElement("div", null,
+      /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "flex-end", marginTop: 4 } },
+        /* @__PURE__ */ React.createElement("button", { type: "button", onClick: function() { setOpen(!open); },
+          style: { display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 9px", fontSize: 8, fontWeight: 800,
+                   border: "1px solid #c9cfd9", background: open ? "#16234a" : "#fff", color: open ? "#fff" : "#16234a", cursor: "pointer" } },
+          (open ? "\u25B4 " : "\u25BE ") + (label || "\uB370\uC774\uD130 \uD655\uC778"))
+      ),
+      open ? /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8 } }, children) : null
+    );
+  }
   const U = ARI.util, C = ARI.calc, SR = ARI.series, S = ARI.store, Icon = ARI.Icon;
   const { Page, Card, KPI, KPIGrid, Badge, Sample, Tabs, Btn, Sel, Inp, Bar, Progress, DataTable, StatusBadge, Note, Formula, EditCell, Modal, Field } = ARI.ui;
   const V = ARI.viz;
@@ -9412,8 +9466,8 @@ ARI.pages = ARI.pages || {};
           contentStyle: { fontSize: 11, borderRadius: 4, border: "1px solid #e6e9ef" }
         }
       ), /* @__PURE__ */ React.createElement(Legend, { wrapperStyle: { fontSize: 10.5, paddingTop: 6 }, iconType: "square", iconSize: 9 }), /* @__PURE__ */ React.createElement(RBar, { dataKey: "\uBAA9\uD45C", name: M.tA, fill: C_TGT, radius: 0, maxBarSize: 26, label: lab }), /* @__PURE__ */ React.createElement(RBar, { dataKey: "\uC2E4\uC801", name: M.tB, fill: C_ACT, radius: 0, maxBarSize: 26, label: lab }), M.tC ? /* @__PURE__ */ React.createElement(RBar, { dataKey: "\uD558\uBD80", name: M.tC, fill: "#4f7fd6", radius: 0, maxBarSize: 26, label: lab }) : null))),
-      data.length ? /* @__PURE__ */ React.createElement("div", { className: "overflow-x-auto mt-3" },
-        /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { color: "#111827", fontSize: "90%" } },
+      data.length ? /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "overflow-x-auto mt-3" },
+        /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { color: "#111827", fontSize: "72%" } },
           /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null,
             [["\uBCF8\uBD80", 96, 0], ["\uC5F0\uAC04\uBAA9\uD45C", 96, 1],
              [(scope === "mon" ? month + "\uC6D4 " : "\uB204\uC801 ") + "\uBAA9\uD45C", 104, 1],
@@ -9445,7 +9499,7 @@ ARI.pages = ARI.pages || {};
             /* @__PURE__ */ React.createElement("td", { className: "num" }, totY ? Math.round(totA / totY * 1e3) / 10 : 0, "%")
           ))
         )
-      ) : null,
+      )) : null,
       data.length ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3 mt-3 pt-2.5", style: { borderTop: "1px solid #e6e9ef" } }, /* @__PURE__ */ React.createElement("div", { className: "text-[13px] font-extrabold", style: { color: "#16234a", flexShrink: 0 } }, "\uD569\uACC4"), /* @__PURE__ */ React.createElement("div", { className: "flex-1 text-[14px] font-extrabold", style: Object.assign({ color: "#16234a" }, U.NUM) }, U.fmt(totA), un, /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-semibold text-slate-500 ml-2" }, "\uBAA9\uD45C ", U.fmt(totT), un, " \xB7 \uACA9\uCC28 ", totT > totA ? "\u2212" + U.fmt(totT - totA) : "+" + U.fmt(totA - totT), un)), /* @__PURE__ */ React.createElement("div", { className: "text-[15px] font-extrabold", style: Object.assign({ color: pcColor(totRate), flexShrink: 0 }, U.NUM) }, totRate, "%")) : /* @__PURE__ */ React.createElement("div", { className: "text-center text-[13px] py-5", style: { color: "#94a3b8" } }, "\uD45C\uC2DC\uD560 \uBCF8\uBD80 \uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.")
     );
   }
@@ -9791,8 +9845,7 @@ ARI.pages = ARI.pages || {};
         return c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97";
       }).length)), /* @__PURE__ */ React.createElement("td", { colSpan: 3 }), months.map(function(m) {
         return /* @__PURE__ */ React.createElement("td", { key: m, className: "num" }, U.fmt(mSum(m)));
-      }), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(sum("tot"))))))),
-      /* @__PURE__ */ React.createElement(Note, null, "\u300C\uAD6C\uB9E4\uACE0\uAC1D\u300D\uC740 26\uB144 \uB204\uC801 \uD310\uB9E4\uB7C9\uC774 1\uAC1C \uC774\uC0C1\uC778 \uACE0\uAC1D\uC785\uB2C8\uB2E4. \uC9C1\uC804 \uC8FC\uAC04\uBCF4\uACE0 \uB300\uBE44 \uBC14\uB010 \uACE0\uAC1D\uC740 \uBCC4\uB3C4 \uD0ED \uB300\uC2E0 \uD589 \uC548\uC5D0 \u300C\uC2E0\uADDC\xB7\uD310\uB9E4\xB7\uC0C1\uD0DC\u300D \uBC30\uC9C0\uB85C \uD45C\uC2DC\uB429\uB2C8\uB2E4.")
+      }), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(sum("tot")))))))
     );
   }
 
@@ -9809,8 +9862,8 @@ ARI.pages = ARI.pages || {};
      당월 고객(목표·확정·달성률) / 당월 실적(진입·판매량·달성률·대리상) /
      반복구매 / 26년 누계(진입·판매량·달성률·대리상) / 전 보고 대비            */
   function StatusReport({ ctx, db }) {
-    const [prod, setProd] = useState(db.product === "BD" ? "BD" : "ARi");
-    const both = prod === "BOTH";
+    const [prod, setProd] = useState("BOTH");   /* 교차판매 고정 */
+    const both = true;
     const M = Number(ctx.wk.start.slice(5, 7));
     const n = function(v) { return +v || 0; };
     const P2 = function(x, y) { return y ? Math.round(x / y * 100) : 0; };
@@ -10003,13 +10056,9 @@ ARI.pages = ARI.pages || {};
     return /* @__PURE__ */ React.createElement(
       Card,
       {
-        title: "\uD604\uD669\uBD84\uC11D\uBCF4\uACE0 \xB7 \uBC95\uC778\xB7\uBCF8\uBD80\xB7\uAD8C\uC5ED\uBCC4",
+        title: "\uB3D9\uC77C \uACE0\uAC1D \uB300\uC0C1 ARi\xB7BD \uAD50\uCC28\uD310\uB9E4",
         desc: M + "\uC6D4 \uACE0\uAC1D\xB7\uC2E4\uC801\uACFC 26\uB144 \uB204\uACC4 \xB7 " + ctx.week + " \uAE30\uC900",
-        rightPos: "left",
-        right: /* @__PURE__ */ React.createElement(Seg, {
-          value: prod, onChange: setProd,
-          options: [{ value: "ARi", label: "ARi" }, { value: "BD", label: "BD" }, { value: "BOTH", label: "ARi\uD83E\uDC7ABD \uC911\uBCF5" }]
-        })
+        rightPos: "left"
       },
       /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-4" },
         CARDS.map(function(c, i) {
@@ -10054,7 +10103,7 @@ ARI.pages = ARI.pages || {};
           /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-2 pt-2", style: { color: "#98a2b3", borderTop: "1px solid #e6e9ef" } }, RANK_N)
         )
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
         /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_status", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed" } },
           /* @__PURE__ */ React.createElement("thead", { className: "sticky top-0 z-10" },
             both ? /* @__PURE__ */ React.createElement("tr", null,
@@ -10093,7 +10142,7 @@ ARI.pages = ARI.pages || {};
           /* @__PURE__ */ React.createElement("tbody", null, data.map(function(r, i) { return line(r, i); })),
           /* @__PURE__ */ React.createElement("tfoot", null, line(foot, "sum", { fontWeight: 800, background: "#f1f3f7", borderTop: "2px solid #16234a" }))
         )
-      )
+      ))
     );
   }
   /* ══════════ 판매량 구간 분석 ══════════
@@ -10407,8 +10456,8 @@ ARI.pages = ARI.pages || {};
             "\uB9C9\uB300 = \uC18C\uC9C4\uC728 \xB7 \uC624\uB978\uCABD \uBD89\uC740 \uC22B\uC790 = \uB0A8\uC740 \uC7AC\uACE0 \xB7 \uC138\uB85C\uC120\uC740 100% \uC9C0\uC810")
         )
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
-        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_flow", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "88%" } },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
+        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_flow", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "75%" } },
           /* @__PURE__ */ React.createElement("thead", null,
             /* @__PURE__ */ React.createElement("tr", null,
               TH("\uBCF8\uBD80", { key: "h1", rowSpan: 2, style: { width: "5.5%" } }),
@@ -10431,7 +10480,7 @@ ARI.pages = ARI.pages || {};
           ),
           /* @__PURE__ */ React.createElement("tbody", null, body)
         )
-      ),
+      )),
       /* @__PURE__ */ React.createElement(Note, null, "\uC18C\uC9C4\uC728\uC740 \uD558\uBD80\uACE0\uAC1D \uD310\uB9E4 \xF7 \uB300\uB9AC\uC0C1 \uAD6C\uB9E4\uC785\uB2C8\uB2E4. 100%\uB97C \uB118\uC73C\uBA74 \uC9C0\uB09C\uD574 \uC7AC\uACE0\uAE4C\uC9C0 \uD480\uB838\uB2E4\uB294 \uB73B\uC774\uB77C \uC7AC\uACE0\uB294 \u2013 \uB85C \uB098\uC635\uB2C8\uB2E4. \u300C\uAC1C\uC6D4\uCE58\u300D\uB294 \uB0A8\uC740 \uC7AC\uACE0\uB97C \uC62C\uD574 \uC6D4\uD3C9\uADE0 \uD310\uB9E4\uB85C \uB098\ub208 \uAC12\uC73C\uB85C, 6\uAC1C\uC6D4\uCE58\uB97C \uB118\uC73C\uBA74 \uBD89\uAC8C \uD45C\uC2DC\uD569\uB2C8\uB2E4.")
     );
   }
@@ -10445,7 +10494,8 @@ ARI.pages = ARI.pages || {};
     const G = window.__GEO;
     const n = function(v) { return +v || 0; };
     const [hov, setHov] = useState(null);
-    const [mode, setMode] = useState("hq");   /* hq=본부별 · qty=판매량 · ent=진입여부 */
+    const [view, setView] = useState("map");   /* map=지도 · list=고객상세 */
+    const mode = "hq";
     if (!G) return null;
     const base = ARI.real[db.product] || {};
     const list = base.snaps || [];
@@ -10527,14 +10577,22 @@ ARI.pages = ARI.pages || {};
     return /* @__PURE__ */ React.createElement(
       Card,
       {
-        title: db.productLabel + " \uACE0\uAC1D \uBD84\uD3EC\uB9F5",
-        desc: "\uCE58\uACFC \uC774\uB984\uC5D0\uC11C \uB3C4\uC2DC\uB97C \uCC3E\uC544 \uCC0D\uC740 " + F(pts.length) + "\uAC1C\uC18C \xB7 \uC810 \uD06C\uAE30\uB294 \uD310\uB9E4\uB7C9 \xB7 " + ctx.week + " \uAE30\uC900",
-        rightPos: "left",
-        right: /* @__PURE__ */ React.createElement(Seg, {
-          value: mode, onChange: setMode,
-          options: [{ value: "hq", label: "\uBCF8\uBD80\uBCC4" }, { value: "qty", label: "\uD310\uB9E4\uB7C9" }, { value: "ent", label: "\uC9C4\uC785 \uC5EC\uBD80" }]
-        })
+        title: /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", alignItems: "center", gap: 12 } },
+          db.productLabel + " \uACE0\uAC1D",
+          /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", border: "1px solid #c9cfd9", background: "#fff" } },
+            [{ v: "map", l: "\uBD84\uD3EC\uB9F5" }, { v: "list", l: "\uACE0\uAC1D \uC0C1\uC138" }].map(function(o, i) {
+              const on = view === o.v;
+              return /* @__PURE__ */ React.createElement("button", { key: o.v, type: "button", onClick: function() { setView(o.v); },
+                style: { padding: "4px 14px", fontSize: 11.5, fontWeight: 800,
+                         background: on ? "#16234a" : "#fff", color: on ? "#fff" : "#68748B",
+                         border: "none", borderLeft: i ? "1px solid #c9cfd9" : "none", cursor: "pointer" } }, o.l);
+            })
+          )
+        ),
+        desc: view === "map" ? ("\uCE58\uACFC \uC774\uB984\uC5D0\uC11C \uB3C4\uC2DC\uB97C \uCC3E\uC544 \uCC0D\uC740 " + F(pts.length) + "\uAC1C\uC18C \xB7 \uC810 \uD06C\uAE30\uB294 \uD310\uB9E4\uB7C9 \xB7 " + ctx.week + " \uAE30\uC900") : (ctx.week + " \uAE30\uC900 \uACE0\uAC1D\uBA85\uC138"),
+        rightPos: "left"
       },
+      view === "list" ? /* @__PURE__ */ React.createElement(CustMapList, { ctx, db }) :
       /* @__PURE__ */ React.createElement("div", { style: { position: "relative", width: "100%" } },
         /* @__PURE__ */ React.createElement("svg", { viewBox: "0 0 " + W + " " + H, style: { width: "100%", height: "auto", display: "block", background: "#f7f9fc" } },
           Object.keys(M.p).map(function(k) {
@@ -10573,6 +10631,13 @@ ARI.pages = ARI.pages || {};
       ),
       /* @__PURE__ */ React.createElement(Note, null, "\uCE58\uACFC \uC8FC\uC18C\uAC00 \uC6D0\uBCF8\uC5D0 \uC5C6\uC5B4, \uCE58\uACFC \uC774\uB984\uC5D0 \uB4E4\uC5B4 \uC788\uB294 \uB3C4\uC2DC\uBA85\uC73C\uB85C\uB9CC \uC704\uCE58\uB97C \uCC3E\uC2B5\uB2C8\uB2E4. \uC774\uB984\uC5D0 \uB3C4\uC2DC\uAC00 \uC5C6\uB294 \uCE58\uACFC\uB294 \uC9C0\uB3C4\uC5D0 \uCC0D\uC9C0 \uC54A\uC544, \uC804\uCCB4 \uACE0\uAC1D \uC218\uBCF4\uB2E4 \uC801\uAC8C \uBCF4\uC785\uB2C8\uB2E4. \uAC19\uC740 \uB3C4\uC2DC \uC548\uC5D0\uC11C\uC758 \uC0C1\uB300 \uC704\uCE58\uB294 \uACB9\uCE68\uC744 \uD53C\uD558\uB824\uACE0 \uD754\uC5B4 \uB193\uC740 \uAC83\uC774\uB77C \uC758\uBBF8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4. \uC815\uD655\uD55C \uC9C0\uB3C4\uB294 \uACE0\uAC1D\uBA85\uC138\uC5D0 \uB3C4\uC2DC \uB610\uB294 \uC8FC\uC18C \uC5F4\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.")
     );
+  }
+  /* 고객 분포맵 안의 「고객 상세」 — 기존 고객상세 표를 그대로 재사용 */
+  function CustMapList({ ctx, db }) {
+    const real = ARI.real[db.product] || {};
+    const month = Number(ctx.wk.start.slice(5, 7));
+    const regions = [];
+    return /* @__PURE__ */ React.createElement(CustomerTable, { real, base: real, month, regions, region: "", hqF: "\uC804\uCCB4", db0: db.productLabel });
   }
 
   function MonthlyPoint({ ctx, db }) {
@@ -10682,8 +10747,8 @@ ARI.pages = ARI.pages || {};
       ),
       /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mb-3", style: { color: "#98a2b3" } },
         "\uB9C9\uB300\uB294 \uC67C\uCABD \uCD95(\uC6D4\uBCC4), \uC120\uC740 \uC624\uB978\uCABD \uCD95(\uB204\uC801)\uC785\uB2C8\uB2E4. \u300C\uD655\uC815\u300D\uC740 \uAC70\uB798\uAC00 \uD655\uC815\uB41C \uACF3, \u300C\uC9C4\uC785\u300D\uC740 \uC2E4\uC81C \uAD6C\uB9E4\uAE4C\uC9C0 \uAC04 \uACF3\uC785\uB2C8\uB2E4."),
-      /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
-        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_mpt", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "86%" } },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
+        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_mpt", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "73%" } },
           /* @__PURE__ */ React.createElement("thead", null,
             /* @__PURE__ */ React.createElement("tr", null,
               /* @__PURE__ */ React.createElement("th", { style: Object.assign({}, THS, { width: "7%" }) }, "\uBCF8\uBD80"),
@@ -10722,8 +10787,7 @@ ARI.pages = ARI.pages || {};
             )
           )
         )
-      ),
-      /* @__PURE__ */ React.createElement(Note, null, "\uCE78 \uC0C9\uC740 \uADF8 \uB2EC \uC9C4\uC785 \uAC1C\uC18C\uAC00 \uB9CE\uC744\uC218\uB85D \uC9C4\uD574\uC9D1\uB2C8\uB2E4. \uB204\uC801\uC740 \uC6D4\uBCC4 \uD569\uC774 \uC544\uB2C8\uB77C \uC8FC\uAC04\uBCF4\uACE0\uC758 \uB204\uACC4 \uAC70\uB798\uCC98 \uC218\uC785\uB2C8\uB2E4.")
+      ))
     );
   }
 
@@ -10830,8 +10894,8 @@ ARI.pages = ARI.pages || {};
       ),
       /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mb-3", style: { color: "#98a2b3" } },
         "\uB9C9\uB300\uB294 \uC67C\uCABD \uCD95(\uC6D4\uBCC4), \uC120\uC740 \uC624\uB978\uCABD \uCD95(\uB204\uC801)\uC785\uB2C8\uB2E4. \uC810\uC120\uC740 \uB204\uC801 \uBAA9\uD45C, \uCD08\uB85D \uC2E4\uC120\uC740 \uB204\uC801 \uD310\uB9E4."),
-      /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
-        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_mqty", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "86%" } },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" },
+        /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_mqty", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed", fontSize: "73%" } },
           /* @__PURE__ */ React.createElement("thead", null,
             /* @__PURE__ */ React.createElement("tr", null,
               /* @__PURE__ */ React.createElement("th", { style: Object.assign({}, THS, { width: "7%" }) }, "\uBCF8\uBD80"),
@@ -10870,7 +10934,7 @@ ARI.pages = ARI.pages || {};
             )
           )
         )
-      ),
+      )),
       /* @__PURE__ */ React.createElement(Note, null, "\uD45C\uC758 \uCE78 \uC0C9\uC740 \uADF8 \uB2EC \uD310\uB9E4\uB7C9\uC774 \uD074\uC218\uB85D \uC9C4\uD574\uC9D1\uB2C8\uB2E4. \uB2EC\uC131\uB960\uC740 \uB204\uC801 \uD310\uB9E4 \xF7 \uC5F0\uAC04\uBAA9\uD45C\uC785\uB2C8\uB2E4.")
     );
   }
@@ -11053,7 +11117,7 @@ ARI.pages = ARI.pages || {};
             "\uCD08\uB85D = 100\uAC1C \uC774\uC0C1 \xB7 \uB0A8\uC0C9 = 10~99\uAC1C \xB7 \uC5F0\uD558\uB298 = 10\uAC1C \uBBF8\uB9CC \xB7 \uC624\uB978\uCABD \uB450 \uC22B\uC790\uB294 100\uAC1C \uC774\uC0C1 \uBE44\uC911\uACFC \uAC1C\uC18C\uB2F9 \uD310\uB9E4")
         )
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "max-h-[560px] overflow-y-auto" },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "max-h-[560px] overflow-y-auto" },
         /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_tier", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed" } },
           /* @__PURE__ */ React.createElement("thead", { className: "sticky top-0 z-10" },
             /* @__PURE__ */ React.createElement("tr", null,
@@ -11079,7 +11143,7 @@ ARI.pages = ARI.pages || {};
           ),
           /* @__PURE__ */ React.createElement("tbody", null, body)
         )
-      ),
+      )),
       /* @__PURE__ */ React.createElement(Note, null, "\uAD6C\uAC04\uC740 \uACE0\uAC1D\uBA85\uC138\uC758 \uB204\uACC4 \uD310\uB9E4\uB7C9\uC5D0\uC11C \uC9C1\uC811 \uACC4\uC0B0\uD558\uBA70, \uC6D0\uBCF8 \u300C\u9500\u552E\u91CF \u5206\u6790\u300D \uC5F4\uACFC \uAC19\uC740 \uAC12\uC785\uB2C8\uB2E4. BD \uB294 25\uB144 \uD310\uB9E4\uAE4C\uC9C0 \uD3EC\uD568\uD55C \uB204\uACC4, ARi \uB294 26\uB144 \uAE30\uC900\uC785\uB2C8\uB2E4. \u300C\uBC18\uBCF5\uACE0\uAC1D\u300D\uC740 \uC6D0\uBCF8 \uBA85\uC138\uC758 \uBCF5\uAD6C \uD45C\uC2DC\uB97C \uADF8\uB300\uB85C \uC369\uB2C8\uB2E4.")
     );
   }
@@ -11264,7 +11328,7 @@ ARI.pages = ARI.pages || {};
             "\uB0A8\uC0C9 \uB9C9\uB300 = \uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728 \xB7 \uBD89\uC740 \uC22B\uC790 = \uC2A4\uD2B8\uB77C\uC6B0\uB9CC \uC810\uC720\uC728")
         )
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "max-h-[560px] overflow-y-auto" },
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "max-h-[560px] overflow-y-auto" },
         /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_ms", className: "tbl-rpt", style: { color: "#111827", width: "100%", tableLayout: "fixed" } },
           /* @__PURE__ */ React.createElement("thead", { className: "sticky top-0 z-10" },
             /* @__PURE__ */ React.createElement("tr", null,
@@ -11290,8 +11354,7 @@ ARI.pages = ARI.pages || {};
           ),
           /* @__PURE__ */ React.createElement("tbody", null, body)
         )
-      ),
-      /* @__PURE__ */ React.createElement(Note, null, "\uC2DC\uC7A5\xB7\uBA54\uAC00\uC820 \uC804\uCCB4\xB7\uC2A4\uD2B8\uB77C\uC6B0\uB9CC\uC740 \u300C\uC5C5\uCCB4\uBCC4MS(\uC2E0\uADDC\uC0C1\uAD8C)\u300D\uACFC \u300C26\uB144 \uBAA9\uD45C\u300D \uC2DC\uD2B8 \uAC12\uC785\uB2C8\uB2E4. \uC218\uB7C9\uC740 \uB9CC \uAC1C \uB2E8\uC704\uB85C \uC904\uC600\uACE0, ARi\xB7BD \uB9CC \uAC1C\uC218 \uADF8\uB300\uB85C\uC785\uB2C8\uB2E4. ARi\xB7BD \uB294 \uC8FC\uAC04\uBCF4\uACE0\uC758 \uB300\uB9AC\uC0C1 \uAD6C\uB9E4 \uB204\uACC4\uB77C \uC9D1\uACC4 \uCD9C\uCC98\uAC00 \uB2EC\uB77C \uBA54\uAC00\uC820 \uC804\uCCB4\uC640 \uC815\uD655\uD788 \uB5A8\uC5B4\uC9C0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.")
+      ))
     );
   }
 
@@ -11318,7 +11381,7 @@ ARI.pages = ARI.pages || {};
     const [open, setOpen] = useState({});
     const [wTab, setWTab] = useState("s_pt");
     const [actOpen, setActOpen] = useState(false);
-    const [btTab, setBtTab] = useState(only || "ms");
+    const [btTab, setBtTab] = useState(only || "pt");
     const [hqMetric, setHqMetric] = useState("pt");
     const wk = ctx.wk;
     const month = Number(wk.start.slice(5, 7));
@@ -12144,16 +12207,15 @@ ARI.pages = ARI.pages || {};
         value: btTab,
         onChange: setBtTab,
         options: [
-          { value: "ms", label: "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728" },
-          { value: "rpt", label: "\uD604\uD669\uBD84\uC11D\uBCF4\uACE0" },
           { value: "pt", label: "\uC6D4\uBCC4 \uD310\uB9E4\uC810\uC218" },
           { value: "qty", label: "\uC6D4\uBCC4 \uD310\uB9E4\uC218\uB7C9" },
           { value: "tier", label: "\uD310\uB9E4\uB7C9 \uAD6C\uAC04 \uBD84\uC11D" },
           { value: "dlr", label: "\uB300\uB9AC\uC0C1 \uD310\uB9E4\uC18C\uC9C4\uC728" },
+          { value: "rpt", label: "\uB3D9\uC77C \uACE0\uAC1D \uB300\uC0C1 ARi\xB7BD \uAD50\uCC28\uD310\uB9E4" },
           { value: "hq", label: "\uBCF8\uBD80\uBCC4 \uBAA9\uD45C \uB300\uBE44 \uC2E4\uC801" },
           { value: "org", label: "\uB300\uB9AC\uC0C1 \xB7 \uD558\uBD80\uACE0\uAC1D \uC2E4\uC801" },
           { value: "map", label: "\uACE0\uAC1D \uBD84\uD3EC\uB9F5" },
-          { value: "cust", label: db.productLabel + " \uACE0\uAC1D \uC0C1\uC138" }
+          { value: "ms", label: "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728" }
         ]
       }
     )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "rpt" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(StatusReport, { ctx, db })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "pt" ? "block" : "none" } },
@@ -12183,7 +12245,7 @@ ARI.pages = ARI.pages || {};
         }) ? "\uBAA8\uB450 \uC811\uAE30" : "\uBAA8\uB450 \uD3BC\uCE58\uAE30")
       },
       /* @__PURE__ */ React.createElement(OrgSummary, { rows: shown, month, db }),
-      /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_org", className: "tbl-rpt", style: { width: "100%", tableLayout: "fixed" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "4.5%" } }, "\uBC95\uC778"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "5.5%" } }, "\uBCF8\uBD80"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "7%" } }, "\uAD8C\uC5ED"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "7%" } }, "\uB300\uB9AC\uC0C1"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "8%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uACE0\uAC1D", /* @__PURE__ */ React.createElement("br", null), "(\uCE58\uACFC)"), /* @__PURE__ */ React.createElement("th", { colSpan: 3 }, month, "\uC6D4 \uACE0\uAC1D(\uC810)"), /* @__PURE__ */ React.createElement("th", { colSpan: 4 }, month, "\uC6D4 \uC2E4\uC801"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, className: "text-right", style: { width: "5%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uC804", /* @__PURE__ */ React.createElement("br", null), "\uBCF4\uACE0", /* @__PURE__ */ React.createElement("br", null), "\uB300\uBE44"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, className: "text-right", style: { width: "5%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uBC18\uBCF5", /* @__PURE__ */ React.createElement("br", null), "\uAD6C\uB9E4"), /* @__PURE__ */ React.createElement("th", { colSpan: 4 }, "26\uB144 \uB204\uACC4")), /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uBAA9\uD45C"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uD655\uC815"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uC9C4\uC785"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 70 } }, "\uD310\uB9E4\uB7C9"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 74 } }, "\uB300\uB9AC\uC0C1"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 52 } }, "\uC9C4\uC785"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 74 } }, "\uD310\uB9E4\uB7C9"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 66 } }, "\uB300\uB9AC\uC0C1"))), /* @__PURE__ */ React.createElement("tbody", null, shown.map(function(r, ri) {
+      /* @__PURE__ */ React.createElement(Collapsible, null, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("table", { "data-table-id": "wk_org", className: "tbl-rpt", style: { width: "100%", tableLayout: "fixed" } }, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "4.5%" } }, "\uBC95\uC778"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "5.5%" } }, "\uBCF8\uBD80"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "7%" } }, "\uAD8C\uC5ED"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "7%" } }, "\uB300\uB9AC\uC0C1"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, style: { width: "8%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uACE0\uAC1D", /* @__PURE__ */ React.createElement("br", null), "(\uCE58\uACFC)"), /* @__PURE__ */ React.createElement("th", { colSpan: 3 }, month, "\uC6D4 \uACE0\uAC1D(\uC810)"), /* @__PURE__ */ React.createElement("th", { colSpan: 4 }, month, "\uC6D4 \uC2E4\uC801"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, className: "text-right", style: { width: "5%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uC804", /* @__PURE__ */ React.createElement("br", null), "\uBCF4\uACE0", /* @__PURE__ */ React.createElement("br", null), "\uB300\uBE44"), /* @__PURE__ */ React.createElement("th", { rowSpan: 2, className: "text-right", style: { width: "5%", whiteSpace: "normal", lineHeight: 1.15 } }, "\uBC18\uBCF5", /* @__PURE__ */ React.createElement("br", null), "\uAD6C\uB9E4"), /* @__PURE__ */ React.createElement("th", { colSpan: 4 }, "26\uB144 \uB204\uACC4")), /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uBAA9\uD45C"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uD655\uC815"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uC9C4\uC785"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 70 } }, "\uD310\uB9E4\uB7C9"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 74 } }, "\uB300\uB9AC\uC0C1"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 52 } }, "\uC9C4\uC785"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 74 } }, "\uD310\uB9E4\uB7C9"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: "5.5%" } }, "\uB2EC\uC131\uB960"), /* @__PURE__ */ React.createElement("th", { className: "text-right", style: { width: 66 } }, "\uB300\uB9AC\uC0C1"))), /* @__PURE__ */ React.createElement("tbody", null, shown.map(function(r, ri) {
         const ro = !!open[r.id];
         const fc = ri === 0 || shown[ri - 1].corp !== r.corp;
         const fh = ri === 0 || shown[ri - 1].hq !== r.hq || fc;
@@ -12197,9 +12259,9 @@ ARI.pages = ARI.pages || {};
         return !r.isEtc;
       }).length), /* @__PURE__ */ React.createElement("td", null, U.fmt(C.sum(shown, function(r) {
         return r.dealerN;
-      })), "\uAC1C\uC0AC"), /* @__PURE__ */ React.createElement("td", null, U.fmt(T.n), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ptT)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.conf)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.conf, t: T.ptT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ent)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.qty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.qty, t: T.qtyT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.deal)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Wow, { v: T.wow })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.rep)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumEnt)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumQty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.cumQty, t: T.annT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumDeal)))))),
+      })), "\uAC1C\uC0AC"), /* @__PURE__ */ React.createElement("td", null, U.fmt(T.n), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ptT)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.conf)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.conf, t: T.ptT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ent)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.qty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.qty, t: T.qtyT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.deal)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Wow, { v: T.wow })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.rep)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumEnt)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumQty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.cumQty, t: T.annT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumDeal))))))),
       /* @__PURE__ */ React.createElement(Note, null, '\uBAA9\uD45C\xB7\uD655\uC815\xB7\uC9C4\uC785\xB7\uD310\uB9E4\uB7C9\xB7\uB300\uB9AC\uC0C1\uC740 \uC8FC\uAC04\uBCF4\uACE0 \uC5D1\uC140 \u300C\u7B80\u8981\u300D/\u300CARI\u5BA2\u6237\u300D \uC2DC\uD2B8 \uAC12 \uADF8\uB300\uB85C\uC785\uB2C8\uB2E4. \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC758 \uD310\uB9E4\uB7C9\uC740 \u300CARI\u660E\u7EC6\u300D \uAE30\uC900\uC774\uBA70, \uB300\uB9AC\uC0C1(\u91C7\u8D2D\u91CF)\uC740 \uAD8C\uC5ED \uB2E8\uC704\uB85C\uB9CC \uC9D1\uACC4\uB418\uC5B4 \uD558\uC704 \uD589\uC740 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \u300C\uAE30\uD0C0\u300D\uB294 \uAD8C\uC5ED\uC5D0 \uBC30\uC815\uB418\uC9C0 \uC54A\uC740 \uB300\uB9AC\uC0C1 \uAD6C\uB9E4\uB7C9\uC785\uB2C8\uB2E4. \uB2EC\uC131\uB960\uC740 \uD655\uC815\xF7\uBAA9\uD45C, \uD310\uB9E4\uB7C9\xF7\uD574\uB2F9 \uAE30\uAC04 \uD310\uB9E4\uBAA9\uD45C, \uB204\uACC4 \uD310\uB9E4\uB7C9\xF7\uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C\uC774\uBA70 \uBAA9\uD45C\uAC00 \uC5C6\uB294 \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC740 "-"\uC785\uB2C8\uB2E4. \uBC18\uBCF5\uAD6C\uB9E4\uB294 \u300CARI\u660E\u7EC6\u300D \u590D\u8D2D\u5BA2\u6237 \uAE30\uC900\uC785\uB2C8\uB2E4.')
-    )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "cust" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(CustomerTable, { real, base, month, regions, region, hqF, db0: db.productLabel })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "ms" ? "block" : "none" } },
+    )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "ms" ? "block" : "none" } },
       btTab === "ms" ? /* @__PURE__ */ React.createElement(PremiumMS, { ctx, db }) : null
     ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "map" ? "block" : "none" } },
       btTab === "map" ? /* @__PURE__ */ React.createElement(CustomerMap, { ctx, db }) : null
@@ -13790,7 +13852,7 @@ ARI.pages = ARI.pages || {};
       Page,
       {
         className: "pg-navy",
-        title: "\uC138\uBBF8\uB098 \uC131\uACFC\uAD00\uB9AC",
+        title: "\uC138\uBBF8\uB098 \uC131\uACFC\uAD00\uB9AC \u2605",
         desc: "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D \uAD50\uC721\uC758 \uCC38\uC11D \u2192 \uC804\uD658 \u2192 \uD310\uB9E4 \uC131\uACFC"
       },
       /* @__PURE__ */ React.createElement(ARI.tabs.eduPerf, { ctx: c, db, view: "perf" })
@@ -15938,8 +16000,7 @@ ARI.pages = ARI.pages || {};
           return /* @__PURE__ */ React.createElement("tr", { key: c.prov + c.name + i }, /* @__PURE__ */ React.createElement("td", { className: "ctr" }, HQ_KO[c._hq] || c._hq), /* @__PURE__ */ React.createElement("td", { className: "ctr" }, /* @__PURE__ */ React.createElement(Zh, null, c._area)), /* @__PURE__ */ React.createElement("td", { className: "ctr" }, /* @__PURE__ */ React.createElement(Zh, null, c.prov)), /* @__PURE__ */ React.createElement("td", { className: "lbl" }, /* @__PURE__ */ React.createElement(Zh, null, c.name)), /* @__PURE__ */ React.createElement("td", { className: "ctr" }, /* @__PURE__ */ React.createElement(Zh, null, c.owner)), /* @__PURE__ */ React.createElement("td", { className: "ctr" }, /* @__PURE__ */ React.createElement(Badge, { tone: RT[c.status] || "gray" }, RM[c.status] || c.status)), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Zh, null, c.dealer || "-")), /* @__PURE__ */ React.createElement("td", { className: "num" }, Z(mQty(c))), /* @__PURE__ */ React.createElement("td", { className: "num" }, Z(U.n(c.tot))));
         }), !brandList.length ? /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("td", { colSpan: 9, className: "ctr text-slate-400", style: { padding: 20 } }, "\uD574\uB2F9 \uACE0\uAC1D\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.")) : null), /* @__PURE__ */ React.createElement("tfoot", null, /* @__PURE__ */ React.createElement("tr", { className: "sumY" }, /* @__PURE__ */ React.createElement("td", { colSpan: 7 }, "\uD569\uACC4 \xB7 \uBE0C\uB79C\uB4DC\uC810 ", U.fmt(brandList.length), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(C.sum(brandList, mQty))), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(C.sum(brandList, function(c) {
           return U.n(c.tot);
-        }))))))),
-        /* @__PURE__ */ React.createElement(Note, null, "\uBE0C\uB79C\uB4DC\uC810\uC740 \u300CARI\u660E\u7EC6\u300D \u54C1\u724C\u5E97 \uD45C\uAE30 \uB610\uB294 \uD604\uD669=\u54C1\u724C\u5E97 \uACE0\uAC1D\uC785\uB2C8\uB2E4. \uD310\uB9E4\uB7C9\uC740 26\uB144 \uB204\uACC4(\u5408\u8BA1)\uC785\uB2C8\uB2E4.")
+        })))))))
       )
     );
   };
@@ -15948,6 +16009,18 @@ ARI.pages = ARI.pages || {};
 /* ==== 74_conv.jsx ==== */
 (function() {
   const { useState, useMemo, useRef, useEffect } = React;
+  function Collapsible({ label, children }) {
+    const [open, setOpen] = useState(false);
+    return /* @__PURE__ */ React.createElement("div", null,
+      /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "flex-end", marginTop: 4 } },
+        /* @__PURE__ */ React.createElement("button", { type: "button", onClick: function() { setOpen(!open); },
+          style: { display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 9px", fontSize: 8, fontWeight: 800,
+                   border: "1px solid #c9cfd9", background: open ? "#16234a" : "#fff", color: open ? "#fff" : "#16234a", cursor: "pointer" } },
+          (open ? "\u25B4 " : "\u25BE ") + (label || "\uB370\uC774\uD130 \uD655\uC778"))
+      ),
+      open ? /* @__PURE__ */ React.createElement("div", { style: { marginTop: 8 } }, children) : null
+    );
+  }
   const U = ARI.util, C = ARI.calc;
   const { Page, Card, KPI, KPIGrid, Note } = ARI.ui;
   const COL_DEFS = [
@@ -16891,13 +16964,7 @@ ARI.pages = ARI.pages || {};
         "\uC6D4\uC5D0 \uB4F1\uB85D\uB41C \uC138\uBBF8\uB098\uAC00 \uC5C6\uC5B4 \uC804\uCCB4 \uB204\uC801\uC73C\uB85C \uBCF4\uC5EC\uB4DC\uB9BD\uB2C8\uB2E4. \uD574\uB2F9 \uC6D4 \uBA85\uB2E8\uC744 \uC62C\uB9AC\uBA74 \uC790\uB3D9\uC73C\uB85C \uC6D4 \uB204\uC801\uC73C\uB85C \uBC14\uB01D\uB2C8\uB2E4."
       ) : null, /* @__PURE__ */ React.createElement("div", { className: "flex items-baseline gap-3 flex-wrap" },
         /* @__PURE__ */ React.createElement("span", { className: "text-[15px] font-extrabold leading-[1.5]", style: { color: "#16234a" } }, "\uBCF8\uBD80\uBCC4 \uC138\uBBF8\uB098 \uC2E4\uC801 \xB7 \uC804\uCCB4 \uB204\uC801 (", ctx.week.slice(5), " \uAE30\uC900)"),
-        /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-semibold leading-[1.5]", style: { color: "#2a51ab" } },
-          "\u203B \uBAA8\uB4E0 \uC22B\uC790\uB294 \uB204\uC801\uC785\uB2C8\uB2E4. \uC138\uBBF8\uB098 \uBA85\uB2E8\uC740 BD 26\uB144 1\uC6D4\xB7ARi 26\uB144 5\uC6D4\uBD80\uD130 \uC313\uC5EC \uC788\uACE0, \uD310\uB9E4\uB294 BD 25\uB144\xB726\uB144 \xB7 ARi 26\uB144 \uAE30\uC900\uC785\uB2C8\uB2E4. " +
-          "\uC9C4\uC785\uCE58\uACFC\xB7\uC804\uD658\uC728\xB7\uC2E4\uC81C\uD310\uB9E4\uB294 \uC138\uBBF8\uB098 \uBA85\uB2E8\uC758 \uCE58\uACFC\uBA85\uACFC \uACE0\uAC1D\uBA85\uC138\uC758 \uCE58\uACFC\uBA85\uC744 \uB300\uC870\uD574 \uCC44\uC6C1\uB2C8\uB2E4. " +
-          "\uB450 \uC790\uB8CC\uC5D0 \uACF5\uD1B5 \uACE0\uAC1D\uCF54\uB4DC\uAC00 \uC5C6\uC5B4 \uC774\uB984 \uD45C\uAE30\uAC00 \uB2E4\uB974\uBA74 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC73C\uBA70, " +
-          "\uD604\uC7AC \uC138\uBBF8\uB098 \uCC38\uC11D \uCE58\uACFC 2,646\uAC1C\uC18C \uC911 \uBA85\uC138\uC5D0 \uC788\uB294 \uACF3\uC740 225\uAC1C\uC18C(8.5%)\uC785\uB2C8\uB2E4. " +
-          "\uB530\uB77C\uC11C \uC774 \uC138 \uAC12\uC740 \uC2E4\uC81C\uBCF4\uB2E4 \uC791\uAC8C \uC7A1\uD790 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uCE58\uACFC\uCF54\uB4DC\uAC00 \uBD80\uC5EC\uB418\uBA74 \uC815\uD655\uD574\uC9d1\uB2C8\uB2E4."
-        )
+        null
       ), /* @__PURE__ */ React.createElement("div", { style: { height: 2, background: "#16234a", margin: "9px 0 12px" } }), /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-3" }, TREE.map(function(m) {
         const base = U.n(m.eCl) || (m.k ? m.k.totCl.length : 0);
         const st = [
@@ -17357,23 +17424,363 @@ ARI.pages = ARI.pages || {};
       items.map(function(it, i) {
         return /* @__PURE__ */ React.createElement("div", { key: i,
           style: { border: "1px solid #e6e9ef", background: "#fff", padding: "11px 13px" } },
-          /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11.5, fontWeight: 800, color: "#16234a" } }, it.l),
+          /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11.5, fontWeight: 800, color: "#16234a", whiteSpace: "nowrap" } }, it.l),
           /* @__PURE__ */ React.createElement("div", { className: "mt-1", style: Object.assign({ display: "flex", alignItems: "baseline", gap: 4 }, U.NUM) },
             /* @__PURE__ */ React.createElement("span", { style: { fontSize: 22, fontWeight: 800, color: "#16234a", lineHeight: 1 } }, it.v),
-            it.u ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#4F5562" } }, it.u) : null,
-            it.of ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#98a2b3" } }, "/ " + it.of) : null
+            it.u ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#4F5562" } }, it.u) : null
           ),
+          it.of ? /* @__PURE__ */ React.createElement("div", { style: Object.assign({ fontSize: 11, color: "#98a2b3", marginTop: 1 }, U.NUM) }, "/ " + it.of) : /* @__PURE__ */ React.createElement("div", { style: { height: 13, marginTop: 1 } }),
           it.r !== null ? /* @__PURE__ */ React.createElement("div", { className: "mt-1.5", style: { height: 4, background: "#eef1f4" } },
             /* @__PURE__ */ React.createElement("i", { style: { display: "block", height: "100%", width: Math.min(100, it.r) + "%", background: BAR } })
           ) : /* @__PURE__ */ React.createElement("div", { className: "mt-1.5", style: { height: 4 } }),
-          /* @__PURE__ */ React.createElement("div", { className: "mt-1.5", style: { fontSize: 10.5, color: "#68748B" } }, it.s)
+          /* @__PURE__ */ React.createElement("div", { className: "mt-1.5", style: { fontSize: 10.5, color: "#68748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, it.s)
         );
       })
     );
   }
 
+  /* 성과현황 그래프 — 본부별 진입·판매·소진율 */
+  /* 성과현황 카드 — 안에서 [성과현황][전주 대비 증감] 전환 */
+  function PerfCard({ ctx, prod }) {
+    const [v, setV] = useState("sum");
+    return /* @__PURE__ */ React.createElement(Card, {
+      title: /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", alignItems: "center", gap: 12 } },
+        prod + " \uC131\uACFC\uD604\uD669",
+        /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", border: "1px solid #c9cfd9", background: "#fff" } },
+          [{ v: "sum", l: "\uC131\uACFC\uD604\uD669" }, { v: "wow", l: "\uC804\uC8FC \uB300\uBE44 \uC99D\uAC10" }].map(function(o, i) {
+            const on = v === o.v;
+            return /* @__PURE__ */ React.createElement("button", { key: o.v, type: "button", onClick: function() { setV(o.v); },
+              style: { padding: "3px 9px", fontSize: 8, fontWeight: 800,
+                       background: on ? "#16234a" : "#fff", color: on ? "#fff" : "#68748B",
+                       border: "none", borderLeft: i ? "1px solid #c9cfd9" : "none", cursor: "pointer" } }, o.l);
+          })
+        )
+      ),
+      desc: ctx.week + " \uB204\uACC4 \uAE30\uC900"
+    },
+      v === "sum" ? /* @__PURE__ */ React.createElement(ProdSummary, { ctx, prod }) : /* @__PURE__ */ React.createElement(WeekDeltaBody, { ctx, only: prod })
+    );
+  }
+
+  /* 성과현황 상세표 — 법인·본부·권역별 (캡처와 동일 구성) */
+  function CustDetailTable({ ctx, prod }) {
+    const n = function(v) { return +v || 0; };
+    const M = Number(ctx.wk.start.slice(5, 7));
+    const b = ARI.real[prod] || {};
+    const sn = (b.snaps || []).filter(function(x) { return x.week <= ctx.week; });
+    const cur = sn.length ? sn[sn.length - 1] : b;
+    const prev = sn.length > 1 ? sn[sn.length - 2] : null;
+    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
+    const cust = (cur.cust && cur.cust.length ? cur.cust : b.cust) || [];
+    const custByArea = {};
+    cust.forEach(function(c) {
+      const corp = (["\u5317\u4EAC","\u5185\u8499\u53E4","\u5185\u8499","\u6CB3\u5317","\u5929\u6D25","\u8FBD\u5B81","\u5409\u6797","\u9ED1\u9F99\u6C5F"].indexOf(c.prov) >= 0) ? "\u5317\u4EAC" : "\u5B81\u6CE2";
+      const k = corp + "|" + String(c.area || "").replace("\u5927\u533A", "");
+      custByArea[k] = (custByArea[k] || 0) + 1;
+    });
+    const prevArea = {};
+    if (prev) (prev.area || []).forEach(function(a) { prevArea[a.corp + "|" + a.area] = a; });
+    const pc = function(x, y) { return y ? Math.round(x / y * 100) : 0; };
+    const F = function(v) { return U.fmt(Math.round(v)); };
+
+    const rows = (cur.area || []).map(function(a) {
+      const m = (a.m || {})[M] || {};
+      const key = a.corp + "|" + a.area;
+      const pv = prevArea[key];
+      const wow = pv ? n(a.cA) - n(pv.cA) : null;
+      return {
+        corp: a.corp === "\u5317\u4EAC" ? "\uBD81\uACBD" : "\uB2DD\uBCF4", hq: HQKO[a.hq] || "\uAE30\uD0C0", area: a.area,
+        clinics: custByArea[key] || 0,
+        mcT: n(m.cT), mcC: n(m.cC), mcA: n(m.cA), msA: n(m.sA), mdB: n(m.dB), msT: n(m.sT),
+        rep: 0, cA: n(a.cA), sA: n(a.sA), dB: n(a.dB), sT: n(a.sT),
+        wow: wow
+      };
+    });
+    /* 대리상 수 (권역별 실적 있는 대리상) */
+    const dealerByArea = {};
+    cust.forEach(function(c) {
+      if (!c.dealer || !(n(c.tot) > 0 || c.status === "\u5DF2\u8FDB\u5165")) return;
+      const corp = (["\u5317\u4EAC","\u5185\u8499\u53E4","\u5185\u8499","\u6CB3\u5317","\u5929\u6D25","\u8FBD\u5B81","\u5409\u6797","\u9ED1\u9F99\u6C5F"].indexOf(c.prov) >= 0) ? "\u5317\u4EAC" : "\u5B81\u6CE2";
+      const k = corp + "|" + String(c.area || "").replace("\u5927\u533A", "");
+      (dealerByArea[k] = dealerByArea[k] || {})[c.dealer] = 1;
+    });
+    const repByArea = {};
+    cust.forEach(function(c) {
+      if (!(n(c.rep) > 0)) return;
+      const corp = (["\u5317\u4EAC","\u5185\u8499\u53E4","\u5185\u8499","\u6CB3\u5317","\u5929\u6D25","\u8FBD\u5B81","\u5409\u6797","\u9ED1\u9F99\u6C5F"].indexOf(c.prov) >= 0) ? "\u5317\u4EAC" : "\u5B81\u6CE2";
+      const k = corp + "|" + String(c.area || "").replace("\u5927\u533A", "");
+      repByArea[k] = (repByArea[k] || 0) + 1;
+    });
+    rows.forEach(function(r, i) {
+      const a = (cur.area || [])[i];
+      r.dealers = Object.keys(dealerByArea[a.corp + "|" + a.area] || {}).length;
+      r.rep = repByArea[a.corp + "|" + a.area] || 0;
+    });
+
+    const SEPL = "1px solid #b8c2d4";
+    const TD = { padding: "4px 5px", whiteSpace: "nowrap", color: "#111827", textAlign: "right" };
+    const TH = { padding: "6px 5px", whiteSpace: "nowrap", color: "#111827", fontWeight: 800, textAlign: "center", lineHeight: 1.2 };
+    const ML = function(a2) { return a2.map(function(t, i) { return /* @__PURE__ */ React.createElement("div", { key: i }, t); }); };
+    const th = function(t, o) { o = o || {}; return /* @__PURE__ */ React.createElement("th", Object.assign({}, o, { style: Object.assign({}, TH, o.style || {}) }), t); };
+    const td = function(v, key, st) { return /* @__PURE__ */ React.createElement("td", { key: key, className: "num", style: Object.assign({}, TD, st || {}) }, v); };
+    const wowCell = function(w) {
+      if (w === null) return td("\u2013", "w", { color: "#c9d2e4" });
+      if (w > 0) return td("\u25B2 " + F(w), "w", { color: "#16794a", fontWeight: 700 });
+      if (w < 0) return td("\u25BC " + F(-w), "w", { color: "#c0392f", fontWeight: 700 });
+      return td("\u2013", "w", { color: "#c9d2e4" });
+    };
+    const line = function(r, key, st) {
+      return /* @__PURE__ */ React.createElement("tr", { key: key },
+        td(r.corp, "a", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
+        td(r.hq, "b", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
+        td(r.area, "c", Object.assign({ textAlign: "center", fontWeight: 700 }, st)),
+        td(F(r.dealers), "d", st),
+        td(F(r.clinics), "e", Object.assign({ background: "#f1f3f7" }, st)),
+        td(F(r.mcT), "f", Object.assign({ borderLeft: SEPL }, st)),
+        td(F(r.mcC), "g", st),
+        td(pc(r.mcC, r.mcT) + "%", "h", st),
+        td(F(r.mcA), "i", Object.assign({ borderLeft: SEPL }, st)),
+        td(F(r.msA), "j", st),
+        td(pc(r.msA, r.msT) + "%", "k", st),
+        td(F(r.mdB), "l", st),
+        td(F(r.rep), "m", Object.assign({ borderLeft: SEPL }, st)),
+        td(F(r.cA), "n", Object.assign({ borderLeft: SEPL }, st)),
+        td(F(r.sA), "o", Object.assign({ background: "#f1f3f7" }, st)),
+        td(pc(r.sA, r.sT) + "%", "p", st),
+        td(F(r.dB), "q", st),
+        wowCell(r.wow)
+      );
+    };
+    const body = rows.map(function(r, i) { return line(r, i); });
+    const tot = { dealers: 0, clinics: 0, mcT: 0, mcC: 0, mcA: 0, msA: 0, msT: 0, mdB: 0, rep: 0, cA: 0, sA: 0, sT: 0, dB: 0, wow: 0 };
+    rows.forEach(function(r) { ["dealers","clinics","mcT","mcC","mcA","msA","msT","mdB","rep","cA","sA","sT","dB"].forEach(function(k) { tot[k] += r[k]; }); tot.wow += (r.wow || 0); });
+    body.push(/* @__PURE__ */ React.createElement("tr", { key: "tot", style: { background: "#f0f2f6", fontWeight: 800, borderTop: "2px solid #16234a" } },
+      td("", "a"), td("", "b"), td("\uD569\uACC4", "c", { textAlign: "center", fontWeight: 800 }),
+      td(F(tot.dealers), "d"), td(F(tot.clinics), "e", { background: "#e8ecf3" }),
+      td(F(tot.mcT), "f", { borderLeft: SEPL }), td(F(tot.mcC), "g"), td(pc(tot.mcC, tot.mcT) + "%", "h"),
+      td(F(tot.mcA), "i", { borderLeft: SEPL }), td(F(tot.msA), "j"), td(pc(tot.msA, tot.msT) + "%", "k"), td(F(tot.mdB), "l"),
+      td(F(tot.rep), "m", { borderLeft: SEPL }),
+      td(F(tot.cA), "n", { borderLeft: SEPL }), td(F(tot.sA), "o", { background: "#e8ecf3" }), td(pc(tot.sA, tot.sT) + "%", "p"), td(F(tot.dB), "q"),
+      wowCell(tot.wow)
+    ));
+
+    return /* @__PURE__ */ React.createElement("table", { className: "tbl-rpt", style: { color: "#111827", width: "100%", fontSize: "72%" } },
+      /* @__PURE__ */ React.createElement("thead", null,
+        /* @__PURE__ */ React.createElement("tr", null,
+          th("\uBC95\uC778", { rowSpan: 2 }), th("\uBCF8\uBD80", { rowSpan: 2 }), th("\uAD8C\uC5ED", { rowSpan: 2 }),
+          th("\uB300\uB9AC\uC0C1", { rowSpan: 2 }), th(ML(["\uACE0\uAC1D", "(\uCE58\uACFC)"]), { rowSpan: 2 }),
+          th(M + "\uC6D4 \uACE0\uAC1D", { colSpan: 3, style: { borderLeft: SEPL } }),
+          th(M + "\uC6D4 \uC2E4\uC801", { colSpan: 4, style: { borderLeft: SEPL } }),
+          th(ML(["\uBC18\uBCF5", "\uAD6C\uB9E4"]), { rowSpan: 2, style: { borderLeft: SEPL } }),
+          th("26\uB144 \uB204\uACC4", { colSpan: 4, style: { borderLeft: SEPL } }),
+          th(ML(["\uC804", "\uBCF4\uACE0", "\uB300\uBE44"]), { rowSpan: 2, style: { borderLeft: SEPL } })
+        ),
+        /* @__PURE__ */ React.createElement("tr", null,
+          th("\uBAA9\uD45C", { style: { borderLeft: SEPL } }), th("\uD655\uC815"), th("\uB2EC\uC131\uB960"),
+          th("\uC9C4\uC785", { style: { borderLeft: SEPL } }), th("\uD310\uB9E4\uB7C9"), th("\uB2EC\uC131\uB960"), th("\uB300\uB9AC\uC0C1"),
+          th("\uC9C4\uC785", { style: { borderLeft: SEPL } }), th("\uD310\uB9E4\uB7C9"), th("\uB2EC\uC131\uB960"), th("\uB300\uB9AC\uC0C1")
+        )
+      ),
+      /* @__PURE__ */ React.createElement("tbody", null, body)
+    );
+  }
+
+  /* 성과 요약 — 카드 6개 · 진입 도넛 · 본부별 판매(클릭 시 표 펼침) */
+  function ProdSummary({ ctx, prod }) {
+    const RC = ARI.RC || {};
+    const n = function(v) { return +v || 0; };
+    const [open, setOpen] = useState(null);   /* 펼친 본부 */
+    const [det, setDet] = useState(false);
+    const b = ARI.real[prod] || {};
+    const sn = (b.snaps || []).filter(function(x) { return x.week <= ctx.week; });
+    const cur = sn.length ? sn[sn.length - 1] : b;
+    const A = cur.area || [];
+    const cust = (cur.cust && cur.cust.length ? cur.cust : b.cust) || [];
+    const M = Number(ctx.wk.start.slice(5, 7));
+    const S = function(k) { return C.sum(A, function(x) { return n(x[k]); }); };
+    const mS = function(k) { return C.sum(A, function(x) { return n(((x.m || {})[M] || {})[k]); }); };
+    const cA = S("cA"), sA = S("sA"), dB = S("dB"), cT = S("cT");
+    const dealers = (function() { const set = {}; cust.forEach(function(c) { if (c.dealer && (n(c.tot) > 0 || c.status === "\u5DF2\u8FDB\u5165")) set[c.dealer] = 1; }); return Object.keys(set).length; })();
+    const pc = function(x, y) { return y ? Math.round(x / y * 1e3) / 10 : 0; };
+    const F = function(v) { return U.fmt(Math.round(v)); };
+
+    const cards = [
+      { l: "26\uB144 \uC9C4\uC785", v: F(cA), s: "\uACE0\uAC1D\uC758 " + pc(cA, cust.length) + "%", bg: "#16794a" },
+      { l: "26\uB144 \uD310\uB9E4", v: F(sA), u: "\uAC1C", s: "\uC9C4\uC785 \uAC1C\uC18C\uB2F9 " + (cA ? (Math.round(sA / cA * 10) / 10).toFixed(1) : "\u2013"), bg: "#152a63" },
+      { l: "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", v: F(dB), u: "\uAC1C", s: "\uC18C\uC9C4\uC728 " + pc(sA, dB) + "%", bg: "#1d3a86" },
+      { l: M + "\uC6D4 \uD310\uB9E4", v: F(mS("sA")), u: "\uAC1C", s: M + "\uC6D4 \uBAA9\uD45C " + F(mS("sT")) + " \xB7 " + pc(mS("sA"), mS("sT")) + "%", bg: "#3d6cca" },
+      { l: M + "\uC6D4 \uC9C4\uC785", v: F(mS("cA")), s: "\uBAA9\uD45C " + F(mS("cT")) + " \xB7 \uD655\uC815 " + F(mS("cC")), bg: "#4f7fd6" }
+    ];
+
+    /* 도넛 : 고객 중 진입 */
+    const ent = cust.filter(function(c) { return c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97"; }).length;
+    const notEnt = Math.max(0, cust.length - ent);
+    const R = 62, C0 = 78, SW = 26, CIRC = 2 * Math.PI * R;
+    const frac = cust.length ? ent / cust.length : 0;
+    const arc = /* @__PURE__ */ React.createElement("circle", { cx: C0, cy: C0, r: R, fill: "none", stroke: "#1e3a8a", strokeWidth: SW,
+      strokeDasharray: (frac * CIRC) + " " + CIRC, strokeDashoffset: 0, transform: "rotate(-90 " + C0 + " " + C0 + ")" });
+
+    /* 본부별 26년 판매 */
+    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
+    const SEQ = ["\uC808\uAC15", "\uD654\uB3D9", "\uD654\uC911", "\uD654\uC11C", "\uD654\uB0A8", "\uD654\uBD81", "\uAE30\uD0C0"];
+    const byHq = SEQ.map(function(hq) {
+      const rs = A.filter(function(a) { return (HQKO[a.hq] || "\uAE30\uD0C0") === hq; });
+      const sA2 = C.sum(rs, function(a) { return n(a.sA); });
+      const dB2 = C.sum(rs, function(a) { return n(a.dB); });
+      const cA2 = C.sum(rs, function(a) { return n(a.cA); });
+      return { hq: hq, sA: sA2, dB: dB2, cA: cA2, rows: rs };
+    }).sort(function(x, y) { return y.sA - x.sA; });
+    const maxS = Math.max.apply(null, byHq.map(function(t) { return t.sA; }).concat([1]));
+
+    return /* @__PURE__ */ React.createElement("div", null,
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2 mb-3" },
+        cards.map(function(c, i) {
+          return /* @__PURE__ */ React.createElement("div", { key: i, className: "px-2.5 py-1.5", style: { background: c.bg, color: "#fff" } },
+            /* @__PURE__ */ React.createElement("div", { className: "font-bold", style: { fontSize: 9.5, opacity: 0.92, whiteSpace: "nowrap" } }, c.l),
+            /* @__PURE__ */ React.createElement("div", { className: "mt-0.5", style: Object.assign({ display: "flex", alignItems: "baseline", gap: 3 }, U.NUM) },
+              /* @__PURE__ */ React.createElement("span", { style: { fontSize: 19, fontWeight: 800, lineHeight: 1 } }, c.v),
+              c.u ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, opacity: 0.85 } }, c.u) : null),
+            /* @__PURE__ */ React.createElement("div", { className: "font-semibold mt-0.5", style: { fontSize: 8.5, opacity: 0.9 } }, c.s)
+          );
+        })
+      ),
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-4", style: { gridTemplateColumns: "minmax(0, 0.7fr) minmax(0, 1.3fr)" } },
+        /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px" } },
+          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-1.5", style: { color: "#16234a" } }, "\uACE0\uAC1D \uC911 \uC9C4\uC785 \uBE44\uC728"),
+          /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-4" },
+            /* @__PURE__ */ React.createElement("svg", { width: 156, height: 156, viewBox: "0 0 156 156", style: { flexShrink: 0 } },
+              /* @__PURE__ */ React.createElement("circle", { cx: C0, cy: C0, r: R, fill: "none", stroke: "#e6e9ef", strokeWidth: SW }),
+              arc,
+              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 - 3, textAnchor: "middle", fontSize: 20, fontWeight: 800, fill: "#16234a" }, pc(ent, cust.length) + "%"),
+              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 + 14, textAnchor: "middle", fontSize: 10, fill: "#98a2b3" }, "\uC9C4\uC785\uC728")
+            ),
+            /* @__PURE__ */ React.createElement("div", { className: "flex-1" },
+              [{ l: "\uC9C4\uC785 \uC644\uB8CC", v: ent, c: "#1e3a8a" }, { l: "\uBBF8\uC9C4\uC785", v: notEnt, c: "#e6e9ef" }].map(function(d, i) {
+                return /* @__PURE__ */ React.createElement("div", { key: i, className: "flex items-center gap-2 mb-1.5" },
+                  /* @__PURE__ */ React.createElement("i", { style: { width: 11, height: 11, background: d.c, display: "block" } }),
+                  /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { color: "#16234a", flex: 1 } }, d.l),
+                  /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-extrabold", style: { color: "#16234a" } }, F(d.v) + "\uAC1C\uC18C"));
+              })
+            )
+          ),
+          /* @__PURE__ */ React.createElement(Collapsible, null,
+            /* @__PURE__ */ React.createElement("div", { style: { overflowX: "auto" } },
+              /* @__PURE__ */ React.createElement(CustDetailTable, { ctx, prod }))
+          )
+        ),
+        /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "12px 14px" } },
+          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-2", style: { color: "#16234a" } }, "\uBCF8\uBD80\uBCC4 26\uB144 \uD310\uB9E4 \u2014 \uB204\uB974\uBA74 \uAD8C\uC5ED\uBCC4 \uD3BC\uCE68"),
+          byHq.map(function(t) {
+            const on = open === t.hq;
+            return /* @__PURE__ */ React.createElement("div", { key: t.hq },
+              /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 mb-1", style: { cursor: "pointer" },
+                onClick: function() { setOpen(on ? null : t.hq); } },
+                /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { width: 46, whiteSpace: "nowrap", color: on ? "#1d3a86" : "#16234a" } }, (on ? "\u25BE " : "\u25B8 ") + t.hq),
+                /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 14, background: "#f1f3f7", display: "block" } },
+                  /* @__PURE__ */ React.createElement("i", { style: { display: "block", height: "100%", width: (t.sA / maxS * 100) + "%", background: "#1e3a8a" } })),
+                /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-extrabold", style: Object.assign({ color: "#16234a", width: 46, textAlign: "right" }, U.NUM) }, F(t.sA)),
+                /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px]", style: Object.assign({ color: "#98a2b3", width: 46, textAlign: "right" }, U.NUM) }, pc(t.sA, t.dB) + "%")
+              ),
+              on ? /* @__PURE__ */ React.createElement("div", { style: { margin: "2px 0 8px 30px", border: "1px solid #eef1f6" } },
+                /* @__PURE__ */ React.createElement("table", { style: { width: "100%", fontSize: "11px", borderCollapse: "collapse" } },
+                  /* @__PURE__ */ React.createElement("thead", null,
+                    /* @__PURE__ */ React.createElement("tr", { style: { background: "#f7f9fc" } },
+                      ["\uAD8C\uC5ED", "\uC9C4\uC785", "\uD310\uB9E4", "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", "\uC18C\uC9C4\uC728"].map(function(h, i) {
+                        return /* @__PURE__ */ React.createElement("th", { key: i, style: { padding: "4px 6px", textAlign: i ? "right" : "left", color: "#68748B", fontWeight: 800 } }, h);
+                      }))),
+                  /* @__PURE__ */ React.createElement("tbody", null, t.rows.map(function(r, i) {
+                    return /* @__PURE__ */ React.createElement("tr", { key: i, style: { borderTop: "1px solid #eef1f6" } },
+                      /* @__PURE__ */ React.createElement("td", { style: { padding: "4px 6px", fontWeight: 700, color: "#16234a" } }, r.area),
+                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right" } }, F(n(r.cA))),
+                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right", fontWeight: 700 } }, F(n(r.sA))),
+                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right" } }, F(n(r.dB))),
+                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right", color: "#68748B" } }, pc(n(r.sA), n(r.dB)) + "%"));
+                  })))
+              ) : null
+            );
+          }),
+          /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-1", style: { color: "#98a2b3" } }, "\uC624\uB978\uCABD \uC22B\uC790 = \uB300\uB9AC\uC0C1 \uAD6C\uB9E4 \uB300\uBE44 \uC18C\uC9C4\uC728")
+        )
+      ),
+      det ? /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px", marginTop: 12, overflowX: "auto" } },
+        /* @__PURE__ */ React.createElement(CustDetailTable, { ctx, prod })
+      ) : null
+    );
+  }
+
+  function ProdChart({ ctx, prod }) {
+    const RC = ARI.RC || {};
+    const RContainer = RC.ResponsiveContainer, RBarC = RC.BarChart, RB = RC.Bar,
+          RX = RC.XAxis, RY = RC.YAxis, RG = RC.CartesianGrid, RT = RC.Tooltip;
+    if (!RContainer) return null;
+    const n = function(v) { return +v || 0; };
+    const b = ARI.real[prod] || {};
+    const sn = (b.snaps || []).filter(function(x) { return x.week <= ctx.week; });
+    const cur = sn.length ? sn[sn.length - 1] : b;
+    const HQKO = { "\u6D59\u6C5F\u672C\u90E8": "\uC808\uAC15", "\u534E\u4E1C\u672C\u90E8": "\uD654\uB3D9", "\u534E\u4E2D\u672C\u90E8": "\uD654\uC911", "\u534E\u897F\u672C\u90E8": "\uD654\uC11C", "\u534E\u5357\u672C\u90E8": "\uD654\uB0A8", "\u534E\u5317\u672C\u90E8": "\uD654\uBD81" };
+    const SEQ = ["\uC808\uAC15", "\uD654\uB3D9", "\uD654\uC911", "\uD654\uC11C", "\uD654\uB0A8", "\uD654\uBD81"];
+    const pc = function(x, y) { return y ? Math.round(x / y * 1e3) / 10 : 0; };
+    const data = SEQ.map(function(hq) {
+      const rs = (cur.area || []).filter(function(a) { return (HQKO[a.hq] || "") === hq; });
+      const cA = C.sum(rs, function(a) { return n(a.cA); });
+      const dB = C.sum(rs, function(a) { return n(a.dB); });
+      const sA = C.sum(rs, function(a) { return n(a.sA); });
+      const cT = C.sum(rs, function(a) { return n(a.cT); });
+      return { name: hq, "\uC9C4\uC785": cA, "\uBAA9\uD45C": cT,
+               "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4": dB, "\uD558\uBD80\uACE0\uAC1D \uD310\uB9E4": sA, "\uC18C\uC9C4\uC728": pc(sA, dB) };
+    }).filter(function(d) { return d["\uBAA9\uD45C"] > 0 || d["\uB300\uB9AC\uC0C1 \uAD6C\uB9E4"] > 0; });
+    const C_A = prod === "BD" ? "#1d3a86" : "#c0392f";
+    const box = { fontSize: 11, borderRadius: 4, border: "1px solid #e6e9ef" };
+    const ax = { fontSize: 10, fill: "#98a2b3" };
+    const xa = { fontSize: 10, fill: "#68748B" };
+    const cell = function(title, chart) {
+      return /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px" } },
+        /* @__PURE__ */ React.createElement("div", { className: "text-[11.5px] font-bold mb-1", style: { color: "#16234a" } }, title),
+        /* @__PURE__ */ React.createElement("div", { style: { width: "100%", height: 190 } }, chart)
+      );
+    };
+    return /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3 mt-3" },
+      cell("\uBCF8\uBD80\uBCC4 \uC9C4\uC785 vs \uBAA9\uD45C",
+        /* @__PURE__ */ React.createElement(RContainer, null,
+          /* @__PURE__ */ React.createElement(RBarC, { data, margin: { top: 8, right: 8, left: -14, bottom: 0 }, barGap: 2 },
+            /* @__PURE__ */ React.createElement(RG, { stroke: "#eef1f6", vertical: false }),
+            /* @__PURE__ */ React.createElement(RX, { dataKey: "name", tick: xa, tickLine: false, axisLine: { stroke: "#d5dae3" } }),
+            /* @__PURE__ */ React.createElement(RY, { tick: ax, tickLine: false, axisLine: false }),
+            /* @__PURE__ */ React.createElement(RT, { contentStyle: box, cursor: { fill: "#f5f7fb" } }),
+            /* @__PURE__ */ React.createElement(RB, { dataKey: "\uBAA9\uD45C", fill: "#c9d2e4", maxBarSize: 18 }),
+            /* @__PURE__ */ React.createElement(RB, { dataKey: "\uC9C4\uC785", fill: C_A, maxBarSize: 18 })
+          )
+        )
+      ),
+      cell("\uB300\uB9AC\uC0C1 \uAD6C\uB9E4 vs \uD558\uBD80\uACE0\uAC1D \uD310\uB9E4",
+        /* @__PURE__ */ React.createElement(RContainer, null,
+          /* @__PURE__ */ React.createElement(RBarC, { data, margin: { top: 8, right: 8, left: -6, bottom: 0 }, barGap: 2 },
+            /* @__PURE__ */ React.createElement(RG, { stroke: "#eef1f6", vertical: false }),
+            /* @__PURE__ */ React.createElement(RX, { dataKey: "name", tick: xa, tickLine: false, axisLine: { stroke: "#d5dae3" } }),
+            /* @__PURE__ */ React.createElement(RY, { tick: ax, tickLine: false, axisLine: false, tickFormatter: function(v) { return U.fmt(v); } }),
+            /* @__PURE__ */ React.createElement(RT, { contentStyle: box, cursor: { fill: "#f5f7fb" }, formatter: function(v, k) { return [U.fmt(v) + "\uAC1C", k]; } }),
+            /* @__PURE__ */ React.createElement(RB, { dataKey: "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", fill: "#7aa7ec", maxBarSize: 18 }),
+            /* @__PURE__ */ React.createElement(RB, { dataKey: "\uD558\uBD80\uACE0\uAC1D \uD310\uB9E4", fill: C_A, maxBarSize: 18 })
+          )
+        )
+      ),
+      cell("\uBCF8\uBD80\uBCC4 \uC7AC\uACE0 \uC18C\uC9C4\uC728",
+        /* @__PURE__ */ React.createElement(RContainer, null,
+          /* @__PURE__ */ React.createElement(RBarC, { data, margin: { top: 8, right: 8, left: -14, bottom: 0 }, layout: "vertical" },
+            /* @__PURE__ */ React.createElement(RG, { stroke: "#eef1f6", horizontal: false }),
+            /* @__PURE__ */ React.createElement(RX, { type: "number", tick: ax, tickLine: false, axisLine: false, tickFormatter: function(v) { return v + "%"; } }),
+            /* @__PURE__ */ React.createElement(RY, { type: "category", dataKey: "name", tick: xa, tickLine: false, axisLine: false, width: 34 }),
+            /* @__PURE__ */ React.createElement(RT, { contentStyle: box, cursor: { fill: "#f5f7fb" }, formatter: function(v) { return [v + "%", "\uC18C\uC9C4\uC728"]; } }),
+            /* @__PURE__ */ React.createElement(RB, { dataKey: "\uC18C\uC9C4\uC728", fill: C_A, maxBarSize: 14 })
+          )
+        )
+      )
+    );
+  }
+
+
   /* 전주 대비 증감 — 막대로 증감률을 보여 주고 숫자는 오른쪽에 */
-  function WeekDelta({ ctx, only }) {
+  function WeekDeltaBody({ ctx, only }) {
     const n = function(v) { return +v || 0; };
     const ROWS = [];
     (only ? [only] : ["ARi", "BD"]).forEach(function(p) {
@@ -17392,11 +17799,9 @@ ARI.pages = ARI.pages || {};
     const F = function(v) { return U.fmt(Math.round(v)); };
     const rate = function(r) { return r.a ? (r.b - r.a) / r.a * 100 : (r.b ? 100 : 0); };
     const maxR = Math.max.apply(null, ROWS.map(function(r) { return Math.abs(rate(r)); }).concat([1]));
-    return /* @__PURE__ */ React.createElement(Card, {
-      title: (only ? only + " " : "") + "\uC804\uC8FC \uB300\uBE44 \uC99D\uAC10",
-      desc: W0.slice(5) + " \u2192 " + W1.slice(5) + " \xB7 \uB9C9\uB300\uB294 \uC99D\uAC10\uB960"
-    },
-      /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 3 } },
+    return /* @__PURE__ */ React.createElement("div", null,
+      /* @__PURE__ */ React.createElement("div", { className: "text-[11px] mb-2", style: { color: "#98a2b3" } }, W0.slice(5) + " \u2192 " + W1.slice(5) + " \xB7 \uB9C9\uB300\uB294 \uC99D\uAC10\uB960"),
+      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "3px 20px" } },
         ROWS.map(function(r, i) {
           const d = r.b - r.a, rt = rate(r);
           const first = i > 0 && ROWS[i - 1].p !== r.p;
@@ -17435,20 +17840,20 @@ ARI.pages = ARI.pages || {};
         ["\uC601\uC5C5\uC0AC\uC6D0 \xB7 \uB300\uB9AC\uC0C1 \uC601\uC5C5\uC0AC\uC6D0", "\uACE0\uAC1D \uC81C\uC548 \uC5ED\uB7C9 \uAC15\uD654 \xB7 \uC0AC\uB871 \uC138\uBBF8\uB098", 0]
       ] },
       { ph: "a", no: "02", t: "\uC81C\uD488 \uC778\uC9C0\uB3C4 \uD655\uB300", rows: [
-        ["B2C \uD50C\uB7AB\uD3FC", "\uC0E4\uC624\uD64D\uC288 \xB7 \uC704\uCC57 \uBAA8\uBA58\uD2B8 \uD64D\uBCF4", 0],
-        ["\uC138\uBBF8\uB098\xB7\uC0AC\uB871", "\uAD00\uC2EC \uACE0\uAC1D \uBC1C\uAD74", 0],
-        ["\uC138\uBBF8\uB098/\uC0AC\uB871 \uCC38\uC11D\uACE0\uAC1D \uBC29\uBB38/\uC601\uC5C5", "\uC0C1\uB2F4 \uAD00\uC2EC \uBC0F \uC801\uD569 \uCF00\uC774\uC2A4 \uD655\uC778", 1]
+        ["B2C \uD50C\uB7AB\uD3FC (\uD658\uC790/\uCE58\uACFC\uC758\uC0AC\uB300\uC0C1)", "\uC0E4\uC624\uD64D\uC288 \xB7 \uC704\uCC57 \uBAA8\uBA58\uD2B8 \uD64D\uBCF4", 1],
+        ["\uC138\uBBF8\uB098 \xB7 \uC0AC\uB871 \xB7 \uCEE4\uC2A4\uD68C\uC758 (\uCE58\uACFC\uC758\uC0AC\uB300\uC0C1)", "\uAD00\uC2EC \uACE0\uAC1D \uBC1C\uAD74 \uBC0F \uBAA8\uAC1D\uD65C\uB3D9 \uC9C4\uD589", 0],
+        ["\uAD50\uC721\uCC38\uC11D \uACE0\uAC1D\uBC29\uBB38 \uBC0F \uC601\uC5C5", "\uACE0\uAC1D\uC601\uC5C5 \uBC0F \uC801\uADF9\uC9C4\uC785", 1]
       ] },
-      { ph: "a", no: "03", t: "\uC81C\uD488 \uD310\uB9E4/\uC601\uC5C5", rows: [
-        ["\uCE58\uACFC \uC81C\uD488\uB3C4\uC785", "\uC801\uD569 \uCF00\uC774\uC2A4 \uBC0F \uD544\uC694 \uC9C0\uC6D0 \uD655\uC778", 0],
-        ["DSO \uB3C4\uC785", "\uAE30\uC874\xB7\uBAA9\uD45C \uB9AC\uC2A4\uD2B8 / \uB2E8\uACC4\uBCC4 \uC9C4\uC785 / BD\xB7ARi\xB7ST\xB7AR\xB7AO \uC81C\uC548", 0],
-        ["\uB300\uB9AC\uC0C1 \uB3C4\uC785 \uB3C5\uB824", "\uC7AC\uACE0 \uD3EC\uC778\uD2B8\uB85C BD/ARi \uAD50\uD658 \uAC00\uB2A5 \uC2DC, \uB300\uB9AC\uC0C1 \uC801\uADF9 \uCD94\uCC9C \uCD94\uC9C4", 1]
+      { ph: "a", no: "03", t: "DSO \uC9D1\uC911\uACF5\ub7b5", rows: [
+        ["\uC77C\uBC18\uCE58\uACFC \uC9C4\uC785", "\uC801\uD569 \uCF00\uC774\uC2A4 \uBC0F \uD544\uC694 \uC9C0\uC6D0 \uD655\uC778", 0],
+        ["DSO \uC801\uADF9\uC9C4\uC785", "1. \uD604\uC7AC\uAE4C\uC9C0 \uC9C4\uC785\uD55C 239\uAC1C\uC18C DSO\uC5D0 ARi/BD \uC9C4\uC785\uBAA9\uD45C \uC218\uB9BD\n2. \uC2E0\uADDC DSO \uC9C4\uC785 \xB7 ARi/BD + ST\xB7AR\xB7AO \uC81C\uC548", 1],
+        ["\uB300\uB9AC\uC0C1 \uB3C4\uC785 \uB3C5\uB824 \xB7 9\uC6D4\uBD80\uD130 \uC2E4\uD589", "\uC7AC\uACE0 \uD3EC\uC778\uD2B8\uB85C BD/ARi \uAD50\uD658 \u2192 \uB300\uB9AC\uC0C1 \uC801\uADF9 \uCD94\uCC9C \uCD94\uC9C4", 3]
       ] },
       { ph: "b", no: "04", t: "\uAD50\uC721", rows: [
-        ["BD/ARi \uC218\uC220 \uC0AC\uB871", "\uC81C\uD488\uAD50\uC721 \xB7 \uC0AC\uC6A9\uBC29\uBC95 \uC219\uC9C0 \xB7 \uC801\uC6A9 \uCF00\uC774\uC2A4 \uB17C\uC758", 0]
+        ["BD/ARi \uC218\uC220 \uC0AC\uB871", "\uC81C\uD488\uAD50\uC721/\uD578\uC988\uC628 \xB7 \uC0AC\uC6A9\uBC29\uBC95 \uC219\uC9C0 \xB7 \uC801\uC6A9 \uCF00\uC774\uC2A4 \uB17C\uC758", 0]
       ] },
-      { ph: "b", no: "05", t: "\uCCAB \uC784\uC0C1", rows: [
-        ["\uB514\uC9C0\uD138\uD300 \uD611\uC870", "\uB514\uC9C0\uD138 \uC124\uACC4 \uC9C0\uC6D0 \xB7 R2 \uD65C\uC6A9 \uD658\uC790\uC0C1\uB2F4", 0]
+      { ph: "b", no: "05", t: "1st \uC784\uC0C1\uC9C4\uD589", rows: [
+        ["\uB514\uC9C0\uD138 R2 \uD65C\uC6A9", "\uB514\uC9C0\uD138 \uC124\uACC4 \uC9C0\uC6D0 \xB7 R2 \uD65C\uC6A9 \uD658\uC790\uC0C1\uB2F4", 1]
       ] },
       { ph: "b", no: "06", t: "\uC7AC\uC8FC\uBB38", rows: [
         ["\uD558\uBD80 \uACE0\uAC1D \uC0AC\uC6A9\uD604\uD669 \uC810\uAC80", "\uC0AC\uC6A9\uB7C9 \xB7 \uCD94\uAC00 \uCF00\uC774\uC2A4 \xB7 \uC7AC\uC8FC\uBB38 \uC5EC\uBD80 \uAD00\uB9AC", 0]
@@ -17464,12 +17869,14 @@ ARI.pages = ARI.pages || {};
         "\uBC29\uC548\uBCF4\uACE0",
         /* @__PURE__ */ React.createElement("span", {
           style: { display: "inline-flex", border: "1px solid #c9cfd9", background: "#fff" } },
-          [{ value: "kpi", label: "\uC131\uACFC\uD604\uD669" }, { value: "plan", label: "\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4" }].map(function(o, i) {
+          [{ value: "kpi", label: "\uC131\uACFC\uD604\uD669" }, { value: "plan", label: "\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \u2605" }].map(function(o, i) {
             const on = tab === o.value;
+            const isPlan = o.value === "plan";
             return /* @__PURE__ */ React.createElement("button", {
               key: o.value, type: "button", onClick: function() { setTab(o.value); },
-              style: { padding: "5px 16px", fontSize: 11.5, fontWeight: 800,
-                       background: on ? "#16234a" : "#fff", color: on ? "#fff" : "#68748B",
+              style: { padding: "4px 13px", fontSize: 9, fontWeight: 800,
+                       background: on ? (isPlan ? "#a01722" : "#16234a") : (isPlan ? "#fdf2f4" : "#fff"),
+                       color: on ? "#fff" : (isPlan ? "#a01722" : "#68748B"),
                        border: "none", borderLeft: i ? "1px solid #c9cfd9" : "none",
                        whiteSpace: "nowrap", cursor: "pointer" }
             }, o.label);
@@ -17480,13 +17887,7 @@ ARI.pages = ARI.pages || {};
     },
       tab === "kpi" ? /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3" },
         ["ARi", "BD"].map(function(p) {
-          return /* @__PURE__ */ React.createElement("div", { key: p,
-            className: "grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-3 items-stretch" },
-            /* @__PURE__ */ React.createElement(Card, {
-              title: p + " \uC131\uACFC\uD604\uD669", desc: ctx.week + " \uB204\uACC4 \uAE30\uC900"
-            }, /* @__PURE__ */ React.createElement(ProdKPI, { ctx, prod: p })),
-            /* @__PURE__ */ React.createElement(WeekDelta, { ctx, only: p })
-          );
+          return /* @__PURE__ */ React.createElement(PerfCard, { key: p, ctx, prod: p });
         })
       ) : null,
       tab === "plan" ? /* @__PURE__ */ React.createElement("div", null,
@@ -17498,7 +17899,7 @@ ARI.pages = ARI.pages || {};
         PHASES.map(function(ph) {
           return /* @__PURE__ */ React.createElement("div", { key: ph.k },
             /* @__PURE__ */ React.createElement("div", {
-              style: { display: "flex", alignItems: "center", gap: 8, paddingBottom: 5, marginBottom: 9,
+              style: { display: "flex", alignItems: "center", gap: 8, paddingBottom: 3, marginBottom: 6,
                        borderBottom: "2px solid " + ph.c }
             },
               /* @__PURE__ */ React.createElement("span", {
@@ -17512,29 +17913,36 @@ ARI.pages = ARI.pages || {};
                 style: { position: "absolute", left: 11, top: 6, bottom: 6, width: 2,
                          background: ph.line, display: "block" } }),
               STEPS.filter(function(x) { return x.ph === ph.k; }).map(function(st) {
-                return /* @__PURE__ */ React.createElement("div", { key: st.no, style: { position: "relative", marginBottom: 9 } },
+                return /* @__PURE__ */ React.createElement("div", { key: st.no, style: { position: "relative", marginBottom: 6 } },
                   /* @__PURE__ */ React.createElement("span", {
                     style: { position: "absolute", left: -30, top: 0, width: 22, height: 22, borderRadius: 11,
                              background: ph.c, color: "#fff", fontSize: 11, fontWeight: 800,
                              display: "flex", alignItems: "center", justifyContent: "center",
                              boxShadow: "0 0 0 3px #fff" } }, st.no),
                   /* @__PURE__ */ React.createElement("div", {
-                    style: { fontSize: 13.5, fontWeight: 800, color: "#16234a", lineHeight: "24px", marginBottom: 3 } }, st.t),
+                    style: { fontSize: 13, fontWeight: 800, color: "#16234a", lineHeight: "20px", marginBottom: 2 } }, st.t),
                   /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 2 } },
                     st.rows.map(function(r, i) {
                       return /* @__PURE__ */ React.createElement("div", { key: i,
-                        style: { padding: "6px 10px",
-                                 background: r[2] ? "#fdf6dd" : "#f7f9fc",
-                                 borderLeft: "3px solid " + (r[2] ? "#d9a406" : "#dfe4ec") } },
-                        /* @__PURE__ */ React.createElement("div", {
-                          style: { fontSize: 12, fontWeight: 800, color: "#16234a" } },
+                        style: (function() {
+                          const f = r[2];
+                          const pink = f === 3;
+                          return { padding: "6px 10px",
+                                   background: pink ? "#fdf2f6" : (f ? "#fdf6dd" : "#f7f9fc"),
+                                   borderLeft: "3px solid " + (pink ? "#d98ba6" : (f ? "#d9a406" : "#dfe4ec")) };
+                        })() },
+                        r[0] ? /* @__PURE__ */ React.createElement("div", {
+                          style: { fontSize: 12, fontWeight: 800, color: "#16234a", whiteSpace: "pre-line", lineHeight: 1.5 } },
                           r[0],
-                          r[2] ? /* @__PURE__ */ React.createElement("span", {
+                          (r[2] === 1 || r[2] === 2) ? /* @__PURE__ */ React.createElement("span", {
                             style: { marginLeft: 6, fontSize: 9, fontWeight: 800, color: "#8a6a00",
-                                     background: "#f3e3a8", padding: "1px 5px", verticalAlign: "middle" } }, "\uC911\uC810") : null
-                        ),
+                                     background: "#f3e3a8", padding: "1px 5px", verticalAlign: "middle" } }, "\uC911\uC810") : null,
+                          r[2] === 3 ? /* @__PURE__ */ React.createElement("span", {
+                            style: { marginLeft: 6, fontSize: 9, fontWeight: 800, color: "#a03a5a",
+                                     background: "#f6dbe4", padding: "1px 5px", verticalAlign: "middle" } }, "9\uC6D4\uBD80\uD130") : null
+                        ) : null,
                         /* @__PURE__ */ React.createElement("div", {
-                          style: { fontSize: 11, color: "#4F5562", lineHeight: 1.45, marginTop: 1 } }, r[1])
+                          style: { fontSize: 11, color: "#4F5562", lineHeight: 1.5, marginTop: 1, whiteSpace: "pre-line" } }, r[1])
                       );
                     })
                   )
@@ -17543,8 +17951,7 @@ ARI.pages = ARI.pages || {};
             )
           );
         })
-        ),
-        /* @__PURE__ */ React.createElement(Note, null, "\uD654\uB3D9\uBCF8\uBD80 \uC2E4\uD589\uBC29\uC548 \uAE30\uC900\uC785\uB2C8\uB2E4. \u300C\uC911\uC810\u300D \uD45C\uC2DC\uB41C \uD56D\uBAA9\uC740 \uD604\uC7A5\uC5D0\uC11C \uBC14\uB85C \uC6C0\uC9C1\uC77C \uC218 \uC788\uB294 \uACFC\uC81C\uC785\uB2C8\uB2E4.")
+        )
       )
       ) : null
     );
@@ -17919,7 +18326,7 @@ ARI.pages = ARI.pages || {};
     ] },
     { id: "g_op", label: "\uC138\uBBF8\uB098\uAD50\uC721", icon: "trending", items: [
       { key: "edumonth", label: "\uC138\uBBF8\uB098\uAD50\uC721\uC77C\uC815" },
-      { key: "education", label: "\uAD50\uC721\uC138\uBBF8\uB098" }
+      { key: "education", label: "\uC138\uBBF8\uB098 \uC131\uACFC\uAD00\uB9AC \u2605" }
     ] },
   ];
   const ALL_ITEMS = GROUPS.reduce(function(a, g) {
@@ -18000,7 +18407,7 @@ ARI.pages = ARI.pages || {};
     const [db, setDb] = useState(function() {
       return S.build(S.getUI("product", "ARi"));
     });
-    const [page, setPage] = useState("weekly");
+    const [page, setPage] = useState("steps");
     const [params, setParams] = useState({});
     const [sidebar, setSidebar] = useState(true);
     const [open, setOpen] = useState(function() {
