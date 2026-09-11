@@ -2467,6 +2467,11 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "26\uB144 \uB204\uC801\uC9C4\uC785\uACE0\uAC1D": "26\u5E74\u7D2F\u8BA1\u8FDB\u5165\u5BA2\u6237",
+    "26\uB144 \uD310\uB9E4\uC218\uB7C9": "26\u5E74\u9500\u552E\u91CF",
+    "\uBAA9\uD45C\uACE0\uAC1D \uB300\uBE44 \uC9C4\uC785": "\u76F8\u5BF9\u76EE\u6807\u5BA2\u6237\u7684\u8FDB\u5165",
+    "\uBAA9\uD45C \uB2EC\uC131": "\u76EE\u6807\u8FBE\u6210",
+    "\uBAA9\uD45C \uBBF8\uB2EC": "\u672A\u8FBE\u76EE\u6807",
     "\uB9C9\uB300\uB294 \uC99D\uAC10\uB960": "\u67F1\u5F62\u4E3A\u589E\u51CF\u7387",
     "\uC9C4\uC785\uB960": "\u8FDB\u5165\u7387",
     "\uACE0\uAC1D\uC758": "\u5BA2\u6237\u7684",
@@ -17599,24 +17604,24 @@ ARI.pages = ARI.pages || {};
     const M = Number(ctx.wk.start.slice(5, 7));
     const S = function(k) { return C.sum(A, function(x) { return n(x[k]); }); };
     const mS = function(k) { return C.sum(A, function(x) { return n(((x.m || {})[M] || {})[k]); }); };
-    const cA = S("cA"), sA = S("sA"), dB = S("dB"), cT = S("cT");
+    const cA = S("cA"), sA = S("sA"), dB = S("dB"), cT = S("cT"), sT = S("sT");
     const dealers = (function() { const set = {}; cust.forEach(function(c) { if (c.dealer && (n(c.tot) > 0 || c.status === "\u5DF2\u8FDB\u5165")) set[c.dealer] = 1; }); return Object.keys(set).length; })();
     const pc = function(x, y) { return y ? Math.round(x / y * 1e3) / 10 : 0; };
     const F = function(v) { return U.fmt(Math.round(v)); };
 
     const cards = [
-      { l: "26\uB144 \uC9C4\uC785", v: F(cA), s: "\uACE0\uAC1D\uC758 " + pc(cA, cust.length) + "%", bg: "#16794a" },
-      { l: "26\uB144 \uD310\uB9E4", v: F(sA), u: "\uAC1C", s: "\uC9C4\uC785 \uAC1C\uC18C\uB2F9 " + (cA ? (Math.round(sA / cA * 10) / 10).toFixed(1) : "\u2013"), bg: "#152a63" },
+      { l: "26\uB144 \uB204\uC801\uC9C4\uC785\uACE0\uAC1D", v: F(cA), s: "\uBAA9\uD45C " + F(cT) + "\uAC1C\uC18C \xB7 " + pc(cA, cT) + "%", bg: "#16794a" },
+      { l: "26\uB144 \uD310\uB9E4\uC218\uB7C9", v: F(sA), u: "\uAC1C", s: "\uBAA9\uD45C " + F(sT) + "\uAC1C \xB7 " + pc(sA, sT) + "%", bg: "#152a63" },
       { l: "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", v: F(dB), u: "\uAC1C", s: "\uC18C\uC9C4\uC728 " + pc(sA, dB) + "%", bg: "#1d3a86" },
       { l: M + "\uC6D4 \uD310\uB9E4", v: F(mS("sA")), u: "\uAC1C", s: M + "\uC6D4 \uBAA9\uD45C " + F(mS("sT")) + " \xB7 " + pc(mS("sA"), mS("sT")) + "%", bg: "#3d6cca" },
       { l: M + "\uC6D4 \uC9C4\uC785", v: F(mS("cA")), s: "\uBAA9\uD45C " + F(mS("cT")) + " \xB7 \uD655\uC815 " + F(mS("cC")), bg: "#4f7fd6" }
     ];
 
-    /* 도넛 : 고객 중 진입 */
-    const ent = cust.filter(function(c) { return c.status === "\u5DF2\u8FDB\u5165" || c.status === "\u54C1\u724C\u5E97"; }).length;
-    const notEnt = Math.max(0, cust.length - ent);
+    /* 도넛 : 연간 목표고객 대비 진입 */
+    const ent = cA;
+    const notEnt = Math.max(0, cT - cA);
     const R = 62, C0 = 78, SW = 26, CIRC = 2 * Math.PI * R;
-    const frac = cust.length ? ent / cust.length : 0;
+    const frac = cT ? ent / cT : 0;
     const arc = /* @__PURE__ */ React.createElement("circle", { cx: C0, cy: C0, r: R, fill: "none", stroke: "#1e3a8a", strokeWidth: SW,
       strokeDasharray: (frac * CIRC) + " " + CIRC, strokeDashoffset: 0, transform: "rotate(-90 " + C0 + " " + C0 + ")" });
 
@@ -17646,16 +17651,16 @@ ARI.pages = ARI.pages || {};
       ),
       /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-4", style: { gridTemplateColumns: "minmax(0, 0.7fr) minmax(0, 1.3fr)" } },
         /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px" } },
-          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-1.5", style: { color: "#16234a" } }, "\uACE0\uAC1D \uC911 \uC9C4\uC785 \uBE44\uC728"),
+          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-1.5", style: { color: "#16234a" } }, "\uBAA9\uD45C\uACE0\uAC1D \uB300\uBE44 \uC9C4\uC785"),
           /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-4" },
             /* @__PURE__ */ React.createElement("svg", { width: 156, height: 156, viewBox: "0 0 156 156", style: { flexShrink: 0 } },
               /* @__PURE__ */ React.createElement("circle", { cx: C0, cy: C0, r: R, fill: "none", stroke: "#e6e9ef", strokeWidth: SW }),
               arc,
-              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 - 3, textAnchor: "middle", fontSize: 20, fontWeight: 800, fill: "#16234a" }, pc(ent, cust.length) + "%"),
-              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 + 14, textAnchor: "middle", fontSize: 10, fill: "#98a2b3" }, "\uC9C4\uC785\uC728")
+              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 - 3, textAnchor: "middle", fontSize: 20, fontWeight: 800, fill: "#16234a" }, pc(ent, cT) + "%"),
+              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 + 14, textAnchor: "middle", fontSize: 10, fill: "#98a2b3" }, "\uBAA9\uD45C \uB2EC\uC131")
             ),
             /* @__PURE__ */ React.createElement("div", { className: "flex-1" },
-              [{ l: "\uC9C4\uC785 \uC644\uB8CC", v: ent, c: "#1e3a8a" }, { l: "\uBBF8\uC9C4\uC785", v: notEnt, c: "#e6e9ef" }].map(function(d, i) {
+              [{ l: "\uC9C4\uC785 \uC644\uB8CC", v: ent, c: "#1e3a8a" }, { l: "\uBAA9\uD45C \uBBF8\uB2EC", v: notEnt, c: "#e6e9ef" }].map(function(d, i) {
                 return /* @__PURE__ */ React.createElement("div", { key: i, className: "flex items-center gap-2 mb-1.5" },
                   /* @__PURE__ */ React.createElement("i", { style: { width: 11, height: 11, background: d.c, display: "block" } }),
                   /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { color: "#16234a", flex: 1 } }, d.l),
