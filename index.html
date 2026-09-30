@@ -5806,11 +5806,38 @@ ARI.pages = ARI.pages || {};
     const s = S[tone] || S.warn;
     return /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 px-3 py-2 rounded-lg border text-[12.5px]", style: { background: s.background, borderColor: s.borderColor, color: s.color } }, /* @__PURE__ */ React.createElement(Icon, { name: icon, className: "w-4 h-4 shrink-0" }), title ? /* @__PURE__ */ React.createElement("span", { className: "font-bold shrink-0" }, title) : null, /* @__PURE__ */ React.createElement("span", { className: "truncate flex-1" }, children), action);
   }
+  /* 제품 선택(ARi / BD) — 좌측 메뉴에서 빼고 각 화면 상단으로 옮긴 컨트롤.
+     누르면 앱 전체의 제품이 즉시 바뀐다. 화면마다 같은 값을 보므로 서로 어긋나지 않는다. */
+  function ProdPick({ product, desc }) {
+    const LIST = (window.ARI && ARI.PRODUCTS) || [{ key: "ARi", label: "ARi" }, { key: "BD", label: "BD" }];
+    const cur = LIST.filter(function(p) { return p.key === product; })[0] || LIST[0];
+    return /* @__PURE__ */ React.createElement(
+      "div",
+      { className: "flex items-center gap-2 flex-wrap", style: { margin: "1px 0 3px" } },
+      /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "-.2px" } }, "\uC81C\uD488"),
+      /* @__PURE__ */ React.createElement("div", { className: "ui-seg" }, LIST.map(function(o) {
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: o.key,
+            type: "button",
+            "data-notr": "1",
+            className: product === o.key ? "on" : "",
+            style: { fontSize: 12, fontWeight: 700, padding: "6px 22px", letterSpacing: "-.2px" },
+            onClick: function() { if (window.ARI && ARI.pickProduct) ARI.pickProduct(o.key); }
+          },
+          o.label
+        );
+      })),
+      desc !== false && cur && cur.desc ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#94a3b8", letterSpacing: "-.2px" } }, cur.desc) : null
+    );
+  }
   ARI.ui = {
     Page,
     Section,
     Card,
     KPI,
+    ProdPick,
     KPIGrid,
     Badge,
     Sample,
@@ -12160,7 +12187,7 @@ ARI.pages = ARI.pages || {};
     const nb = "num";
     const ft = "num";
     const prevLabel = prev ? "\uC804 \uBCF4\uACE0 \uB300\uBE44(" + prev.week.slice(5) + ")" : "\uC804 \uBCF4\uACE0 \uB300\uBE44";
-    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, only ? null : /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] text-slate-500" }, "\uC8FC\uAC04\uBCF4\uACE0 ", ctx.week.slice(5), " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C ", asOf, prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "", " ", /* @__PURE__ */ React.createElement(StatusBadge, { rate }))), /* @__PURE__ */ (only ? null : React.createElement(KPIGrid, { cols: 5, style: { gridTemplateColumns: "1.25fr 1.25fr 1.25fr .85fr .85fr" } }, /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, only ? null : /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] text-slate-500" }, "\uC8FC\uAC04\uBCF4\uACE0 ", ctx.week.slice(5), " \xB7 \uB370\uC774\uD130 \uAE30\uC900\uC77C ", asOf, prev ? " \xB7 \uC9C1\uC804 \uBCF4\uACE0 " + prev.week.slice(5) + " (" + prev.asOf + ")" : "", " ", /* @__PURE__ */ React.createElement(StatusBadge, { rate }))), only ? null : /* @__PURE__ */ React.createElement(ARI.ui.ProdPick, { product: db.product }), /* @__PURE__ */ (only ? null : React.createElement(KPIGrid, { cols: 5, style: { gridTemplateColumns: "1.25fr 1.25fr 1.25fr .85fr .85fr" } }, /* @__PURE__ */ React.createElement(
       KPI,
       {
         label: "\uC9C4\uC785\uC810",
@@ -14090,7 +14117,7 @@ ARI.pages = ARI.pages || {};
     if (hasB) return "bd";
     return "etc";
   }
-  const SCOPE_KO = { all: "\uC804\uCCB4 \uAD50\uC721", ari: "ARi \uB2E8\uB3C5", arbd: "ARi\xB7BD \uACF5\uB3D9", bd: "BD \uB2E8\uB3C5" };
+  const SCOPE_KO = { all: "\uC804\uCCB4 \uAD50\uC721", ari: "ARi \uB2E8\uB3C5", arbd: "ARi\xB7BD \uACF5\uB3D9", bd: "BD \uB2E8\uB3C5", ab: "ARi+BD \uD569\uACC4" };
   function eduAt(week) {
     const R2 = ARI.real || {};
     const S = R2.eduSnaps;
@@ -14162,6 +14189,37 @@ ARI.pages = ARI.pages || {};
       } }, w > 26 ? /* @__PURE__ */ React.createElement("span", { className: "text-white font-extrabold text-[11.5px]", style: U2.NUM }, U2.fmt(f.v), /* @__PURE__ */ React.createElement("span", { className: "text-[9px] font-bold opacity-85 ml-0.5" }, f.u)) : null), w <= 26 ? /* @__PURE__ */ React.createElement("span", { className: "absolute font-extrabold text-[11.5px]", style: Object.assign({ left: "calc(" + w + "% + 5px)", top: 3, color: "#16234a" }, U2.NUM) }, U2.fmt(f.v), /* @__PURE__ */ React.createElement("span", { className: "text-[9px] font-bold text-slate-400 ml-0.5" }, f.u)) : null), /* @__PURE__ */ React.createElement("div", { className: "text-right shrink-0", style: { width: 46 } }, /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] font-extrabold leading-tight", style: Object.assign({ color: "#16234a" }, U2.NUM) }, pct, "%"), /* @__PURE__ */ React.createElement("div", { className: "text-[8.5px] text-slate-400 leading-tight" }, i ? "\uCC38\uC11D \uB300\uBE44" : "\uD65C\uB3D9 " + U2.fmt(cnt) + "\uD68C")));
     })));
   }
+  /* 제품 선택 — 세미나 성과관리 KPI 카드 바로 위에 놓는 버튼 묶음.
+     ARi 단독 + BD 단독 + ARi·BD 공동 = ARi+BD 합계 가 되도록 구성해,
+     버튼끼리 숫자가 맞아떨어지게 만들었다. 「전체」는 其他·미기재까지 포함한다. */
+  function ProdSeg({ scope, setScope, prodCnt, total }) {
+    const OPT = [
+      { v: "ari", l: "ARi", n: prodCnt.ari },
+      { v: "bd", l: "BD", n: prodCnt.bd },
+      { v: "arbd", l: "ARi\xB7BD \uACF5\uB3D9", n: prodCnt.arbd },
+      { v: "ab", l: "ARi+BD \uD569\uACC4", n: prodCnt.ab },
+      { v: "all", l: "\uC804\uCCB4", n: total }
+    ];
+    return /* @__PURE__ */ React.createElement(
+      "div",
+      { className: "flex items-center gap-2 flex-wrap", style: { margin: "1px 0 3px" } },
+      /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "-.2px" } }, "\uC81C\uD488"),
+      /* @__PURE__ */ React.createElement("div", { className: "ui-seg" }, OPT.map(function(o) {
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: o.v,
+            type: "button",
+            className: scope === o.v ? "on" : "",
+            style: { fontSize: 11.5, padding: "6px 15px", letterSpacing: "-.2px" },
+            onClick: function() { setScope(o.v); }
+          },
+          o.l,
+          /* @__PURE__ */ React.createElement("span", { style: { marginLeft: 5, opacity: 0.68, fontWeight: 600 } }, U.fmt(o.n))
+        );
+      }))
+    );
+  }
   function EduPerfTab({ ctx, db, view }) {
     const V0 = view || "perf";
     const [region, setRegion] = useState("");
@@ -14180,7 +14238,10 @@ ARI.pages = ARI.pages || {};
     const evAll = useMemo(function() {
       return eduEvents(db.year, ctx.week);
     }, [db.year, ctx.week]);
-    const evScope = scope === "all" ? evAll : evAll.filter(function(e) {
+    const evScope = scope === "all" ? evAll : scope === "ab" ? evAll.filter(function(e) {
+      const k = prodKey(e.prod);
+      return k === "ari" || k === "arbd" || k === "bd";
+    }) : evAll.filter(function(e) {
       return prodKey(e.prod) === scope;
     });
     const ariCnt = evAll.filter(function(e) {
@@ -14192,6 +14253,7 @@ ARI.pages = ARI.pages || {};
         const k = prodKey(e.prod);
         if (m[k] !== void 0) m[k] += 1;
       });
+      m.ab = m.ari + m.arbd + m.bd;
       return m;
     }, [evAll]);
     const ev = region ? evScope.filter(function(e) {
@@ -15110,12 +15172,7 @@ ARI.pages = ARI.pages || {};
     }).map(function(h) {
       return { value: h, label: (HQ_KO[h] || h) + "\uBCF8\uBD80" };
     }));
-    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, SH.head ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px]", style: { color: "#141826", margin: 0 } }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D ", E.week ? E.week.slice(5) : "", " (", E.asOf, ") \xB7 ", SCOPE_KO[scope] || "\uC804\uCCB4 \uAD50\uC721", " ", U.fmt(ev.length), "\uD68C \xB7 \uC2E4\uC801 \uBCF4\uACE0 ", U.fmt(done.length), "\uD68C"), /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(Sel, { value: scope, onChange: setScope, tone: "navy", options: [
-      { value: "all", label: "\uC804\uCCB4 \uAD50\uC721 " + evAll.length },
-      { value: "ari", label: "ARi \uB2E8\uB3C5 " + prodCnt.ari },
-      { value: "arbd", label: "ARi\xB7BD \uACF5\uB3D9 " + prodCnt.arbd },
-      { value: "bd", label: "BD \uB2E8\uB3C5 " + prodCnt.bd }
-    ] }), /* @__PURE__ */ React.createElement(Sel, { value: region, onChange: setRegion, tone: "gray", options: hqOpts }))) : null, SH.kpi ? /* @__PURE__ */ React.createElement(KPIGrid, { cols: 4 }, /* @__PURE__ */ React.createElement(KPI, { label: "\uAD50\uC721 \uC2E4\uD589", value: U.fmt(done.length), unit: "\uD68C", sub: "\uCC38\uC11D\uC778\uC6D0 " + U.fmt(attended) + "\uBA85 \xB7 \uCC38\uC5EC\uCE58\uACFC " + U.fmt(clinic) + "\uAC1C\uC18C" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C", value: U.fmt(newdev), unit: "\uAC1C\uC18C", tone: "blue", sub: "\uC2E0\uADDC\uACE0\uAC1D " + U.fmt(nonuser) + "\uAC1C\uC18C \uC911 " + U.pctStr(C.conv(newdev, nonuser)) }), /* @__PURE__ */ React.createElement(KPI, { label: "\uD310\uB9E4\uC2E4\uC801", value: U.fmt(sales), unit: "\uB9CC", tone: "blue", sub: "\uB9E4\uCD9C/\uD65C\uB3D9\uBE44 " + (cost ? Math.round(sales / cost * 10) / 10 : 0) + "\uBC30 \xB7 \uC9D1\uD589 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9 \uBE44\uC6A9", value: newdev ? (Math.round(cost / newdev * 100) / 100).toFixed(2) : "-", unit: "\uB9CC", sub: "\uC9D1\uD589\uBE44\uC6A9 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC \xF7 " + U.fmt(newdev) + "\uAC1C\uC18C" })) : null, SH.kpi && !SH.extras ? /* @__PURE__ */ React.createElement(React.Fragment, null) : null, SH.kpi ? /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3" }, SH.extras ? /* @__PURE__ */ React.createElement(Card, { title: "\uACE0\uAC1D \uC804\uD658 \uD37C\uB110", desc: "\uCC38\uC11D\uC778\uC6D0 \u2192 \uCC38\uC5EC\uCE58\uACFC \u2192 \uC2E0\uADDC\uACE0\uAC1D(\uBBF8\uC0AC\uC6A9) \u2192 \uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D \xB7 \uB9C9\uB300 \uAE38\uC774=\uCC38\uC11D \uB300\uBE44 \uBE44\uC911" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-0" }, funnel.map(function(f, i) {
+    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, SH.head ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px]", style: { color: "#141826", margin: 0 } }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D ", E.week ? E.week.slice(5) : "", " (", E.asOf, ") \xB7 ", SCOPE_KO[scope] || "\uC804\uCCB4 \uAD50\uC721", " ", U.fmt(ev.length), "\uD68C \xB7 \uC2E4\uC801 \uBCF4\uACE0 ", U.fmt(done.length), "\uD68C"), /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(Sel, { value: region, onChange: setRegion, tone: "gray", options: hqOpts }))) : null, SH.head ? /* @__PURE__ */ React.createElement(ProdSeg, { scope, setScope, prodCnt, total: evAll.length }) : null, SH.kpi ? /* @__PURE__ */ React.createElement(KPIGrid, { cols: 4 }, /* @__PURE__ */ React.createElement(KPI, { label: "\uAD50\uC721 \uC2E4\uD589", value: U.fmt(done.length), unit: "\uD68C", sub: "\uCC38\uC11D\uC778\uC6D0 " + U.fmt(attended) + "\uBA85 \xB7 \uCC38\uC5EC\uCE58\uACFC " + U.fmt(clinic) + "\uAC1C\uC18C" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C", value: U.fmt(newdev), unit: "\uAC1C\uC18C", tone: "blue", sub: "\uC2E0\uADDC\uACE0\uAC1D " + U.fmt(nonuser) + "\uAC1C\uC18C \uC911 " + U.pctStr(C.conv(newdev, nonuser)) }), /* @__PURE__ */ React.createElement(KPI, { label: "\uD310\uB9E4\uC2E4\uC801", value: U.fmt(sales), unit: "\uB9CC", tone: "blue", sub: "\uB9E4\uCD9C/\uD65C\uB3D9\uBE44 " + (cost ? Math.round(sales / cost * 10) / 10 : 0) + "\uBC30 \xB7 \uC9D1\uD589 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9 \uBE44\uC6A9", value: newdev ? (Math.round(cost / newdev * 100) / 100).toFixed(2) : "-", unit: "\uB9CC", sub: "\uC9D1\uD589\uBE44\uC6A9 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC \xF7 " + U.fmt(newdev) + "\uAC1C\uC18C" })) : null, SH.kpi && !SH.extras ? /* @__PURE__ */ React.createElement(React.Fragment, null) : null, SH.kpi ? /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3" }, SH.extras ? /* @__PURE__ */ React.createElement(Card, { title: "\uACE0\uAC1D \uC804\uD658 \uD37C\uB110", desc: "\uCC38\uC11D\uC778\uC6D0 \u2192 \uCC38\uC5EC\uCE58\uACFC \u2192 \uC2E0\uADDC\uACE0\uAC1D(\uBBF8\uC0AC\uC6A9) \u2192 \uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D \xB7 \uB9C9\uB300 \uAE38\uC774=\uCC38\uC11D \uB300\uBE44 \uBE44\uC911" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-0" }, funnel.map(function(f, i) {
       const w = funnel[0].v ? Math.max(2, f.v / funnel[0].v * 100) : 0;
       return /* @__PURE__ */ React.createElement(React.Fragment, { key: f.l }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold text-slate-700 shrink-0", style: { width: 76 } }, f.l), /* @__PURE__ */ React.createElement("div", { className: "flex-1 rounded-md", style: { background: "#eef1f6", height: 30, position: "relative", overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: {
         width: w + "%",
@@ -16931,6 +16988,7 @@ ARI.pages = ARI.pages || {};
         desc: "\uC138\uBBF8\uB098 \uCC38\uC11D\uC790 \uBA85\uB2E8 \uAE30\uC900 \xB7 \uCC38\uC11D \u2192 \uBC29\uBB38 \u2192 \uC9C4\uB3C4 \u2192 \uC2E4\uC81C \uD310\uB9E4 \uC804\uD658 \uCD94\uC801"
       },
       /* @__PURE__ */ React.createElement("style", null, ".pg-conv{zoom:.85}td.lectcell{position:relative;overflow:visible;padding-left:2px;padding-right:2px}td.lectcell .lectv{display:block;max-width:35px;overflow:hidden;text-overflow:clip;white-space:nowrap}td.lectcell .lectpop{display:none;position:absolute;left:50%;top:100%;transform:translateX(-50%);z-index:60;background:#16234a;color:#fff;padding:5px 7px;font-size:12px;line-height:1.35;box-shadow:0 6px 18px rgba(15,23,42,.28)}td.lectcell .lectpop span{display:block;text-align:center}td.lectcell:hover .lectpop{display:block}.pg-conv table.tbl-rpt{width:100%;table-layout:auto}.pg-conv td{overflow:visible}.rmemowrap{position:relative;text-align:left}.rmemo{text-align:left;line-height:16px;max-height:32px;overflow:hidden;white-space:pre-wrap;word-break:break-word;cursor:text;color:#475467;font-size:11.5px}.rpop{display:none;position:absolute;left:0;top:100%;z-index:60;min-width:240px;max-width:460px;background:#16234a;color:#fff;padding:8px 11px;font-size:12px;line-height:1.65;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 22px rgba(15,23,42,.3);text-align:left}.rmemowrap:hover .rpop{display:block}.cv-big th{font-size:14px !important;padding:10px 8px !important}.cv-big td{font-size:13.5px !important;padding:9px 8px !important}"),
+      only ? null : /* @__PURE__ */ React.createElement(ARI.ui.ProdPick, { product: db.product }),
       /* @__PURE__ */ React.createElement("div", { className: "ui-sec" }, /* @__PURE__ */ React.createElement("span", { className: "ui-sec-t", style: { fontSize: "1.3em", color: "#141826" } }, "\uAD50\uC721 \u2192 \uD310\uB9E4 \uD1B5\uD569 \uC804\uD658 \uD37C\uB110"), /* @__PURE__ */ React.createElement("span", { className: "ui-sec-l" })),
       /* @__PURE__ */ React.createElement("div", { className: "grid gap-2", style: { gridTemplateColumns: "repeat(8, minmax(0,1fr))", marginTop: 18 } }, [
         { b: "\uC138\uBBF8\uB098", l: "\uC138\uBBF8\uB098 \uCC38\uC11D", v: U.fmt(TSUM.att), u: "\uBA85", sub: "\uC138\uBBF8\uB098 " + U.fmt(TSUM.sem) + "\uD68C", bg: "#152a63" },
@@ -18546,6 +18604,10 @@ ARI.pages = ARI.pages || {};
       S.setUI("week", nd.curWeek);
       setTick(tick + 1);
     }
+    /* 제품 선택을 좌측 메뉴에서 빼고 화면 안(판매 실적 분석 KPI 위)으로 옮겼다.
+       화면 쪽에서 부를 수 있도록 매 렌더마다 최신 함수를 공개해 둔다. */
+    ARI.pickProduct = pickProduct;
+    ARI.PRODUCTS = PRODUCTS;
     function setLangAll(l) {
       setLang(l);
       ARI.i18n.set(l);
@@ -18848,20 +18910,7 @@ ARI.pages = ARI.pages || {};
       const gBadge = g.items.reduce(function(a, i) {
         return a + (BADGES[i.key] || 0);
       }, 0);
-      return /* @__PURE__ */ React.createElement("div", { key: g.id, className: "mb-0.5" }, gi === 0 ? /* @__PURE__ */ React.createElement("div", { className: "px-1 pt-0.5 pb-3" }, /* @__PURE__ */ React.createElement("div", { className: "relative" }, /* @__PURE__ */ React.createElement(
-        "select",
-        {
-          value: product,
-          onChange: (e) => pickProduct(e.target.value),
-          "data-notr": "1",
-          className: "side-sel w-full appearance-none rounded-lg pl-3 pr-8 py-[7px] text-[13px] font-bold outline-none cursor-pointer"
-        },
-        PRODUCTS.map(function(p) {
-          return /* @__PURE__ */ React.createElement("option", { key: p.key, value: p.key }, p.label);
-        })
-      ), /* @__PURE__ */ React.createElement(Icon, { name: "chevronDown", className: "w-4 h-4 side-t3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" })), /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] side-t3 mt-1.5 leading-snug" }, (PRODUCTS.filter(function(p) {
-        return p.key === product;
-      })[0] || {}).desc)) : null, /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ React.createElement("div", { key: g.id, className: "mb-0.5" }, null, /* @__PURE__ */ React.createElement(
         "button",
         {
           onClick: () => toggleGroup(g.id),
