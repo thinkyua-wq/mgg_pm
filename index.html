@@ -2467,6 +2467,33 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "\uD65C\uC131\uD654\uBC29\uC548": "\u6FC0\u6D3B\u65B9\u6848",
+    "BD/ARi \uC8FC\uAC04 \uB204\uC801\uD310\uB9E4\uD604\uD669": "BD/ARi \u5468\u7D2F\u8BA1\u9500\u552E\u73B0\u51B5",
+    "\uC131\uACFC\uD604\uD669\uACFC \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10": "\u7EE9\u6548\u73B0\u51B5\u4E0E\u73AF\u6BD4\u4E0A\u5468\u589E\u51CF",
+    "\uC2DC\uC7A5\uC810\uC720\uC728(ing)": "\u5E02\u573A\u5360\u6709\u7387(ing)",
+    "\uD504\uB9AC\uBBF8\uC5C4 \uC81C\uD488 \uC2DC\uC7A5\uC810\uC720\uC728 \u00B7 \uC791\uC5C5 \uC911": "\u9AD8\u7AEF\u4EA7\u54C1\u5E02\u573A\u5360\u6709\u7387 \u00B7 \u5236\u4F5C\u4E2D",
+    "\uC5F0\uAC04\uBAA9\uD45C\uC218\uB7C9": "\u5E74\u5EA6\u76EE\u6807\u6570\u91CF",
+    "\uB204\uC801\uBAA9\uD45C\uC218\uB7C9": "\u7D2F\u8BA1\u76EE\u6807\u6570\u91CF",
+    "\uB204\uC801\uD310\uB9E4\uC218\uB7C9": "\u7D2F\u8BA1\u9500\u552E\u6570\u91CF",
+    "\uC6D4\uD310\uB9E4\uC218\uB7C9": "\u6708\u9500\u552E\u6570\u91CF",
+    "\uC804\uC6D4\uB300\uBE44\uC99D\uAC00\uC218\uB7C9": "\u73AF\u6BD4\u4E0A\u6708\u589E\u52A0\u6570\u91CF",
+    "\uC6D4\uD3C9\uADE0\uD310\uB9E4\uC218\uB7C9": "\u6708\u5747\u9500\u552E\u6570\u91CF",
+    "\uB204\uC801\uC9C4\uC785\uCE58\uACFC": "\u7D2F\u8BA1\u8FDB\u5165\u7259\u79D1",
+    "\uC6D4\uC9C4\uC785\uCE58\uACFC": "\u6708\u8FDB\u5165\u7259\u79D1",
+    "\uC804\uC6D4\uB300\uBE44 \uC99D\uAC00\uCE58\uACFC": "\u73AF\u6BD4\u4E0A\u6708\u589E\u52A0\u7259\u79D1",
+    "\uCE58\uACFC\uB2F9 \uD310\uB9E4\uAC1C\uC218": "\u6BCF\u7259\u79D1\u9500\u552E\u6570",
+    "\uBAA9\uD45C\uB2EC\uC131 \uC794\uC5EC \uCE58\uACFC\uC218": "\u8FBE\u6807\u5269\u4F59\u7259\u79D1\u6570",
+    "26\uB144 \uACE0\uAC1D \uD310\uB9E4\uC218\uB7C9": "26\u5E74\u5BA2\u6237\u9500\u552E\u91CF",
+    "\uB204\uC801 \uB300\uB9AC\uC0C1 \uD310\uB9E4": "\u7D2F\u8BA1\u7ECF\u9500\u5546\u9500\u552E",
+    "9\uC6D4 \uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "9\u6708\u5BA2\u6237\u9500\u552E\u91CF",
+    "9\uC6D4 \uC2E0\uADDC\uC9C4\uC785\uACE0\uAC1D": "9\u6708\u65B0\u8FDB\u5165\u5BA2\u6237",
+    "\uBAA9\uD45C\uACE0\uAC1D \uB300\uBE44 \uC2E0\uADDC\uC9C4\uC785": "\u76EE\u6807\u5BA2\u6237\u5BF9\u6BD4\u65B0\u8FDB\u5165",
+    "\uBCF8\uBD80\uBCC4 26\uB144 \uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9": "\u5206\u672C\u90E826\u5E74\u5BA2\u6237\u9500\u552E\u91CF",
+    "\uBCF8\uBD80\uBCC4 26\uB144 \uB300\uB9AC\uC0C1 \uD310\uB9E4\uC218\uB7C9": "\u5206\u672C\u90E826\u5E74\u7ECF\u9500\u5546\u9500\u552E\u91CF",
+    "\uACE0\uAC1D \uD310\uB9E4\uAC1C\uC218": "\u5BA2\u6237\u9500\u552E\u6570",
+    "\uB300\uB9AC\uC0C1\uAD6C\uB9E4\uAC1C\uC218": "\u7ECF\u9500\u5546\u9500\u552E\u6570",
+    "\uAD00\uB9AC\uACE0\uAC1D\uAD70": "\u7BA1\u7406\u5BA2\u6237\u7FA4",
+    "\uC5F0\uD55C \uB9C9\uB300=\uC804\uC8FC \u00B7 \uC9C4\uD55C \uB9C9\uB300=\uAE08\uC8FC": "\u6D45\u8272\u67F1=\u4E0A\u5468 \u00B7 \u6DF1\u8272\u67F1=\u672C\u5468",
     "\uC7AC\uAD6C\uB9E4 \uACE0\uAC1D\uC728": "\u590D\u8D2D\u5BA2\u6237\u7387",
     "26\uB144 \uB204\uC801\uC9C4\uC785\uACE0\uAC1D": "26\u5E74\u7D2F\u8BA1\u8FDB\u5165\u5BA2\u6237",
     "26\uB144 \uD310\uB9E4\uC218\uB7C9": "26\u5E74\u9500\u552E\u91CF",
@@ -9379,7 +9406,7 @@ ARI.pages = ARI.pages || {};
       /* @__PURE__ */ React.createElement(Note, null, isPt ? "" : "\uD310\uB9E4\uAC1C\uC218\uB294 \uB450 \uB2E8\uACC4\uB85C \uB098\uB269\uB2C8\uB2E4. \u300C\uB300\uB9AC\uC0C1 \uAD6C\uB9E4\u300D\uB294 \uBA54\uAC00\uC820\uC774 \uB300\uB9AC\uC0C1\uC5D0 \uB118\uAE34 \uC591(\u91C7\u8D2D\u91CF)\uC774\uACE0, \u300C\uD558\uBD80\uACE0\uAC1D \uD310\uB9E4\u300D\uB294 \uB300\uB9AC\uC0C1\uC774 \uCE58\uACFC\uC5D0 \uC2E4\uC81C\uB85C \uD310 \uC591(\u9500\u552E\u91CF)\uC785\uB2C8\uB2E4. \uADF8 \uCC28\uC774\uAC00 \uB300\uB9AC\uC0C1 \uCC3D\uACE0\uC5D0 \uB0A8\uC740 \u300C\uB204\uACC4 \uC7AC\uACE0\u300D\uC774\uBA70, \uC7AC\uACE0\uAC00 \uC313\uC774\uBA74 \uB2E4\uC74C \uB2EC \uB300\uB9AC\uC0C1 \uBC1C\uC8FC\uAC00 \uBA48\uCDA5\uB2C8\uB2E4. \uC6D4 \uBAA9\uD45C \uB2EC\uC131\uB960\uC740 \uD558\uBD80\uACE0\uAC1D \uD310\uB9E4 \uAE30\uC900\uC774\uBBC0\uB85C, \uC7AC\uACE0\uB97C \uC18C\uC9C4\uC2DC\uD0A4\uC9C0 \uC54A\uC73C\uBA74 \uB300\uB9AC\uC0C1\uC5D0 \uB354 \uBC00\uC5B4\uB123\uC5B4\uB3C4 \uB2EC\uC131\uB960\uC740 \uC624\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.")
     );
   }
-  function HqTarget({ rows, metric, setMetric, srcLab, week, month }) {
+  function HqTarget({ rows, metric, setMetric, srcLab, week, month, natTot, natMdb }) {
     const [scope, setScope] = useState("cum");
     const M = HQM[(metric === "qty" ? "qty" : "pt") + (scope === "mon" ? "M" : "")] || HQM.pt;
     const un = M.unit;
@@ -9393,18 +9420,29 @@ ARI.pages = ARI.pages || {};
         return { name: r.name, \uC5F0\uAC04\uBAA9\uD45C: y, \uBAA9\uD45C: t, \uC2E4\uC801: a, \uD558\uBD80: c, rate: P(a, t), yr: P(a, y), gap: t - a };
       });
     }, [rows, metric, scope]);
-    const totY = C.sum(data, function(r) {
+    let totY = C.sum(data, function(r) {
       return r.\uC5F0\uAC04\uBAA9\uD45C;
     });
-    const totT = C.sum(data, function(r) {
+    let totT = C.sum(data, function(r) {
       return r.\uBAA9\uD45C;
     });
-    const totA = C.sum(data, function(r) {
+    let totA = C.sum(data, function(r) {
       return r.\uC2E4\uC801;
     });
-    const totC = C.sum(data, function(r) {
+    let totC = C.sum(data, function(r) {
       return r.\uD558\uBD80;
     });
+    /* 판매수량 모드에서 합계는 전국 中国总计/mdb 를 우선 사용 (권역엔 월별 대리상이 없어 0이 되는 문제 보정) */
+    var _isQty = metric === "qty";
+    var _mon = scope === "mon";
+    if (_isQty && natTot) {
+      totY = U.n(natTot.sT) || totY;
+      if (!_mon) { totT = U.n(natTot.sT) || totT; totA = U.n(natTot.dB) || totA; totC = U.n(natTot.sA) || totC; }
+    }
+    if (_isQty && _mon && natMdb) {
+      var _md = U.n(natMdb[month]);
+      if (_md) totA = _md;
+    }
     const totRate = P(totA, totT);
     const ranked = data.slice().sort(function(x, y) {
       return y.rate - x.rate;
@@ -9453,8 +9491,6 @@ ARI.pages = ARI.pages || {};
       },
       /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-3" }, [
         { l: "\uC5F0\uAC04\uBAA9\uD45C", v: U.fmt(totY) + un, bg: "#152a63" },
-        { l: (scope === "mon" ? month + "\uC6D4 " : "\uB204\uC801 ") + M.tA, v: U.fmt(totT) + un, bg: "#1d3a86",
-          s: totY ? "\uC5F0\uAC04\uBAA9\uD45C\uC758 " + U.pctStr(P(totT, totY)) : "" },
         { l: M.tB, v: U.fmt(totA) + un, bg: "#2a51ab", s: "\uB2EC\uC131 " + U.pctStr(totRate) },
         M.tC ? { l: M.tC, v: U.fmt(totC) + un, bg: "#3d6cca",
           s: totA ? "\uB300\uB9AC\uC0C1 \uB300\uBE44 " + U.pctStr(P(totC, totA)) : "" } : null,
@@ -10371,8 +10407,6 @@ ARI.pages = ARI.pages || {};
       { l: "\uD558\uBD80\uACE0\uAC1D \uD310\uB9E4", v: F(G.sA), s: "\uB300\uB9AC\uC0C1 \u2192 \uCE58\uACFC \uB204\uACC4", bg: "#1d3a86" },
       { l: "\uC18C\uC9C4\uC728", v: pc(G.sA, G.dB) + "%", s: "\uD310\uB9E4 \xF7 \uAD6C\uB9E4", bg: pc(G.sA, G.dB) >= 90 ? "#16794a" : "#2a51ab" },
       { l: "\uBBF8\uC18C\uC9C4 \uC7AC\uACE0", v: F(Math.max(0, stockG)), s: stockG <= 0 ? "\uC7AC\uACE0 \uC5C6\uC74C" : mosG === null ? "\uD310\uB9E4 \uC5C6\uC74C" : "\uCD5C\uADFC \uC18D\uB3C4\uB85C " + mosG + "\uAC1C\uC6D4\uCE58", bg: stockG > 0 ? "#c0392f" : "#16794a" },
-      { l: month + "\uC6D4 \uAD6C\uB9E4", v: F(G.mD), s: month + "\uC6D4 \uD310\uB9E4 " + F(G.mS) + " \xB7 " + pc(G.mS, G.mD) + "%", bg: "#3d6cca" },
-      { l: "\uC9C4\uC785 \uCE58\uACFC", v: F(G.cA), s: "\uAC1C\uC18C\uB2F9 \uD310\uB9E4 " + (G.cA ? (Math.round(G.sA / G.cA * 10) / 10).toFixed(1) : "\u2013"), bg: "#4f7fd6" }
     ];
 
     /* 도넛 : 구매 대비 판매·재고 */
@@ -10718,14 +10752,14 @@ ARI.pages = ARI.pages || {};
 
     const cards = [
       { l: "\uC5F0\uAC04 \uBAA9\uD45C", v: F(annT), s: "\uAC70\uB798\uCC98 \uAE30\uC900", bg: "#152a63" },
-      { l: "\uB204\uC801 \uC9C4\uC785", v: F(cumA), s: "\uC5F0\uAC04\uBAA9\uD45C\uC758 " + pc(cumA, annT) + "%", bg: "#1d3a86" },
-      { l: month + "\uC6D4 \uC9C4\uC785", v: thisM ? F(thisM.\uC9C4\uC785) : "\u2013",
+      { l: "\uB204\uC801\uC9C4\uC785\uCE58\uACFC", v: F(cumA), s: "\uC5F0\uAC04\uBAA9\uD45C\uC758 " + pc(cumA, annT) + "%", bg: "#1d3a86" },
+      { l: month + "\uC6D4\uC9C4\uC785\uCE58\uACFC", v: thisM ? F(thisM.\uC9C4\uC785) : "\u2013",
         s: thisM ? "\uBAA9\uD45C " + F(thisM.\uBAA9\uD45C) + " \xB7 \uD655\uC815 " + F(thisM.\uD655\uC815) : "", bg: "#2a51ab" },
-      { l: "\uC804\uC6D4 \uB300\uBE44", v: wow === null ? "\u2013" : (wow > 0 ? "\u25B2 " : wow < 0 ? "\u25BC " : "") + F(Math.abs(wow)),
+      { l: "\uC804\uC6D4\uB300\uBE44 \uC99D\uAC00\uCE58\uACFC", v: wow === null ? "\u2013" : (wow > 0 ? "\u25B2 " : wow < 0 ? "\u25BC " : "") + F(Math.abs(wow)),
         s: prevM ? prevM.m + "\uC6D4 " + F(prevM.\uC9C4\uC785) + " \u2192 " + month + "\uC6D4 " + F(thisM.\uC9C4\uC785) : "", bg: wow < 0 ? "#c0392f" : "#16794a" },
-      { l: "\uAC1C\uC18C\uB2F9 \uD310\uB9E4", v: cumA ? (Math.round(sold / cumA * 10) / 10).toFixed(1) : "\u2013",
+      { l: "\uCE58\uACFC\uB2F9 \uD310\uB9E4\uAC1C\uC218", v: cumA ? (Math.round(sold / cumA * 10) / 10).toFixed(1) : "\u2013",
         s: "\uB204\uC801 \uD310\uB9E4 " + F(sold) + "\uAC1C", bg: "#3d6cca" },
-      { l: "\uB0A8\uC740 \uBAA9\uD45C", v: F(Math.max(0, annT - cumA)),
+      { l: "\uBAA9\uD45C\uB2EC\uC131 \uC794\uC5EC \uCE58\uACFC\uC218", v: F(Math.max(0, annT - cumA)),
         s: F(Math.max(0, mAll.length - past.length)) + "\uAC1C\uC6D4 \xB7 \uC6D4 " + F(Math.max(0, annT - cumA) / Math.max(1, mAll.length - past.length)) + "\uAC1C\uC18C \uD544\uC694", bg: "#4f7fd6" }
     ];
 
@@ -10773,7 +10807,6 @@ ARI.pages = ARI.pages || {};
             /* @__PURE__ */ React.createElement(RBar, { yAxisId: "l", dataKey: "\uBAA9\uD45C", fill: "#c9d2e4", maxBarSize: 22 }),
             /* @__PURE__ */ React.createElement(RBar, { yAxisId: "l", dataKey: "\uD655\uC815", fill: "#7aa7ec", maxBarSize: 22 }),
             /* @__PURE__ */ React.createElement(RBar, { yAxisId: "l", dataKey: "\uC9C4\uC785", fill: "#1d3a86", maxBarSize: 22 }),
-            /* @__PURE__ */ React.createElement(Line, { yAxisId: "r", type: "monotone", dataKey: "\uB204\uC801\uBAA9\uD45C", stroke: "#98a2b3", strokeWidth: 1.6, strokeDasharray: "4 3", dot: false }),
             /* @__PURE__ */ React.createElement(Line, { yAxisId: "r", type: "monotone", dataKey: "\uB204\uC801\uC9C4\uC785", stroke: "#16794a", strokeWidth: 2.4, dot: { r: 2.6, fill: "#16794a" }, connectNulls: false })
           )
         )
@@ -10869,14 +10902,14 @@ ARI.pages = ARI.pages || {};
     const F = function(v) { return U.fmt(Math.round(v)); };
 
     const cards = [
-      { l: "\uC5F0\uAC04\uBAA9\uD45C", v: F(annT), s: "\uC6D4\uD3C9\uADE0 " + F(annT / Math.max(1, mAll.length)), bg: "#152a63" },
-      { l: "\uB204\uC801 \uBAA9\uD45C", v: F(cumT), s: "\uC5F0\uAC04\uBAA9\uD45C\uC758 " + pc(cumT, annT) + "%", bg: "#1d3a86" },
-      { l: "\uB204\uC801 \uD310\uB9E4", v: F(cumA), s: "\uB204\uC801\uBAA9\uD45C \uB300\uBE44 " + pc(cumA, cumT) + "%", bg: "#2a51ab" },
-      { l: month + "\uC6D4 \uD310\uB9E4", v: thisM ? F(thisM.\uD310\uB9E4) : "\u2013",
+      { l: "\uC5F0\uAC04\uBAA9\uD45C\uC218\uB7C9", v: F(annT), s: "\uC6D4\uD3C9\uADE0 " + F(annT / Math.max(1, mAll.length)), bg: "#152a63" },
+      { l: "\uB204\uC801\uBAA9\uD45C\uC218\uB7C9", v: F(cumT), s: "\uC5F0\uAC04\uBAA9\uD45C\uC758 " + pc(cumT, annT) + "%", bg: "#1d3a86" },
+      { l: "\uB204\uC801\uD310\uB9E4\uC218\uB7C9", v: F(cumA), s: "\uB204\uC801\uBAA9\uD45C \uB300\uBE44 " + pc(cumA, cumT) + "%", bg: "#2a51ab" },
+      { l: month + "\uC6D4\uD310\uB9E4\uC218\uB7C9", v: thisM ? F(thisM.\uD310\uB9E4) : "\u2013",
         s: thisM ? "\uBAA9\uD45C " + F(thisM.\uBAA9\uD45C) + " \xB7 " + pc(thisM.\uD310\uB9E4, thisM.\uBAA9\uD45C) + "%" : "", bg: "#3d6cca" },
-      { l: "\uC804\uC6D4 \uB300\uBE44", v: wow === null ? "\u2013" : (wow > 0 ? "\u25B2 " : wow < 0 ? "\u25BC " : "") + F(Math.abs(wow)),
+      { l: "\uC804\uC6D4\uB300\uBE44\uC99D\uAC00\uC218\uB7C9", v: wow === null ? "\u2013" : (wow > 0 ? "\u25B2 " : wow < 0 ? "\u25BC " : "") + F(Math.abs(wow)),
         s: prevM ? prevM.m + "\uC6D4 " + F(prevM.\uD310\uB9E4) + " \u2192 " + month + "\uC6D4 " + F(thisM.\uD310\uB9E4) : "", bg: wow < 0 ? "#c0392f" : "#16794a" },
-      { l: "\uC6D4\uD3C9\uADE0 \uD310\uB9E4", v: F(avg), s: "\uB0A8\uC740 \uBAA9\uD45C " + F(Math.max(0, annT - cumA)) + " \xB7 " + F(Math.max(0, mAll.length - past.length)) + "\uAC1C\uC6D4", bg: "#4f7fd6" }
+      { l: "\uC6D4\uD3C9\uADE0\uD310\uB9E4\uC218\uB7C9", v: F(avg), s: "\uB0A8\uC740 \uBAA9\uD45C " + F(Math.max(0, annT - cumA)) + " \xB7 " + F(Math.max(0, mAll.length - past.length)) + "\uAC1C\uC6D4", bg: "#4f7fd6" }
     ];
 
     const HQR = SEQ.map(function(hq) {
@@ -12246,9 +12279,7 @@ ARI.pages = ARI.pages || {};
           { value: "dlr", label: "\uB300\uB9AC\uC0C1 \uD310\uB9E4\uC18C\uC9C4\uC728" },
           { value: "rpt", label: "\uB3D9\uC77C \uACE0\uAC1D \uB300\uC0C1 ARi\xB7BD \uAD50\uCC28\uD310\uB9E4" },
           { value: "hq", label: "\uBCF8\uBD80\uBCC4 \uBAA9\uD45C \uB300\uBE44 \uC2E4\uC801" },
-          { value: "org", label: "\uB300\uB9AC\uC0C1 \xB7 \uD558\uBD80\uACE0\uAC1D \uC2E4\uC801" },
           { value: "map", label: "\uACE0\uAC1D \uBD84\uD3EC\uB9F5" },
-          { value: "ms", label: "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728" }
         ]
       }
     )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "rpt" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(StatusReport, { ctx, db })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "pt" ? "block" : "none" } },
@@ -12258,8 +12289,9 @@ ARI.pages = ARI.pages || {};
     ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "tier" ? "block" : "none" } },
       btTab === "tier" ? /* @__PURE__ */ React.createElement(VolumeTier, { ctx, db }) : null
     ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "dlr" ? "block" : "none" } },
-      btTab === "dlr" ? /* @__PURE__ */ React.createElement(DealerFlow, { ctx, db }) : null
-    ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "hq" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(HqTarget, { rows: hqRowsW, metric: hqMetric, setMetric: setHqMetric, srcLab, week: ctx.week, month })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "org" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(
+      btTab === "dlr" ? /* @__PURE__ */ React.createElement(React.Fragment, null,
+        /* @__PURE__ */ React.createElement(DealerFlow, { ctx, db }),
+        /* @__PURE__ */ React.createElement("div", { className: "mt-4" }, /* @__PURE__ */ React.createElement(
       Card,
       {
         title: "\uB300\uB9AC\uC0C1 \u2192 \uD558\uBD80\uACE0\uAC1D(\uCE58\uACFC) \uC2E4\uC801 \xB7 \uBC95\uC778\xB7\uBCF8\uBD80\xB7\uAD8C\uC5ED\uBCC4",
@@ -12294,9 +12326,9 @@ ARI.pages = ARI.pages || {};
         return r.dealerN;
       })), "\uAC1C\uC0AC"), /* @__PURE__ */ React.createElement("td", null, U.fmt(T.n), "\uAC1C\uC18C"), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ptT)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.conf)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.conf, t: T.ptT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.ent)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.qty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.qty, t: T.qtyT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.deal)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Wow, { v: T.wow })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.rep)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumEnt)), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumQty)), /* @__PURE__ */ React.createElement("td", { className: "num" }, /* @__PURE__ */ React.createElement(Rt, { a: T.cumQty, t: T.annT })), /* @__PURE__ */ React.createElement("td", { className: "num" }, U.fmt(T.cumDeal))))))),
       /* @__PURE__ */ React.createElement(Note, null, '\uBAA9\uD45C\xB7\uD655\uC815\xB7\uC9C4\uC785\xB7\uD310\uB9E4\uB7C9\xB7\uB300\uB9AC\uC0C1\uC740 \uC8FC\uAC04\uBCF4\uACE0 \uC5D1\uC140 \u300C\u7B80\u8981\u300D/\u300CARI\u5BA2\u6237\u300D \uC2DC\uD2B8 \uAC12 \uADF8\uB300\uB85C\uC785\uB2C8\uB2E4. \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC758 \uD310\uB9E4\uB7C9\uC740 \u300CARI\u660E\u7EC6\u300D \uAE30\uC900\uC774\uBA70, \uB300\uB9AC\uC0C1(\u91C7\u8D2D\u91CF)\uC740 \uAD8C\uC5ED \uB2E8\uC704\uB85C\uB9CC \uC9D1\uACC4\uB418\uC5B4 \uD558\uC704 \uD589\uC740 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \u300C\uAE30\uD0C0\u300D\uB294 \uAD8C\uC5ED\uC5D0 \uBC30\uC815\uB418\uC9C0 \uC54A\uC740 \uB300\uB9AC\uC0C1 \uAD6C\uB9E4\uB7C9\uC785\uB2C8\uB2E4. \uB2EC\uC131\uB960\uC740 \uD655\uC815\xF7\uBAA9\uD45C, \uD310\uB9E4\uB7C9\xF7\uD574\uB2F9 \uAE30\uAC04 \uD310\uB9E4\uBAA9\uD45C, \uB204\uACC4 \uD310\uB9E4\uB7C9\xF7\uC5F0\uAC04 \uD310\uB9E4\uBAA9\uD45C\uC774\uBA70 \uBAA9\uD45C\uAC00 \uC5C6\uB294 \uB300\uB9AC\uC0C1\xB7\uACE0\uAC1D \uD589\uC740 "-"\uC785\uB2C8\uB2E4. \uBC18\uBCF5\uAD6C\uB9E4\uB294 \u300CARI\u660E\u7EC6\u300D \u590D\u8D2D\u5BA2\u6237 \uAE30\uC900\uC785\uB2C8\uB2E4.')
-    )), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "ms" ? "block" : "none" } },
-      btTab === "ms" ? /* @__PURE__ */ React.createElement(PremiumMS, { ctx, db }) : null
-    ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "map" ? "block" : "none" } },
+    ))
+      ) : null
+    ), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "hq" ? "block" : "none" } }, /* @__PURE__ */ React.createElement(HqTarget, { rows: hqRowsW, metric: hqMetric, setMetric: setHqMetric, srcLab, week: ctx.week, month, natTot: real.tot, natMdb: (ARI.real[db.product] || {}).mdb })), /* @__PURE__ */ React.createElement("div", { style: { display: btTab === "map" ? "block" : "none" } },
       btTab === "map" ? /* @__PURE__ */ React.createElement(CustomerMap, { ctx, db }) : null
     ));
   }
@@ -12309,6 +12341,12 @@ ARI.pages = ARI.pages || {};
   };
   ARI.blocks.qtyPane = MonthlyQty;
 
+  ARI.pages.market = function MarketShare({ ctx, db }) {
+    return /* @__PURE__ */ React.createElement(Page,
+      { title: "\uC2DC\uC7A5\uC810\uC720\uC728(ing)", desc: "\uD504\uB9AC\uBBF8\uC5C4 \uC81C\uD488 \uC2DC\uC7A5\uC810\uC720\uC728 \u00B7 \uC791\uC5C5 \uC911" },
+      /* @__PURE__ */ React.createElement(PremiumMS, { ctx, db })
+    );
+  };
   ARI.pages.weekly = function Weekly({ ctx, db }) {
     return /* @__PURE__ */ React.createElement(
       Page,
@@ -15172,7 +15210,7 @@ ARI.pages = ARI.pages || {};
     }).map(function(h) {
       return { value: h, label: (HQ_KO[h] || h) + "\uBCF8\uBD80" };
     }));
-    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, SH.head ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px]", style: { color: "#141826", margin: 0 } }, "\u300C\u57F9\u8BAD\u6D3B\u52A8\u5468\u62A5\u544A\u300D ", E.week ? E.week.slice(5) : "", " (", E.asOf, ") \xB7 ", SCOPE_KO[scope] || "\uC804\uCCB4 \uAD50\uC721", " ", U.fmt(ev.length), "\uD68C \xB7 \uC2E4\uC801 \uBCF4\uACE0 ", U.fmt(done.length), "\uD68C"), /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(Sel, { value: region, onChange: setRegion, tone: "gray", options: hqOpts }))) : null, SH.head ? /* @__PURE__ */ React.createElement(ProdSeg, { scope, setScope, prodCnt, total: evAll.length }) : null, SH.kpi ? /* @__PURE__ */ React.createElement(KPIGrid, { cols: 4 }, /* @__PURE__ */ React.createElement(KPI, { label: "\uAD50\uC721 \uC2E4\uD589", value: U.fmt(done.length), unit: "\uD68C", sub: "\uCC38\uC11D\uC778\uC6D0 " + U.fmt(attended) + "\uBA85 \xB7 \uCC38\uC5EC\uCE58\uACFC " + U.fmt(clinic) + "\uAC1C\uC18C" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C", value: U.fmt(newdev), unit: "\uAC1C\uC18C", tone: "blue", sub: "\uC2E0\uADDC\uACE0\uAC1D " + U.fmt(nonuser) + "\uAC1C\uC18C \uC911 " + U.pctStr(C.conv(newdev, nonuser)) }), /* @__PURE__ */ React.createElement(KPI, { label: "\uD310\uB9E4\uC2E4\uC801", value: U.fmt(sales), unit: "\uB9CC", tone: "blue", sub: "\uB9E4\uCD9C/\uD65C\uB3D9\uBE44 " + (cost ? Math.round(sales / cost * 10) / 10 : 0) + "\uBC30 \xB7 \uC9D1\uD589 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9 \uBE44\uC6A9", value: newdev ? (Math.round(cost / newdev * 100) / 100).toFixed(2) : "-", unit: "\uB9CC", sub: "\uC9D1\uD589\uBE44\uC6A9 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC \xF7 " + U.fmt(newdev) + "\uAC1C\uC18C" })) : null, SH.kpi && !SH.extras ? /* @__PURE__ */ React.createElement(React.Fragment, null) : null, SH.kpi ? /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3" }, SH.extras ? /* @__PURE__ */ React.createElement(Card, { title: "\uACE0\uAC1D \uC804\uD658 \uD37C\uB110", desc: "\uCC38\uC11D\uC778\uC6D0 \u2192 \uCC38\uC5EC\uCE58\uACFC \u2192 \uC2E0\uADDC\uACE0\uAC1D(\uBBF8\uC0AC\uC6A9) \u2192 \uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D \xB7 \uB9C9\uB300 \uAE38\uC774=\uCC38\uC11D \uB300\uBE44 \uBE44\uC911" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-0" }, funnel.map(function(f, i) {
+    return /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, SH.head ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 flex-wrap" }, null, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(Sel, { value: region, onChange: setRegion, tone: "gray", options: hqOpts }))) : null, SH.head ? /* @__PURE__ */ React.createElement(ProdSeg, { scope, setScope, prodCnt, total: evAll.length }) : null, SH.kpi ? /* @__PURE__ */ React.createElement(KPIGrid, { cols: 4 }, /* @__PURE__ */ React.createElement(KPI, { label: "\uAD50\uC721 \uC2E4\uD589", value: U.fmt(done.length), unit: "\uD68C", sub: "\uCC38\uC11D\uC778\uC6D0 " + U.fmt(attended) + "\uBA85 \xB7 \uCC38\uC5EC\uCE58\uACFC " + U.fmt(clinic) + "\uAC1C\uC18C" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C", value: U.fmt(newdev), unit: "\uAC1C\uC18C", tone: "blue", sub: "\uC2E0\uADDC\uACE0\uAC1D " + U.fmt(nonuser) + "\uAC1C\uC18C \uC911 " + U.pctStr(C.conv(newdev, nonuser)) }), /* @__PURE__ */ React.createElement(KPI, { label: "\uD310\uB9E4\uC2E4\uC801", value: U.fmt(sales), unit: "\uB9CC", tone: "blue", sub: "\uB9E4\uCD9C/\uD65C\uB3D9\uBE44 " + (cost ? Math.round(sales / cost * 10) / 10 : 0) + "\uBC30 \xB7 \uC9D1\uD589 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC" }), /* @__PURE__ */ React.createElement(KPI, { label: "\uC2E0\uADDC\uAC1C\uBC1C\uB2F9 \uBE44\uC6A9", value: newdev ? (Math.round(cost / newdev * 100) / 100).toFixed(2) : "-", unit: "\uB9CC", sub: "\uC9D1\uD589\uBE44\uC6A9 " + (Math.round(cost * 100) / 100).toFixed(2) + "\uB9CC \xF7 " + U.fmt(newdev) + "\uAC1C\uC18C" })) : null, SH.kpi && !SH.extras ? /* @__PURE__ */ React.createElement(React.Fragment, null) : null, SH.kpi ? /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-2 gap-3" }, SH.extras ? /* @__PURE__ */ React.createElement(Card, { title: "\uACE0\uAC1D \uC804\uD658 \uD37C\uB110", desc: "\uCC38\uC11D\uC778\uC6D0 \u2192 \uCC38\uC5EC\uCE58\uACFC \u2192 \uC2E0\uADDC\uACE0\uAC1D(\uBBF8\uC0AC\uC6A9) \u2192 \uC2E0\uADDC\uAC1C\uBC1C\uACE0\uAC1D \xB7 \uB9C9\uB300 \uAE38\uC774=\uCC38\uC11D \uB300\uBE44 \uBE44\uC911" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-0" }, funnel.map(function(f, i) {
       const w = funnel[0].v ? Math.max(2, f.v / funnel[0].v * 100) : 0;
       return /* @__PURE__ */ React.createElement(React.Fragment, { key: f.l }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold text-slate-700 shrink-0", style: { width: 76 } }, f.l), /* @__PURE__ */ React.createElement("div", { className: "flex-1 rounded-md", style: { background: "#eef1f6", height: 30, position: "relative", overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: {
         width: w + "%",
@@ -17506,23 +17544,15 @@ ARI.pages = ARI.pages || {};
   /* 성과현황 그래프 — 본부별 진입·판매·소진율 */
   /* 성과현황 카드 — 안에서 [성과현황][전주 대비 증감] 전환 */
   function PerfCard({ ctx, prod }) {
-    const [v, setV] = useState("sum");
     return /* @__PURE__ */ React.createElement(Card, {
-      title: /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", alignItems: "center", gap: 12 } },
-        prod + " \uC131\uACFC\uD604\uD669",
-        /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", border: "1px solid #c9cfd9", background: "#fff" } },
-          [{ v: "sum", l: "\uC131\uACFC\uD604\uD669" }, { v: "wow", l: "\uC804\uC8FC \uB300\uBE44 \uC99D\uAC10" }].map(function(o, i) {
-            const on = v === o.v;
-            return /* @__PURE__ */ React.createElement("button", { key: o.v, type: "button", onClick: function() { setV(o.v); },
-              style: { padding: "3px 9px", fontSize: 8, fontWeight: 800,
-                       background: on ? "#16234a" : "#fff", color: on ? "#fff" : "#68748B",
-                       border: "none", borderLeft: i ? "1px solid #c9cfd9" : "none", cursor: "pointer" } }, o.l);
-          })
-        )
-      ),
+      title: prod + " \uC131\uACFC\uD604\uD669",
       desc: ctx.week + " \uB204\uACC4 \uAE30\uC900"
     },
-      v === "sum" ? /* @__PURE__ */ React.createElement(ProdSummary, { ctx, prod }) : /* @__PURE__ */ React.createElement(WeekDeltaBody, { ctx, only: prod })
+      /* @__PURE__ */ React.createElement(ProdSummary, { ctx, prod }),
+      /* @__PURE__ */ React.createElement("div", { style: { marginTop: 14, paddingTop: 12, borderTop: "1px solid #eef1f6" } },
+        /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-2", style: { color: "#16234a" } }, prod + " \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10"),
+        /* @__PURE__ */ React.createElement(WeekDeltaBody, { ctx, only: prod })
+      )
     );
   }
 
@@ -17663,17 +17693,19 @@ ARI.pages = ARI.pages || {};
     const M = Number(ctx.wk.start.slice(5, 7));
     const S = function(k) { return C.sum(A, function(x) { return n(x[k]); }); };
     const mS = function(k) { return C.sum(A, function(x) { return n(((x.m || {})[M] || {})[k]); }); };
-    const cA = S("cA"), sA = S("sA"), dB = S("dB"), cT = S("cT"), sT = S("sT");
+    const T = cur.tot || {};
+    const g = function(k) { return T[k] != null && n(T[k]) ? n(T[k]) : S(k); };
+    const cA = g("cA"), sA = g("sA"), dB = g("dB"), cT = g("cT"), sT = g("sT");
     const dealers = (function() { const set = {}; cust.forEach(function(c) { if (c.dealer && (n(c.tot) > 0 || c.status === "\u5DF2\u8FDB\u5165")) set[c.dealer] = 1; }); return Object.keys(set).length; })();
     const pc = function(x, y) { return y ? Math.round(x / y * 1e3) / 10 : 0; };
     const F = function(v) { return U.fmt(Math.round(v)); };
 
     const cards = [
       { l: "26\uB144 \uB204\uC801\uC9C4\uC785\uACE0\uAC1D", v: F(cA), s: "\uBAA9\uD45C " + F(cT) + "\uAC1C\uC18C \xB7 " + pc(cA, cT) + "%", bg: "#16794a" },
-      { l: "26\uB144 \uD310\uB9E4\uC218\uB7C9", v: F(sA), u: "\uAC1C", s: "\uBAA9\uD45C " + F(sT) + "\uAC1C \xB7 " + pc(sA, sT) + "%", bg: "#152a63" },
-      { l: "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", v: F(dB), u: "\uAC1C", s: "\uC18C\uC9C4\uC728 " + pc(sA, dB) + "%", bg: "#1d3a86" },
-      { l: M + "\uC6D4 \uD310\uB9E4", v: F(mS("sA")), u: "\uAC1C", s: M + "\uC6D4 \uBAA9\uD45C " + F(mS("sT")) + " \xB7 " + pc(mS("sA"), mS("sT")) + "%", bg: "#3d6cca" },
-      { l: M + "\uC6D4 \uC9C4\uC785", v: F(mS("cA")), s: "\uBAA9\uD45C " + F(mS("cT")) + " \xB7 \uD655\uC815 " + F(mS("cC")), bg: "#4f7fd6" }
+      { l: "26\uB144 \uACE0\uAC1D \uD310\uB9E4\uC218\uB7C9", v: F(sA), u: "\uAC1C", s: "\uBAA9\uD45C " + F(sT) + "\uAC1C \xB7 " + pc(sA, sT) + "%", bg: "#152a63" },
+      { l: "\uB204\uC801 \uB300\uB9AC\uC0C1 \uD310\uB9E4", v: F(dB), u: "\uAC1C", s: "\uC18C\uC9C4\uC728 " + pc(sA, dB) + "%", bg: "#1d3a86" },
+      { l: M + "\uC6D4 \uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9", v: F(mS("sA")), u: "\uAC1C", s: M + "\uC6D4 \uBAA9\uD45C " + F(mS("sT")) + " \xB7 " + pc(mS("sA"), mS("sT")) + "%", bg: "#3d6cca" },
+      { l: M + "\uC6D4 \uC2E0\uADDC\uC9C4\uC785\uACE0\uAC1D", v: F(mS("cA")), s: "\uBAA9\uD45C " + F(mS("cT")) + " \xB7 \uD655\uC815 " + F(mS("cC")), bg: "#4f7fd6" }
     ];
 
     /* 도넛 : 연간 목표고객 대비 진입 */
@@ -17708,22 +17740,23 @@ ARI.pages = ARI.pages || {};
           );
         })
       ),
-      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-4", style: { gridTemplateColumns: "minmax(0, 0.7fr) minmax(0, 1.3fr)" } },
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-3", style: { gridTemplateColumns: "minmax(0, 0.55fr) minmax(0, 1fr) minmax(0, 1fr)" } },
         /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px" } },
-          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-1.5", style: { color: "#16234a" } }, "\uBAA9\uD45C\uACE0\uAC1D \uB300\uBE44 \uC9C4\uC785"),
+          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-1.5", style: { color: "#16234a" } }, "\uBAA9\uD45C\uACE0\uAC1D \uB300\uBE44 \uC2E0\uADDC\uC9C4\uC785"),
           /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-4" },
             /* @__PURE__ */ React.createElement("svg", { width: 156, height: 156, viewBox: "0 0 156 156", style: { flexShrink: 0 } },
               /* @__PURE__ */ React.createElement("circle", { cx: C0, cy: C0, r: R, fill: "none", stroke: "#e6e9ef", strokeWidth: SW }),
               arc,
               /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 - 3, textAnchor: "middle", fontSize: 20, fontWeight: 800, fill: "#16234a" }, pc(ent, cT) + "%"),
-              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 + 14, textAnchor: "middle", fontSize: 10, fill: "#98a2b3" }, "\uBAA9\uD45C \uB2EC\uC131")
+              /* @__PURE__ */ React.createElement("text", { x: C0, y: C0 + 14, textAnchor: "middle", fontSize: 10, fill: "#98a2b3" }, "\uBAA9\uD45C \uB300\uBE44")
             ),
-            /* @__PURE__ */ React.createElement("div", { className: "flex-1" },
+            /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } },
               [{ l: "\uC9C4\uC785 \uC644\uB8CC", v: ent, c: "#1e3a8a" }, { l: "\uBAA9\uD45C \uBBF8\uB2EC", v: notEnt, c: "#e6e9ef" }].map(function(d, i) {
-                return /* @__PURE__ */ React.createElement("div", { key: i, className: "flex items-center gap-2 mb-1.5" },
-                  /* @__PURE__ */ React.createElement("i", { style: { width: 11, height: 11, background: d.c, display: "block" } }),
-                  /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { color: "#16234a", flex: 1 } }, d.l),
-                  /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-extrabold", style: { color: "#16234a" } }, F(d.v) + "\uAC1C\uC18C"));
+                return /* @__PURE__ */ React.createElement("div", { key: i },
+                  /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-1.5" },
+                    /* @__PURE__ */ React.createElement("i", { style: { width: 10, height: 10, background: d.c, display: "block" } }),
+                    /* @__PURE__ */ React.createElement("span", { className: "text-[11px] font-bold", style: { color: "#16234a" } }, d.l)),
+                  /* @__PURE__ */ React.createElement("div", { className: "font-extrabold", style: Object.assign({ color: "#16234a", fontSize: 15, marginLeft: 16 }, U.NUM) }, F(d.v) + "\uAC1C\uC18C"));
               })
             )
           ),
@@ -17732,39 +17765,39 @@ ARI.pages = ARI.pages || {};
               /* @__PURE__ */ React.createElement(CustDetailTable, { ctx, prod }))
           )
         ),
-        /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "12px 14px" } },
-          /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-2", style: { color: "#16234a" } }, "\uBCF8\uBD80\uBCC4 26\uB144 \uD310\uB9E4 \u2014 \uB204\uB974\uBA74 \uAD8C\uC5ED\uBCC4 \uD3BC\uCE68"),
-          byHq.map(function(t) {
-            const on = open === t.hq;
-            return /* @__PURE__ */ React.createElement("div", { key: t.hq },
-              /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 mb-1", style: { cursor: "pointer" },
-                onClick: function() { setOpen(on ? null : t.hq); } },
-                /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { width: 46, whiteSpace: "nowrap", color: on ? "#1d3a86" : "#16234a" } }, (on ? "\u25BE " : "\u25B8 ") + t.hq),
-                /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 14, background: "#f1f3f7", display: "block" } },
-                  /* @__PURE__ */ React.createElement("i", { style: { display: "block", height: "100%", width: (t.sA / maxS * 100) + "%", background: "#1e3a8a" } })),
-                /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-extrabold", style: Object.assign({ color: "#16234a", width: 46, textAlign: "right" }, U.NUM) }, F(t.sA)),
-                /* @__PURE__ */ React.createElement("span", { className: "text-[10.5px]", style: Object.assign({ color: "#98a2b3", width: 46, textAlign: "right" }, U.NUM) }, pc(t.sA, t.dB) + "%")
-              ),
-              on ? /* @__PURE__ */ React.createElement("div", { style: { margin: "2px 0 8px 30px", border: "1px solid #eef1f6" } },
-                /* @__PURE__ */ React.createElement("table", { style: { width: "100%", fontSize: "11px", borderCollapse: "collapse" } },
-                  /* @__PURE__ */ React.createElement("thead", null,
-                    /* @__PURE__ */ React.createElement("tr", { style: { background: "#f7f9fc" } },
-                      ["\uAD8C\uC5ED", "\uC9C4\uC785", "\uD310\uB9E4", "\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", "\uC18C\uC9C4\uC728"].map(function(h, i) {
-                        return /* @__PURE__ */ React.createElement("th", { key: i, style: { padding: "4px 6px", textAlign: i ? "right" : "left", color: "#68748B", fontWeight: 800 } }, h);
-                      }))),
-                  /* @__PURE__ */ React.createElement("tbody", null, t.rows.map(function(r, i) {
-                    return /* @__PURE__ */ React.createElement("tr", { key: i, style: { borderTop: "1px solid #eef1f6" } },
-                      /* @__PURE__ */ React.createElement("td", { style: { padding: "4px 6px", fontWeight: 700, color: "#16234a" } }, r.area),
-                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right" } }, F(n(r.cA))),
-                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right", fontWeight: 700 } }, F(n(r.sA))),
-                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right" } }, F(n(r.dB))),
-                      /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "4px 6px", textAlign: "right", color: "#68748B" } }, pc(n(r.sA), n(r.dB)) + "%"));
-                  })))
-              ) : null
+        /* @__PURE__ */ (function() {
+          var hqTable = function(metric, title) {
+            var rows2 = byHq.slice().sort(function(x, y) { return y[metric] - x[metric]; });
+            var mx = Math.max.apply(null, rows2.map(function(t) { return t[metric]; }).concat([1]));
+            return /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "12px 14px" } },
+              /* @__PURE__ */ React.createElement("div", { className: "text-[12px] font-bold mb-2", style: { color: "#16234a" } }, title),
+              rows2.map(function(t) {
+                var on = open === (metric + "|" + t.hq);
+                return /* @__PURE__ */ React.createElement("div", { key: t.hq },
+                  /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 mb-1", style: { cursor: "pointer" },
+                    onClick: function() { setOpen(on ? null : (metric + "|" + t.hq)); } },
+                    /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-bold", style: { width: 46, whiteSpace: "nowrap", color: on ? "#1d3a86" : "#16234a" } }, (on ? "\u25BE " : "\u25B8 ") + t.hq),
+                    /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 14, background: "#f1f3f7", display: "block" } },
+                      /* @__PURE__ */ React.createElement("i", { style: { display: "block", height: "100%", width: (t[metric] / mx * 100) + "%", background: metric === "dB" ? "#2a51ab" : "#1e3a8a" } })),
+                    /* @__PURE__ */ React.createElement("span", { className: "text-[11.5px] font-extrabold", style: Object.assign({ color: "#16234a", width: 50, textAlign: "right" }, U.NUM) }, F(t[metric]))
+                  ),
+                  on ? /* @__PURE__ */ React.createElement("div", { style: { margin: "2px 0 8px 30px", border: "1px solid #eef1f6" } },
+                    /* @__PURE__ */ React.createElement("table", { style: { width: "100%", fontSize: "11px", borderCollapse: "collapse" } },
+                      /* @__PURE__ */ React.createElement("tbody", null, t.rows.map(function(r, i) {
+                        return /* @__PURE__ */ React.createElement("tr", { key: i, style: { borderTop: i ? "1px solid #eef1f6" : "none" } },
+                          /* @__PURE__ */ React.createElement("td", { style: { padding: "3px 6px", fontWeight: 700, color: "#16234a" } }, r.area),
+                          /* @__PURE__ */ React.createElement("td", { className: "num", style: { padding: "3px 6px", textAlign: "right" } }, F(n(r[metric]))));
+                      })))
+                  ) : null
+                );
+              })
             );
-          }),
-          /* @__PURE__ */ React.createElement("div", { className: "text-[10.5px] mt-1", style: { color: "#98a2b3" } }, "\uC624\uB978\uCABD \uC22B\uC790 = \uB300\uB9AC\uC0C1 \uAD6C\uB9E4 \uB300\uBE44 \uC18C\uC9C4\uC728")
-        )
+          };
+          return /* @__PURE__ */ React.createElement(React.Fragment, null,
+            hqTable("sA", "\uBCF8\uBD80\uBCC4 26\uB144 \uACE0\uAC1D\uD310\uB9E4\uC218\uB7C9"),
+            hqTable("dB", "\uBCF8\uBD80\uBCC4 26\uB144 \uB300\uB9AC\uC0C1 \uD310\uB9E4\uC218\uB7C9")
+          );
+        })()
       ),
       det ? /* @__PURE__ */ React.createElement("div", { style: { border: "1px solid #e6e9ef", padding: "10px 12px", marginTop: 12, overflowX: "auto" } },
         /* @__PURE__ */ React.createElement(CustDetailTable, { ctx, prod })
@@ -17852,42 +17885,35 @@ ARI.pages = ARI.pages || {};
       const sn = (b.snaps || []).filter(function(x) { return x.week <= ctx.week; }).slice(-2);
       if (sn.length < 2) return;
       const S = function(x, k) { return C.sum(x.area || [], function(a2) { return n(a2[k]); }); };
-      [["\uC9C4\uC785", "cA"], ["\uD310\uB9E4", "sA"], ["\uB300\uB9AC\uC0C1 \uAD6C\uB9E4", "dB"]].forEach(function(m) {
+      [["\uC9C4\uC785\uCE58\uACFC", "cA"], ["\uACE0\uAC1D \uD310\uB9E4\uAC1C\uC218", "sA"], ["\uB300\uB9AC\uC0C1\uAD6C\uB9E4\uAC1C\uC218", "dB"]].forEach(function(m) {
         ROWS.push({ p: p, l: p + " " + m[0], a: S(sn[0], m[1]), b: S(sn[1], m[1]), w0: sn[0].week, w1: sn[1].week });
       });
-      ROWS.push({ p: p, l: p + " \uACE0\uAC1D", a: (sn[0].cust || []).length, b: (sn[1].cust || []).length,
+      ROWS.push({ p: p, l: p + " \uAD00\uB9AC\uACE0\uAC1D\uAD70", a: (sn[0].cust || []).length, b: (sn[1].cust || []).length,
                   w0: sn[0].week, w1: sn[1].week });
     });
     if (!ROWS.length) return null;
     const W0 = ROWS[0].w0, W1 = ROWS[0].w1;
     const F = function(v) { return U.fmt(Math.round(v)); };
-    const rate = function(r) { return r.a ? (r.b - r.a) / r.a * 100 : (r.b ? 100 : 0); };
-    const maxR = Math.max.apply(null, ROWS.map(function(r) { return Math.abs(rate(r)); }).concat([1]));
     return /* @__PURE__ */ React.createElement("div", null,
-      /* @__PURE__ */ React.createElement("div", { className: "text-[11px] mb-2", style: { color: "#98a2b3" } }, W0.slice(5) + " \u2192 " + W1.slice(5) + " \xB7 \uB9C9\uB300\uB294 \uC99D\uAC10\uB960"),
-      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "3px 20px" } },
+      /* @__PURE__ */ React.createElement("div", { className: "text-[11px] mb-2", style: { color: "#98a2b3" } }, W0.slice(5) + " \u2192 " + W1.slice(5) + " \xB7 \uC5F0\uD55C \uB9C9\uB300=\uC804\uC8FC \xB7 \uC9C4\uD55C \uB9C9\uB300=\uAE08\uC8FC"),
+      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "6px 20px" } },
         ROWS.map(function(r, i) {
-          const d = r.b - r.a, rt = rate(r);
+          const d = r.b - r.a;
           const first = i > 0 && ROWS[i - 1].p !== r.p;
-          const col = d > 0 ? "#16794a" : d < 0 ? "#c0392f" : "#c9d2e4";
+          const col = d > 0 ? "#16794a" : d < 0 ? "#c0392f" : "#98a2b3";
+          const mx = Math.max(r.a, r.b, 1);
           return /* @__PURE__ */ React.createElement("div", { key: i,
             style: { paddingTop: first ? 7 : 0, marginTop: first ? 4 : 0,
                      borderTop: first ? "1px solid #e6e9ef" : "none" } },
             /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "baseline", gap: 6 } },
-              /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11.5, fontWeight: 800, color: "#16234a", flex: 1, whiteSpace: "nowrap" } }, r.l),
-              /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 11, color: "#98a2b3" }, U.NUM) }, F(r.a)),
-              /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, color: "#c9d2e4" } }, "\u2192"),
+              /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, fontWeight: 800, color: "#16234a", flex: 1, whiteSpace: "nowrap" } }, r.l),
               /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 12.5, fontWeight: 800, color: "#16234a" }, U.NUM) }, F(r.b)),
-              /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 11.5, fontWeight: 800, color: col, width: 58, textAlign: "right" }, U.NUM) },
+              /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 11, fontWeight: 800, color: col, width: 52, textAlign: "right" }, U.NUM) },
                 d > 0 ? "+" + F(d) : d < 0 ? "\u2212" + F(-d) : "\u2013")
             ),
-            /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, marginTop: 2 } },
-              /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 5, background: "#f1f3f7", display: "block" } },
-                /* @__PURE__ */ React.createElement("i", { style: { display: "block", height: "100%", background: col,
-                  width: Math.max(d ? 3 : 0, Math.abs(rt) / maxR * 100) + "%" } })
-              ),
-              /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 10, color: col, width: 44, textAlign: "right" }, U.NUM) },
-                d ? (rt > 0 ? "+" : "") + (Math.round(rt * 10) / 10) + "%" : "")
+            /* @__PURE__ */ React.createElement("div", { style: { marginTop: 3 } },
+              /* @__PURE__ */ React.createElement("div", { style: { height: 5, background: "#c9d2e4", width: (r.a / mx * 100) + "%", marginBottom: 2 } }),
+              /* @__PURE__ */ React.createElement("div", { style: { height: 5, background: col, width: (r.b / mx * 100) + "%" } })
             )
           );
         })
@@ -17896,8 +17922,8 @@ ARI.pages = ARI.pages || {};
   }
 
   /* ══════════ 판매확대 6단계 ══════════ */
-  ARI.pages.steps = function StepsPage({ ctx, db }) {
-    const [tab, setTab] = useState("kpi");
+    /* 활성화방안 (판매확대 6단계) */
+  ARI.pages.activate = function ActivatePage({ ctx, db }) {
     const STEPS = [
       { ph: "a", no: "01", t: "\uC81C\uD488\uC18C\uAC1C", rows: [
         ["DSO \xB7 \uD558\uBD80\uACE0\uAC1D \uAD50\uC721", "\uC81C\uD488 \uD2B9\uC9D5\uACFC \uC801\uD569 \uCF00\uC774\uC2A4 \uC18C\uAC1C", 0],
@@ -17927,34 +17953,9 @@ ARI.pages = ARI.pages || {};
       { k: "a", no: "PHASE 1", t: "", s: "", c: "#16794a", line: "#bfe0d2" },
       { k: "b", no: "PHASE 2", t: "", s: "", c: "#2a51ab", line: "#c3cfe6" }
     ];
-    return /* @__PURE__ */ React.createElement(Page, {
-      className: "pg-navy",
-      title: /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", alignItems: "center", gap: 14 } },
-        "\uBC29\uC548\uBCF4\uACE0",
-        /* @__PURE__ */ React.createElement("span", {
-          style: { display: "inline-flex", border: "1px solid #c9cfd9", background: "#fff" } },
-          [{ value: "kpi", label: "\uC131\uACFC\uD604\uD669" }, { value: "plan", label: "\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \u2605" }].map(function(o, i) {
-            const on = tab === o.value;
-            const isPlan = o.value === "plan";
-            return /* @__PURE__ */ React.createElement("button", {
-              key: o.value, type: "button", onClick: function() { setTab(o.value); },
-              style: { padding: "4px 13px", fontSize: 9, fontWeight: 800,
-                       background: on ? (isPlan ? "#a01722" : "#16234a") : (isPlan ? "#fdf2f4" : "#fff"),
-                       color: on ? "#fff" : (isPlan ? "#a01722" : "#68748B"),
-                       border: "none", borderLeft: i ? "1px solid #c9cfd9" : "none",
-                       whiteSpace: "nowrap", cursor: "pointer" }
-            }, o.label);
-          })
-        )
-      ),
-      right: null
-    },
-      tab === "kpi" ? /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3" },
-        ["ARi", "BD"].map(function(p) {
-          return /* @__PURE__ */ React.createElement(PerfCard, { key: p, ctx, prod: p });
-        })
-      ) : null,
-      tab === "plan" ? /* @__PURE__ */ React.createElement("div", null,
+    return /* @__PURE__ */ React.createElement(Page,
+      { className: "pg-navy", title: "\uD65C\uC131\uD654\uBC29\uC548", desc: "BD/ARi \uC81C\uD488\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \uC2E4\uD589\uBC29\uC548" },
+      /* @__PURE__ */ React.createElement("div", null,
       /* @__PURE__ */ React.createElement(Card, {
         title: "BD/ARi \uC81C\uD488\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4",
         desc: "\uD654\uB3D9\uBCF8\uBD80 \uC2E4\uD589\uBC29\uC548"
@@ -18017,7 +18018,18 @@ ARI.pages = ARI.pages || {};
         })
         )
       )
-      ) : null
+      )
+    );
+  };
+  /* BD/ARi 주간 누적판매현황 (성과현황) */
+  ARI.pages.steps = function StepsPage({ ctx, db }) {
+    return /* @__PURE__ */ React.createElement(Page,
+      { className: "pg-navy", title: "BD/ARi \uC8FC\uAC04 \uB204\uC801\uD310\uB9E4\uD604\uD669", desc: "\uC131\uACFC\uD604\uD669\uACFC \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10" },
+      /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3" },
+        ["ARi", "BD"].map(function(p) {
+          return /* @__PURE__ */ React.createElement(PerfCard, { key: p, ctx, prod: p });
+        })
+      )
     );
   };
 
@@ -18384,7 +18396,9 @@ ARI.pages = ARI.pages || {};
   const { Sel, Btn, Badge, Modal, Note, Field } = ARI.ui;
   const GROUPS = [
     { id: "g_ov", label: "\uD1B5\uD569 \uB300\uC2DC\uBCF4\uB4DC", icon: "dashboard", items: [
-      { key: "steps", label: "\uBC29\uC548\uBCF4\uACE0" },
+      { key: "activate", label: "\uD65C\uC131\uD654\uBC29\uC548" },
+      { key: "steps", label: "BD/ARi \uC8FC\uAC04 \uB204\uC801\uD310\uB9E4\uD604\uD669" },
+      { key: "market", label: "\uC2DC\uC7A5\uC810\uC720\uC728(ing)" },
       { key: "weekly", label: "\uD310\uB9E4\uBD84\uC11D" },
       { key: "conv", label: "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74" }
     ] },
@@ -18399,7 +18413,9 @@ ARI.pages = ARI.pages || {};
     }));
   }, []);
   const SUBTITLE = {
-    steps: "\uC131\uACFC \uD604\uD669\uACFC \uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \uC2E4\uD589\uBC29\uC548",
+    activate: "BD/ARi \uC81C\uD488\uD310\uB9E4\uD655\uB300 6\uB2E8\uACC4 \uC2E4\uD589\uBC29\uC548",
+    steps: "\uC131\uACFC\uD604\uD669\uACFC \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10",
+    market: "\uD504\uB9AC\uBBF8\uC5C4 \uC81C\uD488 \uC2DC\uC7A5\uC810\uC720\uC728 \u00B7 \uC791\uC5C5 \uC911",
     dashboard: "\uB7F0\uCE6D \uC900\uBE44\uBD80\uD130 \uCC44\uD0DD\xB7\uD310\uB9E4\xB7\uC7AC\uAD6C\uB9E4\uAE4C\uC9C0 \uD55C \uD654\uBA74\uC5D0\uC11C \uD655\uC778",
     weekly: "\uBAA9\uD45C \u2192 \uD65C\uB3D9 \u2192 \uC804\uD658 \u2192 \uD310\uB9E4 \u2192 \uAC1C\uC120\uC758 \uC8FC\uAC04 \uC2E4\uD589 \uC0AC\uC774\uD074",
     education: "\uAD50\uC721\xB7\uC138\uBBF8\uB098 \uC2E4\uD589 \uC131\uACFC\uC640 \uACE0\uAC1D \uC804\uD658 \uBD84\uC11D",
@@ -18471,7 +18487,7 @@ ARI.pages = ARI.pages || {};
     const [db, setDb] = useState(function() {
       return S.build(S.getUI("product", "ARi"));
     });
-    const [page, setPage] = useState("steps");
+    const [page, setPage] = useState("activate");
     const [params, setParams] = useState({});
     const [sidebar, setSidebar] = useState(true);
     const [open, setOpen] = useState(function() {
