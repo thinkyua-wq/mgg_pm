@@ -18059,7 +18059,25 @@ ARI.pages = ARI.pages || {};
       if (typeof window.html2canvas !== "function") { alert("\uC774\uBBF8\uC9C0 \uAE30\uB2A5\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC0C8\uB85C\uACE0\uCE68 \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD574 \uC8FC\uC138\uC694."); return; }
       setCapBusy(true);
       try {
-        window.html2canvas(capRef.current, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false }).then(function(canvas) {
+        window.html2canvas(capRef.current, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false,
+          onclone: function(doc) {
+            try {
+              var win = doc.defaultView || window;
+              var all = doc.querySelectorAll("*");
+              for (var i = 0; i < all.length; i++) {
+                var el = all[i];
+                var cs = win.getComputedStyle(el);
+                var props = ["color", "backgroundColor", "borderTopColor", "borderRightColor", "borderBottomColor", "borderLeftColor", "fill", "stroke", "outlineColor"];
+                for (var j = 0; j < props.length; j++) {
+                  var v = cs.getPropertyValue(props[j]);
+                  if (v && v.indexOf("oklch") < 0 && v.indexOf("oklab") < 0 && v.indexOf("color(") < 0) {
+                    el.style.setProperty(props[j].replace(/[A-Z]/g, function(m){return "-"+m.toLowerCase();}), v);
+                  }
+                }
+              }
+            } catch (e) {}
+          }
+        }).then(function(canvas) {
           var a = document.createElement("a");
           a.download = "BD-ARi_" + (ctx.week || "") + ".png";
           a.href = canvas.toDataURL("image/png");
