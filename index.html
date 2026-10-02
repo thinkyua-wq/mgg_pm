@@ -321,6 +321,7 @@
   .tbl-conv tbody td, .tbl-conv thead th { overflow:hidden; text-overflow:ellipsis; padding:6px 6px; }
   .tbl-conv tbody td.cell-clinic { white-space:normal; word-break:break-word; line-height:1.35; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div id="loading">
@@ -2467,6 +2468,7 @@ ARI.pages = ARI.pages || {};
 /* ==== 45_i18n.jsx ==== */
 (function() {
   const CN = {
+    "\uC774\uBBF8\uC9C0 \uC800\uC7A5": "\u4FDD\u5B58\u56FE\u7247",
     "\uC138\uBBF8\uB098\uACE0\uAC1D\uBC1C\uAD74 \u2605": "\u7814\u8BA8\u4F1A\u5BA2\u6237\u6316\u6398 \u2605",
     "\uD504\uB9AC\uBBF8\uC5C4 \uC810\uC720\uC728": "\u9AD8\u7AEF\u5360\u6709\u7387",
     "\uC2DC\uC7A5\u00B7\uC804\uB7B5": "\u5E02\u573A\u00B7\u6218\u7565",
@@ -18028,12 +18030,29 @@ ARI.pages = ARI.pages || {};
   };
   /* BD/ARi 주간 누적판매현황 (성과현황) */
   ARI.pages.steps = function StepsPage({ ctx, db }) {
+    const capRef = React.useRef(null);
+    const doCapture = function() {
+      if (!window.html2canvas || !capRef.current) { alert("\uC774\uBBF8\uC9C0 \uAE30\uB2A5\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC0C8\uB85C\uACE0\uCE68 \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD574 \uC8FC\uC138\uC694."); return; }
+      window.html2canvas(capRef.current, { backgroundColor: "#ffffff", scale: 2, useCORS: true }).then(function(canvas) {
+        var a = document.createElement("a");
+        a.download = "BD-ARi_" + (ctx.week || "") + ".png";
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+      });
+    };
     return /* @__PURE__ */ React.createElement(Page,
-      { className: "pg-navy", title: "BD/ARi \uC8FC\uAC04 \uB204\uC801\uD310\uB9E4\uD604\uD669", desc: "\uC131\uACFC\uD604\uD669\uACFC \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10" },
-      /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3" },
-        ["ARi", "BD"].map(function(p) {
-          return /* @__PURE__ */ React.createElement(PerfCard, { key: p, ctx, prod: p });
-        })
+      { className: "pg-navy",
+        title: /* @__PURE__ */ React.createElement("span", { style: { display: "inline-flex", alignItems: "center", gap: 12 } },
+          "BD/ARi \uC8FC\uAC04 \uB204\uC801\uD310\uB9E4\uD604\uD669",
+          /* @__PURE__ */ React.createElement("button", { type: "button", onClick: doCapture, "data-notr": "1",
+            style: { padding: "3px 11px", fontSize: 11, fontWeight: 800, border: "1px solid #c9cfd9", background: "#fff", color: "#16234a", cursor: "pointer", borderRadius: 4 } }, "\u2b07 \uC774\uBBF8\uC9C0 \uC800\uC7A5")),
+        desc: "\uC131\uACFC\uD604\uD669\uACFC \uC804\uC8FC \uB300\uBE44 \uC99D\uAC10" },
+      /* @__PURE__ */ React.createElement("div", { ref: capRef, style: { background: "#fff" } },
+        /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3" },
+          ["ARi", "BD"].map(function(p) {
+            return /* @__PURE__ */ React.createElement(PerfCard, { key: p, ctx, prod: p });
+          })
+        )
       )
     );
   };
