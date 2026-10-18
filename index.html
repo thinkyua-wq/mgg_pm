@@ -17972,13 +17972,11 @@ ARI.pages = ARI.pages || {};
     var semWk = (conv.sem || []).filter(function(x) { return x.week === ctx.week; });
     var attWk = (conv.rows || []).filter(function(x) { return x.week === ctx.week; }).length;
 
-    /* 본부별 소진율 (ARi+BD 합산) */
     function hqRates() {
       var acc = {};
       [A.cur, B.cur].forEach(function(sn) {
         ((sn && sn.area) || []).forEach(function(a) {
-          var hq = HQKO[a.hq] || null;
-          if (!hq) return;
+          var hq = HQKO[a.hq] || null; if (!hq) return;
           if (!acc[hq]) acc[hq] = { sA: 0, dB: 0 };
           acc[hq].sA += n(a.sA); acc[hq].dB += n(a.dB);
         });
@@ -17989,50 +17987,23 @@ ARI.pages = ARI.pages || {};
       }).filter(function(x) { return x.rate !== null; });
     }
     var rates = hqRates();
+    function monSum(sn, key) { return C.sum((sn && sn.area) || [], function(a) { return n(((a.m || {})[M] || {})[key]); }); }
 
-    /* 월별 당월 지표 (ARi 기준 월 페이스) */
-    function monSum(sn, prod, key) {
-      return C.sum((sn && sn.area) || [], function(a) { return n(((a.m || {})[M] || {})[key]); });
-    }
-
-    /* ── 자동 이슈/제안 규칙 (심각도 포함) ── */
     function autoData() {
       var issues = [], plans = [];
-      /* 1. 본부 소진율 */
       rates.forEach(function(r) {
-        if (r.rate < 70) {
-          var stock = Math.max(0, r.dB - r.sA);
-          issues.push({ lv: 3, t: r.hq + "본부 소진율 " + r.rate + "% — 재고 " + F(stock) + "개 적체" });
-          plans.push(r.hq + " 적체 대리상 재고 포인트 교환 추진");
-        } else if (r.rate < 85) {
-          issues.push({ lv: 2, t: r.hq + "본부 소진율 " + r.rate + "% — 소진 둔화" });
-        }
+        if (r.rate < 70) { var stock = Math.max(0, r.dB - r.sA); issues.push({ lv: 3, t: r.hq + "본부 소진율 " + r.rate + "% — 재고 " + F(stock) + "개 적체" }); plans.push(r.hq + " 적체 대리상 재고 포인트 교환 추진"); }
+        else if (r.rate < 85) { issues.push({ lv: 2, t: r.hq + "본부 소진율 " + r.rate + "% — 소진 둔화" }); }
       });
-      /* 2. 진입 진도 (경과 비율보다 낮으면) */
       var paceExp = Math.round(M / 12 * 100);
       var aEnt = pc(aT.cA, aT.cT), bEnt = pc(bT.cA, bT.cT);
-      if (aEnt < paceExp * 0.6) {
-        issues.push({ lv: 2, t: "ARi 치과 진입 " + aEnt + "% — 연간 페이스 미달" });
-        plans.push("ARi 미진입 DSO 집중 방문 · 적극진입");
-      }
-      if (bEnt < paceExp * 0.6) {
-        issues.push({ lv: 2, t: "BD 치과 진입 " + bEnt + "% — 연간 페이스 미달" });
-      }
-      /* 3. 전주 대비 판매 역성장 */
+      if (aEnt < paceExp * 0.6) { issues.push({ lv: 2, t: "ARi 치과 진입 " + aEnt + "% — 연간 페이스 미달" }); plans.push("ARi 미진입 DSO 집중 방문 · 적극진입"); }
+      if (bEnt < paceExp * 0.6) { issues.push({ lv: 2, t: "BD 치과 진입 " + bEnt + "% — 연간 페이스 미달" }); }
       if (aP.sA != null && n(aT.sA) < n(aP.sA)) issues.push({ lv: 3, t: "ARi 주간 판매 역성장 (" + F(aP.sA) + "→" + F(aT.sA) + ")" });
       if (bP.sA != null && n(bT.sA) < n(bP.sA)) issues.push({ lv: 3, t: "BD 주간 판매 역성장 (" + F(bP.sA) + "→" + F(bT.sA) + ")" });
-      /* 4. 당월 판매 페이스 (월목표 대비) */
-      var amT = monSum(A.cur, "ARi", "sT"), amA = monSum(A.cur, "ARi", "sA");
-      if (amT > 0 && amA / amT < 0.5) {
-        issues.push({ lv: 2, t: M + "월 ARi 판매 " + F(amA) + "/" + F(amT) + " — 월 목표 미달" });
-        plans.push(M + "월 하순 ARi 판매 집중 드라이브");
-      }
-      /* 5. 세미나 없는 주 */
-      if (semWk.length === 0) {
-        issues.push({ lv: 1, t: "이번 주 신규 세미나 개최 없음" });
-        plans.push("KOL 사롱 · 교육 일정 반영");
-      }
-      /* 기본 제안 보강 */
+      var amT = monSum(A.cur, "sT"), amA = monSum(A.cur, "sA");
+      if (amT > 0 && amA / amT < 0.5) { issues.push({ lv: 2, t: M + "월 ARi 판매 " + F(amA) + "/" + F(amT) + " — 월 목표 미달" }); plans.push(M + "월 하순 ARi 판매 집중 드라이브"); }
+      if (semWk.length === 0) { issues.push({ lv: 1, t: "이번 주 신규 세미나 개최 없음" }); plans.push("KOL 사롱 · 교육 일정 반영"); }
       if (plans.length < 3) plans.push("관심고객 발굴 위한 커스·사롱 확대");
       if (!issues.length) issues.push({ lv: 0, t: "특이 이슈 없음 — 지표 정상 범위" });
       issues.sort(function(a, b2) { return b2.lv - a.lv; });
@@ -18041,7 +18012,6 @@ ARI.pages = ARI.pages || {};
     var auto = autoData();
     function issuesToText(arr) { return arr.map(function(x) { return (x.lv === 3 ? "[높음] " : x.lv === 2 ? "[중간] " : x.lv === 1 ? "[낮음] " : "") + x.t; }).join("\n"); }
 
-    /* ── 수동 편집 (주차별 localStorage) ── */
     var LS_KEY = "mgg_today_" + ctx.week;
     var saved = {};
     try { saved = JSON.parse(localStorage.getItem(LS_KEY) || "{}"); } catch (e) {}
@@ -18053,8 +18023,6 @@ ARI.pages = ARI.pages || {};
     var edit = _ed[0], setEdit = _ed[1];
     function save() { try { localStorage.setItem(LS_KEY, JSON.stringify({ issues: issues, plans: plans })); } catch (e) {} setEdit(false); }
     function resetAuto() { setIssues(issuesToText(auto.issues)); setPlans(auto.plans.join("\n")); }
-
-    /* 이슈 한 줄 파싱 → 배지 */
     function parseIssue(line) {
       var lv = 0, t = line;
       if (/^\[높음\]/.test(line)) { lv = 3; t = line.replace(/^\[높음\]\s*/, ""); }
@@ -18062,101 +18030,106 @@ ARI.pages = ARI.pages || {};
       else if (/^\[낮음\]/.test(line)) { lv = 1; t = line.replace(/^\[낮음\]\s*/, ""); }
       return { lv: lv, t: t };
     }
-    var LVL = { 3: { bg: "#fceaea", fg: "#a32d2d", l: "높음" }, 2: { bg: "#faeeda", fg: "#854f0b", l: "중간" }, 1: { bg: "#f1efe8", fg: "#5f5e5a", l: "낮음" }, 0: { bg: "#eaf3de", fg: "#3b6d11", l: "정상" } };
+    var LVL = { 3: { bg: "#152a63", fg: "#fff", l: "높음" }, 2: { bg: "#dde3ef", fg: "#2a3f6b", l: "중간" }, 1: { bg: "#eef1f6", fg: "#64748b", l: "낮음" }, 0: { bg: "#eef1f6", fg: "#64748b", l: "정상" } };
 
-    /* ── UI 조각 ── */
-    function metricCard(label, val, goal, deltaObj, unit) {
-      return /* @__PURE__ */ React.createElement("div", { style: { background: "#f5f6f9", borderRadius: 8, padding: "11px 13px" } },
-        /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#64748b" } }, label),
-        /* @__PURE__ */ React.createElement("div", { style: Object.assign({ fontSize: 21, fontWeight: 800, color: "#16234a", lineHeight: "26px" }, U.NUM) }, F(val),
-          goal ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#98a2b3", fontWeight: 600 } }, " /" + F(goal)) : (unit ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11, color: "#98a2b3", marginLeft: 2 } }, unit) : null)),
-        deltaObj ? /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: deltaObj.c, marginTop: 1 } }, deltaObj.t) : null
-      );
+    /* ── KPI 카드 (누적판매현황 스타일: 진한 색 배경 + 흰 글씨) ── */
+    function kpi(c) {
+      return /* @__PURE__ */ React.createElement("div", { key: c.l, className: "px-2.5 py-2", style: { background: c.bg, color: "#fff" } },
+        /* @__PURE__ */ React.createElement("div", { className: "font-bold", style: { fontSize: 10, opacity: 0.92, whiteSpace: "nowrap" } }, c.l),
+        /* @__PURE__ */ React.createElement("div", { className: "mt-0.5", style: Object.assign({ display: "flex", alignItems: "baseline", gap: 3 }, U.NUM) },
+          /* @__PURE__ */ React.createElement("span", { style: { fontSize: 20, fontWeight: 800, lineHeight: 1 } }, c.v),
+          c.u ? /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, opacity: 0.85 } }, c.u) : null),
+        /* @__PURE__ */ React.createElement("div", { className: "font-semibold mt-1", style: { fontSize: 9, opacity: 0.9 } }, c.s));
     }
-    function delta(cur, prev, suffix) {
+    function delta(cur, prev) {
+      if (prev == null) return "";
       var d = n(cur) - n(prev);
-      if (prev == null) return { t: suffix || "", c: "#64748b" };
-      var arrow = d > 0 ? "↗ +" : d < 0 ? "↘ −" : "– ";
-      return { t: arrow + (d !== 0 ? F(Math.abs(d)) : "") + (suffix ? " · " + suffix : ""), c: d > 0 ? "#16794a" : d < 0 ? "#c0392f" : "#98a2b3" };
+      return (d > 0 ? "↗ +" : d < 0 ? "↘ −" : "– ") + (d !== 0 ? F(Math.abs(d)) : "") + " 전주";
     }
-    function bar(label, val, tgt, color) {
+    var paceNow = Math.round(M / 12 * 100);
+    function bar(label, val, tgt) {
       var p = pc(val, tgt);
+      var ratio = paceNow ? p / paceNow : 0;
+      var col = ratio >= 0.9 ? "#152a63" : ratio >= 0.6 ? "#3d6cca" : "#98a2b3";
+      var badge = ratio >= 0.9 ? { l: "양호", bg: "#e8edf6", fg: "#152a63" } : ratio >= 0.6 ? { l: "보통", bg: "#eaf0fb", fg: "#3d6cca" } : { l: "미흡", bg: "#f1f3f7", fg: "#64748b" };
       return /* @__PURE__ */ React.createElement("div", null,
-        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 3 } },
-          /* @__PURE__ */ React.createElement("span", { style: { color: "#16234a", fontWeight: 700 } }, label),
-          /* @__PURE__ */ React.createElement("span", { style: { color: "#64748b" } }, F(val) + " / " + F(tgt) + " · " + p + "%")),
-        /* @__PURE__ */ React.createElement("div", { style: { height: 7, background: "#eef1f6", borderRadius: 4 } },
-          /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: Math.min(100, p) + "%", background: color, borderRadius: 4 } })));
+        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", fontSize: 12, marginBottom: 4 } },
+          /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 6 } },
+            /* @__PURE__ */ React.createElement("span", { style: { color: "#16234a", fontWeight: 700 } }, label),
+            /* @__PURE__ */ React.createElement("span", { style: { fontSize: 9.5, fontWeight: 700, background: badge.bg, color: badge.fg, padding: "1px 6px", borderRadius: 4 } }, badge.l)),
+          /* @__PURE__ */ React.createElement("span", { style: Object.assign({ color: "#64748b", fontSize: 11 }, U.NUM) }, F(val) + " / " + F(tgt) + " · ", /* @__PURE__ */ React.createElement("b", { style: { color: col } }, p + "%"))),
+        /* @__PURE__ */ React.createElement("div", { style: { position: "relative", height: 9, background: "#eef1f6", borderRadius: 5 } },
+          /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: Math.min(100, p) + "%", background: col, borderRadius: 5 } }),
+          /* @__PURE__ */ React.createElement("div", { title: "연중 경과 " + paceNow + "%", style: { position: "absolute", left: Math.min(100, paceNow) + "%", top: -2, width: 2, height: 13, background: "#16234a", opacity: 0.35 } })));
     }
     function light(r) {
-      var c = r.rate >= 90 ? { bg: "#eaf3de", fg: "#3b6d11" } : r.rate >= 70 ? { bg: "#faeeda", fg: "#854f0b" } : { bg: "#fceaea", fg: "#a32d2d" };
-      return /* @__PURE__ */ React.createElement("div", { key: r.hq, style: { background: c.bg, borderRadius: 6, padding: "6px 9px" } },
-        /* @__PURE__ */ React.createElement("div", { style: { fontSize: 11, color: c.fg } }, r.hq),
-        /* @__PURE__ */ React.createElement("div", { style: Object.assign({ fontSize: 15, fontWeight: 800, color: c.fg }, U.NUM) }, r.rate + "%"));
+      var c = r.rate >= 85 ? { fg: "#152a63", bar: "#1d3a86", dot: "#1d3a86" } : r.rate >= 70 ? { fg: "#3d6cca", bar: "#3d6cca", dot: "#3d6cca" } : { fg: "#8a93a3", bar: "#b4bcc9", dot: "#b4bcc9" };
+      return /* @__PURE__ */ React.createElement("div", { key: r.hq, style: { background: "#fff", border: "0.5px solid #e6e9ef", borderRadius: 8, padding: "8px 10px" } },
+        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 } },
+          /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 5 } },
+            /* @__PURE__ */ React.createElement("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c.dot, display: "inline-block" } }),
+            /* @__PURE__ */ React.createElement("span", { style: { fontSize: 11.5, color: "#16234a", fontWeight: 700 } }, r.hq)),
+          /* @__PURE__ */ React.createElement("span", { style: Object.assign({ fontSize: 15, fontWeight: 800, color: c.fg }, U.NUM) }, r.rate + "%")),
+        /* @__PURE__ */ React.createElement("div", { style: { height: 5, background: "#f1f3f7", borderRadius: 3 } },
+          /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: Math.min(100, r.rate) + "%", background: c.bar, borderRadius: 3 } })));
     }
 
-    var totEnt = n(aT.cA) + n(bT.cA), totEntP = n(aP.cA) + n(bP.cA);
+    var totEnt = n(aT.cA) + n(bT.cA), totEntP = (A.prev || B.prev) ? n(aP.cA) + n(bP.cA) : null;
+    var KC = [
+      { l: "ARi 누적판매", v: F(aT.sA), u: "개", s: "목표 " + F(aT.sT) + " · " + pc(aT.sA, aT.sT) + "% · " + delta(aT.sA, aP.sA), bg: "#152a63" },
+      { l: "BD 누적판매", v: F(bT.sA), u: "개", s: "목표 " + F(bT.sT) + " · " + pc(bT.sA, bT.sT) + "% · " + delta(bT.sA, bP.sA), bg: "#1d3a86" },
+      { l: "진입 치과", v: F(totEnt), u: "개소", s: "ARi " + F(aT.cA) + " · BD " + F(bT.cA) + (totEntP != null ? " · " + delta(totEnt, totEntP) : ""), bg: "#16794a" },
+      { l: "이번 주 세미나", v: F(semWk.length), u: "회", s: "참석 " + F(attWk) + "명", bg: "#3d6cca" }
+    ];
 
     return /* @__PURE__ */ React.createElement(Page,
       { className: "pg-navy", title: "TODAY", desc: ctx.week + " · 이번 주 핵심 지표 · 진도 · 이슈 · 활성화방안",
         right: /* @__PURE__ */ React.createElement("span", { "data-notr": "1", style: { fontSize: 12, background: "#e6f1fb", color: "#185fa5", padding: "3px 10px", borderRadius: 6 } }, "매주 갱신") },
 
-      /* ① 지표 카드 */
-      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0,1fr))", gap: 10 } },
-        metricCard("ARi 누적판매", aT.sA, aT.sT, delta(aT.sA, aP.sA, pc(aT.sA, aT.sT) + "%")),
-        metricCard("BD 누적판매", bT.sA, bT.sT, delta(bT.sA, bP.sA, pc(bT.sA, bT.sT) + "%")),
-        metricCard("진입 치과", totEnt, null, delta(totEnt, A.prev || B.prev ? totEntP : null), "개소"),
-        metricCard("세미나", semWk.length, null, { t: "참석 " + F(attWk) + "명", c: "#64748b" }, "회")),
+      /* ① KPI — 진한 색 카드 */
+      /* @__PURE__ */ React.createElement(Card, { title: "이번 주 핵심 지표", icon: "chart" },
+        /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0,1fr))", gap: 1, background: "#e6e9ef" } },
+          KC.map(kpi))),
 
-      /* ② 진도 + 신호등 (좌우) */
-      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 14, marginTop: 4 } },
-        /* @__PURE__ */ React.createElement("div", null,
-          /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, fontWeight: 700, color: "#64748b", marginBottom: 8 } }, "진도 · 연간목표 대비"),
-          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 9 } },
-            bar("ARi 판매", aT.sA, aT.sT, "#378ADD"),
-            bar("BD 판매", bT.sA, bT.sT, "#1D9E75"),
-            bar("ARi 진입", aT.cA, aT.cT, "#BA7517"),
-            bar("BD 진입", bT.cA, bT.cT, "#BA7517"))),
-        /* @__PURE__ */ React.createElement("div", null,
-          /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, fontWeight: 700, color: "#64748b", marginBottom: 8 } }, "본부별 소진율 · 신호등 ",
-            /* @__PURE__ */ React.createElement("span", { style: { fontWeight: 400, color: "#98a2b3" } }, "(90↑ / 70↑ / 70↓)")),
-          /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6 } },
+      /* ② 진도 + 신호등 */
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-3", style: { gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)" } },
+        /* @__PURE__ */ React.createElement(Card, { title: "진도 · 연간목표 대비" },
+          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 11, padding: "2px 2px" } },
+            bar("ARi 판매", aT.sA, aT.sT),
+            bar("BD 판매", bT.sA, bT.sT),
+            bar("ARi 진입", aT.cA, aT.cT),
+            bar("BD 진입", bT.cA, bT.cT))),
+        /* @__PURE__ */ React.createElement(Card, { title: "본부별 소진율 신호등", desc: "90↑ 초록 · 70↑ 노랑 · 70↓ 빨강" },
+          /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, padding: "2px 2px" } },
             rates.map(light)))),
 
       /* ③④ 이슈 · 제안 */
-      /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 } },
-        /* @__PURE__ */ React.createElement("div", { style: { fontSize: 12, color: "#98a2b3" } }, "이슈·제안은 자동 생성 · 편집 가능"),
-        /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } },
-          /* @__PURE__ */ React.createElement("button", { type: "button", "data-notr": "1", onClick: edit ? save : function() { setEdit(true); },
-            style: { padding: "3px 11px", fontSize: 11, fontWeight: 800, border: "1px solid #c9cfd9", background: edit ? "#16234a" : "#fff", color: edit ? "#fff" : "#16234a", cursor: "pointer", borderRadius: 4 } }, edit ? "저장" : "✎ 편집"),
-          edit ? /* @__PURE__ */ React.createElement("button", { type: "button", "data-notr": "1", onClick: resetAuto,
-            style: { padding: "3px 11px", fontSize: 11, fontWeight: 800, border: "1px solid #c9cfd9", background: "#fff", color: "#64748b", cursor: "pointer", borderRadius: 4 } }, "자동 다시") : null)),
-
-      /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 6 } },
-        /* 이슈 */
-        /* @__PURE__ */ React.createElement("div", { style: { background: "#fff", border: "0.5px solid #e6e9ef", borderRadius: 12, padding: "12px 14px" } },
-          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 800, color: "#c0392f", marginBottom: 10 } }, "⚠ 주요 이슈"),
+      /* @__PURE__ */ React.createElement("div", { className: "grid grid-cols-1 gap-3", style: { gridTemplateColumns: "1fr 1fr" } },
+        /* @__PURE__ */ React.createElement(Card, { title: "주요 이슈", accent: "#152a63",
+            right: /* @__PURE__ */ React.createElement("button", { type: "button", "data-notr": "1", onClick: edit ? save : function() { setEdit(true); },
+              style: { padding: "3px 11px", fontSize: 11, fontWeight: 800, border: "1px solid #c9cfd9", background: edit ? "#16234a" : "#fff", color: edit ? "#fff" : "#16234a", cursor: "pointer", borderRadius: 4 } }, edit ? "저장" : "✎ 편집") },
           edit
-            ? /* @__PURE__ */ React.createElement("textarea", { value: issues, onChange: function(e) { setIssues(e.target.value); }, "data-notr": "1",
-                style: { width: "100%", minHeight: 110, fontSize: 12, lineHeight: 1.7, border: "1px solid #d3d1c7", borderRadius: 6, padding: 8, resize: "vertical", fontFamily: "inherit" } })
-            : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } },
+            ? /* @__PURE__ */ React.createElement("div", { style: { padding: "2px" } },
+                /* @__PURE__ */ React.createElement("textarea", { value: issues, onChange: function(e) { setIssues(e.target.value); }, "data-notr": "1",
+                  style: { width: "100%", minHeight: 110, fontSize: 12, lineHeight: 1.7, border: "1px solid #d3d1c7", borderRadius: 6, padding: 8, resize: "vertical", fontFamily: "inherit" } }),
+                /* @__PURE__ */ React.createElement("button", { type: "button", "data-notr": "1", onClick: resetAuto, style: { marginTop: 6, padding: "2px 9px", fontSize: 11, border: "1px solid #c9cfd9", background: "#fff", color: "#64748b", cursor: "pointer", borderRadius: 4 } }, "자동 다시"))
+            : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 9, padding: "2px" } },
                 issues.split("\n").filter(String).map(function(line, i) {
                   var p = parseIssue(line), L = LVL[p.lv] || LVL[0];
                   return /* @__PURE__ */ React.createElement("div", { key: i, style: { display: "flex", gap: 8, alignItems: "flex-start" } },
-                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, background: L.bg, color: L.fg, padding: "1px 6px", borderRadius: 4, whiteSpace: "nowrap", marginTop: 1 } }, L.l),
-                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#16234a", lineHeight: 1.5 } }, p.t));
+                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 10, fontWeight: 700, background: L.bg, color: L.fg, padding: "1px 7px", borderRadius: 4, whiteSpace: "nowrap", marginTop: 1 } }, L.l),
+                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12.5, color: "#16234a", lineHeight: 1.5 } }, p.t));
                 }))),
-        /* 제안 */
-        /* @__PURE__ */ React.createElement("div", { style: { background: "#fff", border: "0.5px solid #e6e9ef", borderRadius: 12, padding: "12px 14px" } },
-          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 800, color: "#185fa5", marginBottom: 10 } }, "→ 활성화방안"),
+        /* @__PURE__ */ React.createElement(Card, { title: "활성화방안", accent: "#3d6cca" },
           edit
-            ? /* @__PURE__ */ React.createElement("textarea", { value: plans, onChange: function(e) { setPlans(e.target.value); }, "data-notr": "1",
-                style: { width: "100%", minHeight: 110, fontSize: 12, lineHeight: 1.7, border: "1px solid #d3d1c7", borderRadius: 6, padding: 8, resize: "vertical", fontFamily: "inherit" } })
-            : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } },
+            ? /* @__PURE__ */ React.createElement("div", { style: { padding: "2px" } },
+                /* @__PURE__ */ React.createElement("textarea", { value: plans, onChange: function(e) { setPlans(e.target.value); }, "data-notr": "1",
+                  style: { width: "100%", minHeight: 110, fontSize: 12, lineHeight: 1.7, border: "1px solid #d3d1c7", borderRadius: 6, padding: 8, resize: "vertical", fontFamily: "inherit" } }))
+            : /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 9, padding: "2px" } },
                 plans.split("\n").filter(String).map(function(t, i) {
                   return /* @__PURE__ */ React.createElement("div", { key: i, style: { display: "flex", gap: 8, alignItems: "flex-start" } },
-                    /* @__PURE__ */ React.createElement("span", { style: { color: "#378ADD", fontWeight: 800, marginTop: 1 } }, "→"),
-                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12, color: "#16234a", lineHeight: 1.5 } }, t));
+                    /* @__PURE__ */ React.createElement("span", { style: { color: "#3d6cca", fontWeight: 800, fontSize: 13, marginTop: 1 } }, "→"),
+                    /* @__PURE__ */ React.createElement("span", { style: { fontSize: 12.5, color: "#16234a", lineHeight: 1.5 } }, t));
                 })))
       )
     );
