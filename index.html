@@ -553,11 +553,22 @@ ARI.real=(function(){
  try{
   var c=window.__ARI_CLOUD, e=ARI.embedded;
   function wk(d){
+    /* \u300c\uc2e4\uc81c \ub370\uc774\ud130\uac00 \uc788\ub294\u300d \uc2a4\ub0c5\uc0f7\uc758 \ucd5c\uc2e0 \uc8fc\ucc28 \u2014 \ube48 \uc8fc\ucc28(0\uac74)\ub294 \ubb34\uc2dc */
     if(!d) return '';
     var w='';
     ['ARi','BD'].forEach(function(p){
       var sn=(d[p]&&d[p].snaps)||[];
-      sn.forEach(function(x){ if(x&&x.week&&x.week>w) w=x.week; });
+      sn.forEach(function(x){
+        if(!x||!x.week) return;
+        var has=false;
+        try{
+          var t=x.tot||{};
+          if((t.sA||0)>0||(t.cA||0)>0) has=true;
+          if(!has&&x.area&&x.area.length){ for(var i=0;i<x.area.length;i++){ var r=x.area[i]||{}; if((r.sA||0)>0||(r.cA||0)>0){ has=true; break; } } }
+          if(!has&&x.cust&&x.cust.length) has=true;
+        }catch(e){}
+        if(has&&x.week>w) w=x.week;
+      });
     });
     return w;
   }
