@@ -573,6 +573,9 @@ ARI.real=(function(){
     return w;
   }
   if(!(c&&c.ARi&&c.ARi.area&&c.ARi.area.length)) return e;
+  /* \ud074\ub77c\uc6b0\ub4dc\uac00 \uba85\uc138(cust) \uc5c6\ub294 \ubd88\uc644\uc804 \uad6c\uc870\uba74 \ub0b4\uc7a5 \uc720\uc9c0 */
+  function full(d){ try{ var ok=false; ['ARi','BD'].forEach(function(p){ var sn=(d[p]&&d[p].snaps)||[]; sn.forEach(function(x){ if(x&&x.cust&&x.cust.length) ok=true; }); if(!ok&&d[p]&&d[p].cust&&d[p].cust.length) ok=true; }); return ok; }catch(err){ return false; } }
+  if(!full(c)) return e;
   if(!(wk(c)>wk(e))) return e; /* \uac19\uac70\ub098 \uacfc\uac70\uba74 \ub0b4\uc7a5 \uc720\uc9c0 */
   var out={};
   Object.keys(e).forEach(function(k){ out[k]=e[k]; });
@@ -586,10 +589,11 @@ ARI.real=(function(){
         if(Array.isArray(v)&&!v.length) return;      // 빈 배열은 내장 값을 지키게 둔다
         if(f==='snaps'&&Array.isArray(v)&&e[k]&&Array.isArray(e[k].snaps)){
           /* 주차별 유니온: 내장에만 있는 주차 스냅(치과 명세 포함)을 보존하고, 같은 주차는 클라우드가 이긴다 */
-          var seen={},un=[];
-          v.forEach(function(x){if(x&&x.week)seen[x.week]=1;});
-          e[k].snaps.forEach(function(x){if(x&&x.week&&!seen[x.week])un.push(x);});
-          m[f]=un.concat(v).sort(function(a2,b2){return a2.week<b2.week?-1:(a2.week>b2.week?1:0);});
+          var score=function(x){ if(!x) return -1; var sc=0; try{ sc+=((x.cust&&x.cust.length)||0)*10; var t2=x.tot||{}; if((t2.sA||0)>0) sc+=5; sc+=(x.area&&x.area.length)||0; }catch(e2){} return sc; };
+          var by={};
+          e[k].snaps.forEach(function(x){ if(x&&x.week) by[x.week]=x; });
+          v.forEach(function(x){ if(!x||!x.week) return; var old2=by[x.week]; if(!old2||score(x)>score(old2)) by[x.week]=x; });
+          m[f]=Object.keys(by).sort().map(function(w2){ return by[w2]; });
           return;
         }
         m[f]=v;
