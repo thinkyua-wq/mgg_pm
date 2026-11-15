@@ -12,8 +12,9 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 html[lang=zh] body,html[lang=zh] .wc-tt,html[lang=zh] .card .ttl{font-family:"Microsoft YaHei","微软雅黑","Noto Sans SC","Pretendard",sans-serif}
-body{font-family:"Pretendard","Noto Sans KR","Malgun Gothic","맑은 고딕",-apple-system,sans-serif;color:var(--ink);background:#fff;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.num,.tn{font-family:Arial,"Pretendard",sans-serif;font-variant-numeric:tabular-nums}
+body{font-family:"HanYH","Pretendard","Noto Sans KR","Malgun Gothic","맑은 고딕",-apple-system,sans-serif;color:var(--ink);background:#fff;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.num,.tn{font-family:Arial,"HanYH","Pretendard",sans-serif;font-variant-numeric:tabular-nums}
+@font-face{font-family:"HanYH";src:local("Microsoft YaHei"),local("微软雅黑"),local("PingFang SC");unicode-range:U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF01-FF60;}
 .zh{font-family:"Microsoft YaHei","微软雅黑","Noto Sans SC",sans-serif}
 button,select,textarea,input{font:inherit;color:inherit}
 /* ───── layout ───── */
@@ -72,7 +73,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .pc .hstat{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
 .pc .hstat.first{margin-left:auto}
 .pc .hlab{font-size:10.5px;font-weight:700;opacity:.85}
-.pc .big{font-size:28px;font-weight:900;line-height:1;font-family:Arial,sans-serif;font-variant-numeric:tabular-nums}
+.pc .big{font-size:28px;font-weight:900;line-height:1;font-family:Arial,"HanYH",sans-serif;font-variant-numeric:tabular-nums}
 .pc .big small{font-size:11px;font-weight:700;opacity:.85;margin-left:3px}
 .pc .rows{margin-top:10px;border-top:1px solid rgba(255,255,255,.2);padding-top:8px}
 .pc .rw{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px;opacity:.95}
@@ -92,7 +93,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .ov-tbl th{background:#eef0f3;color:#000;font-weight:800;padding:7px 8px;border:1px solid #cbd5e1;white-space:nowrap;font-size:12.6px}
 .ov-tbl td:first-child{white-space:nowrap}
 .ov-tbl td{padding:6px 8px;border:1px solid #cbd5e1;color:#000;white-space:pre-wrap;vertical-align:middle}
-.ov-tbl td.n,.ov-tbl th.n{text-align:right;font-family:Arial,sans-serif;font-variant-numeric:tabular-nums}
+.ov-tbl td.n,.ov-tbl th.n{text-align:right;font-family:Arial,"HanYH",sans-serif;font-variant-numeric:tabular-nums}
 .ov-tbl td.c{text-align:center}
 .ov-tbl tr.sum td{font-weight:800;background:#f6f8fb}
 .ov-tbl td .rd{color:var(--risk);font-weight:800}
@@ -118,7 +119,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .wc-due.risk{color:var(--risk)}
 .wc-pb{width:80px;height:6px;background:#eef1f4;flex:none;border-radius:3px;overflow:hidden}
 .wc-pb i{display:block;height:100%}
-.wc-pn{font-size:11.6px;font-weight:800;text-align:right;flex:none;font-variant-numeric:tabular-nums;font-family:Arial,sans-serif;min-width:118px}
+.wc-pn{font-size:11.6px;font-weight:800;text-align:right;flex:none;font-variant-numeric:tabular-nums;font-family:Arial,"HanYH",sans-serif;min-width:118px}
 .wc-b:empty{display:none}
 .wc-b{padding:2px 0 10px}
 .card{background:var(--bg);border:1px solid var(--ln2);border-radius:var(--rds);padding:12px 14px;position:relative}
@@ -138,7 +139,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin-top:9px}
 .mg{background:#fff;border:1px solid var(--ln2);border-radius:5px;padding:6px 8px}
 .mg .k{font-size:10.6px;color:var(--gray);font-weight:700}
-.mg .v{font-size:15px;font-weight:900;color:#000;font-family:Arial,sans-serif;font-variant-numeric:tabular-nums;margin-top:1px}
+.mg .v{font-size:15px;font-weight:900;color:#000;font-family:Arial,"HanYH",sans-serif;font-variant-numeric:tabular-nums;margin-top:1px}
 .mg .v small{font-size:10.5px;color:var(--gray);font-weight:700;font-family:inherit}
 .mg .v.zh{font-family:"Microsoft YaHei",Arial,sans-serif;font-size:13.5px}
 .card .foot{display:flex;align-items:center;gap:8px;margin-top:10px}
@@ -147,7 +148,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .due svg{width:11px;height:11px}
 .pbar{flex:1;height:6px;background:var(--ln);border-radius:6px;overflow:hidden;position:relative}
 .pbar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;transition:width .5s}
-.pnum{font-size:12.1px;font-weight:800;color:var(--ink2);min-width:30px;text-align:right;font-family:Arial,sans-serif}
+.pnum{font-size:12.1px;font-weight:800;color:var(--ink2);min-width:30px;text-align:right;font-family:Arial,"HanYH",sans-serif}
 .nxw{margin-top:9px}
 .nxw-k{display:block;font-size:12.6px;font-weight:800;color:var(--ink);margin-bottom:3px}
 .nxw-t{width:100%;border:1px solid var(--ln2);border-radius:5px;background:#fff;padding:6px 8px;font-size:13.2px;line-height:1.5;resize:none;min-height:34px;color:#000}
@@ -170,10 +171,10 @@ button,select,textarea,input{font:inherit;color:inherit}
 .sec-h .tagk{font-size:11px;color:var(--navy2);font-weight:800;margin-right:4px}
 .hqp{border:1px solid var(--line);border-radius:8px;padding:12px 16px;background:#fff}
 .hqp-h{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--navy);padding-bottom:8px;margin-bottom:10px}
-.hqp-h b{font-size:15px;color:var(--navy)}.hqp-v{font-size:20px;font-weight:900;font-family:Arial,sans-serif;color:var(--navy)}.hqp-t{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--navy)}
+.hqp-h b{font-size:15px;color:var(--navy)}.hqp-v{font-size:20px;font-weight:900;font-family:Arial,"HanYH",sans-serif;color:var(--navy)}.hqp-t{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--navy)}
 .hqp-r{display:grid;grid-template-columns:62px 1fr 48px 70px 44px;align-items:center;gap:8px;padding:4px 0;font-size:12.5px}
 .hqp-n{font-weight:800;color:var(--navy)}.hqp-bar{position:relative;height:14px;background:var(--soft);border-radius:3px;overflow:visible}.hqp-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--sky);border-radius:3px}.hqp-bar i.ar{background:var(--sky)}.hqp-bar u{position:absolute;right:0;top:-3px;bottom:-3px;width:2px;background:var(--navy2)}
-.hqp-a{text-align:right;font-weight:900;font-family:Arial,sans-serif}.hqp-g{text-align:right;color:var(--gray);font-family:Arial,sans-serif;font-size:11.5px}.hqp-p{text-align:right;font-weight:800;color:var(--navy2);font-family:Arial,sans-serif}
+.hqp-a{text-align:right;font-weight:900;font-family:Arial,"HanYH",sans-serif}.hqp-g{text-align:right;color:var(--gray);font-family:Arial,"HanYH",sans-serif;font-size:11.5px}.hqp-p{text-align:right;font-weight:800;color:var(--navy2);font-family:Arial,"HanYH",sans-serif}
 .hqp-f{font-size:11px;color:var(--gray);margin-top:8px}
 .segbox{padding:4px 2px}.segh{font-size:14.5px;font-weight:800;color:var(--ink);margin-bottom:6px}
 .legend{font-size:11.5px;color:var(--gray);font-weight:700;margin-bottom:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.legend i{display:inline-block;width:11px;height:11px;border-radius:2px}
@@ -181,13 +182,13 @@ button,select,textarea,input{font:inherit;color:inherit}
 .segr{display:grid;grid-template-columns:80px 1fr 64px;align-items:center;gap:10px;padding:5px 0;font-size:12.5px}.segr.sub{font-size:11.8px;color:var(--gray)}.segr.tot .segk{font-weight:800}
 .segk{font-weight:700;color:var(--ink)}.segk.tg{cursor:pointer}
 .seg{display:flex;height:20px;background:#eef2f8;border-radius:3px;overflow:hidden}.seg i{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden}.seg.rep{height:16px}
-.segn{text-align:right;font-weight:800;font-family:Arial,sans-serif}
+.segn{text-align:right;font-weight:800;font-family:Arial,"HanYH",sans-serif}
 .segnote{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--navy)}
 /* Excel 추가 항목 (부진원인·개선대책 등) */
 .xlines{margin-top:7px;font-size:13px;color:#000;line-height:1.6;font-family:"Microsoft YaHei","Pretendard",sans-serif}.xlines .xk{display:inline-block;min-width:118px;font-weight:800;color:var(--navy);font-family:"Pretendard","Malgun Gothic",sans-serif}
 /* 주별 중점관리고객 (누적 F/U) */
 .kct{font-size:12.6px}.kct th{font-size:11.6px;padding:5px 6px}.kct td{padding:3px 6px;height:34px}.kct td.b{font-weight:800}.kct td.due{background:#fff7e6}
-.kc-in{border:1px solid var(--ln2);border-radius:4px;padding:3px 6px;font-size:12.6px;width:100%;background:#fff;color:#000}.kc-in.n{text-align:right;font-family:Arial,sans-serif;width:64px}.kc-in.zh{font-family:"Microsoft YaHei","Pretendard",sans-serif}
+.kc-in{border:1px solid var(--ln2);border-radius:4px;padding:3px 6px;font-size:12.6px;width:100%;background:#fff;color:#000}.kc-in.n{text-align:right;font-family:Arial,"HanYH",sans-serif;width:64px}.kc-in.zh{font-family:"Microsoft YaHei","Pretendard",sans-serif}
 .kc-sel{border:1px solid var(--ln2);border-radius:4px;padding:3px 4px;font-size:12px;background:#fff}
 .kc-x{border:0;background:transparent;color:#b0b8c4;cursor:pointer;font-size:12px}.kc-x:hover{color:var(--risk)}
 .kc-add{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}.kc-add .kc-in{flex:1;min-width:220px}
@@ -196,12 +197,34 @@ button,select,textarea,input{font:inherit;color:inherit}
 .kc{margin-top:10px;border:1px dashed #c9d4e3;border-radius:6px;padding:8px 10px;background:#fff}
 .kc-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}.kc-h small{font-size:11px;color:var(--gray);font-weight:700}
 .kc-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:6px}
-.kc-f{display:flex;flex-direction:column;gap:2px;min-width:0}.kc-f span{font-size:10.6px;color:var(--gray);font-weight:700}.kc-f input,.kc-f select{border:1px solid var(--ln2);border-radius:4px;padding:4px 6px;font-size:12.8px;width:100%;background:#fff;color:#000;font-family:"Microsoft YaHei","Pretendard",sans-serif}.kc-f.n input{text-align:right;font-family:Arial,sans-serif}.kc-f.w{grid-column:span 5}
+.kc-f{display:flex;flex-direction:column;gap:2px;min-width:0}.kc-f span{font-size:10.6px;color:var(--gray);font-weight:700}.kc-f input,.kc-f select{border:1px solid var(--ln2);border-radius:4px;padding:4px 6px;font-size:12.8px;width:100%;background:#fff;color:#000;font-family:"Microsoft YaHei","Pretendard",sans-serif}.kc-f.n input{text-align:right;font-family:Arial,"HanYH",sans-serif}.kc-f.w{grid-column:span 5}
 .kc-f input.cell-ok,.kc-f select.cell-ok{background:#e8f7f0}
 @media (max-width:900px){.kc-g{grid-template-columns:1fr 1fr}.kc-f.w{grid-column:span 2}}
 /* mini bar in tables */
-.mb{display:inline-flex;align-items:center;gap:6px;min-width:120px}.mb i{display:inline-block;height:9px;background:var(--navy2);border-radius:2px;flex:none}.mb i.ar{background:var(--sky)}.mb b{font-family:Arial,sans-serif;font-size:12.4px}
+.mb{display:inline-flex;align-items:center;gap:6px;min-width:120px}.mb i{display:inline-block;height:9px;background:var(--navy2);border-radius:2px;flex:none}.mb i.ar{background:var(--sky)}.mb b{font-family:Arial,"HanYH",sans-serif;font-size:12.4px}
 .ov-tbl tr.sub td{background:#fbfcfe;color:var(--gray);font-size:12.4px}.ov-tbl td.tg{cursor:pointer;font-weight:800}
+.stpx{border:1px solid var(--line,#e2e7ef);border-radius:10px;overflow:hidden;background:#fff;margin:4px 0 16px}
+.stpx .sx-seg{display:grid;grid-template-columns:96px 84px 158px 1fr;border-top:1px solid #eef1f5}
+.stpx .sx-seg:first-child{border-top:0}
+.stpx .sx-sc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#fff;padding:10px 6px}
+.stpx .sx-sc b{font-size:13.5px;letter-spacing:.2px}.stpx .sx-sc span{font-size:10.5px;opacity:.92}
+.stpx .sx-pr{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px;color:#39455c;border-right:1px solid #eef1f5;background:#fbfcfe}
+.stpx .sx-mg2{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 12px;border-right:1px solid #eef1f5;background:#f6f9ff}
+.stpx .sx-mg2 .a{font-size:11px;color:#8a97a8}.stpx .sx-mg2 .b2{font-size:13px;font-weight:800;color:var(--navy,#16234a)}.stpx .sx-mg2 .d{font-size:11px;font-weight:800;color:#1f9d57}
+.stpx .sx-ch{padding:8px 14px 10px}
+.stpx .sx-br{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:8px;margin:3px 0}
+.stpx .sx-br .nm{font-size:11px;font-weight:700;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stpx .sx-tk{position:relative;height:13px;background:linear-gradient(90deg,#f4f6fa 1px,transparent 1px) 0 0/12.5% 100%,#fafbfd;border-radius:3px}
+.stpx .sx-tk i{position:absolute;top:2px;height:9px;border-radius:2px}
+.stpx .sx-tk em{position:absolute;top:-1px;font-size:10px;font-style:normal;font-weight:700;color:#6b7684;white-space:nowrap}
+.stpx .sx-lg2{display:flex;gap:14px;font-size:11px;color:#5b6b82;padding:8px 14px;border-top:1px solid #eef1f5;background:#fbfcfe}
+.stpx .sx-lg2 i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+tr.foldr{cursor:pointer}
+tr.foldr>td:first-child:not([onclick])::before{content:'▸ ';color:#9aa5b4;font-size:10px}
+tr.foldr.fopen>td:first-child:not([onclick])::before{content:'▾ ';color:var(--navy,#16234a)}
+tr.fold-dtl>td{background:#fbfcfe}
+tr.fold-dtl .wlist{margin:0}
+@media print{tr.fold-dtl{display:table-row!important}}
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}
 .tabs button{border:1px solid #c9cfd9;background:#fff;color:var(--gray);font-size:12px;font-weight:800;padding:4px 11px;border-radius:5px;cursor:pointer}.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .pt{width:100%;border-collapse:collapse;font-size:13.2px}.pt th{background:#eef0f3;padding:7px 9px;border:1px solid #cbd5e1;font-size:12.6px}.pt td{padding:7px 9px;border:1px solid #cbd5e1}.pt td.b{font-weight:800}.pt td.mg{background:var(--soft);font-weight:800;color:var(--navy)}
@@ -213,7 +236,7 @@ button,select,textarea,input{font:inherit;color:inherit}
 .om-tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
 .om-tile{background:#fff;border:1px solid #e7ebf0;padding:10px 12px}
 .om-tl{font-size:12.6px;color:var(--gray);font-weight:700}
-.om-tv{font-size:26px;font-weight:900;font-family:Arial,sans-serif;font-variant-numeric:tabular-nums;color:#000;line-height:1.15;margin-top:2px}
+.om-tv{font-size:26px;font-weight:900;font-family:Arial,"HanYH",sans-serif;font-variant-numeric:tabular-nums;color:#000;line-height:1.15;margin-top:2px}
 .om-tv small{font-size:11px;color:var(--gray);font-weight:700;font-family:inherit;margin-left:2px}
 .om-ts{font-size:11.5px;color:var(--gray);margin-top:2px;font-weight:600}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:6px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
@@ -435,6 +458,50 @@ function cardBody(it,tier,p){const pr=prioOf(it.id);
 function editNote(el,id){el.contentEditable='true';el.focus();const r=document.createRange();r.selectNodeContents(el);r.collapse(false);const s=getSelection();s.removeAllRanges();s.addRange(r);}
 function saveNote(el,id){if(el.contentEditable!=='true')return;el.contentEditable='false';eset(id,'note',el.innerText.trim(),true,el);}
 function wlist(items){return `<div class="wlist">${items.map(cardRow).join('')}</div>`;}
+function wlistOpen(OPEN,hint,items){const o=items.filter(x=>OPEN[x.id]);return o.length?wlist(o):`<div class="foot-note" style="margin:4px 0 2px">${hint}</div>`;}
+function foldCore(str,items,keyFn){
+  if(!items||!items.length)return str;
+  VIEWMODE.foldOpen=VIEWMODE.foldOpen||{};
+  const tb=str.lastIndexOf('<tbody>');const te=str.indexOf('</tbody>',tb);
+  if(tb<0||te<0)return str+'<div style="height:10px"></div>'+wlist(items);
+  const parts=str.slice(tb+7,te).split('</tr>');
+  const rows=parts.map(p=>(/<tr/.test(p)?{p,sum:/class="[^"]*sum/.test(p.slice(0,160)),txt:p.replace(/<[^>]+>/g,''),items:[]}:{p,plain:true}));
+  const data=rows.filter(r=>!r.plain&&!r.sum);
+  const left=[];
+  items.forEach(it=>{
+    const k=keyFn?keyFn(it):null;
+    if(k){const r=data.find(r2=>r2.txt.replace(/^[\s\u25b8\u25be]+/,'').indexOf(k)===0)||data.find(r2=>r2.txt.indexOf(k)>=0);if(r){r.items.push(it);return;}}
+    left.push(it);
+  });
+  let i=0;
+  data.forEach(r=>{if(!r.items.length&&i<left.length)r.items.push(left[i++]);});
+  const rem=left.slice(i);
+  let out='';
+  rows.forEach(r=>{
+    if(r.plain){out+=r.p;return;}
+    if(!r.items||!r.items.length){out+=r.p+'</tr>';return;}
+    const ids=r.items.map(x=>x.id);
+    const open=ids.some(id=>VIEWMODE.foldOpen[id]);
+    let p=r.p.replace('<tr',`<tr data-fid="${ids.join('\u0001').replace(/"/g,'&quot;')}" onclick="foldTogEl(event,this)"`);
+    const tag=p.slice(0,p.indexOf('>'));
+    if(/class="/.test(tag))p=p.replace('class="',`class="foldr${open?' fopen':''} `);
+    else p=p.replace('<tr',`<tr class="foldr${open?' fopen':''}"`);
+    out+=p+'</tr>';
+    out+=`<tr class="fold-dtl"${open?'':' style="display:none"'}><td colspan="99" style="padding:6px 2px 12px"><div class="wlist">${r.items.map(cardRow).join('')}</div></td></tr>`;
+  });
+  return str.slice(0,tb+7)+out+str.slice(te)+(rem.length?'<div style="height:10px"></div><div class="wlist">'+rem.map(cardRow).join('')+'</div>':'');
+}
+function foldTbl(tbl,items,keyFn){return foldCore(tbl,items,keyFn);}
+function foldLast(h,items,keyFn){return foldCore(h,items,keyFn);}
+window.foldTogEl=function(ev,el){
+  if(ev&&ev.target&&ev.target.closest&&ev.target.closest('a,button,select,textarea,input,[contenteditable="true"],td[onclick],[data-tog]'))return;
+  const ids=(el.getAttribute('data-fid')||'').split('\u0001');
+  VIEWMODE.foldOpen=VIEWMODE.foldOpen||{};
+  const any=ids.some(id=>VIEWMODE.foldOpen[id]);
+  ids.forEach(id=>{VIEWMODE.foldOpen[id]=!any;if(!any&&typeof OPEN!=='undefined')OPEN[id]=true;});
+  renderPage();
+};
+window.compTog=function(id){VIEWMODE.compOpen=VIEWMODE.compOpen||{};VIEWMODE.compOpen[id]=!VIEWMODE.compOpen[id];renderPage();};
 
 /* 자유 편집 블록 (인사이트 등) */
 function editBlock(el,id){el.contentEditable='true';el.focus();}
@@ -573,12 +640,12 @@ function hqItems(MB,MA,filter){const out=[];HQS.forEach(h=>{[['BD',MB],['ARi',MA
 const EXEC_COLS=`<colgroup><col style="width:90px"><col style="width:52px"><col style="width:74px"><col style="width:76px"><col style="width:54px"><col style="width:86px"><col style="width:68px"><col style="width:56px"><col style="width:128px"><col style="width:96px"><col style="width:96px"><col></colgroup><thead><tr><th>본부</th><th>제품</th><th class="n">월목표EA</th><th class="n">월실적EA</th><th class="n">달성</th><th>치과 목표/실적</th><th class="n">장기미구매</th><th class="n">재구매</th><th>세미나전환</th><th>최우수 담당</th><th>집중관리 담당</th><th>현황분석</th></tr></thead>`;
 const clipTd=(t,cls)=>`<td class="clip ${cls||''}" title="더블클릭하면 전체 내용" ondblclick="this.classList.toggle('full')">${esc(t)}</td>`;
 function execCells(p,x,note){const mt=x.mT!=null&&x.mT!==''?x.mT:null;return `<td class="c">${p}</td><td class="n">${mt!=null?fmt(mt,mt%1?1:0):'—'}</td><td class="n">${fmt0(x.mA)}</td><td class="n">${mt?`<span class="rd">${pct(x.mA,mt)}%</span>`:'–'}</td><td class="c">${x.mcT} / ${x.mcA}</td><td class="n">${fmt0(x.dead)}</td><td class="n">${x.repPct!=null?x.repPct+'%':'–'}</td>${clipTd(x.semTxt||'—','zh')}${clipTd(x.best?`${x.best.name} ${fmt0(x.best.q)}EA`:'—','zh')}${clipTd(x.focus?`${x.focus.name} ${x.focus.c}곳`:'—','zh')}${clipTd(note,'zh')}`;}
-function hqTable(MB,MA){const open=!!VIEWMODE.hqOpen;const X=hqx();
+function hqTable(MB,MA){const open=VIEWMODE.hqOpen!==false;const X=hqx();
   let h=`<div class="ov-wrap"><table class="ov-tbl uni">${EXEC_COLS}<tbody>`;
-  [['BD',MB],['ARi',MA]].forEach(([p,M],i)=>{const T=hqTotal(MB,MA,p);h+=`<tr class="sum">${i===0?`<td rowspan="2" class="tg" onclick="VIEWMODE.hqOpen=!VIEWMODE.hqOpen;renderPage()" title="본부별 펼치기/접기">${open?'▾':'▸'} 합계</td>`:''}${execCells(p,T,T.ana)}</tr>`;});
+  [['BD',MB],['ARi',MA]].forEach(([p,M],i)=>{const T=hqTotal(MB,MA,p);h+=`<tr class="sum">${i===0?`<td rowspan="2" class="tg" onclick="VIEWMODE.hqOpen=(VIEWMODE.hqOpen===false);renderPage()" title="본부별 펼치기/접기">${open?'▾':'▸'} 합계</td>`:''}${execCells(p,T,T.ana)}</tr>`;});
   if(open)HQS.forEach(hq=>{const ao=!!OPEN['hqa|'+hq];const hasA=X&&areaViews(hq,'BD').length;
     [['BD',MB],['ARi',MA]].forEach(([p,M],i)=>{const v=hqView(MB,MA,hq,p);const note=noteOf({id:`hq|${p}|${hq}`,note:''})||(v.ana!=null?v.ana:autoNote(v,M));
-      h+=`<tr>${i===0?`<td rowspan="2" class="${hasA?'tg':''}" style="font-weight:800" ${hasA?`onclick="OPEN['hqa|${hq}']=!OPEN['hqa|${hq}'];renderPage()" title="大区별 펼치기"`:''}>${hasA?(ao?'▾ ':'▸ '):''}${HQKO[hq]}</td>`:''}${execCells(p,v,note)}</tr>`;});
+      h+=`<tr>${i===0?`<td rowspan="2" style="font-weight:800">${HQKO[hq]}${hasA?` <span onclick="event.stopPropagation();OPEN['hqa|${hq}']=!OPEN['hqa|${hq}'];renderPage()" title="大区 펼치기/접기" style="display:inline-block;margin-left:6px;padding:1px 7px;border:1px solid #c9cfd9;border-radius:9px;font-size:9.5px;font-weight:700;color:#5b6b82;cursor:pointer;white-space:nowrap">${ao?'▾':'▸'} 大区</span>`:''}</td>`:''}${execCells(p,v,note)}</tr>`;});
     if(ao){const ab=areaViews(hq,'BD'),aa=areaViews(hq,'ARi');ab.forEach((v,k)=>{const v2=aa[k];h+=`<tr class="sub"><td rowspan="${v2?2:1}">　${esc(v.ko)}</td>${execCells('BD',v,v.ana||'')}</tr>`;if(v2)h+=`<tr class="sub">${execCells('ARi',v2,v2.ana||'')}</tr>`;});}});
   return h+`</tbody></table></div><div class="foot-note">${X?`본부 제출 Excel 「${esc(X.file)}」 기준 (${esc(X.asOf)}) · 최우수·집중관리 담당은 명세에서 계산`:'명세 계산값 (이 주차 본부 제출 Excel 없음)'} · 합계 행 → 본부별, 본부명 → 大区별 ${open?'접힘':'펼침'} · 잘린 칸은 더블클릭하면 전체 표시</div>`;}
 /* EXEC = 위 본부별 실행관리를 본부 단위(BD+ARi)로 뽑아낸 리스트 · 열 구성 동일 */
@@ -622,8 +689,8 @@ function pageWreport(){const MB=model('BD'),MA=model('ARi');const asOf=MB.snap.c
   ${secH(`${WEEK.slice(5)} 금주현황 · 주간실적/장기미구매/주요이슈 Auto Insight`,'데이터에서 자동 생성 · 더블클릭하여 보완 (주차별 저장)','')}
   <div class="ins" ondblclick="editBlock(this,'${insId}')" onblur="saveBlock(this,'${insId}')">${insSaved!=null?insSaved:autoInsight(MB,MA)}</div>${insSaved!=null?`<div class="foot-note">수정본 표시 중 · <a href="#" onclick="eset('${insId}','html',null);renderPage();return false">자동 생성으로 되돌리기</a></div>`:''}
   ${hqBarsBlock(MB,MA)}
-  ${secH(`${WEEK.slice(5)} 본주 본부별 실행관리`,`${hqx()?'본부 제출 Excel 취합 기준':'명세('+esc(MB.snap.cur.week||'')+') 기준'} · 항목을 누르면 상세 · 현황분석 더블클릭 수정 · 다음주 업무 주차별 저장`,'hq',`<button onclick="VIEWMODE.hqOpen=!VIEWMODE.hqOpen;renderPage()">${VIEWMODE.hqOpen?'▾ 본부별 접기':'▸ 본부별 펼치기'}</button>`+fbtn)}
-  ${hqTable(MB,MA)}<div style="height:10px"></div>${wlist(hqItems(MB,MA,f))}
+  ${secH(`${WEEK.slice(5)} 본주 본부별 실행관리`,`${hqx()?'본부 제출 Excel 취합 기준':'명세('+esc(MB.snap.cur.week||'')+') 기준'} · 항목을 누르면 상세 · 현황분석 더블클릭 수정 · 다음주 업무 주차별 저장`,'hq',`<button onclick="VIEWMODE.hqOpen=(VIEWMODE.hqOpen===false);renderPage()">${VIEWMODE.hqOpen!==false?'▾ 본부별 접기':'▸ 본부별 펼치기'}</button>`+fbtn)}
+  ${foldTbl(hqTable(MB,MA),hqItems(MB,MA,f).map(it=>Object.assign({},it,{id:'x'+it.id})),it=>it.cat)}
   ${kcSection()}
   <div class="foot-note" style="margin-top:14px">MGI PM · 주간보고 엑셀(客户开发现况 · 명세) 기준 · 데이터 ${SRC}</div>`;}
 
@@ -688,7 +755,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>본부</th><th class="n">BD 실적</th><th class="n">BD 목표</th><th>BD 달성</th><th class="n">ARi 실적</th><th class="n">ARi 목표</th><th>ARi 달성</th><th class="n">진입치과 BD/ARi</th></tr></thead><tbody>`;
   rows.forEach(r=>{h+=`<tr><td style="font-weight:800">${HQKO[r.hq]}</td><td class="n">${fmt0(r.b.a)}</td><td class="n">${fmt(r.b.t,r.b.t%1?1:0)}</td><td>${mbar(r.b.a,r.b.t)}</td><td class="n">${fmt0(r.a.a)}</td><td class="n">${fmt0(r.a.t)}</td><td>${mbar(r.a.a,r.a.t,'ar')}</td><td class="n">${r.B.cumA} / ${r.A.cumA}</td></tr>`;});
   h+=`<tr class="sum"><td>합계</td><td class="n">${fmt0(TB.a)}</td><td class="n">${fmt0(TB.t)}</td><td>${mbar(TB.a,TB.t)}</td><td class="n">${fmt0(TA.a)}</td><td class="n">${fmt0(TA.t)}</td><td>${mbar(TA.a,TA.t,'ar')}</td><td class="n">${MB.T.cumA} / ${MA.T.cumA}</td></tr></tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(rows.map(r=>{const ar=r.B.areas.map(a=>`${a.key} ${fmt0(valBy(a,m1).a)}`).join(' · ');
+  h=foldLast(h,rows.map(r=>{const ar=r.B.areas.map(a=>`${a.key} ${fmt0(valBy(a,m1).a)}`).join(' · ');
     return {id:`hqs|${r.hq}`,cat:HQKO[r.hq],prod:null,title:`${lab} 판매현황 (BD+ARi)`,a:r.b.a+r.a.a,t:r.b.t+r.a.t,unit:'EA',footLabel:lab+' 달성(BD+ARi)',src:'명세 기준',
       note:`BD ${fmt0(r.b.a)}/${fmt0(r.b.t)}EA(${pct(r.b.a,r.b.t)}%) · ARi ${fmt0(r.a.a)}/${fmt0(r.a.t)}EA(${pct(r.a.a,r.a.t)}%) · 大区: ${ar}`,
       metrics:[{k:'BD '+lab,v:fmt0(r.b.a),sub:'/ '+fmt0(r.b.t)},{k:'ARi '+lab,v:fmt0(r.a.a),sub:'/ '+fmt0(r.a.t)},{k:'BD 연 누적',v:fmt0(r.B.sA),sub:pct(r.B.sA,r.B.sT)+'%'},{k:'ARi 연 누적',v:fmt0(r.A.sA),sub:pct(r.A.sA,r.A.sT)+'%'},{k:'진입치과',v:`${r.B.cumA}<small>/${r.B.cumT}</small>`,sub:`ARi ${r.A.cumA}/${r.A.cumT}`},{k:'장기미구매(BD)',v:fmt0(r.B.dead),sub:`${pct(r.B.dead,r.B.ent)}%`}]};}));
@@ -698,7 +765,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>#</th><th>본부</th><th>지역</th><th>대리상</th><th>구분</th><th class="n">하부고객</th><th>영업담당</th><th>제품구성</th><th class="n">판매수량</th><th class="n">누적</th></tr></thead><tbody>`;
   DL.list.slice(0,10).forEach((d,i)=>{h+=`<tr><td class="c">${i+1}</td><td>${esc(d.ko)}</td><td class="zh">${esc(d.prov)}</td><td class="zh">${esc(d.d)}</td><td>${d.dso?'DSO':'일반'}</td><td class="n">${d.hub}</td><td class="zh">${esc(d.owner)}</td><td>${d.prod}</td><td class="n">${fmt0(d.q)}</td><td class="n">${fmt0(d.y)}</td></tr>`;});
   h+=`</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(DL.list.slice(0,8).map((d,i)=>({id:`dl|${d.d}`,cat:d.ko,prod:null,title:`TOP${i+1} 대리상 ${d.d}`,a:d.y,t:d.hqY,unit:'EA',pn:`${fmt0(d.q)} EA · 본부 점유 ${pct(d.y,d.hqY)}%`,footLabel:'본부 내 연누적 점유',tier:tierLow(100-pct(d.y,d.hqY),60,85),tierHint:'본부 내 점유 비중(높을수록 집중 리스크 — 50%↑ 위험)',src:'명세 기준',
+  h=foldLast(h,DL.list.slice(0,8).map((d,i)=>({id:`dl|${d.d}`,cat:d.ko,prod:null,title:`TOP${i+1} 대리상 ${d.d}`,a:d.y,t:d.hqY,unit:'EA',pn:`${fmt0(d.q)} EA · 본부 점유 ${pct(d.y,d.hqY)}%`,footLabel:'본부 내 연누적 점유',tier:tierLow(100-pct(d.y,d.hqY),60,85),tierHint:'본부 내 점유 비중(높을수록 집중 리스크 — 50%↑ 위험)',src:'명세 기준',
     note:`${d.prov} · ${d.dso?'DSO':'일반'} · 하부 치과 ${d.hub}곳(신규 ${d.newc}) · ${lab2} ${fmt0(d.q)}EA (BD ${fmt0(d.bq)}${d.aq?' · ARi '+fmt0(d.aq):''}) · 연 누적 ${fmt0(d.y)}EA · 담당 ${d.owner}`,
     metrics:[{k:lab2+' 판매',v:fmt0(d.q),sub:'EA'},{k:'연 누적',v:fmt0(d.y),sub:'EA'},{k:'하부 치과',v:d.hub,sub:`신규 ${d.newc}`},{k:'본부 내 점유',v:pct(d.y,d.hqY)+'%'},{k:'영업담당',v:esc(d.owner),zh:true},{k:'TOP 하부',v:esc(d.top||'–'),zh:true}]})));
   /* 3 CUSTOMER */
@@ -708,7 +775,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   HQS.forEach(hq=>{h+=cRow(hq,HB[hq],HA[hq],false,hq);if(OPEN['cx|'+hq])HB[hq].areas.forEach(a=>{const aa=AA.A[a.key]||{cumT:0,cumA:0,prvCumA:0};h+=cRow('　'+a.key,a,aa,true);});});
   h+=cRow('合计',{cumT:MB.T.cumT,cumA:MB.T.cumA,prvCumA:MB.T.prvCumA||MB.T.cumA},{cumT:MA.T.cumT,cumA:MA.T.cumA,prvCumA:MA.T.prvCumA||MA.T.cumA}).replace('<tr class="">','<tr class="sum">');
   h+=`</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(HQS.map(hq=>{const b=HB[hq],a=HA[hq];return {id:`cust|${hq}`,cat:HQKO[hq],prod:null,title:'판매고객(진입치과) 연 목표 관리',a:b.cumA+a.cumA,t:b.cumT+a.cumT,unit:'곳',tier:tierYear(b.cumA+a.cumA,b.cumT+a.cumT),tierHint:'연 경과일 대비 진입 진도',footLabel:'연 진입 달성(BD+ARi)',due:'12/31',src:'명세 기준',
+  h=foldLast(h,HQS.map(hq=>{const b=HB[hq],a=HA[hq];return {id:`cust|${hq}`,cat:HQKO[hq],prod:null,title:'판매고객(진입치과) 연 목표 관리',a:b.cumA+a.cumA,t:b.cumT+a.cumT,unit:'곳',tier:tierYear(b.cumA+a.cumA,b.cumT+a.cumT),tierHint:'연 경과일 대비 진입 진도',footLabel:'연 진입 달성(BD+ARi)',due:'12/31',src:'명세 기준',
     note:`BD ${b.cumA}/${b.cumT}곳(${pct(b.cumA,b.cumT)}%)${MB.snap.prv?` 전주 +${b.cumA-b.prvCumA}`:''} · ARi ${a.cumA}/${a.cumT}곳(${pct(a.cumA,a.cumT)}%)${MA.snap.prv?` 전주 +${a.cumA-a.prvCumA}`:''} · 당월 신규 BD ${b.mcA}/${b.mcT} · ARi ${a.mcA}/${a.mcT}`,
     metrics:[{k:'BD 누적/목표',v:`${b.cumA}<small>/${b.cumT}</small>`},{k:'ARi 누적/목표',v:`${a.cumA}<small>/${a.cumT}</small>`},{k:'BD 전주대비',v:MB.snap.prv?'+'+(b.cumA-b.prvCumA):'–'},{k:'ARi 전주대비',v:MA.snap.prv?'+'+(a.cumA-a.prvCumA):'–'},{k:'당월 신규 BD',v:`${b.mcA}<small>/${b.mcT}</small>`},{k:'당월 신규 ARi',v:`${a.mcA}<small>/${a.mcT}</small>`}]};}));
   /* 3-1 STOCK */
@@ -718,7 +785,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   HQS.forEach(hq=>{h+=sRow(hq,HB[hq],HA[hq],false,hq);if(OPEN['sx|'+hq])HB[hq].areas.forEach(a=>{h+=sRow('　'+a.key,a,AA.A[a.key]||{dead:0,ent:0},true);});});
   h+=sRow('合计',{dead:MB.T.dead,ent:MB.T.ent},{dead:MA.T.dead,ent:MA.T.ent}).replace('<tr class="">','<tr class="sum">');
   h+=`</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(HQS.map(hq=>{const b=HB[hq],a=HA[hq];const r=pct(b.dead,b.ent);const worst=b.areas.slice().sort((x,y)=>y.dead-x.dead)[0];const f=MB.H[hq].focus;
+  h=foldLast(h,HQS.map(hq=>{const b=HB[hq],a=HA[hq];const r=pct(b.dead,b.ent);const worst=b.areas.slice().sort((x,y)=>y.dead-x.dead)[0];const f=MB.H[hq].focus;
     return {id:`stock|${hq}`,cat:HQKO[hq],prod:null,title:'장기미구매 고객 관리 (BD)',a:b.dead,t:b.ent,unit:'곳',pn:`${b.dead} / ${b.ent}곳 (비중 ${r}%)`,tier:tierLow(r,35,49),tierHint:'장기미구매 비중 (≤35% 좋음 · ≤49% 보통 · 50%↑ 위험)',footLabel:'장기미구매 비중',src:'명세 기준',
       note:`BD 장기미구매 ${b.dead}곳 / 진입 ${b.ent}곳 (${r}%)${worst?` · 최다 大区 ${worst.key} ${worst.dead}곳`:''}${f?` · 집중관리 담당 ${f.name} ${f.c}곳`:''} · ARi ${a.dead}/${a.ent}곳`,
       metrics:[{k:'BD 장기미구매',v:b.dead,sub:`${r}%`},{k:'ARi 장기미구매',v:a.dead,sub:`${pct(a.dead,a.ent)}%`},{k:'최다 大区',v:worst?esc(worst.key):'–',sub:worst?worst.dead+'곳':''},{k:'집중관리 담당',v:f?esc(f.name):'–',sub:f?f.c+'곳':'',zh:true},{k:'재구매 비중',v:pct(MB.H[hq].rep,b.ent)+'%'},{k:'목표',v:'≤30%'}]};}));
@@ -731,15 +798,15 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   HQS.forEach(hq=>{h+=pRow(hq,HB[hq],HA[hq],false,hq);if(OPEN['px|'+hq])HB[hq].areas.forEach(a=>{h+=pRow('　'+a.key,a,AA.A[a.key]||{st:{'已确认':0,'跟进中':0,'有意向':0}},true);});});
   const TS={b:{st:{'已确认':0,'跟进中':0,'有意向':0}},a:{st:{'已确认':0,'跟进中':0,'有意向':0}}};HQS.forEach(hq=>Object.keys(TS.b.st).forEach(k=>{TS.b.st[k]+=HB[hq].st[k];TS.a.st[k]+=HA[hq].st[k];}));
   h+=pRow('合计',TS.b,TS.a).replace('<tr class="">','<tr class="sum">')+`</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(HQS.map(hq=>{const b=HB[hq],a=HA[hq];const tot=pc(b.st)+pc(a.st),non=b.non+a.non;return {id:`prog|${hq}`,cat:HQKO[hq],prod:null,title:'영업진도 (미진입 고객 전환)',a:tot,t:non,unit:'곳',pn:`${tot} / ${non}곳 (진도관리 ${pct(tot,non)}%)`,tier:tierLow(100-pct(tot,non),30,60),tierHint:'미구매 치과 중 진도관리(기확인+확인중+의향중) 비중 (≥70% 좋음 · ≥40% 보통)',footLabel:'미구매 치과 중 진도관리 비중',src:'명세 기준',
+  h=foldLast(h,HQS.map(hq=>{const b=HB[hq],a=HA[hq];const tot=pc(b.st)+pc(a.st),non=b.non+a.non;return {id:`prog|${hq}`,cat:HQKO[hq],prod:null,title:'영업진도 (미진입 고객 전환)',a:tot,t:non,unit:'곳',pn:`${tot} / ${non}곳 (진도관리 ${pct(tot,non)}%)`,tier:tierLow(100-pct(tot,non),30,60),tierHint:'미구매 치과 중 진도관리(기확인+확인중+의향중) 비중 (≥70% 좋음 · ≥40% 보통)',footLabel:'미구매 치과 중 진도관리 비중',src:'명세 기준',
     note:`BD 기확인 ${b.st['已确认']} · 확인중 ${b.st['跟进中']} · 의향중 ${b.st['有意向']} (미구매 ${b.non}곳) · ARi 기확인 ${a.st['已确认']} · 확인중 ${a.st['跟进中']} · 의향중 ${a.st['有意向']} (미구매 ${a.non}곳)`,
     metrics:[{k:'BD 기확인',v:b.st['已确认']},{k:'BD 확인중',v:b.st['跟进中']},{k:'BD 의향중',v:b.st['有意向']},{k:'ARi 기확인',v:a.st['已确认']},{k:'ARi 확인중',v:a.st['跟进中']},{k:'ARi 의향중',v:a.st['有意向']}]};}));
   /* 5 SEMINAR */
   h+=secH('5 SEMINAR 세미나 고객전환현황','2026년 9월 세미나 이후 · 방문율·진도율은 기구매 제외 기준 · 상세는 「4. 세미나 고객전환」','');
-  h+=semTable()+'<div style="height:10px"></div>'+wlist(semItems());
+  h=foldLast(h+semTable(),semItems(),it=>it.cat);
   /* 6 EXEC */
   h+=secH('6 EXEC 본부별 실행관리 리스트','본부별 실행관리를 본부 단위(BD+ARi)로 합산 · 열 구성 동일 · 집중관리 = 장기미구매 최다 보유 담당','');
-  h+=execTable(MB,MA)+'<div style="height:10px"></div>'+wlist(execItems(MB,MA));
+  h=foldLast(h+execTable(MB,MA),execItems(MB,MA));
   return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 주간보고 엑셀(客户开发现况 · 명세) 기준 · 데이터 ${SRC}</div>`;}
 
 /* 대리상 집계 */
@@ -784,7 +851,7 @@ function pageRegion(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('B
   h+=secH('진도 · 연간목표 대비','연 경과일 대비 진도로 좋음/보통/위험 판정 · 마감 12/31','');
   const G=[['통합 판매',T.sA+A.sA,T.sT+A.sT,'개'],['통합 진입',T.cumA+A.cumA,T.cumT+A.cumT,'곳'],['BD 판매',T.sA,T.sT,'개'],['BD 진입',T.cumA,T.cumT,'곳'],['ARi 판매',A.sA,A.sT,'개'],['ARi 진입',A.cumA,A.cumT,'곳']];
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>지표</th><th class="n">실적</th><th class="n">연 목표</th><th>달성</th><th>판정</th></tr></thead><tbody>${G.map(g=>{const t=tierYear(g[1],g[2]);return `<tr><td style="font-weight:800">${g[0]}</td><td class="n">${fmt0(g[1])}</td><td class="n">${fmt0(g[2])}</td><td>${mbar(g[1],g[2],/ARi/.test(g[0])?'ar':'')}</td><td><span class="st-sel ${t.key}">${t.label}</span></td></tr>`;}).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(G.map(g=>({id:`goal|${g[0]}`,cat:'연간목표',prod:/BD/.test(g[0])?'BD':/ARi/.test(g[0])?'ARi':null,title:g[0].replace(/^(BD|ARi) /,''),a:g[1],t:g[2],unit:g[3],tier:tierYear(g[1],g[2]),tierHint:'연 경과일 대비 진도',footLabel:'연 달성',due:'12/31',src:'명세 기준',note:`${g[0]} ${fmt0(g[1])}/${fmt0(g[2])}${g[3]} · 달성 ${fmt(g[1]/g[2]*100,1)}% · 잔여 ${fmt0(Math.max(0,g[2]-g[1]))}${g[3]}`,metrics:[{k:'실적',v:fmt0(g[1])},{k:'연 목표',v:fmt0(g[2])},{k:'잔여',v:fmt0(Math.max(0,g[2]-g[1]))},{k:'달성률',v:fmt(g[1]/g[2]*100,1)+'%'},{k:'연 경과',v:yearElapsed()+'%'}]})));
+  h=foldLast(h,G.map(g=>({id:`goal|${g[0]}`,cat:'연간목표',prod:/BD/.test(g[0])?'BD':/ARi/.test(g[0])?'ARi':null,title:g[0].replace(/^(BD|ARi) /,''),a:g[1],t:g[2],unit:g[3],tier:tierYear(g[1],g[2]),tierHint:'연 경과일 대비 진도',footLabel:'연 달성',due:'12/31',src:'명세 기준',note:`${g[0]} ${fmt0(g[1])}/${fmt0(g[2])}${g[3]} · 달성 ${fmt(g[1]/g[2]*100,1)}% · 잔여 ${fmt0(Math.max(0,g[2]-g[1]))}${g[3]}`,metrics:[{k:'실적',v:fmt0(g[1])},{k:'연 목표',v:fmt0(g[2])},{k:'잔여',v:fmt0(Math.max(0,g[2]-g[1]))},{k:'달성률',v:fmt(g[1]/g[2]*100,1)+'%'},{k:'연 경과',v:yearElapsed()+'%'}]})));
   /* 월별현황 */
   h+=secH('월별현황','본부 합산 · 신규고객 = 월 진입 · 달성 = 판매량/판매목표','');
   const mrow=(p,M)=>{const S=M.snap.cur;const out={};for(let m=1;m<=12;m++){out[m]={cA:0,sT:0,sA:0};(S.area||[]).forEach(r=>{const x=(r.m||{})[String(m)]||{};out[m].cA+=n(x.cA);out[m].sT+=n(x.sT);out[m].sA+=n(x.sA);});const g=((MGOAL[p]||{})[String(m)]);if(g&&g.sT)out[m].sT=g.sT;}return out;};
@@ -801,12 +868,12 @@ function pageRegion(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('B
   const areaItems=[];HQS.forEach(hq=>HB[hq].areas.forEach(a=>{const aa=AA.A[a.key]||{mA:0,mcA:0,cumA:0,dead:0,ent:0};areaItems.push({id:`area|${a.key}`,cat:HQKO[hq],prod:null,title:`${a.key} 당월 실행관리`,a:a.mA,t:a.mT,unit:'EA',src:'명세 기준',
     note:`BD 당월 ${fmt0(a.mA)}/${fmt0(a.mT)}EA(${pct(a.mA,a.mT)}%) · 금주 +${fmt0(a.wk)} · 신규진입 ${a.mcA}/${a.mcT} · 진입치과 ${a.cumA}곳 · 장기미구매 ${a.dead}곳(${pct(a.dead,a.ent)}%) · ARi 당월 ${fmt0(aa.mA)}EA`,
     metrics:[{k:'진입치과',v:a.cumA,sub:`ARi ${aa.cumA}`},{k:'당월 BD',v:fmt0(a.mA),sub:'EA'},{k:'금주',v:'+'+fmt0(a.wk)},{k:'신규진입',v:`${a.mcA}<small>/${a.mcT}</small>`},{k:'장기미구매',v:a.dead,sub:pct(a.dead,a.ent)+'%'},{k:'진도관리',v:a.st['已确认']+a.st['跟进中']+a.st['有意向'],sub:`미구매 ${a.non}`}]});}));
-  h+=wlist(areaItems);
+  h=foldLast(h,areaItems);
   /* 고객 집중도 */
   h+=secH('고객 집중도 — 본부별 판매 비중 구성','26년 누적 판매수량 기준 · TOP1 50%↑ 집중 리스크','');
   const conc=HQS.map(hq=>{const S=MB.snap;const PM=provMap();const cs=S.cust.filter(c=>(PM[c.prov]||{}).hq===hq&&n(c.tot)>0).sort((a,b)=>n(b.tot)-n(a.tot));const tot=cs.reduce((s,c)=>s+n(c.tot),0);const t1=cs[0];const s1=t1?n(t1.tot):0,s25=cs.slice(1,5).reduce((s,c)=>s+n(c.tot),0),s610=cs.slice(5,10).reduce((s,c)=>s+n(c.tot),0);return {hq,tot,t1,s1,s25,s610,rest:tot-s1-s25-s610,n:cs.length};});
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>본부</th><th class="n">누적판매</th><th class="n">구매치과</th><th>TOP1</th><th class="n">TOP1 비중</th><th class="n">TOP2~5</th><th class="n">TOP6~10</th><th class="n">기타</th></tr></thead><tbody>${conc.map(c=>`<tr><td style="font-weight:800">${HQKO[c.hq]}</td><td class="n">${fmt0(c.tot)}</td><td class="n">${c.n}</td><td class="zh">${c.t1?esc(c.t1.name)+' '+fmt0(c.s1)+'EA':'–'}</td><td class="n"><span class="${pct(c.s1,c.tot)>=50?'rd':''}">${pct(c.s1,c.tot)}%</span></td><td class="n">${pct(c.s25,c.tot)}%</td><td class="n">${pct(c.s610,c.tot)}%</td><td class="n">${pct(c.rest,c.tot)}%</td></tr>`).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(conc.map(c=>({id:`conc|${c.hq}`,cat:HQKO[c.hq],prod:'BD',title:'고객 집중도 (TOP1 의존)',a:c.s1,t:c.tot,unit:'EA',pn:`TOP1 ${pct(c.s1,c.tot)}% (${fmt0(c.s1)}/${fmt0(c.tot)})`,tier:tierLow(pct(c.s1,c.tot),30,49),tierHint:'TOP1 비중 (≤30% 좋음 · ≤49% 보통 · 50%↑ 위험)',footLabel:'TOP1 비중',src:'명세 기준',
+  h=foldLast(h,conc.map(c=>({id:`conc|${c.hq}`,cat:HQKO[c.hq],prod:'BD',title:'고객 집중도 (TOP1 의존)',a:c.s1,t:c.tot,unit:'EA',pn:`TOP1 ${pct(c.s1,c.tot)}% (${fmt0(c.s1)}/${fmt0(c.tot)})`,tier:tierLow(pct(c.s1,c.tot),30,49),tierHint:'TOP1 비중 (≤30% 좋음 · ≤49% 보통 · 50%↑ 위험)',footLabel:'TOP1 비중',src:'명세 기준',
     note:c.t1?`TOP1 ${c.t1.name} ${fmt0(c.s1)}EA(${pct(c.s1,c.tot)}%) · TOP2~5 ${pct(c.s25,c.tot)}% · TOP6~10 ${pct(c.s610,c.tot)}% · 기타 ${pct(c.rest,c.tot)}% — ${pct(c.s1,c.tot)>=50?'TOP1 1곳 의존, 이탈 시 본부 실적 직격':'분산형'}`:'구매 실적 없음',
     metrics:[{k:'TOP1',v:c.t1?esc(c.t1.name):'–',sub:c.t1?fmt0(c.s1)+'EA':'',zh:true},{k:'TOP1 비중',v:pct(c.s1,c.tot)+'%'},{k:'TOP2~5',v:pct(c.s25,c.tot)+'%'},{k:'TOP6~10',v:pct(c.s610,c.tot)+'%'},{k:'기타',v:pct(c.rest,c.tot)+'%'},{k:'구매치과',v:c.n,sub:'곳'}]})));
   return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 명세(客户开发现况) 기준 · 데이터 ${SRC}</div>`;}
@@ -814,16 +881,16 @@ function pageRegion(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('B
 /* ───── 4-1. 세미나 고객전환 ───── */
 function pageSemconv(){const sel=VIEWMODE.semHq||HQS.find(h=>semConvFull(HQS2[h]))||HQS[0];const sc=semConvFull(HQS2[sel]);
   let h=`<div class="hd"><div><span class="tag">세미나 고객전환</span><h1>4. 세미나 고객전환</h1><p>세미나 참석 치과의 방문·영업진도·진입 전환 관리 · 치과 기준 · 방문율은 기구매 제외 기준</p></div></div>`;
-  h+=secH('본부별 통합 진도율','전 본부 합산 · 자료 제출 본부만','')+semTable()+'<div style="height:10px"></div>'+wlist(semItems());
+  h+=secH('본부별 통합 진도율','전 본부 합산 · 자료 제출 본부만','')+semTable();h=foldLast(h,semItems(),it=>it.cat);
   h+=`<div class="tabs">${HQS.map(hq=>`<button class="${hq===sel?'on':''}" onclick="VIEWMODE.semHq='${hq}';renderPage()">${HQKO[hq]}${semConvFull(HQS2[hq])?'':' · 자료없음'}</button>`).join('')}</div>`;
   if(!sc)return h+`<div class="empty">${HQKO[sel]} — 세미나 방문점검 명단 미제출</div>`;
   h+=`<div class="om-tiles" style="grid-template-columns:repeat(4,1fr)"><div class="om-tile"><div class="om-tl">방문대상 치과</div><div class="om-tv">${sc.tgt}<small>개소</small></div><div class="om-ts">기구매 제외 · 방문점검 명단 기준</div></div><div class="om-tile"><div class="om-tl">신규방문</div><div class="om-tv">${sc.vis}<small>개소</small></div><div class="om-ts">미방문 ${sc.tgt-sc.vis} 개소</div></div><div class="om-tile"><div class="om-tl">방문율</div><div class="om-tv">${pct(sc.vis,sc.tgt)}%</div><div class="om-ts">${HQKO[sel]} · ${sc.mon} 데이터</div></div><div class="om-tile"><div class="om-tl">진입완료</div><div class="om-tv">${sc.done}<small>개소</small></div><div class="om-ts">방문대상 대비 ${pct(sc.done,sc.tgt)}% · 진도 100% 기준</div></div></div>`;
   h+=secH('① 세미나별 (개최일 순)',sc.note,'');
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>개최일</th><th>세미나</th><th class="n">대상치과</th><th class="n">방문</th><th class="n">미방문</th><th class="n">영업진도율</th><th>방문율</th><th class="n">진입완료</th><th class="n">진입율</th></tr></thead><tbody>${sc.semi.map(s=>`<tr><td class="tn">${esc(s.date)}</td><td class="zh">${esc(s.name)}</td><td class="n">${s.tgt}</td><td class="n">${s.vis}</td><td class="n">${s.tgt-s.vis}</td><td class="n">${Math.round(s.ps/s.tgt*100)}%</td><td>${mbar(s.vis,s.tgt)}</td><td class="n">${s.done}</td><td class="n">${pct(s.done,s.tgt)}%</td></tr>`).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(sc.semi.map(s=>({id:`semi|${sel}|${s.date}|${s.name}`,cat:HQKO[sel],prod:null,title:`${s.date} ${s.name}`,a:s.vis,t:s.tgt,unit:'곳',pn:`${s.vis} / ${s.tgt}곳 (방문율 ${pct(s.vis,s.tgt)}%)`,tier:tierLow(100-pct(s.vis,s.tgt),50,75),tierHint:'방문율',footLabel:'방문율',src:'방문점검 명단',note:`대상 ${s.tgt}곳 · 방문 ${s.vis} / 미방문 ${s.tgt-s.vis} · 영업진도율 ${Math.round(s.ps/s.tgt*100)}% · 진입완료 ${s.done}곳`,metrics:[{k:'대상치과',v:s.tgt},{k:'방문',v:s.vis},{k:'미방문',v:s.tgt-s.vis},{k:'영업진도율',v:Math.round(s.ps/s.tgt*100)+'%'},{k:'진입완료',v:s.done},{k:'진입율',v:pct(s.done,s.tgt)+'%'}]})));
+  h=foldLast(h,sc.semi.map(s=>({id:`semi|${sel}|${s.date}|${s.name}`,cat:HQKO[sel],prod:null,title:`${s.date} ${s.name}`,a:s.vis,t:s.tgt,unit:'곳',pn:`${s.vis} / ${s.tgt}곳 (방문율 ${pct(s.vis,s.tgt)}%)`,tier:tierLow(100-pct(s.vis,s.tgt),50,75),tierHint:'방문율',footLabel:'방문율',src:'방문점검 명단',note:`대상 ${s.tgt}곳 · 방문 ${s.vis} / 미방문 ${s.tgt-s.vis} · 영업진도율 ${Math.round(s.ps/s.tgt*100)}% · 진입완료 ${s.done}곳`,metrics:[{k:'대상치과',v:s.tgt},{k:'방문',v:s.vis},{k:'미방문',v:s.tgt-s.vis},{k:'영업진도율',v:Math.round(s.ps/s.tgt*100)+'%'},{k:'진입완료',v:s.done},{k:'진입율',v:pct(s.done,s.tgt)+'%'}]})));
   h+=secH('② 담당자별','대상치과 많은 순','');
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>도시</th><th>담당</th><th class="n">대상치과</th><th class="n">신규방문</th><th class="n">미방문</th><th class="n">영업진도율</th><th>방문율</th><th class="n">진입완료</th><th class="n">진입율</th></tr></thead><tbody>${sc.mgr.map(m=>`<tr><td class="zh">${esc(m.city)}</td><td class="zh">${esc(m.name)}</td><td class="n">${m.tgt}</td><td class="n">${m.vis}</td><td class="n">${m.tgt-m.vis}</td><td class="n">${Math.round(m.ps/m.tgt*100)}%</td><td>${mbar(m.vis,m.tgt)}</td><td class="n">${m.done}</td><td class="n">${pct(m.done,m.tgt)}%</td></tr>`).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(sc.mgr.map(m=>({id:`semmgr|${sel}|${m.name}`,cat:HQKO[sel],prod:null,title:`담당 ${m.name} (${m.city})`,a:m.vis,t:m.tgt,unit:'곳',pn:`${m.vis} / ${m.tgt}곳 (방문율 ${pct(m.vis,m.tgt)}%)`,tier:tierLow(100-pct(m.vis,m.tgt),50,75),tierHint:'방문율',footLabel:'방문율',src:'방문점검 명단',note:`대상 ${m.tgt}곳 · 방문 ${m.vis} / 미방문 ${m.tgt-m.vis} · 영업진도율 ${Math.round(m.ps/m.tgt*100)}% · 진입완료 ${m.done}곳`,metrics:[{k:'대상치과',v:m.tgt},{k:'신규방문',v:m.vis},{k:'미방문',v:m.tgt-m.vis},{k:'영업진도율',v:Math.round(m.ps/m.tgt*100)+'%'},{k:'진입완료',v:m.done},{k:'도시',v:esc(m.city),zh:true}]})));
+  h=foldLast(h,sc.mgr.map(m=>({id:`semmgr|${sel}|${m.name}`,cat:HQKO[sel],prod:null,title:`담당 ${m.name} (${m.city})`,a:m.vis,t:m.tgt,unit:'곳',pn:`${m.vis} / ${m.tgt}곳 (방문율 ${pct(m.vis,m.tgt)}%)`,tier:tierLow(100-pct(m.vis,m.tgt),50,75),tierHint:'방문율',footLabel:'방문율',src:'방문점검 명단',note:`대상 ${m.tgt}곳 · 방문 ${m.vis} / 미방문 ${m.tgt-m.vis} · 영업진도율 ${Math.round(m.ps/m.tgt*100)}% · 진입완료 ${m.done}곳`,metrics:[{k:'대상치과',v:m.tgt},{k:'신규방문',v:m.vis},{k:'미방문',v:m.tgt-m.vis},{k:'영업진도율',v:Math.round(m.ps/m.tgt*100)+'%'},{k:'진입완료',v:m.done},{k:'도시',v:esc(m.city),zh:true}]})));
   /* 방문점검 명단 */
   const H=sc.h||[];h+=secH('③ 방문점검 명단 (치과 기준)',`${sc.rows.length}건 · 기구매 제외`,'');
   h+=`<div class="ov-wrap" style="max-height:520px;overflow:auto"><table class="ov-tbl"><thead><tr><th>#</th>${H.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${sc.rows.map((r,i)=>`<tr><td class="c">${i+1}</td>${r.map((v,j)=>`<td class="${/진도율/.test(H[j])?'n':''} zh">${v==null?'':(/진도율/.test(H[j])?Math.round(n(v)*100)+'%':esc(v))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
@@ -841,16 +908,38 @@ function pageEdu(){const tab=VIEWMODE.eduTab||'done';const isDone=r=>n(r.att)>0|
   h+=`<div class="om-tiles" style="grid-template-columns:repeat(4,1fr)"><div class="om-tile"><div class="om-tl">교육(培训班)</div><div class="om-tv">${T.cnt}<small>回</small></div><div class="om-ts">참석 ${fmt0(T.att)}명</div></div><div class="om-tile"><div class="om-tl">신규매출</div><div class="om-tv">${fmt(T.sales,2)}<small>万</small></div><div class="om-ts">교육 후 신규 발주</div></div><div class="om-tile"><div class="om-tl">신규개발 치과</div><div class="om-tv">${T.newdev}<small>家</small></div><div class="om-ts">ARi 활동 ${T.ari}</div></div><div class="om-tile"><div class="om-tl">교육비용</div><div class="om-tv">${fmt(T.cost/1e4,1)}<small>万</small></div><div class="om-ts">연 누적 ${fmt(S(all).cost/1e4,1)}万 · ${S(all).cnt}回</div></div></div>`;
   h+=secH(`▶ ${MON}월 교육활동 (${rows.length}个培训班)`,'大区별 요약 → 개별 교육 카드 (더블클릭 수정 · 다음주 업무 주차별 저장)','');
   const ks=Object.keys(byHq).sort();h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>大区</th><th class="n">교육 수</th><th class="n">참석</th><th class="n">치과</th><th class="n">비사용자</th><th class="n">신규개발</th><th class="n">신규매출(万)</th><th class="n">비용(万)</th></tr></thead><tbody>${ks.map(k=>{const s=S(byHq[k]);const cl=byHq[k].reduce((a,r)=>a+n(r.clinic),0),nu=byHq[k].reduce((a,r)=>a+n(r.nonuser),0);return `<tr><td style="font-weight:800">${k}</td><td class="n">${s.cnt}</td><td class="n">${s.att}</td><td class="n">${cl}</td><td class="n">${nu}</td><td class="n">${s.newdev}</td><td class="n">${fmt(s.sales,2)}</td><td class="n">${fmt(s.cost/1e4,1)}</td></tr>`;}).join('')}<tr class="sum"><td>合计</td><td class="n">${T.cnt}</td><td class="n">${T.att}</td><td class="n">${rows.reduce((a,r)=>a+n(r.clinic),0)}</td><td class="n">${rows.reduce((a,r)=>a+n(r.nonuser),0)}</td><td class="n">${T.newdev}</td><td class="n">${fmt(T.sales,2)}</td><td class="n">${fmt(T.cost/1e4,1)}</td></tr></tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(rows.map((r,i)=>{const k=akey(r);return {id:`edu|${YEAR}-${MON}|${r.date}|${r.topic}`,cat:k,prod:r.prod||null,title:`${r.date} ${r.city||''} · ${r.topic}`,a:n(r.att),t:n(r.tAtt)||n(r.att),unit:'명',pn:`${n(r.att)}명 / 목표 ${n(r.tAtt)||'–'} · 매출 ${fmt(r.sales,2)}万`,tier:n(r.tAtt)?undefined:(isDone(r)?undefined:{key:'unknown',label:'예정',r:null}),footLabel:'참석 달성',src:'培训活动周报',
+  h=foldLast(h,rows.map((r,i)=>{const k=akey(r);return {id:`edu|${YEAR}-${MON}|${r.date}|${r.topic}`,cat:k,prod:r.prod||null,title:`${r.date} ${r.city||''} · ${r.topic}`,a:n(r.att),t:n(r.tAtt)||n(r.att),unit:'명',pn:`${n(r.att)}명 / 목표 ${n(r.tAtt)||'–'} · 매출 ${fmt(r.sales,2)}万`,tier:n(r.tAtt)?undefined:(isDone(r)?undefined:{key:'unknown',label:'예정',r:null}),footLabel:'참석 달성',src:'培训活动周报',
     note:`${r.cat||''}${r.kind?' · '+r.kind:''} · 강사 ${r.lect||'–'} · 참석 ${n(r.att)}명(치과 ${n(r.clinic)} · 비사용자 ${n(r.nonuser)}) · 신규개발 ${n(r.newdev)}家 · 신규매출 ${fmt(r.sales,2)}万 · 비용 ${fmt0(r.cost)}`,
-    metrics:[{k:'참석',v:n(r.att),sub:`목표 ${n(r.tAtt)||'–'}`},{k:'치과',v:n(r.clinic)},{k:'비사용자',v:n(r.nonuser)},{k:'신규개발',v:n(r.newdev),sub:`목표 ${n(r.tNew)||'–'}`},{k:'신규매출',v:fmt(r.sales,2),sub:'万'},{k:'강사',v:esc(r.lect||'–'),zh:true}]};}));
+    metrics:[{k:'참석',v:n(r.att),sub:`목표 ${n(r.tAtt)||'–'}`},{k:'치과',v:n(r.clinic)},{k:'비사용자',v:n(r.nonuser)},{k:'신규개발',v:n(r.newdev),sub:`목표 ${n(r.tNew)||'–'}`},{k:'신규매출',v:fmt(r.sales,2),sub:'万'},{k:'강사',v:esc(r.lect||'–'),zh:true}]};}),it=>it.cat);
   return h+(rows.length?'':'<div class="empty">해당 조건의 교육활동이 없습니다</div>');}
 
 /* ───── 2. 시장가격동향 (정적 · 더블클릭 수정) ───── */
 const MKT_ROWS=[['士卓曼 BLT','스위스','900~1,000','5,500–9,100','16.4%'],['士卓曼 BLT 国产','국산 (중국 생산)','700','5,500–9,100','12.7%'],['诺保科 PMC','스웨덴','800~850','4,800–7,800','16.7%'],['ASTRA','덴츠플라이','800~850','4,800–7,800','16.7%'],['Zimvie','미국','650~700','5,000–7,000','11.3%'],['BD / ARi','메가젠','600~650','6,000–9,000','10.0%']];
+function mktSTP(){
+  const SEG=[
+   {k:'Premium',c:'#16234a',sz:'285만개 [20%]',pr:'> 400',m26:'9.0만 [3.2%]',dp:'+2.5%p',m27:'16.2만 [5.7%]',bars:[
+    ['Straumann BLT',700,900,'t'],['Nobel PMC',600,700,'o'],['ZimVie · ASTRA',550,680,'o'],['MegaGen BD/BDC',500,550,'m'],['MegaGen AR/ARi',420,450,'m']]},
+   {k:'Value',c:'#e07b39',sz:'500만개 [35%]',pr:'240~350',m26:'40.7만 [8.1%]',dp:'+0.1%p',m27:'41.1만 [8.2%]',bars:[
+    ['오스템 ET',338,420,'t'],['MegaGen AO',280,350,'m'],['덴티움 Superline',280,350,'t'],['Medentika / Adin',300,350,'o'],['오스템 TS3',240,330,'t'],['디오 UV',240,290,'o']]},
+   {k:'Economy ①',c:'#5f6e85',sz:'350만개 [25%]',pr:'150~240',m26:'42.5만 [12.1%]',dp:'+1.5%p',m27:'47.7만 [13.6%]',bars:[
+    ['MegaGen ST',180,230,'m'],['덴티움 Implantium',150,220,'t'],['디오 UF',150,200,'t'],['네오 IS2/IS3',150,200,'o'],['Neodent',null,null,'o']]},
+   {k:'Economy ②',c:'#8a93a3',sz:'285만개 [20%]',pr:'< 180',m26:'–',dp:'+3.5%p',m27:'10.0만 [3.5%]',bars:[
+    ['스누콘 SNUC',130,180,'o'],['Evidence BLT2',130,150,'m'],['신흥 Evertis',120,150,'o'],['아름덴티 NB',120,150,'o'],['포인트 Point UV',120,150,'o'],['중국산 创英/百康特',100,120,'o']]}];
+  const COL={m:'var(--navy,#16234a)',t:'#c0392b',o:'#b9c2cf'};
+  const X0=100,X1=950;
+  const bar=b=>{const[nm,lo,hi,ty]=b;
+    if(lo==null)return `<div class="sx-br"><div class="sx-nm" style="color:${ty==='m'?'var(--navy)':ty==='t'?'#c0392b':'#6b7684'}">${nm}</div><div class="sx-tk"><em style="left:4px;color:#b4bcc9">미정</em></div></div>`;
+    const l=(lo-X0)/(X1-X0)*100,w=Math.max(1.5,(hi-lo)/(X1-X0)*100);
+    return `<div class="sx-br"><div class="sx-nm" style="color:${ty==='m'?'var(--navy)':ty==='t'?'#c0392b':'#6b7684'};font-weight:${ty==='m'?'800':'700'}">${nm}</div><div class="sx-tk"><i style="left:${l}%;width:${w}%;background:${COL[ty]}"></i><em style="left:calc(${l+w}% + 6px)">${lo}~${hi}</em></div></div>`;};
+  let g=`<div class="stpx">`;
+  SEG.forEach(sg=>{g+=`<div class="sx-seg"><div class="sx-sc" style="background:${sg.c}"><b>${sg.k}</b><span>${sg.sz}</span></div><div class="sx-pr">${sg.pr}</div><div class="sx-mg2"><span class="a">메가젠 26E→27</span><span class="b2">${sg.m26} → ${sg.m27}</span><span class="d">${sg.dp}</span></div><div class="sx-ch">${sg.bars.map(bar).join('')}</div></div>`;});
+  g+=`<div class="sx-lg2"><span><i style="background:var(--navy,#16234a)"></i>메가젠</span><span><i style="background:#c0392b"></i>타겟 경쟁사</span><span><i style="background:#b9c2cf"></i>기타</span><span style="flex:1"></span><span>가격축 100~950 RMB (치과 공급가)</span></div></div>`;
+  return g;}
 function pageMkt(){const cell=(id,def)=>{const v=eget(id,'txt',false);return `<span ondblclick="editCell(this,'${id}')" onblur="saveCell(this,'${id}')" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${esc(v==null?def:v)}</span>`;};
   let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>2. 시장가격동향 (Premium Segment)</h1><p>프리미엄 세그먼트 공급가·시술수가 비교 · 셀 더블클릭으로 수정 (공통 저장)</p></div></div>`;
-  h+=secH('1 PRICE 시장가격동향','공급가 · 환자 시술수가(위안) · 원가비중 = 공급가/시술수가','');
+  h+=secH('1 STP 세그먼트 × 가격 포지셔닝','Bi-Polar 전략 — Premium 비중 확대(10%→14%) · Value/Economy① AO·ST 시장 방어 · Economy② Evidence 시장 침투','');
+  h+=mktSTP();
+  h+=secH('2 PRICE 시장가격동향','공급가 · 환자 시술수가(위안) · 원가비중 = 공급가/시술수가','');
   h+=`<div class="ov-wrap"><table class="pt"><thead><tr><th>브랜드</th><th>원산지</th><th>공급가</th><th>환자 시술수가 (위안)</th><th>원가비중</th></tr></thead><tbody>${MKT_ROWS.map((r,i)=>`<tr>${r.map((c,j)=>`<td class="${i===5?'mg':''} ${j===0?'b zh':''}">${cell(`mkt|${i}|${j}`,c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   const blk=(id,def)=>{const v=eget(id,'html',false);return `<div class="blk" ondblclick="editBlockC(this,'${id}')" onblur="saveBlockC(this,'${id}')">${v!=null?v:def}</div>`;};
   h+=`<div class="two" style="margin-top:14px"><div>${secH('26년 대응방안','더블클릭 수정','')}${blk('mkt|plan',`<b>★ 프리미엄 시장 포지션 강화</b> · 목표 경쟁사: Straumann<br>· 영업사원·대리상 교육 역량 강화<br>· 디지털 R2 활용 설계 지원 및 환자상담 강화<br>· BD/ARi 교육·세미나·살롱·케이스회의 운영<br>· BD/ARi 수술 살롱 운영`)}</div>
@@ -891,7 +980,7 @@ const rng=a=>{if(!a.length)return '–';const mn=Math.min(...a),mx=Math.max(...a
 const pp=v=>v==null?'–':fmt(v*100,1)+'%';
 function msBar(v,max,br){const w=Math.round(Math.min(100,n(v)/max*100)*1.5);return `<span class="mb"><i style="width:${w}px;background:${brC(br)}"></i><b>${pp(v)}</b></span>`;}
 
-function pageComp(){const D=compData();const C=window.__COMP||{};if(!D.provs.length)return `<div class="empty">경쟁사 조사표 데이터가 없습니다</div>`;
+function pageComp(){const D=compData();const C=window.__COMP||{};const OPEN=VIEWMODE.compOpen||{};const mtab=VIEWMODE.compTab||'t1';const HINT1='▸ 브랜드 행·그래프를 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다';const HINT2='▸ 省 행을 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다';if(!D.provs.length)return `<div class="empty">경쟁사 조사표 데이터가 없습니다</div>`;
   const mg=D.brands.find(b=>b.br==='MEGAGEN')||{ms25:0,ms26:0,s26:0,n:0,top1:0};const top=D.brands.filter(b=>b.br!=='MEGAGEN')[0];const dMs=(n(mg.ms26)-n(mg.ms25))*100;
   let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>2-(2) 경쟁사 조사 — ${esc(C.period||'')} 竞争对手调查表</h1><p>닝보법인 11개 大区 · ${D.provs.length}개 省 · 대리상 ${D.rows.length}건 · 기준 ${esc(C.asOf||'')} · M/S = 省 시장규모(植体颗数) 가중 평균 · 금액 万元 · 가격 RMB/颗</p></div></div>`;
   h+=`<div class="om-tiles"><div class="om-tile"><div class="om-tl">26년 시장규모 (조사 省 합계)</div><div class="om-tv">${fmt(D.mktT/1e4,1)}<small>만개</small></div><div class="om-ts">25년 ${fmt(D.mktT25/1e4,1)}만개 · ${fmt((D.mktT/D.mktT25-1)*100,1)}%</div></div>
@@ -899,37 +988,53 @@ function pageComp(){const D=compData();const C=window.__COMP||{};if(!D.provs.len
   <div class="om-tile"><div class="om-tl">1위 경쟁사</div><div class="om-tv" style="font-size:22px">${top?esc(top.br):'–'}</div><div class="om-ts">M/S ${top?pp(top.ms26):'–'} · 격차 ${top?fmt((n(mg.ms26)-n(top.ms26))*100,1):'–'}%p</div></div>
   <div class="om-tile"><div class="om-tl">MEGAGEN 1~10월 판매액</div><div class="om-tv">${fmt0(mg.s26)}<small>万元</small></div><div class="om-ts">대리상 ${mg.n}건 · 판매수 ${fmt0(mg.q26)}颗</div></div>
   <div class="om-tile"><div class="om-tl">MEGAGEN 1위 省</div><div class="om-tv">${mg.top1}<small>/ ${D.provs.length}</small></div><div class="om-ts">격차 음수 省 ${D.provs.filter(p=>p.gap<0).length}곳 · 성장 省 ${D.provs.filter(p=>n(p.mg.ms26)>n(p.mg.ms25)).length}곳</div></div></div>`;
+  h+=`<div class="tabs" style="margin:14px 0 4px">${[['t1','1 브랜드 종합'],['t2','2 省별 현황'],['t3','3 가격 비교'],['t4','4 대리상 상세']].map(t=>`<button class="${mtab===t[0]?'on':''}" onclick="VIEWMODE.compTab='${t[0]}';renderPage()">${t[1]}</button>`).join('')}</div>`;
   /* A 브랜드 종합 */
+  if(mtab==='t1'){
   h+=secH('1 브랜드 종합 (전국 · 시장규모 가중 M/S)','MEGAGEN만 남색 · 경쟁사는 회색 농담 · 1위 省 = 해당 브랜드가 M/S 1위인 省 수','');
   const mx=Math.max(...D.brands.map(b=>n(b.ms26)));
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>브랜드</th><th>26년 M/S</th><th class="n">25년 M/S</th><th class="n">증감</th><th class="n">1~10월 판매액(万)</th><th class="n">판매수(颗)</th><th class="n">대리상</th><th class="n">조사 省</th><th class="n">1위 省</th><th>대리상 보편가</th><th>终端 보편가</th></tr></thead><tbody>${D.brands.map(b=>{const d=(n(b.ms26)-n(b.ms25))*100;return `<tr style="${b.br==='MEGAGEN'?'background:var(--soft)':''}"><td style="font-weight:800">${esc(b.br)}</td><td>${msBar(b.ms26,mx,b.br)}</td><td class="n">${pp(b.ms25)}</td><td class="n"><span style="font-weight:800;color:${d>0?'#1f9d57':d<0?'var(--risk)':'inherit'}">${d>0?'+':''}${fmt(d,1)}%p</span></td><td class="n">${fmt0(b.s26)}</td><td class="n">${fmt0(b.q26)}</td><td class="n">${b.n}</td><td class="n">${b.provs}</td><td class="n">${b.top1}</td><td class="n">${rng(b.dp)}</td><td class="n">${rng(b.tp)}</td></tr>`;}).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(D.brands.filter(b=>b.ms26!=null).map((b,i)=>{const d=(n(b.ms26)-n(b.ms25))*100;const tier=d>0.2?{key:'good',label:'상승'}:d<-0.2?{key:'risk',label:'하락'}:{key:'normal',label:'보합'};const best=D.provs.filter(p=>p.br[b.br]).sort((x,y)=>n(y.br[b.br].ms26)-n(x.br[b.br].ms26))[0];
+  h=foldLast(h,D.brands.filter(b=>b.ms26!=null).map((b,i)=>{const d=(n(b.ms26)-n(b.ms25))*100;const tier=d>0.2?{key:'good',label:'상승'}:d<-0.2?{key:'risk',label:'하락'}:{key:'normal',label:'보합'};const best=D.provs.filter(p=>p.br[b.br]).sort((x,y)=>n(y.br[b.br].ms26)-n(x.br[b.br].ms26))[0];
     return {id:`cb|${b.br}`,cat:`전국 ${i+1}위`,prod:null,title:`${b.br} 시장점유율`,a:n(b.ms26)*100,t:100,pn:`M/S ${pp(b.ms26)} (25년 ${pp(b.ms25)} · ${d>=0?'+':''}${fmt(d,1)}%p)`,tier,tierHint:'25→26년 M/S 증감',footLabel:'M/S 26년',due:'26.10',src:'경쟁사 조사표',
       note:`26년 M/S ${pp(b.ms26)} (25년 ${pp(b.ms25)}) · 1~10월 판매액 ${fmt0(b.s26)}万 · 판매수 ${fmt0(b.q26)}颗 · 대리상 ${b.n}건 / 조사 ${b.provs}省 · 1위 ${b.top1}省${best?` · 최고 ${best.prov} ${pp(best.br[b.br].ms26)}`:''} · 대리상 보편가 ${rng(b.dp)} · 终端 ${rng(b.tp)}`,
-      metrics:[{k:'26년 M/S',v:pp(b.ms26)},{k:'25년 M/S',v:pp(b.ms25)},{k:'1~10월 판매액',v:fmt0(b.s26),sub:'万元'},{k:'판매수',v:fmt0(b.q26),sub:'颗'},{k:'대리상 보편가',v:med(b.dp)!=null?fmt0(med(b.dp)):'–',sub:'중앙값'},{k:'终端 보편가',v:med(b.tp)!=null?fmt0(med(b.tp)):'–',sub:'중앙값'}]};}));
+      metrics:[{k:'26년 M/S',v:pp(b.ms26)},{k:'25년 M/S',v:pp(b.ms25)},{k:'1~10월 판매액',v:fmt0(b.s26),sub:'万元'},{k:'판매수',v:fmt0(b.q26),sub:'颗'},{k:'대리상 보편가',v:med(b.dp)!=null?fmt0(med(b.dp)):'–',sub:'중앙값'},{k:'终端 보편가',v:med(b.tp)!=null?fmt0(med(b.tp)):'–',sub:'중앙값'}]};}),it=>String(it.id).slice(3));
+  }
   /* B 省별 */
+  if(mtab==='t2'){
   h+=secH('2 省별 시장규모 · MEGAGEN M/S · 1위 격차','격차 = MEGAGEN M/S − 1위 경쟁사 M/S (%p) · 격차 정렬','');
   const ps=D.provs.slice().sort((a,b)=>a.gap-b.gap);
   h+=`<div class="ov-wrap"><table class="ov-tbl uni"><colgroup><col style="width:72px"><col style="width:60px"><col style="width:56px"><col style="width:110px"><col style="width:120px"><col style="width:130px"><col style="width:80px"><col style="width:60px"><col style="width:90px"><col></colgroup><thead><tr><th>본부</th><th>大区</th><th>省</th><th class="n">시장규모 25→26</th><th>MEGAGEN 25→26</th><th>1위 (M/S)</th><th class="n">격차</th><th class="n">순위</th><th class="n">MG 판매액(万)</th><th>브랜드 구성 (26년 M/S)</th></tr></thead><tbody>${ps.map(p=>{const d=(n(p.mg.ms26)-n(p.mg.ms25))*100;return `<tr><td>${HQKO[p.hq]||p.hq}</td><td>${p.area}</td><td class="zh" style="font-weight:800">${esc(p.prov)}</td><td class="n">${fmt(n(p.mkt25)/1e4,1)}→${fmt(n(p.mkt26)/1e4,1)}만</td><td class="n">${pp(p.mg.ms25)}→<b>${pp(p.mg.ms26)}</b> <span style="color:${d>=0?'#1f9d57':'var(--risk)'};font-weight:800">${d>=0?'+':''}${fmt(d,1)}</span></td><td>${esc(p.top.br)} <b>${pp(p.top.ms26)}</b></td><td class="n"><span style="font-weight:800;color:${p.gap>=0?'#1f9d57':'var(--risk)'}">${p.gap>=0?'+':''}${fmt(p.gap,1)}%p</span></td><td class="n">${p.rank||'–'}</td><td class="n">${fmt0(p.mg.s26)}</td><td class="clip" ondblclick="this.classList.toggle('full')">${p.list.map(x=>`${x.br} ${pp(x.ms26)}`).join(' · ')}</td></tr>`;}).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h+=wlist(ps.map(p=>{const d=(n(p.mg.ms26)-n(p.mg.ms25))*100;const tier=p.gap>=0?{key:'good',label:'1위'}:p.gap>=-10?{key:'normal',label:'추격'}:{key:'risk',label:'열세'};const pol=(p.mg.pol||[]).concat(p.top.pol||[]).filter(Boolean).slice(0,2).join(' / ');const dp=med(p.mg.dp),tp=med(p.top.dp||[]);
+  h=foldLast(h,ps.map(p=>{const d=(n(p.mg.ms26)-n(p.mg.ms25))*100;const tier=p.gap>=0?{key:'good',label:'1위'}:p.gap>=-10?{key:'normal',label:'추격'}:{key:'risk',label:'열세'};const pol=(p.mg.pol||[]).concat(p.top.pol||[]).filter(Boolean).slice(0,2).join(' / ');const dp=med(p.mg.dp),tp=med(p.top.dp||[]);
     return {id:`cp|${p.prov}`,cat:HQKO[p.hq]||p.hq,prod:null,title:`${p.prov} (${p.area}) 경쟁 현황`,a:n(p.mg.ms26)*100,t:Math.max(n(p.top.ms26),n(p.mg.ms26))*100||1,pn:`M/S ${pp(p.mg.ms26)} vs 1위 ${p.top.br} ${pp(p.top.ms26)} (${p.gap>=0?'+':''}${fmt(p.gap,1)}%p)`,tier,tierHint:'MEGAGEN − 1위 경쟁사 M/S 격차 (0 이상 1위 · −10%p 이내 추격 · 그 미만 열세)',footLabel:'MEGAGEN / 1위 M/S',due:'26.10',src:'경쟁사 조사표',
       note:`시장규모 ${fmt(n(p.mkt26)/1e4,1)}만개(25년 ${fmt(n(p.mkt25)/1e4,1)}) · MEGAGEN ${pp(p.mg.ms25)}→${pp(p.mg.ms26)} (${d>=0?'+':''}${fmt(d,1)}%p, ${p.rank}위) · 1위 ${p.top.br} ${pp(p.top.ms26)} · 2위 ${p.list.filter(x=>x.br!=='MEGAGEN')[1]?p.list.filter(x=>x.br!=='MEGAGEN')[1].br+' '+pp(p.list.filter(x=>x.br!=='MEGAGEN')[1].ms26):'–'} · MG 대리상 ${p.mg.n}건 판매액 ${fmt0(p.mg.s26)}万${dp?` · 보편가 MG ${fmt0(dp)}`:''}${tp?` vs ${p.top.br} ${fmt0(tp)}`:''}${pol?` · 정책: ${pol}`:''}`,
       metrics:[{k:'26년 시장규모',v:fmt(n(p.mkt26)/1e4,1),sub:'만개'},{k:'MEGAGEN M/S',v:pp(p.mg.ms26),sub:`25년 ${pp(p.mg.ms25)}`},{k:'1위',v:esc(p.top.br),sub:pp(p.top.ms26)},{k:'격차',v:(p.gap>=0?'+':'')+fmt(p.gap,1)+'%p'},{k:'MG 판매액',v:fmt0(p.mg.s26),sub:`万 · ${p.mg.n}건`},{k:'보편가 MG / 1위',v:`${dp?fmt0(dp):'–'}<small>/${tp?fmt0(tp):'–'}</small>`}]};}));
+  }
   /* C 가격 */
+  if(mtab==='t3'){
   h+=secH('3 가격 비교 (RMB/颗)','대리상 채가 · 终端(치과) 채가 · 보편가 중앙값 기준 · 지수 = MEGAGEN 보편가 100','');
   const mgD=med(mg.dp||[])||1;
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>브랜드</th><th class="n">대리상 보편가 중앙값</th><th class="n">대리상 보편가 범위</th><th class="n">终端 보편가 중앙값</th><th class="n">终端 보편가 범위</th><th class="n">지수(MG=100)</th><th class="n">표본</th></tr></thead><tbody>${D.brands.filter(b=>b.dp.length||b.tp.length).map(b=>`<tr style="${b.br==='MEGAGEN'?'background:var(--soft)':''}"><td style="font-weight:800">${esc(b.br)}</td><td class="n">${med(b.dp)!=null?fmt0(med(b.dp)):'–'}</td><td class="n">${rng(b.dp)}</td><td class="n">${med(b.tp)!=null?fmt0(med(b.tp)):'–'}</td><td class="n">${rng(b.tp)}</td><td class="n">${med(b.dp)!=null?Math.round(med(b.dp)/mgD*100):'–'}</td><td class="n">${b.dp.length}</td></tr>`).join('')}</tbody></table></div>`;
+  }
   /* D 대리상 상세 */
+  if(mtab==='t4'){
   const areas=[...new Set(D.rows.map(r=>r.area))];const sel=VIEWMODE.compArea||areas[0];const bsel=VIEWMODE.compBr||'';
   h+=secH('4 대리상 상세 (调查表 원본)','大区 탭 · 브랜드 필터 · 잘린 칸 더블클릭 → 전체','');
   h+=`<div class="tabs">${areas.map(a=>`<button class="${a===sel?'on':''}" onclick="VIEWMODE.compArea='${a}';renderPage()">${a} ${HQS2[D.rows.find(r=>r.area===a).hq]||''}</button>`).join('')}</div><div class="tabs">${['',...D.brands.map(b=>b.br)].map(b=>`<button class="${b===bsel?'on':''}" onclick="VIEWMODE.compBr='${b}';renderPage()">${b||'전체 브랜드'}</button>`).join('')}</div>`;
   const rs=D.rows.filter(r=>r.area===sel&&(!bsel||r.br===bsel));
   h+=`<div class="ov-wrap"><table class="ov-tbl uni"><colgroup><col style="width:48px"><col style="width:84px"><col style="width:170px"><col style="width:120px"><col style="width:44px"><col style="width:64px"><col style="width:64px"><col style="width:72px"><col style="width:72px"><col style="width:66px"><col style="width:58px"><col><col style="width:70px"><col style="width:70px"></colgroup><thead><tr><th>省</th><th>브랜드</th><th>대리상</th><th>판매지역</th><th class="n">인원</th><th class="n">24년</th><th class="n">25년</th><th class="n">26년 1~10월</th><th class="n">수량 26</th><th class="n">계획(万)</th><th class="n">달성</th><th>판매정책</th><th class="n">대리상 보편가</th><th class="n">终端 보편가</th></tr></thead><tbody>${rs.map(r=>`<tr style="${r.br==='MEGAGEN'?'background:var(--soft)':''}"><td class="zh">${esc(r.prov)}</td><td>${esc(r.br)}</td><td class="zh clip" ondblclick="this.classList.toggle('full')">${esc(r.dealer||'–')}</td><td class="zh clip" ondblclick="this.classList.toggle('full')">${esc(r.region)}</td><td class="n">${r.staff==null?'':fmt0(r.staff)}</td><td class="n">${r.s24!=null?fmt0(r.s24):esc(r.s24t)}</td><td class="n">${r.s25!=null?fmt0(r.s25):esc(r.s25t)}</td><td class="n">${r.s26!=null?fmt0(r.s26):esc(r.s26t)}</td><td class="n">${r.q26!=null?fmt0(r.q26):''}</td><td class="n">${r.planAmt!=null?fmt0(r.planAmt):''}</td><td class="n">${r.planAmt&&r.s26!=null?pct(r.s26,r.planAmt)+'%':''}</td><td class="zh clip" ondblclick="this.classList.toggle('full')">${esc(r.policy)}</td><td class="n">${r.dpTyp!=null?fmt0(r.dpTyp):''}</td><td class="n">${r.tpTyp!=null?fmt0(r.tpTyp):''}</td></tr>`).join('')}</tbody></table></div><div class="foot-note">${rs.length}건 · 금액 万元 · 26년은 1~10월 누계 · 달성 = 26년 누계 / 연간 계획</div>`;
+  }
   return h+`<div class="foot-note" style="margin-top:14px">출처: 26年 1-10月 竞争对手调查表 (${esc(C.asOf||'')}) · 닝보법인 제출</div>`;}
 
 /* ═══════════════ 한/中 전환 (사전 기반 · 렌더 후 텍스트 노드 치환) ═══════════════ */
 let LANG='ko';try{LANG=localStorage.getItem('mgi_g2_lang')||'ko';}catch(e){}
 const CN_EXACT={
+ '1 STP 세그먼트 × 가격 포지셔닝':'1 STP 细分市场 × 价格定位','2 PRICE 시장가격동향':'2 PRICE 市场价格动态',
+ 'Bi-Polar 전략 — Premium 비중 확대(10%→14%) · Value/Economy① AO·ST 시장 방어 · Economy② Evidence 시장 침투':'Bi-Polar战略 — Premium份额扩大(10%→14%) · Value/Economy① AO·ST市场防御 · Economy② Evidence市场渗透',
+ '메가젠 26E→27':'美格真 26E→27','타겟 경쟁사':'目标竞争对手','가격축 100~950 RMB (치과 공급가)':'价格轴 100~950 RMB (牙科供货价)','미정':'未定',
+ '285만개 [20%]':'285万颗 [20%]','500만개 [35%]':'500万颗 [35%]','350만개 [25%]':'350万颗 [25%]',
+ '9.0만 [3.2%] → 16.2만 [5.7%]':'9.0万 [3.2%] → 16.2万 [5.7%]','40.7만 [8.1%] → 41.1만 [8.2%]':'40.7万 [8.1%] → 41.1万 [8.2%]','42.5만 [12.1%] → 47.7만 [13.6%]':'42.5万 [12.1%] → 47.7万 [13.6%]','– → 10.0만 [3.5%]':'– → 10.0万 [3.5%]',
+ '오스템 ET':'奥齿泰 ET','오스템 TS3':'奥齿泰 TS3','덴티움 Superline':'登腾 Superline','덴티움 Implantium':'登腾 Implantium','디오 UV':'DIO UV','디오 UF':'DIO UF','네오 IS2/IS3':'Neo IS2/IS3','중국산 创英/百康特':'国产 创英/百康特',
+ '1 브랜드 종합':'1 品牌综合','2 省별 현황':'2 分省现况','3 가격 비교':'3 价格比较','4 대리상 상세':'4 代理商明细','▸ 브랜드 행·그래프를 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다':'▸ 点击品牌行·图表即可展开明细卡片 · 再次点击关闭','▸ 省 행을 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다':'▸ 点击省行即可展开明细卡片 · 再次点击关闭',
  '주간 판매실적 보고 ★':'周销售业绩报告 ★','1. 주요성과':'1. 主要成果','2. 시장·경쟁동향':'2. 市场·竞争动态','(1) 시장가격동향':'(1) 市场价格动态','(2) 경쟁사 조사 (1~10월)':'(2) 竞争对手调查 (1~10月)','3. 각지역 성과분석':'3. 各区域业绩分析','4. 세미나 고객전환 ★':'4. 研讨会客户转化 ★','(1) 세미나 고객전환':'(1) 研讨会客户转化','(2) 교육활동 주보':'(2) 培训活动周报','5. 메가젠제품 소개자료 ★':'5. MegaGen产品介绍资料 ★',
  '기간':'期间','연도':'年度','월':'月','주차':'周次','페이지':'页面','달력':'日历','오늘':'今天','데이터 기준일':'数据基准日','선택 주차':'所选周次','저장 상태':'保存状态','데이터':'数据','변경 없음':'无变更','미저장 변경':'未保存变更','내장':'内置','클라우드':'云端',
  '☁ 클라우드 새로고침':'☁ 云端刷新','클라우드 저장':'云端保存','⬇ PDF/인쇄':'⬇ PDF/打印','주간 실적 분석 보고':'周业绩分析报告','프리미엄 라인업(BD · ARi) 주간 판매실적 보고':'高端产品线(BD · ARi) 周销售业绩报告',
