@@ -434,7 +434,7 @@ function cardRow(it){
       <span class="wc-cat" style="background:#e4ecf7;color:var(--navy)">${esc(it.cat||'')}</span>${prodChip}
       <span class="pri-b p${pr}" title="중요도">${pr}</span>
       <span class="wc-tt" title="${esc(title)}">${esc(title)}${pr==='상'?' <span class="wc-star">★</span>':''}</span>
-      <span class="wc-pn">${it.pn||(fmt0(it.a)+' / '+fmt(it.t,it.t%1?1:0)+(it.unit||'')+' ('+pct(it.a,it.t)+'%)')}</span>
+      <span class="wc-pn">${it.pn||(fmt0(it.a)+' / '+fmt0(it.t)+(it.unit||'')+' ('+pct(it.a,it.t)+'%)')}</span>
       <span class="wc-pb"><i style="width:${p}%;background:${BARC[tier.key]}"></i></span>
       <span class="wc-due ${tier.key==='risk'?'risk':''}">${esc(it.due||monthEnd())}</span>
     </div>
@@ -543,7 +543,7 @@ function keyCustBlock(it){const [_,prod,hq]=it.id.split('|');const list=kcList(h
   const cands=M.snap.cust.filter(c=>(PM[c.prov]||{}).hq===hq).map(c=>c.name).filter(Boolean);const dl=`kcdl_${prod}_${HQS.indexOf(hq)}`;const thisWk=list.filter(e=>e.wk===WEEK).length;
   const rows=list.slice().sort((a,b)=>a.wk<b.wk?1:-1).map(e=>{const ev=kcEval(e,prod);
     return `<tr><td class="tn">${esc(e.wk.slice(5))}</td><td class="zh b"><span title="${ev.matched?'명세 매칭됨 · 월 판매 자동':'명세에 없음 — 월 판매 수기 입력'}">${ev.matched?'':'<span style="color:#b3781c">◌ </span>'}${esc(e.name)}</span></td><td><select class="kc-sel" onchange="kcUpd('${hq}','${prod}','${e.k}','cat',this.value,this)"><option value="">–</option>${KC_CATS.map(o=>`<option ${e.cat===o?'selected':''}>${o}</option>`).join('')}</select></td>
-      <td class="n"><input class="kc-in n" type="number" value="${e.base!=null&&e.base!==''?esc(e.base):''}" placeholder="${ev.base!=null?fmt(ev.base,1):'–'}" title="기준 월판매 (${ev.baseSrc}) · 비우면 자동" onchange="kcUpd('${hq}','${prod}','${e.k}','base',this.value,this)"></td><td class="n">${ev.tgt!=null?fmt0(ev.tgt):'–'}</td>
+      <td class="n"><input class="kc-in n" type="number" value="${e.base!=null&&e.base!==''?esc(e.base):''}" placeholder="${ev.base!=null?fmt(ev.base,0):'–'}" title="기준 월판매 (${ev.baseSrc}) · 비우면 자동" onchange="kcUpd('${hq}','${prod}','${e.k}','base',this.value,this)"></td><td class="n">${ev.tgt!=null?fmt0(ev.tgt):'–'}</td>
       ${ev.series.map(s=>`<td class="n ${s.m===ev.due?'due':''}">${s.future?'<span class="dimm">–</span>':`<input class="kc-in n" type="number" value="${((e.fu||{})[s.m]||{}).q!=null?((e.fu||{})[s.m]||{}).q:''}" placeholder="${s.q!=null?fmt0(s.q):'–'}" title="${s.m} 월판매 (${s.src||'미확인'}) · 수기 입력 시 우선" onchange="kcUpd('${hq}','${prod}','${e.k}','fu:${s.m}',this.value,this)">`}</td>`).join('')}
       <td class="n"><b style="color:${ev.growth==null?'inherit':ev.growth>=10?'#1f9d57':'var(--risk)'}">${ev.growth==null?'–':(ev.growth>=0?'+':'')+ev.growth+'%'}</b></td><td><span class="st-sel ${ev.st.key}">${ev.st.label}</span></td>
       <td><input class="kc-in zh" type="text" value="${esc(((e.fu||{})[ev.cur]||{}).note||'')}" placeholder="이번달 F/U 메모" onchange="kcUpd('${hq}','${prod}','${e.k}','note:${ev.cur}',this.value,this)"></td><td class="c"><button class="kc-x" title="삭제" onclick="kcDel('${hq}','${prod}','${e.k}')">✕</button></td></tr>`;}).join('');
@@ -569,13 +569,17 @@ function kcSection(){const all=kcAllRows();const f=VIEWMODE.kcF||'';const rows=a
   return secH('주별 중점관리고객 F/U (누적)','매주 BD 1 · ARi 1 추가 → 3개월 뒤 월판매 +10% · 본부 카드에서 등록','',fb)+tiles+'<div style="height:10px"></div>'+tbl;}
 
 /* ═══════════════ 페이지 ═══════════════ */
+window.__WPREV={"week": "2026-W46", "title": "本部·大区销售分析 — 2026-W46 (11.9~11.13)", "rows": [{"hq": "浙江本部", "prod": "BD", "mT": "—", "mA": 496, "cT": 12, "cA": 2, "dead": 41, "rep": 0.4918032786885246, "prog": "计划 19", "sem": "7/28家\n未访21·进度24%\n(09月数据)", "anal": "【现状】496EA 全司第一(宁1 473EA占95%)·宁2仅23EA;长期未购41家=已进入34%(超30%基准)\n【改善】宁2复制宁1模式(KOL病例+代理商联动);26年0EA 18家优先回访,月内长期未购降至≤36家", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "浙江本部", "prod": "ARi", "mT": 380, "mA": 12, "cT": 16, "cA": 1, "dead": 0, "rep": 0.4615384615384616, "prog": "计划 36", "sem": "", "anal": "【现状】当月12EA·复购46%;新进仅1/16家(6%)\n【改善】计划36家→每周锁定2家试用转化,宁2集中跟进", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华东本部", "prod": "BD", "mT": "—", "mA": 47, "cT": 18, "cA": 3, "dead": 91, "rep": 0.4966887417218543, "prog": "计划 46", "sem": "17/134家\n未访117·进度13%\n(10月数据)", "anal": "【现状】47EA 放量放缓;长期未购91家=已进入60%(基准2倍),宁5 52家最多\n【改善】名单分配至负责人,每人每周回访≥3家;月内降至≤45家(30%)", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华东本部", "prod": "ARi", "mT": 400, "mA": 14, "cT": 18, "cA": 3, "dead": 0, "rep": 0.2, "prog": "计划 51", "sem": "", "anal": "【现状】14EA ARi订货全司第一;新进3/18家(17%)\n【改善】宁3模式(新进2/5)推广至宁4·宁5", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华中本部", "prod": "BD", "mT": "—", "mA": 377, "cT": 25, "cA": 3, "dead": 43, "rep": 0.4375, "prog": "计划 21", "sem": "名单未收集", "anal": "【现状】377EA 但宁6植得285EA占76%(单一客户依赖);宁7仅1EA;长期未购43家(34%)\n【改善】降低依赖度,宁7/宁11扩大新进;长期未购降至≤38家", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华中本部", "prod": "ARi", "mT": 480, "mA": 11, "cT": 19, "cA": 2, "dead": 0, "rep": 0.1428571428571428, "prog": "计划 50", "sem": "", "anal": "【现状】累计318EA 全司最大·当月11EA;新进2/19家\n【改善】计划50家→每周锁定2家试用", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华西本部", "prod": "BD", "mT": "—", "mA": 71, "cT": 21, "cA": 3, "dead": 28, "rep": 0.5813953488372093, "prog": "计划 26", "sem": "406/705家\n未访299·进度40%\n(10月数据·1~8月研讨会)", "anal": "【现状】订货恢复(0→71EA)·复购58% 全司第一;长期未购28家(22% 达标);宁9仅2EA\n【改善】宁8模式复制到宁9;研讨会未访299家优先跟进", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华西本部", "prod": "ARi", "mT": 460, "mA": 4, "cT": 19, "cA": 0, "dead": 0, "rep": 0.2352941176470588, "prog": "计划 38", "sem": "", "anal": "【现状】当月4EA;新进0/19家\n【改善】研讨会客户转ARi,计划38家中锁定重点", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华南本部", "prod": "BD", "mT": "—", "mA": 76, "cT": 11, "cA": 2, "dead": 23, "rep": 0.5535714285714286, "prog": "计划 17", "sem": "名单未收集", "anal": "【现状】订货恢复(0→76EA)·复购55%;长期未购23家(41% 超基准)\n【改善】26年0EA 7家优先回访,月内降至≤16家;负责客户集中于姚永富需再分配", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华南本部", "prod": "ARi", "mT": 280, "mA": 0, "cT": 12, "cA": 0, "dead": 0, "rep": 0.3333333333333333, "prog": "计划 18", "sem": "", "anal": "【现状】当月0EA;新进0/12家\n【改善】计划18家→本月锁定3家试用;佛山医路联动", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华北本部", "prod": "BD", "mT": 1857.6, "mA": 38, "cT": 13, "cA": 2, "dead": 198, "rep": 0.321875, "prog": "计划 42", "sem": "名单未收集", "anal": "【现状】38EA 全司最低(目标1,857.6EA·达成2%);长期未购198家=已进入62%(全司最多);复购32%\n【改善】北3 143家专项清理,每人每周回访≥5家;月内降至≤96家(30%)", "cause": "", "plan": "", "kcust": "", "hqreq": ""}, {"hq": "华北本部", "prod": "ARi", "mT": 340, "mA": 0, "cT": 18, "cA": 0, "dead": 0, "rep": 0.06666666666666667, "prog": "计划 200", "sem": "", "anal": "【现状】当月0EA·复购7% 全司最低;新进0/18家\n【改善】计划200家过多,收敛至重点30家集中转化", "cause": "", "plan": "", "kcust": "", "hqreq": ""}], "tot": [{"hq": "合计", "prod": "BD", "mT": 8636, "mA": 1105, "cT": 100, "cA": 15, "dead": 424, "rep": 0.44, "prog": "计划 171", "sem": "430/867家\n未访437·进度35%", "anal": "11月 1,105/8,636EA(13%)·新进15/100家(15%)·复购44%"}, {"hq": "合计", "prod": "ARi", "mT": 2340, "mA": 41, "cT": 102, "cA": 6, "dead": 0, "rep": 0.2079207920792079, "prog": "计划 393", "sem": "", "anal": "11月 41/2,340EA(2%)·新进6家(6%)·复购21%"}], "areas": {"浙江本部": [{"dq": "宁1大区", "prod": "BD", "anal": "【现状】473EA·复购71% 全司最高;长期未购13家(23% 达标);新进1/7家\n【改善】维持复购;26年0EA 5家(恒美3店等)本月回访;新进开发提速"}, {"dq": "宁1大区", "prod": "ARi", "anal": "【现状】10EA·复购100%;新进0/8家\n【改善】利用复购客户转介绍,每周≥1家试用"}, {"dq": "宁2大区", "prod": "BD", "anal": "【现状】23EA·复购30%偏低;长期未购28家(42% 超基准)\n【改善】优先激活和美口腔(111EA)·东山夷美(65EA);陈煜鑫负责客户过多需分担"}, {"dq": "宁2大区", "prod": "ARi", "anal": "【现状】2EA·复购0%;新进1/8家\n【改善】首单后2周内跟进复购;德康代理商联动"}], "华东本部": [{"dq": "宁3大区", "prod": "BD", "anal": "【现状】15EA·复购60%;新进0/6家;长期未购22家(63%)\n【改善】品牌店(众植·晟诺)复购恢复为首要;26年0EA 12家本月电访"}, {"dq": "宁3大区", "prod": "ARi", "anal": "【现状】9EA·新进2/5家 进度良好\n【改善】维持节奏,新进客户2周内二次订货"}, {"dq": "宁4大区", "prod": "BD", "anal": "【现状】32EA·新进1/6家;长期未购17家(71% 比例最高)\n【改善】中喜系4家(各108EA)集团层面对接恢复订货"}, {"dq": "宁4大区", "prod": "ARi", "anal": "【现状】5EA·复购0%;新进1/6家\n【改善】首单客户复购跟进,本月≥1家二次订货"}, {"dq": "宁5大区", "prod": "BD", "anal": "【现状】当月0EA;长期未购52家(57%) 全司最多\n【改善】启贝连锁(5店)集团对接;振全嘉泰·吉瑞昇代理商联合回访"}, {"dq": "宁5大区", "prod": "ARi", "anal": "【现状】当月0EA·复购17%;新进0/7家\n【改善】计划22家中锁定3家本月试用"}], "华中本部": [{"dq": "宁6大区", "prod": "BD", "anal": "【现状】285EA 植得集中订货;新进0/7家;长期未购10家(43%)\n【改善】远见(55EA)·英子(50EA)优先回访;恢复新进开发"}, {"dq": "宁6大区", "prod": "ARi", "anal": "【现状】3EA·新进1/6家\n【改善】新进客户复购跟进,每周≥1家试用"}, {"dq": "宁7大区", "prod": "BD", "anal": "【现状】当月1EA·复购24%;长期未购16家(36%)\n【改善】禾木(品牌店60EA)·王朝贵恢复订货;牙博士连锁(3店)集团对接"}, {"dq": "宁7大区", "prod": "ARi", "anal": "【现状】当月0EA·复购0%;新进0/5家\n【改善】重新筛选目标客户,本月≥1家试用"}, {"dq": "宁11大区", "prod": "BD", "anal": "【现状】91EA·复购60%·新进3/12家 均衡良好;长期未购17家(28% 达标)\n【改善】德派·健齿(品牌店)大客户回访;模式推广至宁6/宁7"}, {"dq": "宁11大区", "prod": "ARi", "anal": "【现状】8EA·新进1/8家\n【改善】每周≥1家试用,首单2周内跟进"}], "华西本部": [{"dq": "宁8大区", "prod": "BD", "anal": "【现状】69EA·复购69% 优秀;长期未购12家(12%)\n【改善】新疆张倩倩·锐珂(合计145EA)恢复订货"}, {"dq": "宁8大区", "prod": "ARi", "anal": "【现状】1EA·新进0/13家\n【改善】计划22家→本月锁定3家试用"}, {"dq": "宁9大区", "prod": "BD", "anal": "【现状】2EA·复购23%;长期未购16家(52%)\n【改善】宝鸡洁白(104EA)·鹏诚(品牌店80EA)优先激活;山西代理商分散需整合"}, {"dq": "宁9大区", "prod": "ARi", "anal": "【现状】3EA·新进0/6家\n【改善】本月≥1家试用转化"}], "华南本部": [{"dq": "宁10大区", "prod": "BD", "anal": "【现状】76EA·复购55%;长期未购23家(41%)\n【改善】瑞德口腔(品牌店)复购恢复;广州颜笑·深圳西丽回访"}, {"dq": "宁10大区", "prod": "ARi", "anal": "【现状】0EA·新进0/12家\n【改善】锁定3家重点客户试用,每周跟进"}], "华北本部": [{"dq": "北1大区", "prod": "BD", "anal": "【现状】0/640.8EA;长期未购17家(45%)\n【改善】博康口腔(63EA)·新芽口腔优先;圣特嘉代理商联动"}, {"dq": "北1大区", "prod": "ARi", "anal": "【现状】0EA·计划60家\n【改善】计划收敛,本月锁定3家试用"}, {"dq": "北2大区", "prod": "BD", "anal": "【现状】18/512.4EA(4%);长期未购38家(46%)\n【改善】品牌店3家(莱恩·普瑞·共昌 各50EA)优先恢复"}, {"dq": "北2大区", "prod": "ARi", "anal": "【现状】0EA·复购0%·计划89家\n【改善】计划收敛,本月锁定3家试用"}, {"dq": "北3大区", "prod": "BD", "anal": "【现状】20/704.4EA(3%);长期未购143家(72%) 全司最多;复购21%\n【改善】恒嘉齿科(202EA)·依诺·葫芦岛化机等大客户优先;鑫盛达·鑫汇鑫代理商联合回访"}, {"dq": "北3大区", "prod": "ARi", "anal": "【现状】0EA·计划51家\n【改善】计划收敛,本月锁定3家试用"}]}, "fill": {"华北本部": {"owners": {"北1大区": "刘伟", "北2大区": "林大盛", "北3大区": "李雪峰", "本部": "林大盛"}, "cells": {"北1大区|BD": {"cause": "AR 전환 영향, BD 정책이 AR 대비 불리. 소포장 100颗 연수 지원 필요", "plan": "프로모션·학술회의 등 지원 강화", "req": ""}, "北1大区|ARi": {"cause": "증례 부족, 시장 프로모션 시간 부족", "plan": "프로모션·학술회의 등 지원 강화", "req": ""}, "北2大区|BD": {"cause": "수가(치료비) 영향, AR 전환, 우위 부각 부족", "plan": "11월 말까지 단계적 개선", "req": "CEO 살롱"}, "北2大区|ARi": {"cause": "임상의 이해·숙련 부족으로 시술 개시 주저", "plan": "실습 교육반 강화, 12월 말까지 단계적 개선", "req": "전략 협력, DSO 방한"}, "北3大区|BD": {"cause": "수가 높고 제품 차별화 부각 안됨. 치과 재고 확보 주저, 개별 케이스에만 사용, 시장 미확산", "plan": "제품 차별화 설명, 증례 제공 독려, 반악궁 BD 증례 부품 지원. 11월 말 개선", "req": "부품 지원, kit, 현지 대형치과 3.3 시용"}, "北3大区|ARi": {"cause": "수술 난이도 높고 수용도 낮음, 짧은 기간에 시장 개척 미진", "plan": "현지 KOL의 ARi 증례 제공 독려, 온라인 공개강의. 연말까지 5곳 확보", "req": "AXA 어버트먼트 부품 지원"}}}}};
 const MENU=[
- {id:'wreport',label:'주간 판매실적 보고 ★'},
- {id:'wrrest',label:'1. 주요성과'},
- {id:'g_mp',label:'2. 시장·경쟁동향',kids:[{id:'mktprice',label:'(1) 시장가격동향'},{id:'compsurvey',label:'(2) 경쟁사 조사 (1~10월)'}]},
- {id:'region',label:'3. 각지역 성과분석'},
- {id:'g_p3',label:'4. 세미나 고객전환 ★',kids:[{id:'semconv',label:'(1) 세미나 고객전환'},{id:'eduweek',label:'(2) 교육활동 주보'}]},
- {id:'intro',label:'5. 메가젠제품 소개자료 ★'}];
+ {id:'wreport',label:'금주 판매실적 보고 ★'},
+ {id:'wprev',label:'전주 판매실적 보고 ★'},
+ {id:'wrrest',label:'1. 판매성과'},
+ {id:'stock',label:'2. 장기미구매고객'},
+ {id:'progress',label:'3. 영업진도현황'},
+ {id:'semconv',label:'4. 세미나 고객전환'},
+ {id:'eduweek',label:'5. 교육활동현황'},
+ {id:'intro',label:'6. 제품소개자료'},
+ {id:'g_mp',label:'7. 시장경쟁동향',kids:[{id:'mktprice',label:'(1) 시장가격동향'},{id:'compsurvey',label:'(2) 경쟁사 조사 (1~10월)'}]}];
 let VIEWMODE={};   // 섹션별 카드/표
 function setPage(id){PAGE=id;renderAll();window.scrollTo(0,0);}
 function renderMenu(){const el=document.getElementById('menu');el.innerHTML=MENU.map(m=>{if(m.kids){const on=m.kids.some(k=>k.id===PAGE);return `<button class="${on?'':''}" onclick="setPage('${m.kids[0].id}')">${m.label}<span class="sub">›</span></button>`+m.kids.map(k=>`<button class="sm ${k.id===PAGE?'on':''}" onclick="setPage('${k.id}')">${k.label}</button>`).join('');}
@@ -595,7 +599,7 @@ function renderSbox(){const el=document.getElementById('sbox');const t=new Date(
   <div class="r"><span>저장 상태</span><span class="${DIRTY?'ng':'ok'}">${DIRTY?'미저장 변경':'변경 없음'}</span></div>
   <div class="r"><span>데이터</span><span class="${SRC==='클라우드'?'ok':'ng'}">${SRC} · ${esc(DATA.week||'')}</span></div>`;}
 function renderAll(){renderMenu();renderCal();renderSbox();setSaveSt();renderPage();}
-function renderPage(){const el=document.getElementById('page');const fn={wreport:pageWreport,wrrest:pageRest,region:pageRegion,semconv:pageSemconv,eduweek:pageEdu,mktprice:pageMkt,compsurvey:pageComp,intro:pageIntro}[PAGE]||pagePlaceholder;try{el.innerHTML=fn();}catch(e){el.innerHTML=`<div class="empty">화면 생성 오류: ${esc(e.message)}</div>`;console.error(e);}
+function renderPage(){const el=document.getElementById('page');const fn={wreport:pageWreport,wprev:pageWprev,wrrest:pageRest,stock:pageStock,progress:pageProgress,region:pageRegion,semconv:pageSemconv,eduweek:pageEdu,mktprice:pageMkt,compsurvey:pageComp,intro:pageIntro}[PAGE]||pagePlaceholder;try{el.innerHTML=fn();}catch(e){el.innerHTML=`<div class="empty">화면 생성 오류: ${esc(e.message)}</div>`;console.error(e);}
   el.querySelectorAll('textarea.nxw-t').forEach(autogrow);}
 function pagePlaceholder(){const m=MENU.flatMap(x=>x.kids?[x,...x.kids]:[x]).find(x=>x.id===PAGE)||{label:PAGE};
   return `<div class="hd"><div><span class="tag">MGI PM</span><h1>${esc(m.label)}</h1><p>다음 단계에서 같은 카드 방식으로 구성합니다 (주차 선택·더블클릭 수정·자동저장 공통).</p></div></div><div class="empty" style="margin-top:20px">「주간 판매실적 보고」 방향 확인 후 이어서 만듭니다.</div>`;}
@@ -637,9 +641,9 @@ function hqItems(MB,MA,filter){const out=[];HQS.forEach(h=>{[['BD',MB],['ARi',MA
     metrics:[{k:'치과 목표/실적',v:`${v.mcA}<small>/${v.mcT}</small>`},{k:'금주 판매',v:M.snap.prv?'+'+fmt0(v.wk):'–',sub:'EA · 명세'},{k:'장기미구매',v:fmt0(v.dead),sub:dr!=null?`곳 · ${dr}%`:'곳'},{k:'재구매 비중',v:v.repPct+'%'},
       {k:'세미나전환',v:esc(v.semTxt.split(' ')[0]),sub:v.semTxt.split(' ').slice(1).join(' ')},{k:'최우수 담당',v:v.best?esc(v.best.name):'–',sub:v.best?fmt0(v.best.q)+' EA':'',zh:true},{k:'집중관리 담당',v:v.focus?esc(v.focus.name):'–',sub:v.focus?v.focus.c+'곳':'',zh:true}]});});});return out;}
 /* 공통 표 (본부별 실행관리 · EXEC 동일 열 구성) */
-const EXEC_COLS=`<colgroup><col style="width:90px"><col style="width:52px"><col style="width:74px"><col style="width:76px"><col style="width:54px"><col style="width:86px"><col style="width:68px"><col style="width:56px"><col style="width:128px"><col style="width:96px"><col style="width:96px"><col></colgroup><thead><tr><th>본부</th><th>제품</th><th class="n">월목표EA</th><th class="n">월실적EA</th><th class="n">달성</th><th>치과 목표/실적</th><th class="n">장기미구매</th><th class="n">재구매</th><th>세미나전환</th><th>최우수 담당</th><th>집중관리 담당</th><th>현황분석</th></tr></thead>`;
+const EXEC_COLS=`<colgroup><col style="width:90px"><col style="width:52px"><col style="width:74px"><col style="width:76px"><col style="width:54px"><col style="width:86px"><col style="width:68px"><col style="width:128px"><col style="width:96px"><col style="width:96px"><col></colgroup><thead><tr><th>본부</th><th>제품</th><th class="n">월목표EA</th><th class="n">월실적EA</th><th class="n">달성</th><th>치과 목표/실적</th><th class="n">장기미구매</th><th>세미나전환</th><th>최우수 담당</th><th>집중관리 담당</th><th>현황분석</th></tr></thead>`;
 const clipTd=(t,cls)=>`<td class="clip ${cls||''}" title="더블클릭하면 전체 내용" ondblclick="this.classList.toggle('full')">${esc(t)}</td>`;
-function execCells(p,x,note){const mt=x.mT!=null&&x.mT!==''?x.mT:null;return `<td class="c">${p}</td><td class="n">${mt!=null?fmt(mt,mt%1?1:0):'—'}</td><td class="n">${fmt0(x.mA)}</td><td class="n">${mt?`<span class="rd">${pct(x.mA,mt)}%</span>`:'–'}</td><td class="c">${x.mcT} / ${x.mcA}</td><td class="n">${fmt0(x.dead)}</td><td class="n">${x.repPct!=null?x.repPct+'%':'–'}</td>${clipTd(x.semTxt||'—','zh')}${clipTd(x.best?`${x.best.name} ${fmt0(x.best.q)}EA`:'—','zh')}${clipTd(x.focus?`${x.focus.name} ${x.focus.c}곳`:'—','zh')}${clipTd(note,'zh')}`;}
+function execCells(p,x,note){const mt=x.mT!=null&&x.mT!==''?x.mT:null;return `<td class="c">${p}</td><td class="n">${mt!=null?fmt0(mt):'—'}</td><td class="n">${fmt0(x.mA)}</td><td class="n">${mt?`<span class="rd">${pct(x.mA,mt)}%</span>`:'–'}</td><td class="c">${fmt0(x.mcT)} / ${fmt0(x.mcA)}</td><td class="n">${fmt0(x.dead)}</td>${clipTd(x.semTxt||'—','zh')}${clipTd(x.best?`${x.best.name} ${fmt0(x.best.q)}EA`:'—','zh')}${clipTd(x.focus?`${x.focus.name} ${x.focus.c}곳`:'—','zh')}${clipTd(note,'zh')}`;}
 function hqTable(MB,MA){const open=VIEWMODE.hqOpen!==false;const X=hqx();
   let h=`<div class="ov-wrap"><table class="ov-tbl uni">${EXEC_COLS}<tbody>`;
   [['BD',MB],['ARi',MA]].forEach(([p,M],i)=>{const T=hqTotal(MB,MA,p);h+=`<tr class="sum">${i===0?`<td rowspan="2" class="tg" onclick="VIEWMODE.hqOpen=(VIEWMODE.hqOpen===false);renderPage()" title="본부별 펼치기/접기">${open?'▾':'▸'} 합계</td>`:''}${execCells(p,T,T.ana)}</tr>`;});
@@ -684,7 +688,7 @@ ${topHq&&MB.snap.prv?`□ 금주 TOP1 본부: <b>${topHq.ko}</b> +${fmt0(topHq.w
 function pageWreport(){const MB=model('BD'),MA=model('ARi');const asOf=MB.snap.cur.asOf||DATA.asOf||'';const stale=MB.snap.stale?`<span style="color:#b3781c;font-weight:800"> · ⚠ ${WEEK} 데이터 없음 — ${MB.snap.cur.week||'최신'} 값 표시</span>`:'';
   const f=VIEWMODE.hqF||'';const fbtn=['','BD','ARi'].map(k=>`<button class="${f===k?'on':''}" onclick="VIEWMODE.hqF='${k}';renderPage()">${k||'전체'}</button>`).join('');
   const insId='ins';const insSaved=eget(insId,'html');
-  return `<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>프리미엄 라인업(BD · ARi) 주간 판매실적 보고</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)}${stale}</p></div><div class="brand"><i style="width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#2C57A6,#27B4E8);display:inline-block"></i>MEGAGEN</div></div>
+  return `<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>프리미엄 라인업(BD · ARi) 금주 판매실적 보고</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)}${stale}</p></div><div class="brand"><i style="width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#2C57A6,#27B4E8);display:inline-block"></i>MEGAGEN</div></div>
   <div class="band">${bandCard(MB,'bd','BD')}${bandCard(MA,'ar','ARi')}</div>
   ${secH(`${WEEK.slice(5)} 금주현황 · 주간실적/장기미구매/주요이슈 Auto Insight`,'데이터에서 자동 생성 · 더블클릭하여 보완 (주차별 저장)','')}
   <div class="ins" ondblclick="editBlock(this,'${insId}')" onblur="saveBlock(this,'${insId}')">${insSaved!=null?insSaved:autoInsight(MB,MA)}</div>${insSaved!=null?`<div class="foot-note">수정본 표시 중 · <a href="#" onclick="eset('${insId}','html',null);renderPage();return false">자동 생성으로 되돌리기</a></div>`:''}
@@ -706,8 +710,8 @@ function pageWreport(){const MB=model('BD'),MA=model('ARi');const asOf=MB.snap.c
 function hqBarsBlock(MB,MA){const m=VIEWMODE.wrHqm||'wk';const lab={wk:'주간',mo:'월별',yr:'년도'}[m];const hint={wk:`주간 = 당월분 중 ${MB.snap.prv?MB.snap.prv.week.slice(5):'전주'} 이후 증가`,mo:'월별 = 당월 누적',yr:'년도 = 26년 누적'}[m];const op=VIEWMODE.wrHqOpen!==false;
   const val=x=>m==='wk'?{a:x.wk,t:x.mT}:m==='yr'?{a:x.sA,t:x.sT}:{a:x.mA,t:x.mT};
   const panel=(M,name,cls)=>{const rows=HQS.map(h=>({ko:HQKO[h],...val(M.H[h])})).sort((a,b)=>pct(b.a,b.t)-pct(a.a,a.t));const T=val({wk:M.T.wk,mT:M.T.mT,mA:M.T.mA,sA:M.T.sA,sT:M.T.sT});
-    return `<div class="hqp"><div class="hqp-h"><b>${name}</b><span class="hqp-v">${fmt0(T.a)}</span><span class="hqp-t">목표 ${fmt(T.t,T.t%1?1:0)} · ${pct(T.a,T.t)}%</span></div>
-      ${rows.map(r=>`<div class="hqp-r"><span class="hqp-n">${r.ko}</span><span class="hqp-bar"><i class="${cls}" style="width:${Math.min(100,pct(r.a,r.t))}%"></i><u></u></span><span class="hqp-a">${fmt0(r.a)}</span><span class="hqp-g">/ ${fmt(r.t,r.t%1?1:0)}</span><span class="hqp-p">${pct(r.a,r.t)}%</span></div>`).join('')}
+    return `<div class="hqp"><div class="hqp-h"><b>${name}</b><span class="hqp-v">${fmt0(T.a)}</span><span class="hqp-t">목표 ${fmt0(T.t)} · ${pct(T.a,T.t)}%</span></div>
+      ${rows.map(r=>`<div class="hqp-r"><span class="hqp-n">${r.ko}</span><span class="hqp-bar"><i class="${cls}" style="width:${Math.min(100,pct(r.a,r.t))}%"></i><u></u></span><span class="hqp-a">${fmt0(r.a)}</span><span class="hqp-g">/ ${fmt0(r.t)}</span><span class="hqp-p">${pct(r.a,r.t)}%</span></div>`).join('')}
       <div class="hqp-f">막대 = 목표 대비 달성률 · 오른쪽 파란 선 = 목표 100%</div></div>`;};
   /* 구간별 고객 구성 · 재구매 (BD 진입 고객 기준) */
   const PM=provMap();const G={};const add=(k,c)=>{const g=G[k]=G[k]||{k,n:0,u10:0,m10:0,o100:0,rep:0};g.n++;const t=n(c.tot);if(t<10)g.u10++;else if(t<100)g.m10++;else g.o100++;if((c.m||[]).filter(v=>n(v)>0).length>=2)g.rep++;};
@@ -746,14 +750,14 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   // 보정: 북경 월목표는 model()의 MGOAL 반영값을 사용
   HQS.forEach(h=>{HB[h].mT=MB.H[h].mT;HA[h].mT=MA.H[h].mT;HB[h].mcT=MB.H[h].mcT;HA[h].mcT=MA.H[h].mcT;});
   const asOf=MB.snap.cur.asOf||'';
-  let h=`<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>1. 주요성과 — 본부·대리상·고객·장기미구매·영업진도</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)} · 주간 = 당월 누적의 스냅 간 증가분</p></div></div>`;
+  let h=`<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>1. 판매성과 — 본부·대리상·고객·세미나·실행관리</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)} · 주간 = 당월 누적의 스냅 간 증가분</p></div></div>`;
   /* 2 HQ 본부별 판매현황 */
   const m1=modeOf('hqm');const lab=MODES.find(x=>x[0]===m1)[1];
-  h+=secH('2 HQ 본부별 판매현황 (수량)',`${lab} · ${noPrv(MB)&&m1==='wk'?'전주 스냅 없음 → 월별 값 표시':valBy(HB[HQS[0]],m1).lab}`,'',modeTabs('hqm'));
+  h+=secH('1 HQ 본부별 판매현황 (수량)',`${lab} · ${noPrv(MB)&&m1==='wk'?'전주 스냅 없음 → 월별 값 표시':valBy(HB[HQS[0]],m1).lab}`,'',modeTabs('hqm'));
   const rows=HQS.map(hq=>({hq,b:valBy(HB[hq],m1),a:valBy(HA[hq],m1),B:HB[hq],A:HA[hq]})).sort((x,y)=>pct(y.b.a,y.b.t)-pct(x.b.a,x.b.t));
   const TB=rows.reduce((s,r)=>({a:s.a+r.b.a,t:s.t+r.b.t}),{a:0,t:0}),TA=rows.reduce((s,r)=>({a:s.a+r.a.a,t:s.t+r.a.t}),{a:0,t:0});
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>본부</th><th class="n">BD 실적</th><th class="n">BD 목표</th><th>BD 달성</th><th class="n">ARi 실적</th><th class="n">ARi 목표</th><th>ARi 달성</th><th class="n">진입치과 BD/ARi</th></tr></thead><tbody>`;
-  rows.forEach(r=>{h+=`<tr><td style="font-weight:800">${HQKO[r.hq]}</td><td class="n">${fmt0(r.b.a)}</td><td class="n">${fmt(r.b.t,r.b.t%1?1:0)}</td><td>${mbar(r.b.a,r.b.t)}</td><td class="n">${fmt0(r.a.a)}</td><td class="n">${fmt0(r.a.t)}</td><td>${mbar(r.a.a,r.a.t,'ar')}</td><td class="n">${r.B.cumA} / ${r.A.cumA}</td></tr>`;});
+  rows.forEach(r=>{h+=`<tr><td style="font-weight:800">${HQKO[r.hq]}</td><td class="n">${fmt0(r.b.a)}</td><td class="n">${fmt0(r.b.t)}</td><td>${mbar(r.b.a,r.b.t)}</td><td class="n">${fmt0(r.a.a)}</td><td class="n">${fmt0(r.a.t)}</td><td>${mbar(r.a.a,r.a.t,'ar')}</td><td class="n">${r.B.cumA} / ${r.A.cumA}</td></tr>`;});
   h+=`<tr class="sum"><td>합계</td><td class="n">${fmt0(TB.a)}</td><td class="n">${fmt0(TB.t)}</td><td>${mbar(TB.a,TB.t)}</td><td class="n">${fmt0(TA.a)}</td><td class="n">${fmt0(TA.t)}</td><td>${mbar(TA.a,TA.t,'ar')}</td><td class="n">${MB.T.cumA} / ${MA.T.cumA}</td></tr></tbody></table></div><div style="height:10px"></div>`;
   h=foldLast(h,rows.map(r=>{const ar=r.B.areas.map(a=>`${a.key} ${fmt0(valBy(a,m1).a)}`).join(' · ');
     return {id:`hqs|${r.hq}`,cat:HQKO[r.hq],prod:null,title:`${lab} 판매현황 (BD+ARi)`,a:r.b.a+r.a.a,t:r.b.t+r.a.t,unit:'EA',footLabel:lab+' 달성(BD+ARi)',src:'명세 기준',
@@ -761,7 +765,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
       metrics:[{k:'BD '+lab,v:fmt0(r.b.a),sub:'/ '+fmt0(r.b.t)},{k:'ARi '+lab,v:fmt0(r.a.a),sub:'/ '+fmt0(r.a.t)},{k:'BD 연 누적',v:fmt0(r.B.sA),sub:pct(r.B.sA,r.B.sT)+'%'},{k:'ARi 연 누적',v:fmt0(r.A.sA),sub:pct(r.A.sA,r.A.sT)+'%'},{k:'진입치과',v:`${r.B.cumA}<small>/${r.B.cumT}</small>`,sub:`ARi ${r.A.cumA}/${r.A.cumT}`},{k:'장기미구매(BD)',v:fmt0(r.B.dead),sub:`${pct(r.B.dead,r.B.ent)}%`}]};}));
   /* 2-1 DEALER */
   const m2=modeOf('dlm');const DL=dealerList(MB,MA,m2);const lab2=MODES.find(x=>x[0]===m2)[1];
-  h+=secH('2-1 DEALER 판매수량 TOP 대리상',`${lab2}${m2==='wk'&&!DL.hasWk?' · 치과별 주간 분해는 명세 스냅 2개부터 — 월별 값 표시':''} · 상위 10`,'',modeTabs('dlm'));
+  h+=secH('1-1 DEALER 판매수량 TOP 대리상',`${lab2}${m2==='wk'&&!DL.hasWk?' · 치과별 주간 분해는 명세 스냅 2개부터 — 월별 값 표시':''} · 상위 10`,'',modeTabs('dlm'));
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>#</th><th>본부</th><th>지역</th><th>대리상</th><th>구분</th><th class="n">하부고객</th><th>영업담당</th><th>제품구성</th><th class="n">판매수량</th><th class="n">누적</th></tr></thead><tbody>`;
   DL.list.slice(0,10).forEach((d,i)=>{h+=`<tr><td class="c">${i+1}</td><td>${esc(d.ko)}</td><td class="zh">${esc(d.prov)}</td><td class="zh">${esc(d.d)}</td><td>${d.dso?'DSO':'일반'}</td><td class="n">${d.hub}</td><td class="zh">${esc(d.owner)}</td><td>${d.prod}</td><td class="n">${fmt0(d.q)}</td><td class="n">${fmt0(d.y)}</td></tr>`;});
   h+=`</tbody></table></div><div style="height:10px"></div>`;
@@ -769,7 +773,7 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
     note:`${d.prov} · ${d.dso?'DSO':'일반'} · 하부 치과 ${d.hub}곳(신규 ${d.newc}) · ${lab2} ${fmt0(d.q)}EA (BD ${fmt0(d.bq)}${d.aq?' · ARi '+fmt0(d.aq):''}) · 연 누적 ${fmt0(d.y)}EA · 담당 ${d.owner}`,
     metrics:[{k:lab2+' 판매',v:fmt0(d.q),sub:'EA'},{k:'연 누적',v:fmt0(d.y),sub:'EA'},{k:'하부 치과',v:d.hub,sub:`신규 ${d.newc}`},{k:'본부 내 점유',v:pct(d.y,d.hqY)+'%'},{k:'영업담당',v:esc(d.owner),zh:true},{k:'TOP 하부',v:esc(d.top||'–'),zh:true}]})));
   /* 3 CUSTOMER */
-  h+=secH('3 CUSTOMER 본부별 판매고객 (진입치과)','연 목표 대비 누적 진입 · 전주대비 = 스냅 간 증가 · 본부 행을 누르면 大区별','');
+  h+=secH('2 CUSTOMER 본부별 판매고객 (진입치과)','연 목표 대비 누적 진입 · 전주대비 = 스냅 간 증가 · 본부 행을 누르면 大区별','');
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th rowspan="2">本部 / 大区</th><th colspan="4">BD</th><th colspan="4">ARi</th></tr><tr><th class="n">목표</th><th class="n">누적고객</th><th>달성률</th><th class="n">전주대비</th><th class="n">목표</th><th class="n">누적고객</th><th>달성률</th><th class="n">전주대비</th></tr></thead><tbody>`;
   const cRow=(lbl,b,a,sub,tg)=>`<tr class="${sub?'sub':''}"><td class="${tg?'tg':''}" ${tg?`onclick="OPEN['cx|${tg}']=!OPEN['cx|${tg}'];renderPage()"`:''}>${tg?(OPEN['cx|'+tg]?'▾ ':'▸ '):''}${esc(lbl)}</td><td class="n">${b.cumT}</td><td class="n">${b.cumA}</td><td>${mbar(b.cumA,b.cumT)}</td><td class="n">${MB.snap.prv?'+'+(b.cumA-b.prvCumA):'–'}</td><td class="n">${a.cumT}</td><td class="n">${a.cumA}</td><td>${mbar(a.cumA,a.cumT,'ar')}</td><td class="n">${MA.snap.prv?'+'+(a.cumA-a.prvCumA):'–'}</td></tr>`;
   HQS.forEach(hq=>{h+=cRow(hq,HB[hq],HA[hq],false,hq);if(OPEN['cx|'+hq])HB[hq].areas.forEach(a=>{const aa=AA.A[a.key]||{cumT:0,cumA:0,prvCumA:0};h+=cRow('　'+a.key,a,aa,true);});});
@@ -778,8 +782,68 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   h=foldLast(h,HQS.map(hq=>{const b=HB[hq],a=HA[hq];return {id:`cust|${hq}`,cat:HQKO[hq],prod:null,title:'판매고객(진입치과) 연 목표 관리',a:b.cumA+a.cumA,t:b.cumT+a.cumT,unit:'곳',tier:tierYear(b.cumA+a.cumA,b.cumT+a.cumT),tierHint:'연 경과일 대비 진입 진도',footLabel:'연 진입 달성(BD+ARi)',due:'12/31',src:'명세 기준',
     note:`BD ${b.cumA}/${b.cumT}곳(${pct(b.cumA,b.cumT)}%)${MB.snap.prv?` 전주 +${b.cumA-b.prvCumA}`:''} · ARi ${a.cumA}/${a.cumT}곳(${pct(a.cumA,a.cumT)}%)${MA.snap.prv?` 전주 +${a.cumA-a.prvCumA}`:''} · 당월 신규 BD ${b.mcA}/${b.mcT} · ARi ${a.mcA}/${a.mcT}`,
     metrics:[{k:'BD 누적/목표',v:`${b.cumA}<small>/${b.cumT}</small>`},{k:'ARi 누적/목표',v:`${a.cumA}<small>/${a.cumT}</small>`},{k:'BD 전주대비',v:MB.snap.prv?'+'+(b.cumA-b.prvCumA):'–'},{k:'ARi 전주대비',v:MA.snap.prv?'+'+(a.cumA-a.prvCumA):'–'},{k:'당월 신규 BD',v:`${b.mcA}<small>/${b.mcT}</small>`},{k:'당월 신규 ARi',v:`${a.mcA}<small>/${a.mcT}</small>`}]};}));
+  /* 5 SEMINAR */
+  h+=secH('3 SEMINAR 세미나 고객전환현황','2026년 9월 세미나 이후 · 방문율·진도율은 기구매 제외 기준 · 상세는 「4. 세미나 고객전환」','');
+  h=foldLast(h+semTable(),semItems(),it=>it.cat);
+  /* 6 EXEC */
+  h+=secH('4 EXEC 본부별 실행관리 리스트','본부별 실행관리를 본부 단위(BD+ARi)로 합산 · 열 구성 동일 · 집중관리 = 장기미구매 최다 보유 담당','');
+  h=foldLast(h+execTable(MB,MA),execItems(MB,MA));
+  return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 주간보고 엑셀(客户开发现况 · 명세) 기준 · 데이터 ${SRC}</div>`;}
+
+/* ───── 전주 판매실적 보고 (본부 제출 엑셀) ───── */
+function pageWprev(){const D=window.__WPREV||{rows:[],tot:[],areas:{}};const wk=D.week||'';
+  const num=v=>(v==null||v==='—'||v==='')?null:Number(v);
+  const f0=v=>{const x=num(v);return x==null?'—':fmt0(x);};
+  const ach=(a,t)=>{const x=num(a),y=num(t);return (x!=null&&y>0)?pct(x,y)+'%':'–';};
+  const br=t=>esc(t||'').replace(/\n/g,'<br>');
+  let h=`<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>전주 판매실적 보고 — ${esc(D.title||wk)}</h1><p>각 본부 제출 엑셀(本部·大区销售分析 ${esc(wk)}) 기준 · 부진원인·개선대책·중점관리고객·본사요청은 직접 기입 (자동저장)</p></div></div>`;
+  h+=secH('HQ 본부별 판매실적 분석','본부별 BD·ARi 小计 + 현황분석 · 노란칸 = 직접 기입란','');
+  h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>본부</th><th>제품</th><th class="n">월목표EA</th><th class="n">월실적EA</th><th>달성</th><th class="n">신규목표 家</th><th class="n">신규실적 家</th><th class="n">장기미구매</th><th>진도계획</th><th>세미나전환</th></tr></thead><tbody>`;
+  const byHq={};(D.rows||[]).forEach(r=>{(byHq[r.hq]=byHq[r.hq]||[]).push(r);});
+  const dataRow=(r,i,rs)=>`<tr>${i===0?`<td rowspan="2" style="font-weight:800">${esc(HQKO[r.hq]||r.hq)}</td>`:''}<td style="font-weight:800;color:${r.prod==='BD'?'var(--navy)':'var(--navy2)'}">${r.prod}</td><td class="n">${f0(r.mT)}</td><td class="n" style="font-weight:800">${f0(r.mA)}</td><td class="n">${ach(r.mA,r.mT)}</td><td class="n">${f0(r.cT)}</td><td class="n">${f0(r.cA)}</td><td class="n">${f0(r.dead)}</td><td>${esc(r.prog||'–')}</td><td style="font-size:11.5px">${br(r.sem||'–')}</td></tr>`;
+  Object.keys(byHq).forEach(hq=>{const rs=byHq[hq];
+    rs.forEach((r,i)=>{h+=dataRow(r,i,rs);});
+    const id='wprev|'+wk+'|'+hq;
+    const anaHtml=rs.map(r=>`<div style="margin-bottom:4px"><b style="color:${r.prod==='BD'?'var(--navy)':'var(--navy2)'}">${r.prod}</b> · ${br(r.anal||'–')}</div>`).join('')
+      +((D.areas||{})[hq]||[]).map(a=>`<div style="font-size:12px;color:#5b6b82;margin-top:2px"><b>${esc(a.dq)} ${a.prod}</b> · ${br(a.anal)}</div>`).join('');
+    h+=`<tr class="fold-dtl"><td style="font-weight:800;background:#f7f9fc">현황분석</td><td colspan="9" style="text-align:left;padding:6px 10px;font-size:12.8px;line-height:1.55">${anaHtml}</td></tr>`;
+    const FL=((D.fill||{})[hq])||{};const owners=FL.owners||{};const cells=FL.cells||{};
+    const dqs=[];(((D.areas||{})[hq])||[]).forEach(a2=>{if(dqs.indexOf(a2.dq)<0)dqs.push(a2.dq);});
+    const cell=(key,fld)=>{const v=(cells[key]||{})[fld];if(v)return `<td style="text-align:left">${esc(v)}</td>`;
+      const ek='wpd|'+wk+'|'+hq+'|'+key+'|'+fld;
+      return `<td style="padding:4px 6px"><textarea class="nxw-t" style="background:#fffbe8;min-height:26px;font-size:12.5px" placeholder="기입" oninput="autogrow(this)" onchange="eset('${ek}','v',this.value,false,this)">${esc(eget(ek,'v',false)||'')}</textarea></td>`;};
+    let sub=`<table class="ov-tbl" style="margin:0"><colgroup><col style="width:84px"><col style="width:70px"><col style="width:52px"><col style="width:31%"><col style="width:31%"><col></colgroup><thead><tr><th>大区</th><th>담당</th><th>제품</th><th>부진원인</th><th>개선대책/완성기한</th><th>본사요청사항</th></tr></thead><tbody>`;
+    dqs.concat(['本部']).forEach(dq=>{const lbl=dq==='本部'?(HQKO[hq]||hq):dq;const ow=owners[dq]||'';
+      ['BD','ARi'].forEach((pd,i)=>{const key=dq+'|'+pd;
+        sub+=`<tr${dq==='本部'?' class="sum"':''}>${i===0?`<td rowspan="2" style="font-weight:800">${esc(lbl)}</td><td rowspan="2">${esc(ow)}</td>`:''}<td style="font-weight:800;color:${pd==='BD'?'var(--navy)':'var(--navy2)'}">${pd}</td>${cell(key,'cause')}${cell(key,'plan')}${cell(key,'req')}</tr>`;});});
+    sub+=`</tbody></table>`;
+    h+=`<tr class="fold-dtl"><td colspan="10" style="padding:6px 8px">${sub}</td></tr>`;});
+  (D.tot||[]).forEach((r,i)=>{h+=`<tr class="sum">${i===0?`<td rowspan="2">合计</td>`:''}<td style="font-weight:800">${r.prod}</td><td class="n">${f0(r.mT)}</td><td class="n" style="font-weight:800">${f0(r.mA)}</td><td class="n">${ach(r.mA,r.mT)}</td><td class="n">${f0(r.cT)}</td><td class="n">${f0(r.cA)}</td><td class="n">${f0(r.dead)}</td><td>${esc(r.prog||'–')}</td><td style="font-size:11.5px">${br(r.sem||'–')}</td></tr>`;});
+  h+=`</tbody></table></div><div style="height:12px"></div>`;
+  h+=kcSection();
+  return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 본부 제출 本部·大区销售分析 엑셀 기준 (${esc(wk)}) · 기입 내용은 이 브라우저에 자동저장 · 상단 클라우드 저장 버튼으로 공유 저장</div>`;}
+
+/* ───── 고객 명세 리스트 (장기미구매·진도) 공통 ───── */
+function custDetail(p){const S=pickSnap(p),PM=provMap();const out=[];
+  (S.cust||[]).forEach(c=>{const pm=PM[c.prov];if(!pm)return;const m=c.m||[];const ent=!!ENTERED[c.status];
+    let dead=false;if(ent){const from=p==='ARi'?0:5;dead=true;for(let i=from;i<m.length;i++)if(n(m[i])>0){dead=false;break;}}
+    let last=0;for(let i=0;i<m.length;i++)if(n(m[i])>0)last=i+1;const lastMon=last?(p==='ARi'?last+5:last):0;
+    out.push({p,hq:pm.hq,ko:HQKO[pm.hq]||pm.hq,key:pm.key,name:c.name||'',owner:c.owner||'',dealer:c.dealer||'',status:c.status,tot:n(c.tot),tot25:n(c.tot25||0),lastMon,ent,dead});});
+  return out;}
+function selChips(vk,items,cnts){const sel=VIEWMODE[vk]||{};const any=items.some(it=>sel[it[0]]);
+  let h=`<div class="tabs"><button class="${any?'':'on'}" onclick="VIEWMODE['${vk}']={};renderPage()">전체</button>`;
+  items.forEach(it=>{const[k,lab]=it;const c=cnts?(cnts[k]||0):null;
+    h+=`<button class="${sel[k]?'on':''}" onclick="VIEWMODE['${vk}']=VIEWMODE['${vk}']||{};VIEWMODE['${vk}']['${k}']=!VIEWMODE['${vk}']['${k}'];renderPage()">${lab}${c!=null?`<b style="margin-left:4px">${c}</b>`:''}</button>`;});
+  return h+`</div>`;}
+function selOn(vk,k){const sel=VIEWMODE[vk]||{};return !Object.keys(sel).some(x=>sel[x])||!!sel[k];}
+
+/* ───── 2. 장기미구매고객 (독립 페이지) ───── */
+function pageStock(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'),AA=areaModel('ARi');const HB=hqFromAreas(AB),HA=hqFromAreas(AA);
+  HQS.forEach(x=>{HB[x].mT=MB.H[x].mT;HA[x].mT=MA.H[x].mT;HB[x].mcT=MB.H[x].mcT;HA[x].mcT=MA.H[x].mcT;});
+  const asOf=MB.snap.cur.asOf||'';
+  let h=`<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>2. 장기미구매고객 — 진입 치과 중 26년 6월 이후 발주 0</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)} · 모수 = 진입 치과 · 목표 비중 30% 이하</p></div></div>`;
   /* 3-1 STOCK */
-  h+=secH('3-1 STOCK 장기미구매 고객','진입 치과 중 26년 6월 이후 발주 0 · 모수 = 진입 치과 · 목표 비중 30% 이하','');
+  h+=secH('STOCK 장기미구매 고객','진입 치과 중 26년 6월 이후 발주 0 · 모수 = 진입 치과 · 목표 비중 30% 이하','');
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th rowspan="2">本部 / 大区</th><th colspan="3">통합</th><th colspan="3">BD</th><th colspan="3">ARi</th></tr><tr><th class="n">장기미구매</th><th class="n">진입 치과</th><th>비중</th><th class="n">장기미구매</th><th class="n">진입 치과</th><th>비중</th><th class="n">장기미구매</th><th class="n">진입 치과</th><th>비중</th></tr></thead><tbody>`;
   const sRow=(lbl,b,a,sub,tg)=>`<tr class="${sub?'sub':''}"><td class="${tg?'tg':''}" ${tg?`onclick="OPEN['sx|${tg}']=!OPEN['sx|${tg}'];renderPage()"`:''}>${tg?(OPEN['sx|'+tg]?'▾ ':'▸ '):''}${esc(lbl)}</td><td class="n">${b.dead+a.dead}</td><td class="n">${b.ent+a.ent}</td><td>${mbar(b.dead+a.dead,b.ent+a.ent)}</td><td class="n">${b.dead}</td><td class="n">${b.ent}</td><td>${mbar(b.dead,b.ent)}</td><td class="n">${a.dead}</td><td class="n">${a.ent}</td><td>${mbar(a.dead,a.ent,'ar')}</td></tr>`;
   HQS.forEach(hq=>{h+=sRow(hq,HB[hq],HA[hq],false,hq);if(OPEN['sx|'+hq])HB[hq].areas.forEach(a=>{h+=sRow('　'+a.key,a,AA.A[a.key]||{dead:0,ent:0},true);});});
@@ -789,8 +853,26 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
     return {id:`stock|${hq}`,cat:HQKO[hq],prod:null,title:'장기미구매 고객 관리 (BD)',a:b.dead,t:b.ent,unit:'곳',pn:`${b.dead} / ${b.ent}곳 (비중 ${r}%)`,tier:tierLow(r,35,49),tierHint:'장기미구매 비중 (≤35% 좋음 · ≤49% 보통 · 50%↑ 위험)',footLabel:'장기미구매 비중',src:'명세 기준',
       note:`BD 장기미구매 ${b.dead}곳 / 진입 ${b.ent}곳 (${r}%)${worst?` · 최다 大区 ${worst.key} ${worst.dead}곳`:''}${f?` · 집중관리 담당 ${f.name} ${f.c}곳`:''} · ARi ${a.dead}/${a.ent}곳`,
       metrics:[{k:'BD 장기미구매',v:b.dead,sub:`${r}%`},{k:'ARi 장기미구매',v:a.dead,sub:`${pct(a.dead,a.ent)}%`},{k:'최다 大区',v:worst?esc(worst.key):'–',sub:worst?worst.dead+'곳':''},{k:'집중관리 담당',v:f?esc(f.name):'–',sub:f?f.c+'곳':'',zh:true},{k:'재구매 비중',v:pct(MB.H[hq].rep,b.ent)+'%'},{k:'목표',v:'≤30%'}]};}));
+  /* LIST 장기미구매 고객 리스트 */
+  h+=secH('LIST 장기미구매 고객 리스트','본부·제품 중복선택 · 금년 수량 오름차순 (0 = 금년 무발주 우선)','');
+  const allRows=custDetail('BD').concat(custDetail('ARi')).filter(r=>r.dead);
+  const pRows=allRows.filter(r=>selOn('skP',r.p));
+  const hqCnt={};pRows.forEach(r=>hqCnt[r.hq]=(hqCnt[r.hq]||0)+1);
+  h+=selChips('skP',[['BD','BD'],['ARi','ARi']],(()=>{const c={};allRows.forEach(r=>{if(selOn('skHq',r.hq))c[r.p]=(c[r.p]||0)+1;});return c;})());
+  h+=selChips('skHq',HQS.map(q=>[q,HQKO[q]]),hqCnt);
+  const list=pRows.filter(r=>selOn('skHq',r.hq)).sort((a,b)=>a.tot-b.tot||(a.hq===b.hq?0:HQS.indexOf(a.hq)-HQS.indexOf(b.hq))||(a.name<b.name?-1:1));
+  h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>제품</th><th>본부</th><th>大区</th><th>치과명</th><th>담당</th><th>대리상</th><th class="n">금년 수량</th><th class="n">작년 수량</th><th>최근 발주</th></tr></thead><tbody>`;
+  list.forEach(r=>{h+=`<tr><td>${r.p}</td><td>${esc(r.ko)}</td><td>${esc(r.key)}</td><td style="text-align:left">${esc(r.name)}</td><td>${esc(r.owner)}</td><td style="text-align:left">${esc(r.dealer)}</td><td class="n" style="font-weight:800;${r.tot===0?'color:#c0392b':''}">${r.tot}</td><td class="n">${r.tot25||'–'}</td><td>${r.lastMon?r.lastMon+'月':(r.tot25>0?"'25年":'–')}</td></tr>`;});
+  h+=`</tbody><tfoot><tr class="sum"><td colspan="6">합계 ${list.length}곳</td><td class="n">${list.reduce((x,r)=>x+r.tot,0)}</td><td class="n">${list.reduce((x,r)=>x+r.tot25,0)}</td><td></td></tr></tfoot></table></div>`;
+  return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 주간보고 엑셀(客户开发现况 · 명세) 기준 · 데이터 ${SRC}</div>`;}
+
+/* ───── 3. 영업진도현황 (독립 페이지) ───── */
+function pageProgress(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'),AA=areaModel('ARi');const HB=hqFromAreas(AB),HA=hqFromAreas(AA);
+  HQS.forEach(x=>{HB[x].mT=MB.H[x].mT;HA[x].mT=MA.H[x].mT;HB[x].mcT=MB.H[x].mcT;HA[x].mcT=MA.H[x].mcT;});
+  const asOf=MB.snap.cur.asOf||'';
+  let h=`<div class="hd"><div><span class="tag">주간 실적 분석 보고</span><h1>3. 영업진도현황 — 미구매(미진입) 고객 전환 관리</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(asOf)} · 기확인(已确认)/확인중(跟进中)/의향중(有意向) · 모수 = 미구매 치과</p></div></div>`;
   /* 4 PROGRESS */
-  h+=secH('4 PROGRESS 영업진도현황','미구매(미진입) 고객 대상 · 기확인(已确认)/확인중(跟进中)/의향중(有意向) · 모수 = 미구매 치과','');
+  h+=secH('PROGRESS 영업진도현황','미구매(미진입) 고객 대상 · 기확인(已确认)/확인중(跟进中)/의향중(有意向) · 모수 = 미구매 치과','');
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th rowspan="2">本部 / 大区</th><th colspan="4">통합</th><th colspan="4">BD</th><th colspan="4">ARi</th></tr><tr>${'<th class="n">기확인</th><th class="n">확인중</th><th class="n">의향중</th><th class="n">합계</th>'.repeat(3)}</tr></thead><tbody>`;
   const pc=s=>s['已确认']+s['跟进中']+s['有意向'];
   const pRow=(lbl,b,a,sub,tg)=>{const t={'已确认':b.st['已确认']+a.st['已确认'],'跟进中':b.st['跟进中']+a.st['跟进中'],'有意向':b.st['有意向']+a.st['有意向']};const cell=s=>`<td class="n">${s['已确认']}</td><td class="n">${s['跟进中']}</td><td class="n">${s['有意向']}</td><td class="n" style="font-weight:800">${pc(s)}</td>`;
@@ -801,13 +883,21 @@ function pageRest(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('BD'
   h=foldLast(h,HQS.map(hq=>{const b=HB[hq],a=HA[hq];const tot=pc(b.st)+pc(a.st),non=b.non+a.non;return {id:`prog|${hq}`,cat:HQKO[hq],prod:null,title:'영업진도 (미진입 고객 전환)',a:tot,t:non,unit:'곳',pn:`${tot} / ${non}곳 (진도관리 ${pct(tot,non)}%)`,tier:tierLow(100-pct(tot,non),30,60),tierHint:'미구매 치과 중 진도관리(기확인+확인중+의향중) 비중 (≥70% 좋음 · ≥40% 보통)',footLabel:'미구매 치과 중 진도관리 비중',src:'명세 기준',
     note:`BD 기확인 ${b.st['已确认']} · 확인중 ${b.st['跟进中']} · 의향중 ${b.st['有意向']} (미구매 ${b.non}곳) · ARi 기확인 ${a.st['已确认']} · 확인중 ${a.st['跟进中']} · 의향중 ${a.st['有意向']} (미구매 ${a.non}곳)`,
     metrics:[{k:'BD 기확인',v:b.st['已确认']},{k:'BD 확인중',v:b.st['跟进中']},{k:'BD 의향중',v:b.st['有意向']},{k:'ARi 기확인',v:a.st['已确认']},{k:'ARi 확인중',v:a.st['跟进中']},{k:'ARi 의향중',v:a.st['有意向']}]};}));
-  /* 5 SEMINAR */
-  h+=secH('5 SEMINAR 세미나 고객전환현황','2026년 9월 세미나 이후 · 방문율·진도율은 기구매 제외 기준 · 상세는 「4. 세미나 고객전환」','');
-  h=foldLast(h+semTable(),semItems(),it=>it.cat);
-  /* 6 EXEC */
-  h+=secH('6 EXEC 본부별 실행관리 리스트','본부별 실행관리를 본부 단위(BD+ARi)로 합산 · 열 구성 동일 · 집중관리 = 장기미구매 최다 보유 담당','');
-  h=foldLast(h+execTable(MB,MA),execItems(MB,MA));
+  /* LIST 진도상태별 고객 리스트 */
+  h+=secH('LIST 진도상태별 고객 리스트','본부·제품·상태 중복선택 · 기확인 → 확인중 → 의향중 순 정렬','');
+  const STK={'已确认':'기확인','跟进中':'확인중','有意向':'의향중'};const STO=['已确认','跟进中','有意向'];
+  const allP=custDetail('BD').concat(custDetail('ARi')).filter(r=>!r.ent&&STK[r.status]);
+  const base=allP.filter(r=>selOn('pgP',r.p)&&selOn('pgSt',r.status));
+  const hqCnt2={};base.forEach(r=>hqCnt2[r.hq]=(hqCnt2[r.hq]||0)+1);
+  h+=selChips('pgP',[['BD','BD'],['ARi','ARi']],(()=>{const c={};allP.forEach(r=>{if(selOn('pgHq',r.hq)&&selOn('pgSt',r.status))c[r.p]=(c[r.p]||0)+1;});return c;})());
+  h+=selChips('pgSt',STO.map(t=>[t,STK[t]]),(()=>{const c={};allP.forEach(r=>{if(selOn('pgHq',r.hq)&&selOn('pgP',r.p))c[r.status]=(c[r.status]||0)+1;});return c;})());
+  h+=selChips('pgHq',HQS.map(q=>[q,HQKO[q]]),hqCnt2);
+  const list2=base.filter(r=>selOn('pgHq',r.hq)).sort((a,b)=>STO.indexOf(a.status)-STO.indexOf(b.status)||HQS.indexOf(a.hq)-HQS.indexOf(b.hq)||(a.name<b.name?-1:1));
+  h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>상태</th><th>제품</th><th>본부</th><th>大区</th><th>치과명</th><th>담당</th><th>대리상</th></tr></thead><tbody>`;
+  list2.forEach(r=>{h+=`<tr><td style="font-weight:800">${STK[r.status]}</td><td>${r.p}</td><td>${esc(r.ko)}</td><td>${esc(r.key)}</td><td style="text-align:left">${esc(r.name)}</td><td>${esc(r.owner)}</td><td style="text-align:left">${esc(r.dealer)}</td></tr>`;});
+  h+=`</tbody><tfoot><tr class="sum"><td colspan="7">합계 ${list2.length}곳</td></tr></tfoot></table></div>`;
   return h+`<div class="foot-note" style="margin-top:14px">MGI PM · 주간보고 엑셀(客户开发现况 · 명세) 기준 · 데이터 ${SRC}</div>`;}
+
 
 /* 대리상 집계 */
 function dealerList(MB,MA,mode){const PM=provMap();const D={};let hasWk=false;
@@ -842,16 +932,16 @@ function pageRegion(){const MB=model('BD'),MA=model('ARi');const AB=areaModel('B
   const T=MB.T,A=MA.T;const semWk=((DATA.conv||{}).sem||[]).filter(s=>s.week===WEEK);const att=semWk.reduce((s,x)=>s+n(x.aAtt),0);
   let h=`<div class="hd"><div><span class="tag">각지역 성과분석</span><h1>3. 각지역 성과분석 — 본부·大区별 성과 · 월별현황 · 진도·연간목표</h1><p>${WEEK} (${wkRange(WEEK)}) · 데이터 기준 ${esc(MB.snap.cur.asOf||'')}</p></div></div>`;
   h+=secH('이번 주 핵심 지표','연 목표 대비 · 금주 = 스냅 간 증가분','');
-  h+=`<div class="om-tiles"><div class="om-tile"><div class="om-tl">통합 누적판매</div><div class="om-tv">${fmt0(T.sA+A.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(T.sT+A.sT)} · ${fmt((T.sA+A.sA)/(T.sT+A.sT)*100,1)}% · 금주판매 +${fmt0(T.wk+A.wk)}</div></div>
-  <div class="om-tile"><div class="om-tl">BD 누적판매</div><div class="om-tv">${fmt0(T.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(T.sT)} · ${fmt(T.sA/T.sT*100,1)}% · 금주판매 +${fmt0(T.wk)}</div></div>
-  <div class="om-tile"><div class="om-tl">ARi 누적판매</div><div class="om-tv">${fmt0(A.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(A.sT)} · ${fmt(A.sA/A.sT*100,1)}% · 금주판매 +${fmt0(A.wk)}</div></div>
+  h+=`<div class="om-tiles"><div class="om-tile"><div class="om-tl">통합 누적판매</div><div class="om-tv">${fmt0(T.sA+A.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(T.sT+A.sT)} · ${fmt((T.sA+A.sA)/(T.sT+A.sT)*100,0)}% · 금주판매 +${fmt0(T.wk+A.wk)}</div></div>
+  <div class="om-tile"><div class="om-tl">BD 누적판매</div><div class="om-tv">${fmt0(T.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(T.sT)} · ${fmt(T.sA/T.sT*100,0)}% · 금주판매 +${fmt0(T.wk)}</div></div>
+  <div class="om-tile"><div class="om-tl">ARi 누적판매</div><div class="om-tv">${fmt0(A.sA)}<small>개</small></div><div class="om-ts">목표 ${fmt0(A.sT)} · ${fmt(A.sA/A.sT*100,0)}% · 금주판매 +${fmt0(A.wk)}</div></div>
   <div class="om-tile"><div class="om-tl">진입 치과(통합)</div><div class="om-tv">${fmt0(T.cumA+A.cumA)}<small>개소</small></div><div class="om-ts">BD ${T.cumA} · ARi ${A.cumA}${T.prvCumA!=null?` · ↗ +${(T.cumA-T.prvCumA)+(A.cumA-A.prvCumA)} 전주`:''}</div></div>
   <div class="om-tile"><div class="om-tl">이번 주 세미나</div><div class="om-tv">${semWk.length}<small>회</small></div><div class="om-ts">참석 ${fmt0(att)}명</div></div></div>`;
   /* 진도·연간목표 */
   h+=secH('진도 · 연간목표 대비','연 경과일 대비 진도로 좋음/보통/위험 판정 · 마감 12/31','');
   const G=[['통합 판매',T.sA+A.sA,T.sT+A.sT,'개'],['통합 진입',T.cumA+A.cumA,T.cumT+A.cumT,'곳'],['BD 판매',T.sA,T.sT,'개'],['BD 진입',T.cumA,T.cumT,'곳'],['ARi 판매',A.sA,A.sT,'개'],['ARi 진입',A.cumA,A.cumT,'곳']];
   h+=`<div class="ov-wrap"><table class="ov-tbl"><thead><tr><th>지표</th><th class="n">실적</th><th class="n">연 목표</th><th>달성</th><th>판정</th></tr></thead><tbody>${G.map(g=>{const t=tierYear(g[1],g[2]);return `<tr><td style="font-weight:800">${g[0]}</td><td class="n">${fmt0(g[1])}</td><td class="n">${fmt0(g[2])}</td><td>${mbar(g[1],g[2],/ARi/.test(g[0])?'ar':'')}</td><td><span class="st-sel ${t.key}">${t.label}</span></td></tr>`;}).join('')}</tbody></table></div><div style="height:10px"></div>`;
-  h=foldLast(h,G.map(g=>({id:`goal|${g[0]}`,cat:'연간목표',prod:/BD/.test(g[0])?'BD':/ARi/.test(g[0])?'ARi':null,title:g[0].replace(/^(BD|ARi) /,''),a:g[1],t:g[2],unit:g[3],tier:tierYear(g[1],g[2]),tierHint:'연 경과일 대비 진도',footLabel:'연 달성',due:'12/31',src:'명세 기준',note:`${g[0]} ${fmt0(g[1])}/${fmt0(g[2])}${g[3]} · 달성 ${fmt(g[1]/g[2]*100,1)}% · 잔여 ${fmt0(Math.max(0,g[2]-g[1]))}${g[3]}`,metrics:[{k:'실적',v:fmt0(g[1])},{k:'연 목표',v:fmt0(g[2])},{k:'잔여',v:fmt0(Math.max(0,g[2]-g[1]))},{k:'달성률',v:fmt(g[1]/g[2]*100,1)+'%'},{k:'연 경과',v:yearElapsed()+'%'}]})));
+  h=foldLast(h,G.map(g=>({id:`goal|${g[0]}`,cat:'연간목표',prod:/BD/.test(g[0])?'BD':/ARi/.test(g[0])?'ARi':null,title:g[0].replace(/^(BD|ARi) /,''),a:g[1],t:g[2],unit:g[3],tier:tierYear(g[1],g[2]),tierHint:'연 경과일 대비 진도',footLabel:'연 달성',due:'12/31',src:'명세 기준',note:`${g[0]} ${fmt0(g[1])}/${fmt0(g[2])}${g[3]} · 달성 ${fmt(g[1]/g[2]*100,0)}% · 잔여 ${fmt0(Math.max(0,g[2]-g[1]))}${g[3]}`,metrics:[{k:'실적',v:fmt0(g[1])},{k:'연 목표',v:fmt0(g[2])},{k:'잔여',v:fmt0(Math.max(0,g[2]-g[1]))},{k:'달성률',v:fmt(g[1]/g[2]*100,0)+'%'},{k:'연 경과',v:yearElapsed()+'%'}]})));
   /* 월별현황 */
   h+=secH('월별현황','본부 합산 · 신규고객 = 월 진입 · 달성 = 판매량/판매목표','');
   const mrow=(p,M)=>{const S=M.snap.cur;const out={};for(let m=1;m<=12;m++){out[m]={cA:0,sT:0,sA:0};(S.area||[]).forEach(r=>{const x=(r.m||{})[String(m)]||{};out[m].cA+=n(x.cA);out[m].sT+=n(x.sT);out[m].sA+=n(x.sA);});const g=((MGOAL[p]||{})[String(m)]);if(g&&g.sT)out[m].sT=g.sT;}return out;};
@@ -903,7 +993,7 @@ function pageEdu(){const tab=VIEWMODE.eduTab||'done';const isDone=r=>n(r.att)>0|
   const S=(rs)=>({cnt:rs.length,att:rs.reduce((s,r)=>s+n(r.att),0),sales:rs.reduce((s,r)=>s+n(r.sales),0),newdev:rs.reduce((s,r)=>s+n(r.newdev),0),cost:rs.reduce((s,r)=>s+n(r.cost),0),ari:rs.reduce((s,r)=>s+n(r.ari),0)});
   const akey=r=>{const a=String(r.area||'').replace('大区','');return a?((r.corp==='北京'?'北':'')+a+'大区'):'전국·본사';};
   const T=S(rows);const byHq={};rows.forEach(r=>{(byHq[akey(r)]=byHq[akey(r)]||[]).push(r);});
-  let h=`<div class="hd"><div><span class="tag">교육활동 주보</span><h1>4-2. 교육활동 주보 (培训活动周报)</h1><p>${YEAR}년 ${MON}월 · ${WEEK} · 주간보고 엑셀(培训活动) 기준 · 실행완료 = 참석 또는 매출 기록이 있는 교육</p></div></div>
+  let h=`<div class="hd"><div><span class="tag">교육활동 주보</span><h1>5. 교육활동현황 (培训活动周报)</h1><p>${YEAR}년 ${MON}월 · ${WEEK} · 주간보고 엑셀(培训活动) 기준 · 실행완료 = 참석 또는 매출 기록이 있는 교육</p></div></div>
   <div class="tabs">${[['done','실행완료 (당월)'],['plan','예정 (당월)'],['all','전체 (당월)']].map(([k,l])=>`<button class="${tab===k?'on':''}" onclick="VIEWMODE.eduTab='${k}';renderPage()">${l} ${month.filter(r=>k==='all'?true:k==='done'?isDone(r):!isDone(r)).length}</button>`).join('')}</div>`;
   h+=`<div class="om-tiles" style="grid-template-columns:repeat(4,1fr)"><div class="om-tile"><div class="om-tl">교육(培训班)</div><div class="om-tv">${T.cnt}<small>回</small></div><div class="om-ts">참석 ${fmt0(T.att)}명</div></div><div class="om-tile"><div class="om-tl">신규매출</div><div class="om-tv">${fmt(T.sales,2)}<small>万</small></div><div class="om-ts">교육 후 신규 발주</div></div><div class="om-tile"><div class="om-tl">신규개발 치과</div><div class="om-tv">${T.newdev}<small>家</small></div><div class="om-ts">ARi 활동 ${T.ari}</div></div><div class="om-tile"><div class="om-tl">교육비용</div><div class="om-tv">${fmt(T.cost/1e4,1)}<small>万</small></div><div class="om-ts">연 누적 ${fmt(S(all).cost/1e4,1)}万 · ${S(all).cnt}回</div></div></div>`;
   h+=secH(`▶ ${MON}월 교육활동 (${rows.length}个培训班)`,'大区별 요약 → 개별 교육 카드 (더블클릭 수정 · 다음주 업무 주차별 저장)','');
@@ -936,7 +1026,7 @@ function mktSTP(){
   g+=`<div class="sx-lg2"><span><i style="background:var(--navy,#16234a)"></i>메가젠</span><span><i style="background:#c0392b"></i>타겟 경쟁사</span><span><i style="background:#b9c2cf"></i>기타</span><span style="flex:1"></span><span>가격축 100~950 RMB (치과 공급가)</span></div></div>`;
   return g;}
 function pageMkt(){const cell=(id,def)=>{const v=eget(id,'txt',false);return `<span ondblclick="editCell(this,'${id}')" onblur="saveCell(this,'${id}')" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${esc(v==null?def:v)}</span>`;};
-  let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>2. 시장가격동향 (Premium Segment)</h1><p>프리미엄 세그먼트 공급가·시술수가 비교 · 셀 더블클릭으로 수정 (공통 저장)</p></div></div>`;
+  let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>7-(1) 시장가격동향 (Premium Segment)</h1><p>프리미엄 세그먼트 공급가·시술수가 비교 · 셀 더블클릭으로 수정 (공통 저장)</p></div></div>`;
   h+=secH('1 STP 세그먼트 × 가격 포지셔닝','Bi-Polar 전략 — Premium 비중 확대(10%→14%) · Value/Economy① AO·ST 시장 방어 · Economy② Evidence 시장 침투','');
   h+=mktSTP();
   h+=secH('2 PRICE 시장가격동향','공급가 · 환자 시술수가(위안) · 원가비중 = 공급가/시술수가','');
@@ -952,7 +1042,7 @@ function saveBlockC(el,id){if(el.contentEditable!=='true')return;el.contentEdita
 
 /* ───── 5. 소개자료 ───── */
 function pageIntro(){const lang=VIEWMODE.introLang||'ko';const doc=(window.__INTRO||{})[lang]||'';
-  return `<div class="hd"><div><span class="tag">소개자료</span><h1>5. 프리미엄 라인업 가치제안 1P · BD · ARi · BDC</h1><p>영업·대리상 배포용 1페이지 자료</p></div><div class="tabs" style="margin:0"><button class="${lang==='ko'?'on':''}" onclick="VIEWMODE.introLang='ko';renderPage()">한국어</button><button class="${lang==='cn'?'on':''}" onclick="VIEWMODE.introLang='cn';renderPage()">中文</button><button onclick="openIntro()">새 창으로 열기</button><button onclick="printIntro()">PDF 다운로드</button></div></div>
+  return `<div class="hd"><div><span class="tag">소개자료</span><h1>6. 프리미엄 라인업 가치제안 1P · BD · ARi · BDC</h1><p>영업·대리상 배포용 1페이지 자료</p></div><div class="tabs" style="margin:0"><button class="${lang==='ko'?'on':''}" onclick="VIEWMODE.introLang='ko';renderPage()">한국어</button><button class="${lang==='cn'?'on':''}" onclick="VIEWMODE.introLang='cn';renderPage()">中文</button><button onclick="openIntro()">새 창으로 열기</button><button onclick="printIntro()">PDF 다운로드</button></div></div>
   <iframe class="ifr" id="introFr" srcdoc="${esc(doc)}"></iframe>`;}
 function openIntro(){const w=window.open('about:blank');w.document.write((window.__INTRO||{})[VIEWMODE.introLang||'ko']||'');w.document.close();}
 function printIntro(){const f=document.getElementById('introFr');if(f&&f.contentWindow)f.contentWindow.print();}
@@ -982,7 +1072,7 @@ function msBar(v,max,br){const w=Math.round(Math.min(100,n(v)/max*100)*1.5);retu
 
 function pageComp(){const D=compData();const C=window.__COMP||{};const OPEN=VIEWMODE.compOpen||{};const mtab=VIEWMODE.compTab||'t1';const HINT1='▸ 브랜드 행·그래프를 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다';const HINT2='▸ 省 행을 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다';if(!D.provs.length)return `<div class="empty">경쟁사 조사표 데이터가 없습니다</div>`;
   const mg=D.brands.find(b=>b.br==='MEGAGEN')||{ms25:0,ms26:0,s26:0,n:0,top1:0};const top=D.brands.filter(b=>b.br!=='MEGAGEN')[0];const dMs=(n(mg.ms26)-n(mg.ms25))*100;
-  let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>2-(2) 경쟁사 조사 — ${esc(C.period||'')} 竞争对手调查表</h1><p>닝보법인 11개 大区 · ${D.provs.length}개 省 · 대리상 ${D.rows.length}건 · 기준 ${esc(C.asOf||'')} · M/S = 省 시장규모(植体颗数) 가중 평균 · 금액 万元 · 가격 RMB/颗</p></div></div>`;
+  let h=`<div class="hd"><div><span class="tag">시장·경쟁동향</span><h1>7-(2) 경쟁사 조사 — ${esc(C.period||'')} 竞争对手调查表</h1><p>닝보법인 11개 大区 · ${D.provs.length}개 省 · 대리상 ${D.rows.length}건 · 기준 ${esc(C.asOf||'')} · M/S = 省 시장규모(植体颗数) 가중 평균 · 금액 万元 · 가격 RMB/颗</p></div></div>`;
   h+=`<div class="om-tiles"><div class="om-tile"><div class="om-tl">26년 시장규모 (조사 省 합계)</div><div class="om-tv">${fmt(D.mktT/1e4,1)}<small>만개</small></div><div class="om-ts">25년 ${fmt(D.mktT25/1e4,1)}만개 · ${fmt((D.mktT/D.mktT25-1)*100,1)}%</div></div>
   <div class="om-tile"><div class="om-tl">MEGAGEN M/S 26년</div><div class="om-tv">${pp(mg.ms26)}</div><div class="om-ts">25년 ${pp(mg.ms25)} · <span class="${dMs>=0?'':'rd'}" style="${dMs>=0?'color:#1f9d57':''};font-weight:800">${dMs>=0?'+':''}${fmt(dMs,1)}%p</span> · 전국 ${D.brands.findIndex(b=>b.br==='MEGAGEN')+1}위</div></div>
   <div class="om-tile"><div class="om-tl">1위 경쟁사</div><div class="om-tv" style="font-size:22px">${top?esc(top.br):'–'}</div><div class="om-ts">M/S ${top?pp(top.ms26):'–'} · 격차 ${top?fmt((n(mg.ms26)-n(top.ms26))*100,1):'–'}%p</div></div>
@@ -1035,7 +1125,7 @@ const CN_EXACT={
  '9.0만 [3.2%] → 16.2만 [5.7%]':'9.0万 [3.2%] → 16.2万 [5.7%]','40.7만 [8.1%] → 41.1만 [8.2%]':'40.7万 [8.1%] → 41.1万 [8.2%]','42.5만 [12.1%] → 47.7만 [13.6%]':'42.5万 [12.1%] → 47.7万 [13.6%]','– → 10.0만 [3.5%]':'– → 10.0万 [3.5%]',
  '오스템 ET':'奥齿泰 ET','오스템 TS3':'奥齿泰 TS3','덴티움 Superline':'登腾 Superline','덴티움 Implantium':'登腾 Implantium','디오 UV':'DIO UV','디오 UF':'DIO UF','네오 IS2/IS3':'Neo IS2/IS3','중국산 创英/百康特':'国产 创英/百康特',
  '1 브랜드 종합':'1 品牌综合','2 省별 현황':'2 分省现况','3 가격 비교':'3 价格比较','4 대리상 상세':'4 代理商明细','▸ 브랜드 행·그래프를 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다':'▸ 点击品牌行·图表即可展开明细卡片 · 再次点击关闭','▸ 省 행을 클릭하면 상세 카드가 열립니다 · 다시 클릭하면 닫힙니다':'▸ 点击省行即可展开明细卡片 · 再次点击关闭',
- '주간 판매실적 보고 ★':'周销售业绩报告 ★','1. 주요성과':'1. 主要成果','2. 시장·경쟁동향':'2. 市场·竞争动态','(1) 시장가격동향':'(1) 市场价格动态','(2) 경쟁사 조사 (1~10월)':'(2) 竞争对手调查 (1~10月)','3. 각지역 성과분석':'3. 各区域业绩分析','4. 세미나 고객전환 ★':'4. 研讨会客户转化 ★','(1) 세미나 고객전환':'(1) 研讨会客户转化','(2) 교육활동 주보':'(2) 培训活动周报','5. 메가젠제품 소개자료 ★':'5. MegaGen产品介绍资料 ★',
+ '금주 판매실적 보고 ★':'本周销售业绩报告 ★','전주 판매실적 보고 ★':'上周销售业绩报告 ★','1. 주요성과':'1. 主要成果','2. 시장·경쟁동향':'2. 市场·竞争动态','(1) 시장가격동향':'(1) 市场价格动态','(2) 경쟁사 조사 (1~10월)':'(2) 竞争对手调查 (1~10月)','3. 각지역 성과분석':'3. 各区域业绩分析','4. 세미나 고객전환 ★':'4. 研讨会客户转化 ★','(1) 세미나 고객전환':'(1) 研讨会客户转化','(2) 교육활동 주보':'(2) 培训活动周报','5. 메가젠제품 소개자료 ★':'5. MegaGen产品介绍资料 ★','HQ 본부별 판매실적 분석':'HQ 本部销售实绩分析','부진원인':'不振原因','AR 전환 영향, BD 정책이 AR 대비 불리. 소포장 100颗 연수 지원 필요':'AR转化，BD政策不如AR好。需要小包100颗游学支持。','프로모션·학술회의 등 지원 강화':'加强推广，学术会议等支持','증례 부족, 시장 프로모션 시간 부족':'病例不多，市场推广时间不足','수가(치료비) 영향, AR 전환, 우위 부각 부족':'收费价格影响，AR转化，优势不够突出。','11월 말까지 단계적 개선':'11月底逐步改善','CEO 살롱':'CEO沙龙','임상의 이해·숙련 부족으로 시술 개시 주저':'临床医生还不了解，掌握不熟练，不敢开展。','실습 교육반 강화, 12월 말까지 단계적 개선':'加强实操培训班，12月底逐步改善','전략 협력, DSO 방한':'战略合作，DSO访韩','수가 높고 제품 차별화 부각 안됨. 치과 재고 확보 주저, 개별 케이스에만 사용, 시장 미확산':'收费价格高，产品差异化拉不开。门诊不敢囤货。解决个别案例才用。市场没有铺开。','제품 차별화 설명, 증례 제공 독려, 반악궁 BD 증례 부품 지원. 11월 말 개선':'产品差异化讲解，鼓励提供病例，半口BD病例给与配件支持。11月底改善','부품 지원, kit, 현지 대형치과 3.3 시용':'配件支持，kit,当地大门诊3.3试用','수술 난이도 높고 수용도 낮음, 짧은 기간에 시장 개척 미진':'手术难度大，接受度差，时间短，市场没有一下打开局面。','현지 KOL의 ARi 증례 제공 독려, 온라인 공개강의. 연말까지 5곳 확보':'鼓励当地KOL提供ARI病例，线上公开课。年底争取5家','AXA 어버트먼트 부품 지원':'AXA基台配件支持','개선대책/완성기한':'改善对策/完成期限','매주 중점관리고객':'每周重点管理客户','본사요청사항':'请求总部协助事项','본부별 BD·ARi 小计 + 현황분석 · 노란칸 = 직접 기입란':'按本部 BD·ARi 小计 + 现状分析 · 黄色栏 = 直接填写','신규목표 家':'新进目标 家','신규실적 家':'新进实绩 家','재구매 비중':'复购占比','진도계획':'进度计划','현황분석 (数据现状分析)':'数据现状分析','부진원인 (不振原因)':'不振原因','중점고객 상황 (重点管理客户 现况)':'重点管理客户 现况','LIST 장기미구매 고객 리스트':'LIST 长期未购客户清单','본부·제품 중복선택 · 금년 수량 오름차순 (0 = 금년 무발주 우선)':'可多选本部·产品 · 今年数量升序 (0 = 今年未订购优先)','LIST 진도상태별 고객 리스트':'LIST 按进度状态客户清单','본부·제품·상태 중복선택 · 기확인 → 확인중 → 의향중 순 정렬':'可多选本部·产品·状态 · 按已确认 → 跟进中 → 有意向排序','치과명':'牙科名称','금년 수량':'今年数量','작년 수량':'去年数量','최근 발주':'最近订购','상태':'状态','1. 판매성과':'1. 销售成果','2. 장기미구매고객':'2. 长期未购客户','3. 영업진도현황':'3. 销售进度现况','4. 세미나 고객전환':'4. 研讨会客户转化','5. 교육활동현황':'5. 培训活动现况','6. 제품소개자료':'6. 产品介绍资料','7. 시장경쟁동향':'7. 市场·竞争动态',
  '기간':'期间','연도':'年度','월':'月','주차':'周次','페이지':'页面','달력':'日历','오늘':'今天','데이터 기준일':'数据基准日','선택 주차':'所选周次','저장 상태':'保存状态','데이터':'数据','변경 없음':'无变更','미저장 변경':'未保存变更','내장':'内置','클라우드':'云端',
  '☁ 클라우드 새로고침':'☁ 云端刷新','클라우드 저장':'云端保存','⬇ PDF/인쇄':'⬇ PDF/打印','주간 실적 분석 보고':'周业绩分析报告','프리미엄 라인업(BD · ARi) 주간 판매실적 보고':'高端产品线(BD · ARi) 周销售业绩报告',
  '월 목표수량':'月目标数量','년 목표수량':'年目标数量','월 진입(치과) 목표':'月进入(牙科)目标','년 진입(치과) 목표 / 누적':'年进入(牙科)目标 / 累计',
@@ -1044,8 +1134,8 @@ const CN_EXACT={
  '다음주 업무':'下周工作','다음주 계획을 적어주세요 (주차별 저장)':'请填写下周计划 (按周保存)','더블클릭하여 현황분석 입력':'双击输入现况分析','위험':'风险','보통':'一般','좋음':'良好','상승':'上升','하락':'下降','보합':'持平','1위':'第1','추격':'追赶','열세':'劣势','자료없음':'无资料','예정':'计划','목표없음':'无目标',
  '중요도-상':'重要度-高','중요도-중':'重要度-中','중요도-하':'重要度-低','상':'高','중':'中','하':'低',
  '치과 목표/실적':'牙科 目标/实绩','금주 판매':'本周销售','재구매 비중':'复购占比','최우수 담당':'最优负责人','집중관리 담당':'重点管理负责人','진입치과':'进入牙科','신규진입':'新进入','월 달성':'月达成','BD 월 달성':'BD 月达成','월 달성(BD+ARi)':'月达成(BD+ARi)',
- '6 EXEC 본부별 실행관리 리스트':'6 EXEC 本部执行管理清单','본부 실행관리 리스트 (BD 기준)':'本部执行管理清单 (BD基准)','카드':'卡片','표':'表',
- '2 HQ 본부별 판매현황 (수량)':'2 HQ 本部销售现况 (数量)','2-1 DEALER 판매수량 TOP 대리상':'2-1 DEALER 销量TOP代理商','3 CUSTOMER 본부별 판매고객 (진입치과)':'3 CUSTOMER 本部销售客户 (进入牙科)','3-1 STOCK 장기미구매 고객':'3-1 STOCK 长期未购客户','4 PROGRESS 영업진도현황':'4 PROGRESS 销售进度现况','5 SEMINAR 세미나 고객전환현황':'5 SEMINAR 研讨会客户转化现况',
+ '4 EXEC 본부별 실행관리 리스트':'4 EXEC 本部执行管理清单','본부 실행관리 리스트 (BD 기준)':'本部执行管理清单 (BD基准)','카드':'卡片','표':'表',
+ '1 HQ 본부별 판매현황 (수량)':'1 HQ 本部销售现况 (数量)','1-1 DEALER 판매수량 TOP 대리상':'1-1 DEALER 销量TOP代理商','2 CUSTOMER 본부별 판매고객 (진입치과)':'2 CUSTOMER 本部销售客户 (进入牙科)','STOCK 장기미구매 고객':'STOCK 长期未购客户','PROGRESS 영업진도현황':'PROGRESS 销售进度现况','3 SEMINAR 세미나 고객전환현황':'3 SEMINAR 研讨会客户转化现况',
  'BD 실적':'BD 实绩','BD 목표':'BD 目标','BD 달성':'BD 达成','ARi 실적':'ARi 实绩','ARi 목표':'ARi 目标','ARi 달성':'ARi 达成','진입치과 BD/ARi':'进入牙科 BD/ARi','지역':'地区','대리상':'代理商','구분':'类别','하부고객':'下级客户','영업담당':'销售负责人','제품구성':'产品构成','판매수량':'销售数量','누적':'累计','목표':'目标','누적고객':'累计客户','달성률':'达成率','전주대비':'环比上周','진입 치과':'进入牙科','비중':'占比','통합':'综合','기확인':'已确认','확인중':'跟进中','의향중':'有意向','세미나':'研讨会','대상치과':'目标牙科','신규방문':'新访问','미방문':'未访问','방문율':'访问率','영업진도율':'销售进度率','진입완료':'进入完成','진입율':'进入率',
  '이번 주 핵심 지표':'本周核心指标','통합 누적판매':'综合累计销售','BD 누적판매':'BD 累计销售','ARi 누적판매':'ARi 累计销售','진입 치과(통합)':'进入牙科(综合)','이번 주 세미나':'本周研讨会','진도 · 연간목표 대비':'进度 · 对比年度目标','지표':'指标','실적':'实绩','연 목표':'年目标','판정':'判定','월별현황':'月度现况','신규고객':'新客户','판매목표':'销售目标','판매량':'销量','지역별 현황 (大区)':'区域现况 (大区)','고객 집중도 — 본부별 판매 비중 구성':'客户集中度 — 本部销售占比构成','누적판매':'累计销售','구매치과':'购买牙科','TOP1 비중':'TOP1 占比','기타':'其他',
  '본부별 통합 진도율':'本部综合进度率','방문대상 치과':'访问目标牙科','방문':'访问','개최일':'举办日','담당':'负责人','도시':'城市','① 세미나별 (개최일 순)':'① 按研讨会 (举办日顺序)','② 담당자별':'② 按负责人','③ 방문점검 명단 (치과 기준)':'③ 访问检查名单 (牙科基准)',
