@@ -804,9 +804,6 @@ function pageWprev(){const D=window.__WPREV||{rows:[],tot:[],areas:{}};const wk=
   Object.keys(byHq).forEach(hq=>{const rs=byHq[hq];
     rs.forEach((r,i)=>{h+=dataRow(r,i,rs);});
     const id='wprev|'+wk+'|'+hq;
-    const anaHtml=rs.map(r=>`<div style="margin-bottom:4px"><b style="color:${r.prod==='BD'?'var(--navy)':'var(--navy2)'}">${r.prod}</b> · ${br(r.anal||'–')}</div>`).join('')
-      +((D.areas||{})[hq]||[]).map(a=>`<div style="font-size:12px;color:#5b6b82;margin-top:2px"><b>${esc(a.dq)} ${a.prod}</b> · ${br(a.anal)}</div>`).join('');
-    h+=`<tr class="fold-dtl"><td style="font-weight:800;background:#f7f9fc">현황분석</td><td colspan="9" style="text-align:left;padding:6px 10px;font-size:12.8px;line-height:1.55">${anaHtml}</td></tr>`;
     const FL=((D.fill||{})[hq])||{};const owners=FL.owners||{};const cells=FL.cells||{};
     const dqs=[];(((D.areas||{})[hq])||[]).forEach(a2=>{if(dqs.indexOf(a2.dq)<0)dqs.push(a2.dq);});
     const cell=(key,fld)=>{const v=(cells[key]||{})[fld];if(v)return `<td style="text-align:left">${esc(v)}</td>`;
