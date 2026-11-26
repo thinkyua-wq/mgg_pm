@@ -1449,6 +1449,21 @@ async function __buildDeck(lang){
   kcard(0.55,'BD',kB,NAVY,false);kcard(6.78,'ARi',kA,NAVY2,true);
   sl.addText(ai.map(t=>({text:t,options:{breakLine:true,bold:/^\d\./.test(t),color:/^\d\./.test(t)?NAVY:INK,fontSize:/^\d\./.test(t)?11.6:10.4,paraSpaceAfter:/^\d\./.test(t)?3:2,paraSpaceBefore:/^\d\./.test(t)?6:0}})),
     {x:0.55,y:4.45,w:12.23,h:2.6,isTextBox:true,margin:0,valign:'top'});
+  /* 금주 KPI 다음: 본부별 판매현황 (수량) — 주간 1장 · 월별 1장 (화면 캡처) */
+  {const keepM=VIEWMODE.wrHqm,keepO=VIEWMODE.wrHqOpen;
+   for(const md of ['wk','mo']){const hb=document.createElement('div');
+     hb.style.cssText='position:absolute;left:-99999px;top:0;width:1280px;background:#fff;color:#1f2937;padding:4px 6px;'+(cn?'font-family:"Microsoft YaHei","微软雅黑","Noto Sans SC",sans-serif;':'');
+     VIEWMODE.wrHqm=md;VIEWMODE.wrHqOpen=true;window.__forceLang=cn?'zh':'ko';
+     try{hb.innerHTML=hqBarsBlock(model('BD'),model('ARi'));}finally{VIEWMODE.wrHqm=keepM;VIEWMODE.wrHqOpen=keepO;window.__forceLang=null;}
+     const sh=hb.querySelector('.sec-h');if(sh){sh.style.marginTop='0';const acts=sh.querySelectorAll('.act');if(acts.length>1)acts[acts.length-1].style.display='none';}
+     document.body.appendChild(hb);if(cn)__cnRoot(hb);
+     try{const cv=await html2canvas(hb,{scale:2,backgroundColor:'#ffffff',logging:false});
+       sl=pres.addSlide({masterName:'MAIN'});
+       band(sl,'THIS WEEK',(cn?'本部销售现况 (数量) — ':'본부별 판매현황 (수량) — ')+(md==='wk'?(cn?'周':'주간'):(cn?'月':'월별')),md==='wk'?(cn?'周 = 当月中上周以后的增加':'주간 = 당월분 중 전주 이후 증가'):(cn?'月 = 当月累计':'월별 = 당월 누적'));
+       const y0=1.45,maxH=7.0-y0;let w=12.23,hh=12.23*cv.height/cv.width;if(hh>maxH){w=w*maxH/hh;hh=maxH;}
+       sl.addImage({data:cv.toDataURL('image/png'),x:0.55+(12.23-w)/2,y:y0,w,h:hh});}
+     finally{document.body.removeChild(hb);}}}
+
   /* S3·S4 전주 실적 · 부진원인 — 앱 화면을 그대로 캡처해서 넣는다 (한국어/중문 각각) */
   const capBox=document.createElement('div');
   capBox.style.cssText='position:absolute;left:-99999px;top:0;width:1100px;background:#fff;color:#1f2937;'+(cn?'font-family:"Microsoft YaHei","微软雅黑","Noto Sans SC",sans-serif;':'');
